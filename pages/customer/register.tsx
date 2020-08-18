@@ -83,7 +83,7 @@ export const Register = () => {
         router.push("/customer/login");
       }
     } catch (err) {
-      setCustomError(err.response.errors[0].message);
+      setCustomError(err.response?.errors[0].message);
       setLoading(false);
       // console.log(err.message);
     }

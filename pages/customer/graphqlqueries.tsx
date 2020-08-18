@@ -1,3 +1,8 @@
+/* 
+1. signUp 3.  5.
+2. logIn   4.   6.
+*/
+
 export const SIGN_UP = `
   mutation signUp(
     $first_name: String!, $last_name: String!, $email: String!, $password: String!, $confirm_password: String!, $phone:String, $role: String!, $pending: String!, $business_name: String, $business_name_slug: String, $business_address: String, $business_area: String, $business_image: String, $business_bio: String, $customer_address: String
@@ -7,5 +12,14 @@ export const SIGN_UP = `
     ) {
       message
     }
+  }
+`;
+
+export const LOG_IN = `
+  mutation logIn($email: String!, $password: String!){
+      logIn(email: $email, password: $password){
+          accesstoken
+          role
+      }
   }
 `;
