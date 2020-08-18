@@ -1,5 +1,6 @@
 import React from "react";
 import { request } from "graphql-request";
+import useSWR from "swr";
 
 const PRODUCTS = `
   {
@@ -15,7 +16,7 @@ const PRODUCTS = `
     }
   }
 `;
-export async function getServerSideProps() {
+export async function getStaticProps() {
   try {
     const res = await request("http://localhost:4000/graphql", PRODUCTS);
     const products = await res.products;
@@ -35,13 +36,16 @@ export async function getServerSideProps() {
   }
 }
 
-const Test = ({ products, err }: any) => {
+const Test = ({ products, err }) => {
+  // const { data, error } = useSWR(
+  //   PRODUCTS,
+  //   (query) => request("http://localhost:4000/graphql", query)
+  // );
+
   if (err) {
-    console.log(err);
-    return "an error occurred";
+    console.log(err.message);
+    return "an error occured";
   }
-  console.log(products);
-  console.log(products[0].creator);
 
   return (
     <div>
