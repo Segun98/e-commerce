@@ -10,7 +10,7 @@ import {
 } from "@chakra-ui/core";
 import { useForm } from "react-hook-form";
 import { request } from "graphql-request";
-import { SIGN_UP } from "./graphqlqueries";
+import { SIGN_UP } from "./../../graphql/users";
 import { endpoint } from "../../utils/auth";
 import { useRouter } from "next/router";
 

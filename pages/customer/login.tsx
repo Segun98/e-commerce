@@ -10,8 +10,7 @@ import {
 import { useForm } from "react-hook-form";
 import { graphQLClient } from "../../utils/auth";
 import { useRouter } from "next/router";
-import { LOG_IN } from "./graphqlqueries";
-import Cookies from "js-cookie";
+import { LOG_IN } from "../../graphql/users";
 
 interface inputs {
   email: string;
@@ -63,11 +62,16 @@ export const Login = () => {
 
       if (res.logIn) {
         setLoading(false);
+        if (res.logIn.role !== "customer") {
+          setSuccess(
+            "Credentials are correct but you are attempting login from the wrong portal"
+          );
+          router.push(`/${res.logIn.role}/login`);
+          return;
+        }
         setSuccess("Login Successful");
         //reset form field
         e.target.reset();
-        console.log(res.logIn.accesstoken);
-        console.log(res.logIn.role);
         // router.push("/customer/account");
       }
     } catch (err) {
