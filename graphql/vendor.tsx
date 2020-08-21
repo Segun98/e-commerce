@@ -9,3 +9,32 @@ mutation addProduct(
   }
 }
 `;
+
+export const STORE = `
+query user($business_name_slug: String!){
+  user(business_name_slug:$business_name_slug){
+    id
+    email
+    role
+    phone
+    pending
+    business_name
+    business_address
+    business_area
+    business_image
+    business_bio
+    jwt_user_id
+    usersProducts{
+      id,
+      name,
+      name_slug,
+      description,
+      price,
+      category,
+      image,
+      in_stock,
+    }
+    
+  }
+}
+`;

@@ -6,6 +6,7 @@ import {
   Textarea,
   Select,
 } from "@chakra-ui/core";
+import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import slug from "slug";
@@ -15,6 +16,7 @@ import {
   graphQLClient,
 } from "../../utils/auth";
 import { ADD_PRODUCT } from "./../../graphql/vendor";
+import { ProtectRouteV } from "./../../utils/ProtectedRouteV";
 
 interface input {
   name: string;
@@ -27,6 +29,11 @@ interface input {
 }
 
 export const Newitem = () => {
+  let role = Cookies.get("role");
+  // you shouldn't see this page if you aren't a vendor
+  if (role !== "vendor") {
+    return <div style={{ textAlign: "center" }}>loading...</div>;
+  }
   const [customError, setCustomError] = useState("");
   const [Loading, setLoading] = useState(false);
   const [success, setSuccess] = useState("");
@@ -190,4 +197,4 @@ export const Newitem = () => {
   );
 };
 
-export default Newitem;
+export default ProtectRouteV(Newitem);
