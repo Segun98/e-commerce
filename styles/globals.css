@@ -13,3 +13,10 @@ html {
   --softgrey: rgba(32, 33, 36, 0.28);
   --box: 0 1px 6px 0
 }
+
+.indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 90vh
+}

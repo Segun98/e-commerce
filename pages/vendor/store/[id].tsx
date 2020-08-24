@@ -1,7 +1,40 @@
 import React, { useEffect } from "react";
 import { accessToken, graphQLClient } from "../../../utils/auth";
 import { STORE } from "../../../graphql/vendor";
+import { Spinner, useToast } from "@chakra-ui/core";
+import { useRouter } from "next/router";
 
+interface response {
+  data: user;
+  error: err;
+}
+interface err {
+  message: string;
+}
+interface user {
+  id: string;
+  email: string;
+  role: string;
+  phone: string;
+  pending: string;
+  business_name: string;
+  business_address: string;
+  business_area: string;
+  business_image: string;
+  business_bio: string;
+  jwt_user_id: string;
+  usersProducts: [product];
+}
+interface product {
+  id: string;
+  name: string;
+  name_slug: string;
+  description: string;
+  price: string;
+  category: string;
+  image: string;
+  in_stock: string;
+}
 export async function getServerSideProps({ params, req }) {
   //the whole point of this is to always get a value in jwt signed from the backend to acsertain if the person visiting this page is the owner of the store
   //custom method i wrote to get the token from cookies
@@ -36,34 +69,69 @@ export async function getServerSideProps({ params, req }) {
       },
     };
   } catch (err) {
-    let error = {
-      one: err?.message,
-      two: err.response?.errors[0].message,
-    };
     return {
       props: {
-        error,
+        error: err?.message,
       },
     };
   }
 }
-const Store = ({ data, error }) => {
-  useEffect(() => {
-    console.log(accessToken);
-  }, []);
-  if (!data) {
-    return "loadinnngg..";
-  }
-  if (error) {
-    return "custom error layout and an option to refresh...";
-  }
-  if (!data.id) {
-    return "user does not exist";
-  }
-  console.log(data);
-  // console.log(error);
+const Store = ({ data, error }: response) => {
+  const toast = useToast();
+  const router = useRouter();
 
-  return <div>hello</div>;
+  useEffect(() => {
+    if (data && !data.id) {
+      router.push("/404");
+    }
+  }, []);
+
+  return (
+    <div>
+      {error &&
+        toast({
+          title: "An error occurred.",
+          description: "check your internet connection and refresh.",
+          status: "error",
+          duration: 7000,
+          isClosable: true,
+          position: "top",
+        })}
+
+      <section>
+        {data && (
+          <ul>
+            <li>{data.id}</li>
+            <li>{data.email}</li>
+            <li>{data.role}</li>
+            <li>{data.phone}</li>
+            <li>{data.pending}</li>
+            <li>{data.business_name}</li>
+            <li>{data.business_address}</li>
+            <li>{data.business_area}</li>
+            <li>{data.business_image}</li>
+            <li>{data.business_bio}</li>
+            <li>{data.jwt_user_id}</li>
+          </ul>
+        )}
+      </section>
+
+      <section>
+        {data &&
+          data.usersProducts.map((d) => (
+            <div key={d.id}>
+              <div>{d.name}</div>
+              <div>{d.name_slug}</div>
+              <div>{d.price}</div>
+              <div>{d.in_stock}</div>
+              <div>{d.image}</div>
+              <div>{d.category}</div>
+              <div>{d.description}</div>
+            </div>
+          ))}
+      </section>
+    </div>
+  );
 };
 
 export default Store;
