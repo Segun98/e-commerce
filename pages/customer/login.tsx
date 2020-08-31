@@ -8,7 +8,7 @@ import {
   Button,
 } from "@chakra-ui/core";
 import { useForm } from "react-hook-form";
-import { graphQLClient } from "../../utils/auth";
+import { graphQLClient } from "../../utils/client";
 import { useRouter } from "next/router";
 import { LOG_IN } from "../../graphql/users";
 

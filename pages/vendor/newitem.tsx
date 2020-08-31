@@ -10,13 +10,9 @@ import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import slug from "slug";
-import {
-  accessToken,
-  fetchRefreshToken,
-  graphQLClient,
-} from "../../utils/auth";
+import { useAuth } from "../../Context/AuthProvider";
+import { graphQLClient } from "../../utils/client";
 import { ADD_PRODUCT } from "./../../graphql/vendor";
-import { ProtectRouteV } from "./../../utils/ProtectedRouteV";
 
 interface input {
   name: string;
@@ -29,6 +25,9 @@ interface input {
 }
 
 export const Newitem = () => {
+  //from context
+
+  const { Token } = useAuth();
   let role = Cookies.get("role");
   // you shouldn't see this page if you aren't a vendor
   if (role !== "vendor") {
@@ -37,10 +36,6 @@ export const Newitem = () => {
   const [customError, setCustomError] = useState("");
   const [Loading, setLoading] = useState(false);
   const [success, setSuccess] = useState("");
-
-  useEffect(() => {
-    fetchRefreshToken();
-  }, []);
 
   useEffect(() => {
     if (customError || success) {
@@ -70,7 +65,7 @@ export const Newitem = () => {
     };
 
     try {
-      graphQLClient.setHeader("authorization", `Bearer ${accessToken}`);
+      graphQLClient.setHeader("authorization", `Bearer ${Token}`);
       setLoading(true);
       const res = await graphQLClient.request(ADD_PRODUCT, variables);
       if (res.addProduct) {
@@ -197,4 +192,4 @@ export const Newitem = () => {
   );
 };
 
-export default ProtectRouteV(Newitem);
+export default Newitem;

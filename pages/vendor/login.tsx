@@ -8,9 +8,10 @@ import {
   Button,
 } from "@chakra-ui/core";
 import { useForm } from "react-hook-form";
-import { graphQLClient, setToken } from "../../utils/auth";
+import { graphQLClient } from "../../utils/client";
 import { useRouter } from "next/router";
 import { LOG_IN } from "../../graphql/users";
+import { useAuth } from "../../Context/AuthProvider";
 
 interface inputs {
   email: string;
@@ -26,6 +27,9 @@ interface loginRes {
 }
 
 export const Login = () => {
+  //from context
+  const { setToken } = useAuth();
+
   const router = useRouter();
   //react-hook-form
   const { handleSubmit, register, errors } = useForm();

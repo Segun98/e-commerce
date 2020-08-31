@@ -11,7 +11,7 @@ import {
 import { useForm } from "react-hook-form";
 import { request } from "graphql-request";
 import { SIGN_UP } from "./../../graphql/users";
-import { endpoint } from "../../utils/auth";
+import { endpoint } from "../../utils/client";
 import { useRouter } from "next/router";
 import slug from "slug";
 

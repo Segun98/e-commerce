@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
-import { accessToken, graphQLClient } from "../../../utils/auth";
-import { STORE } from "../../../graphql/vendor";
-import { Spinner, useToast } from "@chakra-ui/core";
+import { graphQLClient } from "../../utils/client";
+import { STORE } from "../../graphql/vendor";
+import { useToast } from "@chakra-ui/core";
 import { useRouter } from "next/router";
 
 interface response {
@@ -79,6 +79,8 @@ export async function getServerSideProps({ params, req }) {
 const Store = ({ data, error }: response) => {
   const toast = useToast();
   const router = useRouter();
+
+  // console.log(data);
 
   useEffect(() => {
     if (data && !data.id) {

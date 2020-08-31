@@ -38,3 +38,19 @@ query user($business_name_slug: String!){
   }
 }
 `;
+
+export const PRODUCT = `
+query products{
+  products{
+    id,
+    name,
+    name_slug,
+    description,
+    price,
+    category,
+    image,
+    in_stock,
+    creator_id
+  }
+}
+`;
