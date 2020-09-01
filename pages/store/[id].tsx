@@ -37,6 +37,9 @@ interface product {
 }
 export async function getServerSideProps({ params, req }) {
   //the whole point of this is to always get a value in jwt signed from the backend to acsertain if the person visiting this page is the owner of the store
+
+  //Note: i could have just fetched it in the component itself for access to "Token" from Context APi.indicator
+
   //custom method i wrote to get the token from cookies
   let c = [];
   //only run if theres a cookie in header
@@ -80,13 +83,12 @@ const Store = ({ data, error }: response) => {
   const toast = useToast();
   const router = useRouter();
 
-  // console.log(data);
-
   useEffect(() => {
     if (data && !data.id) {
       router.push("/404");
     }
   }, []);
+  // console.log(data);
 
   return (
     <div>

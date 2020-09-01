@@ -1,14 +1,16 @@
-import React, { useEffect, useState } from "react";
-import { useRouter } from "next/router";
+import React from "react";
 import Cookies from "js-cookie";
 
-export function ProtectRouteC(Component) {
-  return function () {
-    const router = useRouter();
-    useEffect(() => {
-      if (Cookies.get("role") !== "customer") router.push("/customer/login");
-    }, []);
+export function ProtectRouteC(WrappedComponent: any) {
+  return class extends React.Component {
+    componentDidMount(): void {
+      if (typeof window === "object") {
+        if (Cookies.get("role") !== "customer") window.location.href = "/login";
+      }
+    }
 
-    return <Component {...arguments} />;
+    render() {
+      return <WrappedComponent {...this.props} />;
+    }
   };
 }

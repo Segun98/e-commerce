@@ -72,7 +72,7 @@ export const Login = () => {
         setSuccess("Login Successful");
         //reset form field
         e.target.reset();
-        // router.push("/customer/account");
+        router.push("/customer/account");
       }
     } catch (err) {
       // console.log(err.message);

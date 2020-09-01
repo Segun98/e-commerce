@@ -5,6 +5,7 @@ import {
   Input,
   Textarea,
   Select,
+  Spinner,
 } from "@chakra-ui/core";
 import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
@@ -13,6 +14,7 @@ import slug from "slug";
 import { useAuth } from "../../Context/AuthProvider";
 import { graphQLClient } from "../../utils/client";
 import { ADD_PRODUCT } from "./../../graphql/vendor";
+import { ProtectRouteV } from "./../../utils/ProtectedRouteV";
 
 interface input {
   name: string;
@@ -26,13 +28,10 @@ interface input {
 
 export const Newitem = () => {
   //from context
-
   const { Token } = useAuth();
+  //role from cookie
   let role = Cookies.get("role");
-  // you shouldn't see this page if you aren't a vendor
-  if (role !== "vendor") {
-    return <div style={{ textAlign: "center" }}>loading...</div>;
-  }
+
   const [customError, setCustomError] = useState("");
   const [Loading, setLoading] = useState(false);
   const [success, setSuccess] = useState("");
@@ -82,6 +81,13 @@ export const Newitem = () => {
   };
   return (
     <div>
+      <>
+        {role && role !== "vendor" ? (
+          <div className="indicator">
+            <Spinner speed="1s"></Spinner>
+          </div>
+        ) : null}
+      </>
       <form onSubmit={handleSubmit(onSubmit)}>
         <h2>New Product</h2>
         <h3 style={{ color: "red" }}>{customError}</h3>
@@ -192,4 +198,4 @@ export const Newitem = () => {
   );
 };
 
-export default Newitem;
+export default ProtectRouteV(Newitem);

@@ -2,6 +2,8 @@ import React, { useEffect } from "react";
 import { Button, useToast } from "@chakra-ui/core";
 import { PRODUCT } from "./../graphql/vendor";
 import { graphQLClient } from "../utils/client";
+import { useAuth } from "../Context/AuthProvider";
+import { addToCart } from "../graphql/customer";
 
 interface response {
   data: Array<product>;
@@ -39,8 +41,27 @@ export async function getServerSideProps() {
   }
 }
 const Home = ({ data, error }: response) => {
+  const { Token } = useAuth();
   const toast = useToast();
+  // console.log(data);
 
+  async function addCart(product_id, prod_creator_id) {
+    const variables = {
+      product_id,
+      prod_creator_id,
+    };
+    try {
+      graphQLClient.setHeader("authorization", `Bearer ${Token}`);
+      const res = await graphQLClient.request(addToCart, variables);
+      console.log(res);
+    } catch (err) {
+      // console.log(err?.message);
+      if (err.response?.errors[0].message === "jwt must be provided") {
+        alert("you need to login first");
+      }
+      console.log(err.response?.errors[0].message);
+    }
+  }
   return (
     <div>
       <>
@@ -57,6 +78,7 @@ const Home = ({ data, error }: response) => {
       <div>
         {error && (
           <div className="indicator">
+            <p>An Error Occurred, Don't Fret,</p>
             <Button variantColor="green">Refresh Page</Button>
           </div>
         )}
@@ -68,6 +90,14 @@ const Home = ({ data, error }: response) => {
               <div>{p.name}</div>
               <div>{p.name_slug}</div>
               <div>{p.creator_id}</div>
+              <Button
+                variantColor="yellow"
+                onClick={() => {
+                  addCart(p.id, p.creator_id);
+                }}
+              >
+                Add to Cart
+              </Button>
               <br />
             </div>
           ))}
