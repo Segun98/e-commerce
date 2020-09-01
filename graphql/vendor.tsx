@@ -1,9 +1,9 @@
 export const ADD_PRODUCT = `
 mutation addProduct(
-  $name: String!, $name_slug: String!, $description: String!, $price: Int!, $category: String!, $image: String!, $in_stock: String!
+  $name: String!, $name_slug: String!, $description: String!, $price: Int!, $category: String!, $image: String!, $available_qty: Int!
 ) {
     addProduct(
-    name: $name, name_slug:$name_slug, description:$description, price:$price, category:$category, image: $image, in_stock:$in_stock
+    name: $name, name_slug:$name_slug, description:$description, price:$price, category:$category, image: $image, available_qty:$available_qty
   ) {
     message
   }
@@ -33,13 +33,14 @@ query user($business_name_slug: String!){
       category,
       image,
       in_stock,
+      available_qty
     }
     
   }
 }
 `;
 
-export const PRODUCT = `
+export const PRODUCTS = `
 query products{
   products{
     id,
@@ -50,6 +51,24 @@ query products{
     category,
     image,
     in_stock,
+    available_qty,
+    creator_id
+  }
+}
+`;
+
+export const PRODUCT = `
+query product($name_slug:String!){
+  product(name_slug:$name_slug){
+    id,
+    name,
+    name_slug,
+    description,
+    price,
+    category,
+    image,
+    in_stock,
+    available_qty,
     creator_id
   }
 }

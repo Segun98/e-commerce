@@ -23,7 +23,7 @@ interface input {
   price: any;
   category: string;
   image: string;
-  in_stock: string;
+  available_qty: any;
 }
 
 export const Newitem = () => {
@@ -51,7 +51,7 @@ export const Newitem = () => {
 
   const onSubmit = async (values: input, e): Promise<void> => {
     e.preventDefault();
-    const { name, description, price } = values;
+    const { name, description, price, available_qty } = values;
 
     const variables: input = {
       name,
@@ -60,7 +60,7 @@ export const Newitem = () => {
       price: parseInt(price),
       category: category === "" ? "other" : category,
       image: "unsplash.com",
-      in_stock: "true",
+      available_qty: parseInt(available_qty),
     };
 
     try {
@@ -166,11 +166,32 @@ export const Newitem = () => {
               <option defaultValue="Other">Other</option>
             </Select>
           </div>
-        </FormControl>
 
+          <div className="form-item">
+            <FormLabel htmlFor="available quantity">
+              Available Quantity
+            </FormLabel>
+            <Input
+              type="text"
+              inputMode="numeric"
+              pattern="[0-9]*"
+              name="available_qty"
+              id="available quantity"
+              placeholder="number of items in stock"
+              defaultValue="1"
+              maxLength={3}
+              ref={register({
+                required: true,
+              })}
+              isInvalid={errors.available_qty ? true : false}
+              errorBorderColor="red.300"
+            />
+          </div>
+        </FormControl>
+        <br />
         <Button
           isDisabled={Loading}
-          // variantColor="purple"
+          variantColor="purple"
           type="submit"
           isLoading={Loading}
         >

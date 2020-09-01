@@ -3,6 +3,7 @@ import { graphQLClient } from "../../utils/client";
 import { STORE } from "../../graphql/vendor";
 import { useToast } from "@chakra-ui/core";
 import { useRouter } from "next/router";
+import { Iproduct } from "../../Typescript/product";
 
 interface response {
   data: user;
@@ -23,18 +24,9 @@ interface user {
   business_image: string;
   business_bio: string;
   jwt_user_id: string;
-  usersProducts: [product];
+  usersProducts: [Iproduct];
 }
-interface product {
-  id: string;
-  name: string;
-  name_slug: string;
-  description: string;
-  price: string;
-  category: string;
-  image: string;
-  in_stock: string;
-}
+
 export async function getServerSideProps({ params, req }) {
   //the whole point of this is to always get a value in jwt signed from the backend to acsertain if the person visiting this page is the owner of the store
 

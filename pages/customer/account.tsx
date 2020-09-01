@@ -32,11 +32,11 @@ export const Account = () => {
   }
   console.log(data);
 
-  let role = Cookies.get("role");
+  // let role = Cookies.get("role");
 
-  if (role !== "customer") {
-    return "Redirecting...";
-  }
+  // if (role !== "customer") {
+  //   return "Redirecting...";
+  // }
   return (
     <div>
       <main>
@@ -48,6 +48,7 @@ export const Account = () => {
               <div>{d.product.price}</div>
               <div>{d.product.name}</div>
               <div>{d.product.description}</div>
+              <div>Qty: {d.product.available_qty}</div>
               <div>Subtotal - {d.product.price * d.quantity}</div>
               <div>Cart creator </div>
               <div>{d.cartCreator.first_name}</div>

@@ -1,31 +1,22 @@
 import React, { useEffect } from "react";
 import { Button, useToast } from "@chakra-ui/core";
-import { PRODUCT } from "./../graphql/vendor";
+import { PRODUCTS } from "./../graphql/vendor";
 import { graphQLClient } from "../utils/client";
 import { useAuth } from "../Context/AuthProvider";
 import { addToCart } from "../graphql/customer";
+import { Iproduct } from "../Typescript/product";
 
 interface response {
-  data: Array<product>;
+  data: Array<Iproduct>;
   error: err;
 }
 interface err {
   message: string;
 }
-interface product {
-  id: string;
-  name: string;
-  name_slug: string;
-  description: string;
-  price: string;
-  category: string;
-  image: string;
-  in_stock: string;
-  creator_id: string;
-}
+
 export async function getServerSideProps() {
   try {
-    const res = await graphQLClient.request(PRODUCT);
+    const res = await graphQLClient.request(PRODUCTS);
     const data = await res.products;
     return {
       props: {
@@ -53,7 +44,7 @@ const Home = ({ data, error }: response) => {
     try {
       graphQLClient.setHeader("authorization", `Bearer ${Token}`);
       const res = await graphQLClient.request(addToCart, variables);
-      console.log(res);
+      // console.log(res);
     } catch (err) {
       // console.log(err?.message);
       if (err.response?.errors[0].message === "jwt must be provided") {
@@ -90,6 +81,8 @@ const Home = ({ data, error }: response) => {
               <div>{p.name}</div>
               <div>{p.name_slug}</div>
               <div>{p.creator_id}</div>
+              <div>Qty: {p.available_qty}</div>
+              <div>in stock: {p.in_stock}</div>
               <Button
                 variantColor="yellow"
                 onClick={() => {
