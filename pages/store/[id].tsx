@@ -80,7 +80,7 @@ const Store = ({ data, error }: response) => {
       router.push("/404");
     }
   }, []);
-  // console.log(data);
+  console.log(data);
 
   return (
     <div>
@@ -107,7 +107,6 @@ const Store = ({ data, error }: response) => {
             <li>{data.business_area}</li>
             <li>{data.business_image}</li>
             <li>{data.business_bio}</li>
-            <li>{data.jwt_user_id}</li>
           </ul>
         )}
       </section>

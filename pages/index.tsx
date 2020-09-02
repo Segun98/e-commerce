@@ -5,6 +5,7 @@ import { graphQLClient } from "../utils/client";
 import { useAuth } from "../Context/AuthProvider";
 import { addToCart } from "../graphql/customer";
 import { Iproduct } from "../Typescript/product";
+import Cookies from "js-cookie";
 
 interface response {
   data: Array<Iproduct>;
@@ -32,6 +33,8 @@ export async function getServerSideProps() {
   }
 }
 const Home = ({ data, error }: response) => {
+  let role = Cookies.get("role");
+
   const { Token } = useAuth();
   const toast = useToast();
   // console.log(data);
@@ -46,7 +49,7 @@ const Home = ({ data, error }: response) => {
       const res = await graphQLClient.request(addToCart, variables);
       // console.log(res);
     } catch (err) {
-      // console.log(err?.message);
+      console.log(err?.message);
       if (err.response?.errors[0].message === "jwt must be provided") {
         alert("you need to login first");
       }
@@ -78,14 +81,31 @@ const Home = ({ data, error }: response) => {
         {data &&
           data.map((p) => (
             <div key={p.id}>
-              <div>{p.name}</div>
-              <div>{p.name_slug}</div>
-              <div>{p.creator_id}</div>
-              <div>Qty: {p.available_qty}</div>
-              <div>in stock: {p.in_stock}</div>
+              <div>
+                <strong>PRODUCT NAME:</strong>
+                {p.name}
+              </div>
+              <div>
+                <strong>NAME SLUG: </strong>
+                {p.name_slug}
+              </div>
+              <div>
+                <strong>Creator ID:</strong>
+                {p.creator_id}
+              </div>
+              <div>
+                <strong>Available Qty:</strong> {p.available_qty}
+              </div>
+              <div>
+                <strong>in stock:</strong> {p.in_stock}
+              </div>
               <Button
                 variantColor="yellow"
                 onClick={() => {
+                  if (role !== "customer") {
+                    alert("you need to login");
+                    return;
+                  }
                   addCart(p.id, p.creator_id);
                 }}
               >

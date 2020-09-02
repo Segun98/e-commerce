@@ -82,122 +82,125 @@ export const Newitem = () => {
   return (
     <div>
       <>
-        {role && role !== "vendor" ? (
+        {!role && role !== "vendor" && (
           <div className="indicator">
             <Spinner speed="1s"></Spinner>
           </div>
-        ) : null}
+        )}
       </>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <h2>New Product</h2>
-        <h3 style={{ color: "red" }}>{customError}</h3>
-        <h3 style={{ color: "green" }}>{success}</h3>
-        <FormControl isRequired>
-          <div>
-            <FormLabel htmlFor="name">Product Name</FormLabel>
-            <Input
-              type="text"
-              id="name"
-              name="name"
-              aria-describedby="name-helper-text"
-              placeholder="name@example.com"
-              ref={register({
-                required: true,
-                minLength: 3,
-              })}
-              isInvalid={errors.name ? true : false}
-              errorBorderColor="red.300"
-            />
-            <small style={{ color: "red" }}>
-              {errors.name && errors.name.message}
-            </small>
-          </div>
+      {role && role === "vendor" && (
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <h2>New Product</h2>
+          <h3 style={{ color: "red" }}>{customError}</h3>
+          <h3 style={{ color: "green" }}>{success}</h3>
+          <FormControl isRequired>
+            <div>
+              <FormLabel htmlFor="name">Product Name</FormLabel>
+              <Input
+                type="text"
+                id="name"
+                name="name"
+                aria-describedby="name-helper-text"
+                placeholder="name@example.com"
+                ref={register({
+                  required: true,
+                  minLength: 3,
+                })}
+                isInvalid={errors.name ? true : false}
+                errorBorderColor="red.300"
+              />
+              <small style={{ color: "red" }}>
+                {errors.name && errors.name.message}
+              </small>
+            </div>
 
-          <div>
-            <FormLabel htmlFor="description">Product Description</FormLabel>
-            <Textarea
-              //   size="sm"
-              id="description"
-              name="description"
-              aria-describedby="descriptiom-helper-text"
-              placeholder="help your customers know more about this product"
-              ref={register({
-                required: true,
-                minLength: 10,
-              })}
-              isInvalid={errors.description ? true : false}
-              errorBorderColor="red.300"
-            ></Textarea>
-            <small style={{ color: "red" }}>
-              {errors.description && "minimum length of 10 characters"}
-            </small>
-          </div>
+            <div>
+              <FormLabel htmlFor="description">Product Description</FormLabel>
+              <Textarea
+                //   size="sm"
+                id="description"
+                name="description"
+                aria-describedby="descriptiom-helper-text"
+                placeholder="help your customers know more about this product"
+                ref={register({
+                  required: true,
+                  minLength: 10,
+                })}
+                isInvalid={errors.description ? true : false}
+                errorBorderColor="red.300"
+              ></Textarea>
+              <small style={{ color: "red" }}>
+                {errors.description && "minimum length of 10 characters"}
+              </small>
+            </div>
 
-          <div>
-            <FormLabel htmlFor="price">Price</FormLabel>
-            <Input
-              type="text"
-              inputMode="numeric"
-              pattern="[0-9]*"
-              name="price"
-              id="price"
-              ref={register({
-                required: true,
-              })}
-              isInvalid={errors.price ? true : false}
-              errorBorderColor="red.300"
-            />
-          </div>
+            <div>
+              <FormLabel htmlFor="price">Price</FormLabel>
+              <Input
+                type="text"
+                inputMode="numeric"
+                pattern="[0-9]*"
+                name="price"
+                id="price"
+                ref={register({
+                  required: true,
+                })}
+                isInvalid={errors.price ? true : false}
+                errorBorderColor="red.300"
+              />
+            </div>
 
-          <div className="form-item">
-            <FormLabel htmlFor="category">Product Category</FormLabel>
+            <div className="form-item">
+              <FormLabel htmlFor="category">Product Category</FormLabel>
 
-            <Select
-              defaultValue={category}
-              onChange={(e) => {
-                setCategory(e.target.value);
-              }}
-            >
-              <option defaultValue="">--select--</option>
-              <option defaultValue="Cakes">Cakes</option>
-              <option defaultValue="Props">Props</option>
-              <option defaultValue="Drinks">Drinks</option>
-              <option defaultValue="Food">Food</option>
-              <option defaultValue="Other">Other</option>
-            </Select>
-          </div>
+              <Select
+                defaultValue={category}
+                onChange={(e) => {
+                  setCategory(e.target.value);
+                }}
+              >
+                <option defaultValue="">--select--</option>
+                <option defaultValue="Cakes">Cakes</option>
+                <option defaultValue="Props">Props</option>
+                <option defaultValue="Drinks">Drinks</option>
+                <option defaultValue="Food">Food</option>
+                <option defaultValue="Other">Other</option>
+              </Select>
+            </div>
 
-          <div className="form-item">
-            <FormLabel htmlFor="available quantity">
-              Available Quantity
-            </FormLabel>
-            <Input
-              type="text"
-              inputMode="numeric"
-              pattern="[0-9]*"
-              name="available_qty"
-              id="available quantity"
-              placeholder="number of items in stock"
-              defaultValue="1"
-              maxLength={3}
-              ref={register({
-                required: true,
-              })}
-              isInvalid={errors.available_qty ? true : false}
-              errorBorderColor="red.300"
-            />
-          </div>
-        </FormControl>
-        <br />
-        <Button
-          isDisabled={Loading}
-          variantColor="purple"
-          type="submit"
-          isLoading={Loading}
-        >
-          Add Product
-        </Button>
-      </form>
+            <div className="form-item">
+              <FormLabel htmlFor="available quantity">
+                Available Quantity
+              </FormLabel>
+              <Input
+                type="text"
+                inputMode="numeric"
+                pattern="[0-9]*"
+                name="available_qty"
+                id="available quantity"
+                placeholder="number of items in stock"
+                defaultValue="1"
+                maxLength={3}
+                ref={register({
+                  required: true,
+                })}
+                isInvalid={errors.available_qty ? true : false}
+                errorBorderColor="red.300"
+              />
+            </div>
+          </FormControl>
+          <br />
+          <Button
+            isDisabled={Loading}
+            variantColor="purple"
+            type="submit"
+            isLoading={Loading}
+          >
+            Add Product
+          </Button>
+        </form>
+      )}
+
       <style jsx>{`
         form {
           margin: auto;
