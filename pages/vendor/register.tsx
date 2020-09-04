@@ -76,7 +76,7 @@ export const Register = () => {
       business_name_slug: slug(business_name),
       first_name,
       last_name,
-      email,
+      email: email.toLowerCase(),
       password,
       confirm_password,
       role: "vendor",

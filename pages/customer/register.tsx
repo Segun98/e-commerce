@@ -54,7 +54,7 @@ export const Register = () => {
     const variables = {
       first_name,
       last_name,
-      email,
+      email: email.toLowerCase(),
       password,
       confirm_password,
       role: "customer",

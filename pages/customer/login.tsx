@@ -52,7 +52,7 @@ export const Login = () => {
     const { email, password } = values;
 
     const variables = {
-      email,
+      email: email.toLowerCase(),
       password,
     };
 
