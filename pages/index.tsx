@@ -49,7 +49,7 @@ const Home = ({ data, error }: response) => {
       const res = await graphQLClient.request(addToCart, variables);
       // console.log(res);
     } catch (err) {
-      console.log(err?.message);
+      // console.log(err?.message);
       if (err.response?.errors[0].message === "jwt must be provided") {
         alert("you need to login first");
       }
@@ -111,6 +111,7 @@ const Home = ({ data, error }: response) => {
               >
                 Add to Cart
               </Button>
+              <br />
               <br />
             </div>
           ))}
