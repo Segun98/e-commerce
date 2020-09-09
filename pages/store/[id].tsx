@@ -3,28 +3,14 @@ import { graphQLClient } from "../../utils/client";
 import { STORE } from "../../graphql/vendor";
 import { useToast } from "@chakra-ui/core";
 import { useRouter } from "next/router";
-import { Iproduct } from "../../Typescript/product";
+import { UsersRes } from "../../Typescript/types";
 
 interface response {
-  data: user;
+  data: UsersRes;
   error: err;
 }
 interface err {
   message: string;
-}
-interface user {
-  id: string;
-  email: string;
-  role: string;
-  phone: string;
-  pending: string;
-  business_name: string;
-  business_address: string;
-  business_area: string;
-  business_image: string;
-  business_bio: string;
-  jwt_user_id: string;
-  usersProducts: [Iproduct];
 }
 
 export async function getServerSideProps({ params, req }) {
@@ -80,7 +66,6 @@ const Store = ({ data, error }: response) => {
       router.push("/404");
     }
   }, []);
-  console.log(data);
 
   return (
     <div>

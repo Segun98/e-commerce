@@ -3,14 +3,14 @@ import { graphQLClient } from "../../utils/client";
 import { PRODUCT } from "../../graphql/vendor";
 import { useToast } from "@chakra-ui/core";
 import { useRouter } from "next/router";
-import { Iproduct } from "../../Typescript/product";
+import { ProductsRes } from "../../Typescript/types";
 
 interface err {
   message: string;
 }
 
 interface response {
-  data: Iproduct;
+  data: ProductsRes;
   error: err;
 }
 

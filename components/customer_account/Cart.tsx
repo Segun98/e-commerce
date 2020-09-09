@@ -6,9 +6,10 @@ import {
 } from "../../graphql/customer";
 import { graphQLClient } from "../../utils/client";
 import { Button } from "@chakra-ui/core";
+import { MutationCreateOrderArgs, Cart } from "../../Typescript/types";
 
-export const Cart: React.FC<{ Token: string }> = ({ Token }) => {
-  const [data, setData] = useState([]);
+export const CustomerCart: React.FC<{ Token: string }> = ({ Token }) => {
+  const [data, setData] = useState<Array<Cart>>([]);
   const [loading, setLoading] = useState(true);
   const [Error, setError] = useState();
 
@@ -52,7 +53,7 @@ export const Cart: React.FC<{ Token: string }> = ({ Token }) => {
     //cart item id
     id
   ) {
-    const variables = {
+    const variables: MutationCreateOrderArgs = {
       name,
       price,
       quantity,
@@ -89,7 +90,7 @@ export const Cart: React.FC<{ Token: string }> = ({ Token }) => {
     <div>
       {loading && "loading..."}
       {data &&
-        data.map((d) => (
+        data.map((d: Cart) => (
           <div key={d.id}>
             <div>{d.product_id}</div>
             <div>{d.quantity}</div>

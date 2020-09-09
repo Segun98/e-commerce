@@ -12,19 +12,10 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import slug from "slug";
 import { useAuth } from "../../Context/AuthProvider";
+import { MutationAddProductArgs } from "../../Typescript/types";
 import { graphQLClient } from "../../utils/client";
 import { ADD_PRODUCT } from "./../../graphql/vendor";
 import { ProtectRouteV } from "./../../utils/ProtectedRouteV";
-
-interface input {
-  name: string;
-  name_slug: string;
-  description: string;
-  price: any;
-  category: string;
-  image: string;
-  available_qty: any;
-}
 
 export const Newitem = () => {
   //from context
@@ -49,11 +40,14 @@ export const Newitem = () => {
   const { handleSubmit, register, errors } = useForm();
   const [category, setCategory] = useState("");
 
-  const onSubmit = async (values: input, e): Promise<void> => {
+  const onSubmit = async (
+    values: MutationAddProductArgs | any,
+    e
+  ): Promise<void> => {
     e.preventDefault();
     const { name, description, price, available_qty } = values;
 
-    const variables: input = {
+    const variables: MutationAddProductArgs = {
       name,
       name_slug: slug(name),
       description,

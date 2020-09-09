@@ -1,7 +1,7 @@
 import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
 import { useAuth } from "./../../Context/AuthProvider";
-import { Cart } from "../../components/customer_account/Cart";
+import { CustomerCart } from "../../components/customer_account/Cart";
 
 export const Account = () => {
   const { Token } = useAuth();
@@ -13,7 +13,7 @@ export const Account = () => {
   return (
     <div>
       <main>
-        <Cart Token={Token} />
+        <CustomerCart Token={Token} />
       </main>
     </div>
   );

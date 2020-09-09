@@ -1,14 +1,14 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Button, useToast } from "@chakra-ui/core";
 import { PRODUCTS } from "./../graphql/vendor";
 import { graphQLClient } from "../utils/client";
 import { useAuth } from "../Context/AuthProvider";
 import { addToCart } from "../graphql/customer";
-import { Iproduct } from "../Typescript/product";
 import Cookies from "js-cookie";
+import { ProductsRes } from "../Typescript/types";
 
 interface response {
-  data: Array<Iproduct>;
+  data: Array<ProductsRes>;
   error: err;
 }
 interface err {

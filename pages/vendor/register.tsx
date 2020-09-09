@@ -14,15 +14,7 @@ import { SIGN_UP } from "./../../graphql/users";
 import { endpoint } from "../../utils/client";
 import { useRouter } from "next/router";
 import slug from "slug";
-
-interface inputs {
-  business_name: string;
-  first_name: string;
-  last_name: string;
-  email: string;
-  password: string;
-  confirm_password: string;
-}
+import { MutationSignUpArgs } from "../../Typescript/types";
 
 export const Register = () => {
   const router = useRouter();
@@ -57,7 +49,7 @@ export const Register = () => {
 
   //form submit function
 
-  const onSubmit = async (values: inputs, e): Promise<void> => {
+  const onSubmit = async (values: MutationSignUpArgs, e): Promise<void> => {
     //i could use values.password
     if (watch("password") !== watch("confirm_password")) {
       return setCustomError("Passwords must match");
@@ -71,7 +63,7 @@ export const Register = () => {
       confirm_password,
     } = values;
 
-    const variables = {
+    const variables: MutationSignUpArgs = {
       business_name: capital_letter(business_name),
       business_name_slug: slug(business_name),
       first_name,

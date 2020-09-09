@@ -11,19 +11,7 @@ import { useForm } from "react-hook-form";
 import { graphQLClient } from "../../utils/client";
 import { useRouter } from "next/router";
 import { LOG_IN } from "../../graphql/users";
-
-interface inputs {
-  email: string;
-  password: string;
-}
-//login response
-interface Res {
-  logIn: loginRes;
-}
-interface loginRes {
-  role: string;
-  accesstoken: string;
-}
+import { LoginRes, MutationLogInArgs } from "../../Typescript/types";
 
 export const Login = () => {
   const router = useRouter();
@@ -48,7 +36,7 @@ export const Login = () => {
 
   //form submit function
 
-  const onSubmit = async (values: inputs, e): Promise<void> => {
+  const onSubmit = async (values: MutationLogInArgs, e): Promise<void> => {
     const { email, password } = values;
 
     const variables = {
@@ -58,15 +46,16 @@ export const Login = () => {
 
     try {
       setLoading(true);
-      const res: Res = await graphQLClient.request(LOG_IN, variables);
+      const res = await graphQLClient.request(LOG_IN, variables);
+      const data: LoginRes = res.login;
 
-      if (res.logIn) {
+      if (data) {
         setLoading(false);
-        if (res.logIn.role !== "customer") {
+        if (data.role !== "customer") {
           setSuccess(
             "Credentials are correct but you are attempting login from the wrong portal"
           );
-          router.push(`/${res.logIn.role}/login`);
+          router.push(`/${data.role}/login`);
           return;
         }
         setSuccess("Login Successful");
