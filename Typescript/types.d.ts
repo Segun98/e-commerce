@@ -15,6 +15,7 @@ export type Query = {
   __typename?: 'Query';
   users?: Maybe<Array<Maybe<UsersRes>>>;
   user?: Maybe<UsersRes>;
+  getUser?: Maybe<UsersRes>;
   customerProfile?: Maybe<UsersRes>;
   editUserPage?: Maybe<UsersRes>;
   products?: Maybe<Array<Maybe<ProductsRes>>>;

@@ -1,71 +1,34 @@
 import React, { useEffect } from "react";
-import { graphQLClient } from "../../utils/client";
 import { STORE } from "../../graphql/vendor";
 import { useToast } from "@chakra-ui/core";
 import { useRouter } from "next/router";
 import { UsersRes } from "../../Typescript/types";
+import { useQuery } from "./../../components/useQuery";
+import { useAuth } from "../../Context/AuthProvider";
 
-interface response {
-  data: UsersRes;
-  error: err;
-}
-interface err {
-  message: string;
-}
-
-export async function getServerSideProps({ params, req }) {
-  //the whole point of this is to always get a value in jwt signed from the backend to acsertain if the person visiting this page is the owner of the store
-
-  //Note: i could have just fetched it in the component itself for access to "Token" from Context APi.indicator
-
-  //custom method i wrote to get the token from cookies
-  let c = [];
-  //only run if theres a cookie in header
-  if (req.headers.cookie) {
-    let cookies = req.headers.cookie.split("; ");
-
-    //loop to get the exact cookie "ecom"
-    for (let i = 0; i < cookies.length; i++) {
-      if (cookies[i].split("=")[0] === "ecom") {
-        c.push(cookies[i]);
-        break;
-      }
-    }
-    //get the cookie value which is accesstoken
-    if (c[0]) {
-      var cookie = c[0].split("=")[1];
-    }
-  }
-
-  const variables = {
-    business_name_slug: params.id,
+export function getServerSideProps({ params }) {
+  return {
+    props: {
+      id: params.id,
+    },
   };
-  graphQLClient.setHeader("authorization", `bearer ${cookie}`);
-  try {
-    const res = await graphQLClient.request(STORE, variables);
-    const data = await res.user;
-    return {
-      props: {
-        data,
-      },
-    };
-  } catch (err) {
-    return {
-      props: {
-        error: err?.message,
-      },
-    };
-  }
 }
-const Store = ({ data, error }: response) => {
+const Store = ({ id }) => {
   const toast = useToast();
   const router = useRouter();
+  const { Token } = useAuth();
+
+  const variables = {
+    business_name_slug: id,
+  };
+  const [data, loading, error] = useQuery(STORE, variables, Token);
+  const res: UsersRes | undefined = data ? data.user : undefined;
 
   useEffect(() => {
-    if (data && !data.id) {
+    if (res && !res.id) {
       router.push("/404");
     }
-  }, []);
+  }, [res]);
 
   return (
     <div>
@@ -78,27 +41,27 @@ const Store = ({ data, error }: response) => {
           isClosable: true,
           position: "top",
         })}
-
+      {loading && "loading..."}
       <section>
-        {data && (
+        {res && (
           <ul>
-            <li>{data.id}</li>
-            <li>{data.email}</li>
-            <li>{data.role}</li>
-            <li>{data.phone}</li>
-            <li>{data.pending}</li>
-            <li>{data.business_name}</li>
-            <li>{data.business_address}</li>
-            <li>{data.business_area}</li>
-            <li>{data.business_image}</li>
-            <li>{data.business_bio}</li>
+            <li>{res.id}</li>
+            <li>{res.email}</li>
+            <li>{res.role}</li>
+            <li>{res.phone}</li>
+            <li>{res.pending}</li>
+            <li>{res.business_name}</li>
+            <li>{res.business_address}</li>
+            <li>{res.business_area}</li>
+            <li>{res.business_image}</li>
+            <li>{res.business_bio}</li>
           </ul>
         )}
       </section>
-
+      <br />
       <section>
-        {data &&
-          data.usersProducts.map((d) => (
+        {res &&
+          res.usersProducts.map((d) => (
             <div key={d.id}>
               <div>{d.name}</div>
               <div>{d.name_slug}</div>

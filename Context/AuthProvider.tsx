@@ -36,7 +36,7 @@ export const AuthProvider = ({ children }) => {
       if (error.message === "Request failed with status code 401") {
         return Cookies.remove("role");
       }
-      console.log(error.message);
+      // console.log(error.message);
     }
   }
 

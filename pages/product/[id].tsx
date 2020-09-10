@@ -43,7 +43,6 @@ const Product = ({ data, error }: response) => {
       router.push("/404");
     }
   }, []);
-  console.log(data);
 
   return (
     <div>

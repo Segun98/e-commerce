@@ -6,38 +6,16 @@ import { useAuth } from "../Context/AuthProvider";
 import { addToCart } from "../graphql/customer";
 import Cookies from "js-cookie";
 import { ProductsRes } from "../Typescript/types";
+import Link from "next/link";
+import { useQuery } from "./../components/useQuery";
 
-interface response {
-  data: Array<ProductsRes>;
-  error: err;
-}
-interface err {
-  message: string;
-}
-
-export async function getServerSideProps() {
-  try {
-    const res = await graphQLClient.request(PRODUCTS);
-    const data = await res.products;
-    return {
-      props: {
-        data,
-      },
-    };
-  } catch (err) {
-    return {
-      props: {
-        error: err?.message,
-      },
-    };
-  }
-}
-const Home = ({ data, error }: response) => {
+const Home = () => {
   let role = Cookies.get("role");
-
   const { Token } = useAuth();
   const toast = useToast();
-  // console.log(data);
+
+  const [data, loading, error] = useQuery(PRODUCTS);
+  let res = data ? data.products : undefined;
 
   async function addCart(product_id, prod_creator_id) {
     const variables = {
@@ -77,17 +55,22 @@ const Home = ({ data, error }: response) => {
           </div>
         )}
       </div>
+      {loading && "loading..."}
       <main>
-        {data &&
-          data.map((p) => (
+        {res &&
+          res.map((p: ProductsRes) => (
             <div key={p.id}>
               <div>
                 <strong>PRODUCT NAME:</strong>
                 {p.name}
               </div>
               <div>
-                <strong>NAME SLUG: </strong>
-                {p.name_slug}
+                <Link
+                  href={`/product/${p.name_slug}`}
+                  as={`/product/${p.name_slug}`}
+                >
+                  <a>Visit Product Page</a>
+                </Link>
               </div>
               <div>
                 <strong>Creator ID:</strong>

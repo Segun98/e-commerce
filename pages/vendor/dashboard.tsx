@@ -1,7 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useAuth } from "../../Context/AuthProvider";
 import { Orders } from "../../Typescript/types";
-import { graphQLClient } from "../../utils/client";
+import Link from "next/link";
+import { UserProvider } from "./../../Context/UserProvider";
+import { ShowUser } from "../../components/ShowUser";
+import { useQuery } from "./../../components/useQuery";
 
 const getVendorOrders = `
 query getVendorOrders{
@@ -22,54 +25,41 @@ query getVendorOrders{
 export const Dashboard: React.FC = () => {
   const { Token } = useAuth();
 
-  const [data, setData] = useState<Array<Orders>>([]);
-  const [loading, setLoading] = useState(true);
-  const [Error, setError] = useState();
+  const [data, loading, error] = useQuery(getVendorOrders, {}, Token);
 
-  useEffect(() => {
-    getOrders();
-  }, [Token]);
-
-  async function getOrders() {
-    try {
-      setLoading(true);
-      graphQLClient.setHeader("authorization", `bearer ${Token}`);
-
-      const res = await graphQLClient.request(getVendorOrders);
-      const data = res.getVendorOrders;
-      if (data) {
-        setData(data);
-        setLoading(false);
-      }
-    } catch (err) {
-      // console.log(err.message);
-      setLoading(false);
-      console.log(err.response?.errors[0].message);
-    }
-  }
+  const res = data ? data.getVendorOrders : undefined;
 
   function toDate(d) {
     let date = new Date(parseInt(d));
     return date.toLocaleString();
   }
   return (
-    <div>
-      <h1>Dashboard</h1>
-      <main>
-        {data &&
-          data.map((d) => (
-            <div key={d.id}>
-              <div>{d.name}</div>
-              <div>{d.price}</div>
-              <div>{d.quantity}</div>
-              <div>{d.completed}</div>
-              <div>{d.canceled}</div>
-              <div>{d.customer_email}</div>
-              <div>{toDate(d.created_at)}</div>
-            </div>
-          ))}
-      </main>
-    </div>
+    <UserProvider>
+      <div>
+        <h1>Dashboard</h1>
+        <ShowUser />
+        {error && "en error occured"}
+        <br />
+        {loading && "loading..."}
+        <br />
+        <p>{!loading && res && res.length === 0 && "you have no orders"}</p>
+        <main>
+          {res &&
+            res.map((d: Orders) => (
+              <div key={d.id}>
+                <div>{d.name}</div>
+                <div>{d.price}</div>
+                <div>{d.quantity}</div>
+                <div>{d.completed}</div>
+                <div>{d.canceled}</div>
+                <div>{d.customer_email}</div>
+                <div>{toDate(d.created_at)}</div>
+                <br />
+              </div>
+            ))}
+        </main>
+      </div>
+    </UserProvider>
   );
 };
 

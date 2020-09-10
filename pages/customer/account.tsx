@@ -1,7 +1,9 @@
 import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
 import { useAuth } from "./../../Context/AuthProvider";
-import { CustomerCart } from "../../components/customer_account/Cart";
+import { CustomerCart } from "../../components/customer/Cart";
+import { ShowUser } from "../../components/ShowUser";
+import { UserProvider } from "../../Context/UserProvider";
 
 export const Account = () => {
   const { Token } = useAuth();
@@ -11,11 +13,14 @@ export const Account = () => {
   //   return "Redirecting...";
   // }
   return (
-    <div>
-      <main>
-        <CustomerCart Token={Token} />
-      </main>
-    </div>
+    <UserProvider>
+      <div>
+        <main>
+          <ShowUser />
+          <CustomerCart Token={Token} />
+        </main>
+      </div>
+    </UserProvider>
   );
 };
 export default Account;

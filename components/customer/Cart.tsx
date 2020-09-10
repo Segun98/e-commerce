@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import {
   createOrder,
   deleteFromCart,
@@ -7,33 +7,13 @@ import {
 import { graphQLClient } from "../../utils/client";
 import { Button } from "@chakra-ui/core";
 import { MutationCreateOrderArgs, Cart } from "../../Typescript/types";
+import { useQuery } from "./../useQuery";
+import { useRouter } from "next/router";
 
 export const CustomerCart: React.FC<{ Token: string }> = ({ Token }) => {
-  const [data, setData] = useState<Array<Cart>>([]);
-  const [loading, setLoading] = useState(true);
-  const [Error, setError] = useState();
-
-  useEffect(() => {
-    fetchCartItems();
-  }, [Token]);
-
-  async function fetchCartItems() {
-    try {
-      setLoading(true);
-      graphQLClient.setHeader("authorization", `bearer ${Token}`);
-
-      const res = await graphQLClient.request(getCartItems);
-      const data = res.getCartItems;
-      if (data) {
-        setData(data);
-        setLoading(false);
-      }
-    } catch (err) {
-      // console.log(err.message);
-      setLoading(false);
-      console.log(err.response?.errors[0].message);
-    }
-  }
+  const router = useRouter();
+  const [data, loading, error] = useQuery(getCartItems, {}, Token);
+  const res = data ? data.getCartItems : undefined;
 
   async function handleOrder(
     name,
@@ -78,7 +58,8 @@ export const CustomerCart: React.FC<{ Token: string }> = ({ Token }) => {
       if (data) {
         const res = await graphQLClient.request(deleteFromCart, { id });
         if (res.deleteFromCart) {
-          fetchCartItems();
+          alert("order completed");
+          // router.reload();
         }
       }
     } catch (err) {
@@ -89,8 +70,9 @@ export const CustomerCart: React.FC<{ Token: string }> = ({ Token }) => {
   return (
     <div>
       {loading && "loading..."}
-      {data &&
-        data.map((d: Cart) => (
+      {!loading && res && res.length === 0 && "Cart is Empty"}
+      {res &&
+        res.map((d: Cart) => (
           <div key={d.id}>
             <div>{d.product_id}</div>
             <div>{d.quantity}</div>

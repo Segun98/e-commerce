@@ -51,7 +51,8 @@ export const Login = () => {
     try {
       setLoading(true);
       const res = await graphQLClient.request(LOG_IN, variables);
-      const data: LoginRes = res.login;
+      const data: LoginRes = res.logIn;
+
       if (data) {
         setLoading(false);
         if (data.role !== "vendor") {
