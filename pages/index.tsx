@@ -11,7 +11,7 @@ import { useMutation } from "../utils/useMutation";
 const Home = () => {
   const { Token } = useToken();
   const toast = useToast();
-  const [data, loading, error] = useQuery(PRODUCTS);
+  const [data, loading, error] = useQuery(PRODUCTS, { limit: null });
   let res = data ? data.products : undefined;
 
   async function addCart(product_id, prod_creator_id) {
@@ -23,7 +23,7 @@ const Home = () => {
     if (data) {
       toast({
         title: "Item Added to Cart!",
-        description: "Your Item has been added to cart, proceed to checkout",
+        description: `Your Item has been added to cart, proceed to checkout`,
         status: "success",
         duration: 7000,
         isClosable: true,
@@ -31,6 +31,18 @@ const Home = () => {
       });
     }
     if (error) {
+      if (error.response?.errors[0].message === "Item is already in Cart") {
+        toast({
+          title: "Item is already in Cart",
+          description: "Please Visit your Cart page to checkout",
+          status: "info",
+          duration: 5000,
+          isClosable: true,
+          position: "top",
+        });
+        return;
+      }
+
       toast({
         title: "Error occurred while adding to cart.",
         description: "check your internet connection and refresh.",

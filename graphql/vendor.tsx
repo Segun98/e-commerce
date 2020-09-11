@@ -41,8 +41,8 @@ query user($business_name_slug: String!){
 `;
 
 export const PRODUCTS = `
-query products{
-  products{
+query products($limit:Int){
+  products(limit:$limit){
     id,
     name,
     name_slug,
