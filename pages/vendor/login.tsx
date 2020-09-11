@@ -11,12 +11,12 @@ import { useForm } from "react-hook-form";
 import { graphQLClient } from "../../utils/client";
 import { useRouter } from "next/router";
 import { LOG_IN } from "../../graphql/users";
-import { useAuth } from "../../Context/AuthProvider";
+import { useToken } from "../../Context/TokenProvider";
 import { LoginRes, MutationLogInArgs } from "../../Typescript/types";
 
 export const Login = () => {
   //from context
-  const { setToken } = useAuth();
+  const { setToken } = useToken();
 
   const router = useRouter();
   //react-hook-form

@@ -4,7 +4,7 @@ import { useToast } from "@chakra-ui/core";
 import { useRouter } from "next/router";
 import { UsersRes } from "../../Typescript/types";
 import { useQuery } from "./../../components/useQuery";
-import { useAuth } from "../../Context/AuthProvider";
+import { useToken } from "../../Context/TokenProvider";
 
 export function getServerSideProps({ params }) {
   return {
@@ -16,7 +16,7 @@ export function getServerSideProps({ params }) {
 const Store = ({ id }) => {
   const toast = useToast();
   const router = useRouter();
-  const { Token } = useAuth();
+  const { Token } = useToken();
 
   const variables = {
     business_name_slug: id,

@@ -11,7 +11,7 @@ import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import slug from "slug";
-import { useAuth } from "../../Context/AuthProvider";
+import { useToken } from "../../Context/TokenProvider";
 import { MutationAddProductArgs } from "../../Typescript/types";
 import { graphQLClient } from "../../utils/client";
 import { ADD_PRODUCT } from "./../../graphql/vendor";
@@ -19,7 +19,7 @@ import { ProtectRouteV } from "./../../utils/ProtectedRouteV";
 
 export const Newitem = () => {
   //from context
-  const { Token } = useAuth();
+  const { Token } = useToken();
   //role from cookie
   let role = Cookies.get("role");
 

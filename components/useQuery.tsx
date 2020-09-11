@@ -23,7 +23,12 @@ export const useQuery = (Query: any, Variables?: {}, Token?: string) => {
         }
       } catch (err) {
         setLoading(false);
-        if (err.response?.errors[0].message !== "jwt must be provided") {
+        //there should only be an error after Token has been passed
+        if (Token && err) {
+          setError(true);
+        }
+        //handle network errors if request doesn't require a token
+        if (err.message === "Network request failed") {
           setError(true);
         }
         // console.log(err.response?.errors[0].message);

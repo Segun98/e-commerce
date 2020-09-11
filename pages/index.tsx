@@ -1,19 +1,16 @@
 import React from "react";
 import { Button, useToast } from "@chakra-ui/core";
 import { PRODUCTS } from "./../graphql/vendor";
-import { graphQLClient } from "../utils/client";
-import { useAuth } from "../Context/AuthProvider";
+import { useToken } from "../Context/TokenProvider";
 import { addToCart } from "../graphql/customer";
-import Cookies from "js-cookie";
 import { ProductsRes } from "../Typescript/types";
 import Link from "next/link";
 import { useQuery } from "./../components/useQuery";
+import { useMutation } from "../utils/useMutation";
 
 const Home = () => {
-  let role = Cookies.get("role");
-  const { Token } = useAuth();
+  const { Token } = useToken();
   const toast = useToast();
-
   const [data, loading, error] = useQuery(PRODUCTS);
   let res = data ? data.products : undefined;
 
@@ -22,16 +19,26 @@ const Home = () => {
       product_id,
       prod_creator_id,
     };
-    try {
-      graphQLClient.setHeader("authorization", `Bearer ${Token}`);
-      const res = await graphQLClient.request(addToCart, variables);
-      // console.log(res);
-    } catch (err) {
-      // console.log(err?.message);
-      if (err.response?.errors[0].message === "jwt must be provided") {
-        alert("you need to login first");
-      }
-      console.log(err.response?.errors[0].message);
+    const { data, error } = await useMutation(addToCart, variables, Token);
+    if (data) {
+      toast({
+        title: "Item Added to Cart!",
+        description: "Your Item has been added to cart, proceed to checkout",
+        status: "success",
+        duration: 7000,
+        isClosable: true,
+        position: "top",
+      });
+    }
+    if (error) {
+      toast({
+        title: "Error occurred while adding to cart.",
+        description: "check your internet connection and refresh.",
+        status: "error",
+        duration: 7000,
+        isClosable: true,
+        position: "top",
+      });
     }
   }
   return (
@@ -85,7 +92,7 @@ const Home = () => {
               <Button
                 variantColor="yellow"
                 onClick={() => {
-                  if (role !== "customer") {
+                  if (!Token) {
                     alert("you need to login");
                     return;
                   }

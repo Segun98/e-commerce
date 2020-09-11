@@ -1,5 +1,5 @@
 import React from "react";
-import { useAuth } from "../../Context/AuthProvider";
+import { useToken } from "../../Context/TokenProvider";
 import { Orders } from "../../Typescript/types";
 import Link from "next/link";
 import { UserProvider } from "./../../Context/UserProvider";
@@ -23,7 +23,7 @@ query getVendorOrders{
 `;
 
 export const Dashboard: React.FC = () => {
-  const { Token } = useAuth();
+  const { Token } = useToken();
 
   const [data, loading, error] = useQuery(getVendorOrders, {}, Token);
 

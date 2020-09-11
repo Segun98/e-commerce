@@ -7,7 +7,7 @@ import React, {
   useContext,
 } from "react";
 import { graphQLClient } from "../utils/client";
-import { useAuth } from "./AuthProvider";
+import { useToken } from "./TokenProvider";
 import { UsersRes } from "../Typescript/types";
 
 interface props {
@@ -21,7 +21,7 @@ export const useUser = () => useContext(UserContext);
 export const UserProvider = ({ children }) => {
   const [User, setUser] = useState<UsersRes>({});
 
-  const { Token } = useAuth();
+  const { Token } = useToken();
 
   useEffect(() => {
     fetchUser();

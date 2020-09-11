@@ -14,10 +14,10 @@ interface props {
   setToken: Dispatch<SetStateAction<string>>;
 }
 
-export const AuthContext = createContext<props>(undefined);
-export const useAuth = () => useContext(AuthContext);
+export const TokenContext = createContext<props>(undefined);
+export const useToken = () => useContext(TokenContext);
 
-export const AuthProvider = ({ children }) => {
+export const TokenProvider = ({ children }) => {
   const [Token, setToken] = useState("");
 
   useEffect(() => {
@@ -41,8 +41,8 @@ export const AuthProvider = ({ children }) => {
   }
 
   return (
-    <AuthContext.Provider value={{ Token, setToken }}>
+    <TokenContext.Provider value={{ Token, setToken }}>
       {children}
-    </AuthContext.Provider>
+    </TokenContext.Provider>
   );
 };

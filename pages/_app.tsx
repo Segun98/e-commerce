@@ -4,7 +4,7 @@ import { ThemeProvider, CSSReset } from "@chakra-ui/core";
 import Router from "next/router";
 import NProgress from "nprogress";
 import "nprogress/nprogress.css";
-import { AuthProvider } from "../Context/AuthProvider";
+import { TokenProvider } from "../Context/TokenProvider";
 // import { UserProvider } from "../Context/UserProvider";
 
 function MyApp({ Component, pageProps }: AppProps) {
@@ -14,14 +14,14 @@ function MyApp({ Component, pageProps }: AppProps) {
   Router.events.on("routeChangeError", () => NProgress.done());
 
   return (
-    <AuthProvider>
+    <TokenProvider>
       {/* <UserProvider> */}
       <ThemeProvider>
         <CSSReset />
         <Component {...pageProps} />
       </ThemeProvider>
       {/* </UserProvider> */}
-    </AuthProvider>
+    </TokenProvider>
   );
 }
 
