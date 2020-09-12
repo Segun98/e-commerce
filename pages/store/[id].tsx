@@ -46,6 +46,7 @@ const Store = ({ id }) => {
         {res && (
           <ul>
             <li>{res.id}</li>
+            <li>JWT ID: {res.jwt_user_id}</li>
             <li>{res.email}</li>
             <li>{res.role}</li>
             <li>{res.phone}</li>
