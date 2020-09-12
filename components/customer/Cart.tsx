@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { getCartItems } from "../../graphql/customer";
 import { useToast } from "@chakra-ui/core";
 import { Cart } from "../../Typescript/types";
@@ -14,7 +14,9 @@ export const CustomerCart: React.FC<{ Token: string }> = ({ Token }) => {
 
   return (
     <div>
+      {/* "network error" */}
       {error &&
+        error.message === "Network request failed" &&
         toast({
           title: "An error occurred.",
           description: "check your internet connection and refresh.",
@@ -24,6 +26,11 @@ export const CustomerCart: React.FC<{ Token: string }> = ({ Token }) => {
           position: "top",
         })}
       {loading && "loading..."}
+      {!loading && !Token && "log in to add to cart"}
+      {/* vendors trying to access Cart  */}
+      {error && Token && error.response?.errors[0].message === "Unauthorised"
+        ? "log in as a customer to add to cart"
+        : null}
       {!loading && res && res.length === 0 && "Cart is Empty"}
       {res &&
         res.map((d: Cart) => (

@@ -55,18 +55,13 @@ export const Login = () => {
 
       if (data) {
         setLoading(false);
+        setToken(data.accesstoken);
         if (data.role !== "vendor") {
-          setSuccess(
-            "Credentials are correct but you are attempting login from the wrong portal"
-          );
           router.push(`/${data.role}/login`);
           return;
         }
         setSuccess("Login Successful");
-        setToken(data.accesstoken);
-        //reset form field
-        // e.target.reset();
-        router.push("/vendor/newitem");
+        router.push("/vendor/dashboard");
       }
     } catch (err) {
       // console.log(err.message);

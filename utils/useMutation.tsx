@@ -1,5 +1,6 @@
 import { graphQLClient } from "./client";
 
+//custom function
 export async function useMutation(Mutation, Variables, Token?) {
   try {
     if (Token) {

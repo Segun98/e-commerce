@@ -14,8 +14,9 @@ import slug from "slug";
 import { useToken } from "../../Context/TokenProvider";
 import { MutationAddProductArgs } from "../../Typescript/types";
 import { graphQLClient } from "../../utils/client";
-import { ADD_PRODUCT } from "./../../graphql/vendor";
-import { ProtectRouteV } from "./../../utils/ProtectedRouteV";
+import { ADD_PRODUCT } from "../../graphql/vendor";
+import { ProtectRouteV } from "../../utils/ProtectedRouteV";
+import { useMutation } from "../../utils/useMutation";
 
 export const Newitem = () => {
   //from context
@@ -46,6 +47,7 @@ export const Newitem = () => {
   ): Promise<void> => {
     e.preventDefault();
     const { name, description, price, available_qty } = values;
+    setLoading(true);
 
     const variables: MutationAddProductArgs = {
       name,
@@ -56,29 +58,29 @@ export const Newitem = () => {
       image: "unsplash.com",
       available_qty: parseInt(available_qty),
     };
+    const { data, error } = await useMutation(ADD_PRODUCT, variables, Token);
 
-    try {
-      graphQLClient.setHeader("authorization", `Bearer ${Token}`);
-      setLoading(true);
-      const res = await graphQLClient.request(ADD_PRODUCT, variables);
-      if (res.addProduct) {
-        setLoading(false);
-        setSuccess(res.addProduct.message);
-        e.target.reset();
-      }
-    } catch (err) {
-      console.log(err?.message);
-      console.log(err.response?.errors[0].message);
+    if (data) {
+      setLoading(false);
+      setSuccess(data.addProduct.message);
+      e.target.reset();
+    }
+    if (error) {
       setCustomError("an error occurred, check your intenet connection");
       setLoading(false);
+      console.log(error?.message);
+      console.log(error.response?.errors[0].message);
     }
   };
+
   return (
     <div>
       <>
-        {!role && role !== "vendor" && (
+        {role && role !== "vendor" && (
           <div className="indicator">
-            <Spinner speed="1s"></Spinner>
+            <Button variantColor="red" size="sm">
+              Unauthorised
+            </Button>
           </div>
         )}
       </>

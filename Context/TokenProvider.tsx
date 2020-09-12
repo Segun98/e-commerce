@@ -31,7 +31,9 @@ export const TokenProvider = ({ children }) => {
 
     try {
       const res = await instance.post(`http://localhost:4000/api/refreshtoken`);
-      setToken(res.data.accessToken);
+      if (res.data) {
+        setToken(res.data.accessToken);
+      }
     } catch (error) {
       if (error.message === "Request failed with status code 401") {
         return Cookies.remove("role");

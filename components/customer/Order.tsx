@@ -1,5 +1,4 @@
 import { Button, useToast } from "@chakra-ui/core";
-import { Token } from "graphql/language";
 import React, { useState } from "react";
 import { createOrder, deleteFromCart } from "../../graphql/customer";
 import { Cart, MutationCreateOrderArgs } from "../../Typescript/types";

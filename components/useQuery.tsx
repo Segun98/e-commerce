@@ -1,15 +1,17 @@
 import { useEffect, useState } from "react";
 import { graphQLClient } from "../utils/client";
 
+//custom react hook
+
 export const useQuery = (Query: any, Variables?: {}, Token?: string) => {
   const [data, setData] = useState(undefined);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     async function query() {
       try {
-        setError(false);
+        setError("");
         setLoading(true);
         if (Token) {
           graphQLClient.setHeader("authorization", `bearer ${Token}`);
@@ -17,19 +19,18 @@ export const useQuery = (Query: any, Variables?: {}, Token?: string) => {
 
         const res = await graphQLClient.request(Query, Variables);
         if (res) {
-          setError(false);
+          setError("");
           setLoading(false);
           setData(res);
         }
       } catch (err) {
         setLoading(false);
-        //there should only be an error after Token has been passed
         if (Token && err) {
-          setError(true);
+          setError(err);
         }
-        //handle network errors if request doesn't require a token
+        // handle network errors if request doesn't require a token
         if (err.message === "Network request failed") {
-          setError(true);
+          setError(err);
         }
         // console.log(err.response?.errors[0].message);
         // console.log(err.message);

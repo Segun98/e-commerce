@@ -12,9 +12,12 @@ import { graphQLClient } from "../../utils/client";
 import { useRouter } from "next/router";
 import { LOG_IN } from "../../graphql/users";
 import { LoginRes, MutationLogInArgs } from "../../Typescript/types";
+import { useToken } from "../../Context/TokenProvider";
 
 export const Login = () => {
   const router = useRouter();
+  const { setToken } = useToken();
+
   //react-hook-form
   const { handleSubmit, register, errors } = useForm();
 
@@ -51,16 +54,12 @@ export const Login = () => {
 
       if (data) {
         setLoading(false);
+        setToken(data.accesstoken);
         if (data.role !== "customer") {
-          setSuccess(
-            "Credentials are correct but you are attempting login from the wrong portal"
-          );
           router.push(`/${data.role}/login`);
           return;
         }
         setSuccess("Login Successful");
-        //reset form field
-        e.target.reset();
         router.push("/customer/account");
       }
     } catch (err) {

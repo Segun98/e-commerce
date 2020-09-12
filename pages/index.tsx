@@ -7,9 +7,11 @@ import { ProductsRes } from "../Typescript/types";
 import Link from "next/link";
 import { useQuery } from "./../components/useQuery";
 import { useMutation } from "../utils/useMutation";
+import { useRouter } from "next/router";
 
 const Home = () => {
   const { Token } = useToken();
+  const router = useRouter();
   const toast = useToast();
   const [data, loading, error] = useQuery(PRODUCTS, { limit: null });
   let res = data ? data.products : undefined;
@@ -20,6 +22,7 @@ const Home = () => {
       prod_creator_id,
     };
     const { data, error } = await useMutation(addToCart, variables, Token);
+
     if (data) {
       toast({
         title: "Item Added to Cart!",
@@ -31,6 +34,7 @@ const Home = () => {
       });
     }
     if (error) {
+      //handled this error cos chakra ui "status" should be "info"
       if (error.response?.errors[0].message === "Item is already in Cart") {
         toast({
           title: "Item is already in Cart",
@@ -44,8 +48,13 @@ const Home = () => {
       }
 
       toast({
-        title: "Error occurred while adding to cart.",
-        description: "check your internet connection and refresh.",
+        title: "An Error occurred while adding to cart.",
+        //if theres a graphql error, show it, else display other errors
+        description: error.response?.errors[0].message
+          ? error.response?.errors[0].message
+          : error.message === "Network request failed"
+          ? "Check Your Internet Connection and Refressh"
+          : error.message,
         status: "error",
         duration: 7000,
         isClosable: true,
@@ -66,14 +75,6 @@ const Home = () => {
             position: "top",
           })}
       </>
-      <div>
-        {error && (
-          <div className="indicator">
-            <p>An Error Occurred, Don't Fret,</p>
-            <Button variantColor="green">Refresh Page</Button>
-          </div>
-        )}
-      </div>
       {loading && "loading..."}
       <main>
         {res &&
@@ -105,7 +106,7 @@ const Home = () => {
                 variantColor="yellow"
                 onClick={() => {
                   if (!Token) {
-                    alert("you need to login");
+                    router.push("/customer/account");
                     return;
                   }
                   addCart(p.id, p.creator_id);

@@ -43,6 +43,7 @@ export const Dashboard: React.FC = () => {
         {loading && "loading..."}
         <br />
         <p>{!loading && res && res.length === 0 && "you have no orders"}</p>
+        <p>{res && res.length > 0 && <strong>YOUR ORDERS</strong>}</p>
         <main>
           {res &&
             res.map((d: Orders) => (
