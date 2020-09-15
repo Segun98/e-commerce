@@ -26,6 +26,8 @@ query getCartItems{
             phone
             id
             business_address
+            first_name
+            business_name
         }
     }
     }

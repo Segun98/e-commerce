@@ -5,6 +5,7 @@ import Link from "next/link";
 import { UserProvider } from "./../../Context/UserProvider";
 import { ShowUser } from "../../components/ShowUser";
 import { useQuery } from "./../../components/useQuery";
+import { ProtectRouteV } from "../../utils/ProtectedRouteV";
 
 const getVendorOrders = `
 query getVendorOrders{
@@ -27,12 +28,11 @@ export const Dashboard: React.FC = () => {
 
   const [data, loading, error] = useQuery(getVendorOrders, {}, Token);
 
-  const res = data ? data.getVendorOrders : undefined;
-
   function toDate(d) {
     let date = new Date(parseInt(d));
     return date.toLocaleString();
   }
+
   return (
     <UserProvider>
       <div>
@@ -42,11 +42,26 @@ export const Dashboard: React.FC = () => {
         <br />
         {loading && "loading..."}
         <br />
-        <p>{!loading && res && res.length === 0 && "you have no orders"}</p>
-        <p>{res && res.length > 0 && <strong>YOUR ORDERS</strong>}</p>
+        <p>
+          {!loading &&
+            data &&
+            data.getVendorOrders.length === 0 &&
+            "you have no orders"}
+        </p>
+        <div>
+          <Link href="/store/new-item">
+            <a>Add New Product</a>
+          </Link>
+        </div>
+        <br />
+        <p>
+          {data && data.getVendorOrders.length > 0 && (
+            <strong>YOUR ORDERS</strong>
+          )}
+        </p>
         <main>
-          {res &&
-            res.map((d: Orders) => (
+          {data &&
+            data.getVendorOrders.map((d: Orders) => (
               <div key={d.id}>
                 <div>{d.name}</div>
                 <div>{d.price}</div>
@@ -64,4 +79,4 @@ export const Dashboard: React.FC = () => {
   );
 };
 
-export default Dashboard;
+export default ProtectRouteV(Dashboard);

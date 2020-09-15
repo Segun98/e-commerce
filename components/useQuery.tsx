@@ -25,10 +25,11 @@ export const useQuery = (Query: any, Variables?: {}, Token?: string) => {
         }
       } catch (err) {
         setLoading(false);
+        //queries that require a token might run before Token gets passed from context, this is to prevent unauthoarization errors for a user who is signed in
         if (Token && err) {
           setError(err);
         }
-        // handle network errors if request doesn't require a token
+        // handle network errors
         if (err.message === "Network request failed") {
           setError(err);
         }

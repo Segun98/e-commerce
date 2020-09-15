@@ -1,0 +1,79 @@
+@import url("https://fonts.googleapis.com/css?family=Sen&display=swap");
+*,
+*::before,
+*::after {
+  padding: 0;
+  margin: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+body {
+  font-family: "Sen", sans-serif;
+}
+
+.indicator {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  height: 90vh;
+}
+
+/* Note - ALL Imported styles represent each page and are named accordingly. 
+Class names accross components can be the same but they are wrapped by a unique class, usually named after the page or component */
+.store_new-item {
+  background: whitesmoke;
+}
+
+.store_new-item .main-wrap {
+  margin: auto;
+  width: 70%;
+  padding: 20px;
+}
+
+.store_new-item .main-wrap .title {
+  font-weight: bold;
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+}
+
+.store_new-item form label {
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+.store_new-item form .form-item {
+  margin: 15px 0 5px 0;
+}
+
+.store_new-item form .form-wrap {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 2fr 1fr;
+      grid-template-columns: 2fr 1fr;
+  gap: 20px;
+}
+
+.store_new-item form .form-wrap textarea {
+  height: 400px;
+}
+
+.store_new-item form .form-wrap .grid-1,
+.store_new-item form .form-wrap .grid-2 {
+  background: white;
+  padding: 20px;
+  border-radius: 7px;
+  -webkit-box-shadow: 0 1px 6px 0 rgba(32, 33, 36, 0.28);
+          box-shadow: 0 1px 6px 0 rgba(32, 33, 36, 0.28);
+}
+
+.store_new-item .btn {
+  text-align: center;
+}
+/*# sourceMappingURL=App.css.map */

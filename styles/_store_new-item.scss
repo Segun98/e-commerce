@@ -1,0 +1,51 @@
+.store_new-item {
+    background: whitesmoke;
+
+    .main-wrap {
+        margin: auto;
+        width: 70%;
+        padding: 20px;
+
+        .title {
+            font-weight: bold;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+    }
+
+    form {
+        label {
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .form-item {
+            margin: 15px 0 5px 0;
+        }
+
+
+        .form-wrap {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+
+            textarea {
+                height: 400px;
+            }
+
+            .grid-1,
+            .grid-2 {
+                background: white;
+                padding: 20px;
+                border-radius: 7px;
+                box-shadow: $box $softgrey;
+            }
+        }
+
+
+    }
+
+    .btn {
+        text-align: center;
+    }
+}

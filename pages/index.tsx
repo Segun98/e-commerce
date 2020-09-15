@@ -5,16 +5,22 @@ import { useToken } from "../Context/TokenProvider";
 import { addToCart } from "../graphql/customer";
 import { ProductsRes } from "../Typescript/types";
 import Link from "next/link";
-import { useQuery } from "./../components/useQuery";
 import { useMutation } from "../utils/useMutation";
 import { useRouter } from "next/router";
+import Cookies from "js-cookie";
+import useSwr from "swr";
+import queryFunc from "../utils/fetcher";
 
 const Home = () => {
+  const { data, error } = useSwr("PRODUCTS", () =>
+    queryFunc(PRODUCTS, { limit: null })
+  );
+
   const { Token } = useToken();
   const router = useRouter();
   const toast = useToast();
-  const [data, loading, error] = useQuery(PRODUCTS, { limit: null });
-  let res = data ? data.products : undefined;
+
+  const role = Cookies.get("role");
 
   async function addCart(product_id, prod_creator_id) {
     const variables = {
@@ -46,15 +52,14 @@ const Home = () => {
         });
         return;
       }
-
       toast({
         title: "An Error occurred while adding to cart.",
-        //if theres a graphql error, show it, else display other errors
-        description: error.response?.errors[0].message
-          ? error.response?.errors[0].message
-          : error.message === "Network request failed"
-          ? "Check Your Internet Connection and Refressh"
-          : error.message,
+        description:
+          error.message === "Network request failed"
+            ? "Check Your Internet Connection and Refressh"
+            : role !== "customer"
+            ? "You need to Login as a customer"
+            : "",
         status: "error",
         duration: 7000,
         isClosable: true,
@@ -75,10 +80,10 @@ const Home = () => {
             position: "top",
           })}
       </>
-      {loading && "loading..."}
+      {!data && !error && "loading..."}
       <main>
-        {res &&
-          res.map((p: ProductsRes) => (
+        {data &&
+          data.products.map((p: ProductsRes) => (
             <div key={p.id}>
               <div>
                 <strong>PRODUCT NAME:</strong>
@@ -95,6 +100,14 @@ const Home = () => {
               <div>
                 <strong>Creator ID:</strong>
                 {p.creator_id}
+              </div>
+              <div>
+                <strong>Creator business name:</strong>
+                {p.creator.business_name}
+              </div>
+              <div>
+                <strong>Creator name:</strong>
+                {p.creator.first_name}
               </div>
               <div>
                 <strong>Available Qty:</strong> {p.available_qty}

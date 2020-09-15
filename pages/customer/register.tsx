@@ -7,6 +7,8 @@ import {
   InputGroup,
   InputRightElement,
   Button,
+  InputLeftAddon,
+  Icon,
 } from "@chakra-ui/core";
 import { useForm } from "react-hook-form";
 import { request } from "graphql-request";
@@ -43,6 +45,11 @@ export const Register = () => {
       return setCustomError("Passwords must match");
     }
     const { first_name, last_name, email, password, confirm_password } = values;
+
+    if (first_name.trim() === "" || last_name.trim() === "") {
+      setCustomError("All Fields are Required");
+      return;
+    }
 
     const variables: MutationSignUpArgs = {
       first_name,
@@ -96,6 +103,8 @@ export const Register = () => {
               id="first_name"
               name="first_name"
               aria-describedby="first_name-helper-text"
+              variant="flushed"
+              padding="5px"
               placeholder="First Name"
               ref={register({
                 required: true,
@@ -118,6 +127,8 @@ export const Register = () => {
               id="last_name"
               name="last_name"
               aria-describedby="last_name-helper-text"
+              variant="flushed"
+              padding="5px"
               placeholder="Last Name"
               ref={register({
                 required: true,
@@ -135,22 +146,29 @@ export const Register = () => {
 
           <div>
             <FormLabel htmlFor="email">Email address</FormLabel>
-            <Input
-              type="email"
-              id="email"
-              name="email"
-              aria-describedby="email-helper-text"
-              placeholder="email@example.com"
-              ref={register({
-                required: "Required",
-                pattern: {
-                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                  message: "invalid email address",
-                },
-              })}
-              isInvalid={errors.email ? true : false}
-              errorBorderColor="red.300"
-            />
+            <InputGroup>
+              <InputLeftAddon
+                children={<Icon name="at-sign" color="blue.400" />}
+              />
+              <Input
+                type="email"
+                id="email"
+                name="email"
+                aria-describedby="email-helper-text"
+                variant="flushed"
+                padding="5px"
+                placeholder="email@example.com"
+                ref={register({
+                  required: "Required",
+                  pattern: {
+                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                    message: "invalid email address",
+                  },
+                })}
+                isInvalid={errors.email ? true : false}
+                errorBorderColor="red.300"
+              />
+            </InputGroup>
             <small style={{ color: "red" }}>
               {errors.email && errors.email.message}
             </small>
@@ -162,11 +180,18 @@ export const Register = () => {
           <div>
             <FormLabel htmlFor="password">Password</FormLabel>
             <InputGroup size="md">
+              <InputLeftAddon
+                children={<Icon name="view" color="blue.400" />}
+                borderTop="none"
+                color="blue.400"
+              />
               <Input
                 pr="4.5rem"
                 type={show ? "text" : "password"}
                 name="password"
                 id="password"
+                variant="flushed"
+                padding="5px"
                 placeholder="Enter Password"
                 ref={register({
                   required: true,
@@ -196,11 +221,18 @@ export const Register = () => {
           <div>
             <FormLabel htmlFor="confirm_password">Confirm Password</FormLabel>
             <InputGroup size="md">
+              <InputLeftAddon
+                children={<Icon name="view" color="blue.400" />}
+                borderTop="none"
+                color="blue.400"
+              />
               <Input
                 pr="4.5rem"
                 type={show ? "text" : "password"}
                 id="confirm_password"
                 name="confirm_password"
+                variant="flushed"
+                padding="5px"
                 placeholder="Confirm Password"
                 ref={register({
                   required: true,

@@ -53,6 +53,10 @@ query products($limit:Int){
     in_stock,
     available_qty,
     creator_id
+    creator{
+      first_name
+      business_name
+    }
   }
 }
 `;

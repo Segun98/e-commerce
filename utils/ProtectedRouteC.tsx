@@ -15,3 +15,15 @@ export function ProtectRouteC(WrappedComponent: any) {
     }
   };
 }
+
+// export function ProtectRouteC(WrappedComponent: any) {
+//   return function () {
+//     if (Cookies && Cookies.get("role") !== "vendor") {
+//       if (typeof window === "object") {
+//         window.location.href = "/customer/login";
+//       }
+//     }
+
+//     return <WrappedComponent {...arguments} />;
+//   };
+// }

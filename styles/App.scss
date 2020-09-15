@@ -1,0 +1,28 @@
+@import url("https://fonts.googleapis.com/css?family=Sen&display=swap");
+
+*,
+*::before,
+*::after {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+$softgrey: rgba(32, 33, 36, 0.28);
+$box: 0 1px 6px 0;
+
+body {
+    font-family: "Sen", sans-serif;
+}
+
+.indicator {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 90vh;
+}
+
+/* Note - ALL Imported styles represent each page and are named accordingly. 
+Class names accross components can be the same but they are wrapped by a unique class, usually named after the page or component */
+
+@import "./store_new-item"
