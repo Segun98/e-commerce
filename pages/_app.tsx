@@ -5,6 +5,8 @@ import Router from "next/router";
 import NProgress from "nprogress";
 import "nprogress/nprogress.css";
 import { TokenProvider } from "../Context/TokenProvider";
+import React from "react";
+import { UserProvider } from "../Context/UserProvider";
 
 function MyApp({ Component, pageProps }: AppProps) {
   //progress bar on page visit
@@ -21,10 +23,21 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   return (
     <TokenProvider>
-      <ThemeProvider>
-        <CSSReset />
-        <Component {...pageProps} />
-      </ThemeProvider>
+      <UserProvider>
+        <ThemeProvider>
+          <CSSReset />
+          <Component {...pageProps} />
+        </ThemeProvider>
+        <style jsx global>{`
+          :root {
+            --box: 0 1px 6px 0;
+            --softgrey: rgba(32, 33, 36, 0.28);
+            --lightblue: #cbd8f9;
+            --deepblue: #02247a;
+            --text: #626262;
+          }
+        `}</style>
+      </UserProvider>
     </TokenProvider>
   );
 }

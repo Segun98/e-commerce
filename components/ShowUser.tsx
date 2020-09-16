@@ -24,7 +24,7 @@ export const ShowUser = () => {
               <a>Visit Store</a>
             </Link>
           </div>
-          <div>{User && <p>Signed in as {User.first_name}</p>}</div>
+          <div>{User && <p>Hello, {User.first_name}</p>}</div>
         </main>
       )}
     </div>

@@ -13,10 +13,11 @@ export function getServerSideProps({ params }) {
     },
   };
 }
-const Store = ({ id }) => {
+const Store: React.FC<{ id: any }> = React.memo(({ id }) => {
   const toast = useToast();
   const router = useRouter();
   const { Token } = useToken();
+  console.log("store rendered");
 
   const variables = {
     business_name_slug: id,
@@ -25,10 +26,10 @@ const Store = ({ id }) => {
   const res: UsersRes | undefined = data ? data.user : undefined;
 
   useEffect(() => {
-    if (res && !res.id) {
+    if ((res && !res.id) || error.response?.errors[0].message === "404") {
       router.push("/404");
     }
-  }, [res]);
+  }, [res, error]);
 
   return (
     <div>
@@ -76,6 +77,6 @@ const Store = ({ id }) => {
       </section>
     </div>
   );
-};
+});
 
 export default Store;

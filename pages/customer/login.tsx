@@ -15,6 +15,8 @@ import { useRouter } from "next/router";
 import { LOG_IN } from "../../graphql/users";
 import { LoginRes, MutationLogInArgs } from "../../Typescript/types";
 import { useToken } from "../../Context/TokenProvider";
+import { Layout } from "../../components/Layout";
+import Link from "next/link";
 
 export const Login = () => {
   const router = useRouter();
@@ -72,104 +74,139 @@ export const Login = () => {
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <h2>LogIn to your Account</h2>
-        <h3 style={{ color: "red" }}>{customError}</h3>
-        <h3 style={{ color: "green" }}>{success}</h3>
-        <FormControl isRequired>
-          <div>
-            <FormLabel htmlFor="email">Email address</FormLabel>
-            <InputGroup>
-              <InputLeftAddon
-                children={<Icon name="at-sign" color="blue.400" />}
-              />
-              <Input
-                type="email"
-                id="email"
-                name="email"
-                aria-describedby="email-helper-text"
-                placeholder="email@example.com"
-                variant="flushed"
-                padding="5px"
-                ref={register({
-                  required: "Required",
-                  pattern: {
-                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                    message: "invalid email address",
-                  },
-                })}
-                isInvalid={errors.email || customError ? true : false}
-                errorBorderColor="red.300"
-              />
-            </InputGroup>
-            <small style={{ color: "red" }}>
-              {errors.email && errors.email.message}
-            </small>
+    <Layout>
+      <div className="login-page-wrap">
+        <img src="/login.png" alt="login-vector" className="login-vector" />
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <h1 className="log-in">Log In</h1>
+          <h2 className="log-in-message">Enjoy A Modern Shopping Experience</h2>
+          <h3 style={{ color: "red" }}>{customError}</h3>
+          <h3 style={{ color: "green" }}>{success}</h3>
+          <FormControl isRequired>
+            <div>
+              <FormLabel htmlFor="email">Email</FormLabel>
+              <InputGroup>
+                {/* <InputLeftAddon
+                  children={<Icon name="at-sign" color="blue.400" />}
+                /> */}
+                <Input
+                  type="email"
+                  id="email"
+                  name="email"
+                  aria-describedby="email-helper-text"
+                  placeholder="email@example.com"
+                  ref={register({
+                    required: "Required",
+                    pattern: {
+                      value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                      message: "invalid email address",
+                    },
+                  })}
+                  isInvalid={errors.email || customError ? true : false}
+                  errorBorderColor="red.300"
+                />
+              </InputGroup>
+              <small style={{ color: "red" }}>
+                {errors.email && errors.email.message}
+              </small>
+            </div>
+
+            <div>
+              <FormLabel htmlFor="password">Password</FormLabel>
+              <InputGroup size="md">
+                <Input
+                  pr="4.5rem"
+                  type={show ? "text" : "password"}
+                  name="password"
+                  id="password"
+                  placeholder="Enter Password"
+                  ref={register}
+                  isInvalid={customError ? true : false}
+                  errorBorderColor="red.300"
+                />
+                <InputRightElement width="4.5rem">
+                  <Icon
+                    name="view"
+                    color="blue.400"
+                    cursor="pointer"
+                    onClick={() => {
+                      setShow(!show);
+                    }}
+                  />
+                </InputRightElement>
+              </InputGroup>
+            </div>
+          </FormControl>
+          <div className="btn">
+            <Button
+              isDisabled={Loading}
+              style={{ background: "var(--deepblue)" }}
+              color="white"
+              type="submit"
+              isLoading={Loading}
+            >
+              Log in
+            </Button>
+            <div className="sign-up-msg">
+              <small>
+                Don't have an account?{" "}
+                <Link href="/customer/register">
+                  <a>Sign Up</a>
+                </Link>{" "}
+              </small>
+            </div>
           </div>
+        </form>
+        <style jsx>{`
+          .login-page-wrap {
+            display: flex;
+            flex-direction: column-reverse;
+            margin: 2rem auto;
+            width: 90%;
+          }
+          form {
+            margin: 2rem auto;
+            width: 90%;
+          }
+          .log-in {
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: bolder;
+            color: var(--deepblue);
+          }
+          .log-in-message {
+            text-align: center;
+            font-size: 1.05rem;
+            color: var(--softgrey);
+            margin-bottom: 5px;
+          }
 
-          <div>
-            <FormLabel htmlFor="password">Password</FormLabel>
-            <InputGroup size="md">
-              <InputLeftAddon
-                children={<Icon name="view" color="blue.400" />}
-                borderTop="none"
-                color="blue.400"
-              />
-              <Input
-                pr="4.5rem"
-                type={show ? "text" : "password"}
-                name="password"
-                id="password"
-                variant="flushed"
-                padding="5px"
-                placeholder="Enter Password"
-                ref={register}
-                isInvalid={customError ? true : false}
-                errorBorderColor="red.300"
-              />
-              <InputRightElement width="4.5rem">
-                <Button
-                  h="1.75rem"
-                  size="sm"
-                  onClick={() => {
-                    setShow(!show);
-                  }}
-                >
-                  {show ? "Hide" : "Show"}
-                </Button>
-              </InputRightElement>
-            </InputGroup>
-          </div>
-        </FormControl>
+          form div {
+            margin: 10px 0;
+          }
 
-        <Button
-          isDisabled={Loading}
-          variantColor="blue"
-          type="submit"
-          isLoading={Loading}
-        >
-          Log in
-        </Button>
-      </form>
-      <style jsx>{`
-        form {
-          margin: auto;
-          width: 60%;
-          box-shadow: var(--box) var(--softgrey);
-          padding: 20px;
-          margin-top: 40px;
-        }
-        form h2:first-child {
-          text-align: center;
-          color: green;
-        }
-
-        form div {
-          margin: 10px 0 !important;
-        }
-      `}</style>
-    </div>
+          .btn {
+            text-align: center;
+            margin-top: 10px;
+          }
+          .sign-up-msg a {
+            color: var(--deepblue);
+          }
+          .login-vector {
+            display: none;
+          }
+          @media only screen and (min-width: 700px) {
+            .login-page-wrap {
+              flex-direction: row;
+            }
+            .login-vector {
+              width: 60%;
+              display: block;
+            }
+          }
+        `}</style>
+      </div>
+    </Layout>
   );
 };
 

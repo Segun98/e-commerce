@@ -38,6 +38,6 @@ export const useQuery = (Query: any, Variables?: {}, Token?: string) => {
       }
     }
     query();
-  }, [Token ? Token : null]);
+  }, [Token]);
   return [data, loading, error];
 };

@@ -7,7 +7,6 @@ import {
   InputGroup,
   InputRightElement,
   Button,
-  InputLeftAddon,
   Icon,
 } from "@chakra-ui/core";
 import { useForm } from "react-hook-form";
@@ -16,6 +15,8 @@ import { SIGN_UP } from "./../../graphql/users";
 import { endpoint } from "../../utils/client";
 import { useRouter } from "next/router";
 import { MutationSignUpArgs } from "../../Typescript/types";
+import Link from "next/link";
+import { Layout } from "../../components/Layout";
 
 export const Register = () => {
   const router = useRouter();
@@ -90,200 +91,230 @@ export const Register = () => {
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <h2>Register</h2>
-        <h3 style={{ color: "red" }}>{customError}</h3>
-        <h3 style={{ color: "green" }}>{success}</h3>
-        <FormControl isRequired>
-          <div>
-            <FormLabel htmlFor="first_name">First Name</FormLabel>
-            <Input
-              type="first_name"
-              id="first_name"
-              name="first_name"
-              aria-describedby="first_name-helper-text"
-              variant="flushed"
-              padding="5px"
-              placeholder="First Name"
-              ref={register({
-                required: true,
-                minLength: 3,
-                maxLength: 20,
-              })}
-              isInvalid={errors.first_name ? true : false}
-              errorBorderColor="red.300"
-            />
-            <small style={{ color: "red" }}>
-              {errors.first_name &&
-                "first name should be a minimum of 3 chracters and max of 20"}
-            </small>
-          </div>
-
-          <div>
-            <FormLabel htmlFor="last_name">Last Name</FormLabel>
-            <Input
-              type="last_name"
-              id="last_name"
-              name="last_name"
-              aria-describedby="last_name-helper-text"
-              variant="flushed"
-              padding="5px"
-              placeholder="Last Name"
-              ref={register({
-                required: true,
-                minLength: 3,
-                maxLength: 20,
-              })}
-              isInvalid={errors.last_name ? true : false}
-              errorBorderColor="red.300"
-            />
-            <small style={{ color: "red" }}>
-              {errors.last_name &&
-                "Last name should be a minimum of 3 chracters and max of 20"}
-            </small>
-          </div>
-
-          <div>
-            <FormLabel htmlFor="email">Email address</FormLabel>
-            <InputGroup>
-              <InputLeftAddon
-                children={<Icon name="at-sign" color="blue.400" />}
-              />
+    <Layout>
+      <div className="register-page-wrap">
+        <img
+          src="/undraw_shopping_app_flsj.svg"
+          alt="register-vector"
+          className="register-vector"
+        />
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <h1 className="register">Create Account</h1>
+          <h2 className="register-message">
+            Enjoy A Modern Shopping Experience
+          </h2>
+          <h3 style={{ color: "red" }}>{customError}</h3>
+          <h3 style={{ color: "green" }}>{success}</h3>
+          <FormControl isRequired>
+            <div>
+              <FormLabel htmlFor="first_name">First Name</FormLabel>
               <Input
-                type="email"
-                id="email"
-                name="email"
-                aria-describedby="email-helper-text"
-                variant="flushed"
-                padding="5px"
-                placeholder="email@example.com"
-                ref={register({
-                  required: "Required",
-                  pattern: {
-                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                    message: "invalid email address",
-                  },
-                })}
-                isInvalid={errors.email ? true : false}
-                errorBorderColor="red.300"
-              />
-            </InputGroup>
-            <small style={{ color: "red" }}>
-              {errors.email && errors.email.message}
-            </small>
-            <FormHelperText id="email-helper-text" color="green">
-              We'll never share your email.
-            </FormHelperText>
-          </div>
-
-          <div>
-            <FormLabel htmlFor="password">Password</FormLabel>
-            <InputGroup size="md">
-              <InputLeftAddon
-                children={<Icon name="view" color="blue.400" />}
-                borderTop="none"
-                color="blue.400"
-              />
-              <Input
-                pr="4.5rem"
-                type={show ? "text" : "password"}
-                name="password"
-                id="password"
-                variant="flushed"
-                padding="5px"
-                placeholder="Enter Password"
+                type="first_name"
+                id="first_name"
+                name="first_name"
+                aria-describedby="first_name-helper-text"
+                placeholder="First Name"
                 ref={register({
                   required: true,
-                  minLength: 8,
+                  minLength: 3,
                   maxLength: 20,
                 })}
-                isInvalid={errors.password ? true : false}
+                isInvalid={errors.first_name ? true : false}
                 errorBorderColor="red.300"
               />
-              <InputRightElement width="4.5rem">
-                <Button
-                  h="1.75rem"
-                  size="sm"
-                  onClick={() => {
-                    setShow(!show);
-                  }}
-                >
-                  {show ? "Hide" : "Show"}
-                </Button>
-              </InputRightElement>
-            </InputGroup>
-            <small style={{ color: "red" }}>
-              {errors.password && "minimum of 8 characters and max of 20"}
-            </small>
-          </div>
+              <small style={{ color: "red" }}>
+                {errors.first_name &&
+                  "first name should be a minimum of 3 chracters and max of 20"}
+              </small>
+            </div>
 
-          <div>
-            <FormLabel htmlFor="confirm_password">Confirm Password</FormLabel>
-            <InputGroup size="md">
-              <InputLeftAddon
-                children={<Icon name="view" color="blue.400" />}
-                borderTop="none"
-                color="blue.400"
-              />
+            <div>
+              <FormLabel htmlFor="last_name">Last Name</FormLabel>
               <Input
-                pr="4.5rem"
-                type={show ? "text" : "password"}
-                id="confirm_password"
-                name="confirm_password"
-                variant="flushed"
-                padding="5px"
-                placeholder="Confirm Password"
+                type="last_name"
+                id="last_name"
+                name="last_name"
+                aria-describedby="last_name-helper-text"
+                placeholder="Last Name"
                 ref={register({
                   required: true,
-                  minLength: 8,
+                  minLength: 3,
                   maxLength: 20,
                 })}
-                isInvalid={errors.confirm_password ? true : false}
+                isInvalid={errors.last_name ? true : false}
                 errorBorderColor="red.300"
               />
-              <InputRightElement width="4.5rem">
-                <Button
-                  h="1.75rem"
-                  size="sm"
-                  onClick={() => {
-                    setShow(!show);
-                  }}
-                >
-                  {show ? "Hide" : "Show"}
-                </Button>
-              </InputRightElement>
-            </InputGroup>
+              <small style={{ color: "red" }}>
+                {errors.last_name &&
+                  "Last name should be a minimum of 3 chracters and max of 20"}
+              </small>
+            </div>
+
+            <div>
+              <FormLabel htmlFor="email">Email address</FormLabel>
+              <InputGroup>
+                <Input
+                  type="email"
+                  id="email"
+                  name="email"
+                  aria-describedby="email-helper-text"
+                  placeholder="email@example.com"
+                  ref={register({
+                    required: "Required",
+                    pattern: {
+                      value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                      message: "invalid email address",
+                    },
+                  })}
+                  isInvalid={errors.email ? true : false}
+                  errorBorderColor="red.300"
+                />
+              </InputGroup>
+              <small style={{ color: "red" }}>
+                {errors.email && errors.email.message}
+              </small>
+              <FormHelperText id="email-helper-text" color="green">
+                We'll never share your email.
+              </FormHelperText>
+            </div>
+
+            <div>
+              <FormLabel htmlFor="password">Password</FormLabel>
+              <InputGroup size="md">
+                <Input
+                  pr="4.5rem"
+                  type={show ? "text" : "password"}
+                  name="password"
+                  id="password"
+                  placeholder="Enter Password"
+                  ref={register({
+                    required: true,
+                    minLength: 8,
+                    maxLength: 20,
+                  })}
+                  isInvalid={errors.password ? true : false}
+                  errorBorderColor="red.300"
+                />
+                <InputRightElement width="4.5rem">
+                  <Icon
+                    name="view"
+                    color="blue.400"
+                    cursor="pointer"
+                    onClick={() => {
+                      setShow(!show);
+                    }}
+                  />
+                </InputRightElement>
+              </InputGroup>
+              <small style={{ color: "red" }}>
+                {errors.password && "minimum of 8 characters and max of 20"}
+              </small>
+            </div>
+
+            <div>
+              <FormLabel htmlFor="confirm_password">Confirm Password</FormLabel>
+              <InputGroup size="md">
+                <Input
+                  pr="4.5rem"
+                  type={show ? "text" : "password"}
+                  id="confirm_password"
+                  name="confirm_password"
+                  placeholder="Confirm Password"
+                  ref={register({
+                    required: true,
+                    minLength: 8,
+                    maxLength: 20,
+                  })}
+                  isInvalid={errors.confirm_password ? true : false}
+                  errorBorderColor="red.300"
+                />
+                <InputRightElement width="4.5rem">
+                  <Icon
+                    name="view"
+                    color="blue.400"
+                    cursor="pointer"
+                    onClick={() => {
+                      setShow(!show);
+                    }}
+                  />
+                </InputRightElement>
+              </InputGroup>
+            </div>
+          </FormControl>
+
+          <div className="btn">
+            <Button
+              isDisabled={Loading}
+              style={{ background: "var(--deepblue)" }}
+              color="white"
+              type="submit"
+              isLoading={Loading}
+            >
+              Create Account
+            </Button>
+            <div className="register-msg">
+              <small>
+                Already have an account?{" "}
+                <Link href="/customer/login">
+                  <a>Login</a>
+                </Link>{" "}
+              </small>
+            </div>
           </div>
-        </FormControl>
+        </form>
+        <style jsx>{`
+          .register-page-wrap {
+            display: flex;
+            flex-direction: column-reverse;
+            margin: 2rem auto;
+            width: 90%;
+          }
+          form {
+            margin: 2rem auto;
+            width: 90%;
+          }
 
-        <Button
-          isDisabled={Loading}
-          // variantColor="purple"
-          type="submit"
-          isLoading={Loading}
-        >
-          Submit
-        </Button>
-      </form>
-      <style jsx>{`
-        form {
-          margin: auto;
-          width: 60%;
-          box-shadow: var(--box) var(--softgrey);
-          padding: 20px;
-          margin-top: 40px;
-        }
-        form h2:first-child {
-          text-align: center;
-          color: green;
-        }
+          .register {
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: bolder;
+            color: var(--deepblue);
+          }
+          .register-message {
+            text-align: center;
+            font-size: 1.05rem;
+            color: var(--softgrey);
+            margin-bottom: 5px;
+          }
 
-        form div {
-          margin: 10px 0 !important;
-        }
-      `}</style>
-    </div>
+          form div {
+            margin: 10px 0;
+          }
+
+          .btn {
+            text-align: center;
+            margin-top: 15px;
+          }
+          .register-msg a {
+            color: var(--deepblue);
+          }
+          .register-vector {
+            display: none;
+          }
+          @media only screen and (min-width: 700px) {
+            .register-page-wrap {
+              flex-direction: row;
+              width: 80%;
+            }
+            .register-vector {
+              width: 50%;
+              margin-right: 50px;
+              display: block;
+            }
+          }
+        `}</style>
+      </div>
+    </Layout>
   );
 };
 
