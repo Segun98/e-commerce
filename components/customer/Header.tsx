@@ -9,13 +9,21 @@ import {
   MenuItem,
   MenuDivider,
   Button,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  PopoverHeader,
+  PopoverBody,
+  PopoverFooter,
+  PopoverArrow,
+  PopoverCloseButton,
 } from "@chakra-ui/core";
 import Link from "next/link";
 import React, { useState } from "react";
 import { useToken } from "../../Context/TokenProvider";
 import Cookies from "js-cookie";
 import { useRouter } from "next/router";
-import { UserProvider, useUser } from "../../Context/UserProvider";
+import { useUser } from "../../Context/UserProvider";
 
 export const Header = () => {
   const { Token } = useToken();
@@ -67,70 +75,71 @@ export const Header = () => {
 
             <div className="header-wrap_right">
               <div>
-                <Menu>
-                  <MenuButton
-                    as={Button}
-                    size="sm"
-                    style={{ color: "white", background: "var(--deepblue)" }}
-                    rightIcon="chevron-down"
-                  >
-                    {!Token && !role && <div>Login</div>}
-                    {Token && role && (
-                      <div
-                        className="profile-icon"
-                        style={{ cursor: "pointer" }}
-                      >
-                        {/* <img src="/profile.svg" alt="profile-icon" /> */}
-                        <div>Hi, {Token && User && User.first_name}</div>
-                      </div>
-                    )}
-                  </MenuButton>
-                  <MenuList>
-                    {" "}
+                <Popover usePortal>
+                  <PopoverTrigger>
+                    <Button
+                      onClick={() => {
+                        setClicked(!clicked);
+                      }}
+                      style={{ color: "white", background: "var(--deepblue)" }}
+                      rightIcon="chevron-down"
+                    >
+                      {!Token && !role && <div>Login</div>}
+                      {Token && role && (
+                        <div
+                          className="profile-icon"
+                          style={{ cursor: "pointer" }}
+                        >
+                          <div>Hi, {Token && User && User.first_name}</div>
+                        </div>
+                      )}
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent width="30" zIndex={4}>
                     {!Token && !role && (
                       <Link href="/customer/login">
-                        <MenuItem
+                        <p
                           style={{
                             color: "var(--deepblue)",
                             textAlign: "center",
                           }}
                         >
                           <a>Login</a>
-                        </MenuItem>
+                        </p>
                       </Link>
                     )}
                     {!Token && !role && (
                       <Link href="/customer/register">
-                        <MenuItem
+                        <p
                           style={{
                             color: "var(--deepblue)",
                             textAlign: "center",
                           }}
                         >
                           <a>CREATE AN ACCOUNT</a>
-                        </MenuItem>
+                        </p>
                       </Link>
                     )}
-                    {!Token && !role && <MenuDivider />}
+                    {!Token && !role && <hr />}
                     <Link href="/customer/account">
-                      <MenuItem>
+                      <p>
                         <a>Account</a>
-                      </MenuItem>
+                      </p>
                     </Link>
                     <Link href="/customer/cart">
-                      <MenuItem>
+                      <p>
                         <a>Cart</a>
-                      </MenuItem>
+                      </p>
                     </Link>
                     <Link href="/customer/cart">
-                      <MenuItem>
+                      <p>
                         <a>Contact</a>
-                      </MenuItem>
+                      </p>
                     </Link>
-                    <MenuDivider />
-                    <MenuItem>Logout</MenuItem>
-                  </MenuList>
-                </Menu>
+                    <hr />
+                    <p>Logout</p>
+                  </PopoverContent>
+                </Popover>
               </div>
 
               <div className="cart-icon">

@@ -7,6 +7,8 @@ import "nprogress/nprogress.css";
 import { TokenProvider } from "../Context/TokenProvider";
 import React from "react";
 import { UserProvider } from "../Context/UserProvider";
+// import "react-responsive-carousel/lib/styles/carousel.min.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 function MyApp({ Component, pageProps }: AppProps) {
   //progress bar on page visit

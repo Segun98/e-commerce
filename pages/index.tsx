@@ -11,6 +11,9 @@ import Cookies from "js-cookie";
 import useSwr from "swr";
 import queryFunc from "../utils/fetcher";
 import { Layout } from "../components/Layout";
+// import { Carousel } from "react-responsive-carousel";
+// const Carousel = require("react-responsive-carousel").Carousel;
+import Carousel from "react-bootstrap/Carousel";
 
 const Home = () => {
   const { data, error } = useSwr("PRODUCTS", () =>
@@ -71,18 +74,59 @@ const Home = () => {
   return (
     <Layout>
       <div className="home-page">
-        <>
-          {/* {error &&
-            toast({
-              title: "An error occurred.",
-              description: "check your internet connection and refresh.",
-              status: "error",
-              duration: 7000,
-              isClosable: true,
-              position: "top",
-            })} */}
-        </>
-        {!data && !error && "loading..."}
+        <Carousel indicators={false} interval={7000}>
+          <Carousel.Item>
+            <img src="/slider/slide1.jpg" />
+
+            <Carousel.Caption>
+              <h3>DRINKS</h3>
+              <Button variantColor="blue">Learn More</Button>
+            </Carousel.Caption>
+          </Carousel.Item>
+          <Carousel.Item>
+            <img src="/slider/slide2.jpeg" />
+
+            <Carousel.Caption>
+              <h3>COSTUME</h3>
+              <Button variantColor="blue">Learn More</Button>
+            </Carousel.Caption>
+          </Carousel.Item>
+          <Carousel.Item>
+            <img src="/slider/slide3.jpeg" />
+
+            <Carousel.Caption>
+              <h3>BALLOONS</h3>
+              <Button variantColor="blue">Learn More</Button>
+            </Carousel.Caption>
+          </Carousel.Item>
+
+          <Carousel.Item>
+            <img src="/slider/slide4.jpeg" />
+
+            <Carousel.Caption>
+              <h3>PARTY SUPPLIES</h3>
+              <Button variantColor="blue">Learn More</Button>
+            </Carousel.Caption>
+          </Carousel.Item>
+
+          <Carousel.Item>
+            <img src="/slider/slide5.jpeg" />
+
+            <Carousel.Caption>
+              <h3>SPECIAL LIGTHS</h3>
+              <Button variantColor="blue">Learn More</Button>
+            </Carousel.Caption>
+          </Carousel.Item>
+
+          <Carousel.Item>
+            <img src="/slider/slide6.jpeg" />
+
+            <Carousel.Caption>
+              <h3>HOUSE PARTY</h3>
+              <Button variantColor="blue">Learn More</Button>
+            </Carousel.Caption>
+          </Carousel.Item>
+        </Carousel>
 
         <main>
           {data &&
@@ -136,6 +180,17 @@ const Home = () => {
             ))}
         </main>
       </div>
+      <style jsx>{`
+        @media only screen and (min-width: 700px) {
+          .home-page img {
+            height: 450px;
+            width: 100vw;
+            object-fit: cover;
+
+            /* object-fit: contain; */
+          }
+        }
+      `}</style>
     </Layout>
   );
 };
