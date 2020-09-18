@@ -40,7 +40,7 @@ const Home = () => {
         status: "success",
         duration: 7000,
         isClosable: true,
-        position: "top",
+        position: "bottom",
       });
     }
     if (error) {
@@ -52,7 +52,7 @@ const Home = () => {
           status: "info",
           duration: 5000,
           isClosable: true,
-          position: "top",
+          position: "bottom",
         });
         return;
       }
@@ -79,8 +79,11 @@ const Home = () => {
             <img src="/slider/slide1.jpg" />
 
             <Carousel.Caption>
-              <h3>DRINKS</h3>
-              <Button variantColor="blue">Learn More</Button>
+              <h3>Drinks Adds Life to Parties</h3>
+              <p>
+                We Sell Over 45 Different Types of Drinks From Different Brands
+              </p>
+              <Button>Buy A Drink</Button>
             </Carousel.Caption>
           </Carousel.Item>
           <Carousel.Item>
@@ -88,7 +91,8 @@ const Home = () => {
 
             <Carousel.Caption>
               <h3>COSTUME</h3>
-              <Button variantColor="blue">Learn More</Button>
+              <p>Get Freaky At Your Parties, Add New Faces</p>
+              <Button variantColor="blue">Get Costume</Button>
             </Carousel.Caption>
           </Carousel.Item>
           <Carousel.Item>
@@ -96,7 +100,10 @@ const Home = () => {
 
             <Carousel.Caption>
               <h3>BALLOONS</h3>
-              <Button variantColor="blue">Learn More</Button>
+              <p>
+                Balloons Add Colours and Bring That Classic Party Experience
+              </p>
+              <Button variantColor="blue">Shop Now</Button>
             </Carousel.Caption>
           </Carousel.Item>
 
@@ -104,8 +111,12 @@ const Home = () => {
             <img src="/slider/slide4.jpeg" />
 
             <Carousel.Caption>
-              <h3>PARTY SUPPLIES</h3>
-              <Button variantColor="blue">Learn More</Button>
+              <h3>Games</h3>
+              <p>
+                Games Come Through When Things Get Dull, and You Want No Dull
+                Moments
+              </p>
+              <Button variantColor="blue">Click To Buy</Button>
             </Carousel.Caption>
           </Carousel.Item>
 
@@ -114,7 +125,8 @@ const Home = () => {
 
             <Carousel.Caption>
               <h3>SPECIAL LIGTHS</h3>
-              <Button variantColor="blue">Learn More</Button>
+              <p>Whats A Party Without Lights?</p>
+              <Button variantColor="blue">Shop Now</Button>
             </Carousel.Caption>
           </Carousel.Item>
 
@@ -122,12 +134,36 @@ const Home = () => {
             <img src="/slider/slide6.jpeg" />
 
             <Carousel.Caption>
-              <h3>HOUSE PARTY</h3>
-              <Button variantColor="blue">Learn More</Button>
+              <h3>Decoration</h3>
+              <p>Add Special Decorations To Your Party</p>
+              <Button variantColor="blue">Shop Now</Button>
             </Carousel.Caption>
           </Carousel.Item>
         </Carousel>
 
+        <main className="main-section">
+          <div className="bar"></div>
+
+          <section className="for-you">
+            <h1>Products For You</h1>
+            <div className="for-you-wrap">
+              {data &&
+                data.products.map((p: ProductsRes) => (
+                  <div className="item" key={p.id}>
+                    <img src="/product1.png" alt={`${p.name}`} />
+                    <h1>{p.name}</h1>
+                    <p>{p.price}</p>
+                    <Link
+                      href={`/product/${p.name_slug}`}
+                      as={`/product/${p.name_slug}`}
+                    >
+                      <a>Buy</a>
+                    </Link>
+                  </div>
+                ))}
+            </div>
+          </section>
+        </main>
         <main>
           {data &&
             data.products.map((p: ProductsRes) => (
@@ -180,17 +216,7 @@ const Home = () => {
             ))}
         </main>
       </div>
-      <style jsx>{`
-        @media only screen and (min-width: 700px) {
-          .home-page img {
-            height: 450px;
-            width: 100vw;
-            object-fit: cover;
-
-            /* object-fit: contain; */
-          }
-        }
-      `}</style>
+      <style jsx>{``}</style>
     </Layout>
   );
 };

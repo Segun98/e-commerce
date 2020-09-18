@@ -17,7 +17,6 @@ const Store: React.FC<{ id: any }> = React.memo(({ id }) => {
   const toast = useToast();
   const router = useRouter();
   const { Token } = useToken();
-  console.log("store rendered");
 
   const variables = {
     business_name_slug: id,

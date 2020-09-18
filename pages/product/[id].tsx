@@ -4,6 +4,9 @@ import { PRODUCT } from "../../graphql/vendor";
 import { useToast } from "@chakra-ui/core";
 import { useRouter } from "next/router";
 import { ProductsRes } from "../../Typescript/types";
+import { Layout } from "../../components/Layout";
+import queryFunc from "../../utils/fetcher";
+import useSwr, { responseInterface } from "swr";
 
 interface err {
   message: string;
@@ -20,10 +23,10 @@ export async function getServerSideProps({ params }) {
   };
   try {
     const res = await graphQLClient.request(PRODUCT, variables);
-    const data = await res.product;
+    const product = await res.product;
     return {
       props: {
-        data,
+        product,
       },
     };
   } catch (err) {
@@ -34,43 +37,49 @@ export async function getServerSideProps({ params }) {
     };
   }
 }
-const Product = ({ data, error }: response) => {
+const Product = ({ product, error }) => {
   const toast = useToast();
   const router = useRouter();
 
+  const { data }: responseInterface<ProductsRes, any> = useSwr("PRODUCT", {
+    initialData: product,
+  });
+
   useEffect(() => {
-    if (!data) {
+    if (!product) {
       router.push("/404");
     }
   }, []);
 
   return (
-    <div>
-      {error &&
-        toast({
-          title: "An error occurred.",
-          description: "check your internet connection and refresh.",
-          status: "error",
-          duration: 7000,
-          isClosable: true,
-          position: "top",
-        })}
+    <Layout>
+      <div>
+        {error &&
+          toast({
+            title: "An error occurred.",
+            description: "check your internet connection and refresh.",
+            status: "error",
+            duration: 7000,
+            isClosable: true,
+            position: "bottom",
+          })}
 
-      <section>
-        {data && (
-          <div key={data.id}>
-            <div>{data.name}</div>
-            <div>{data.name_slug}</div>
-            <div>{data.price}</div>
-            <div>{data.in_stock}</div>
-            <div>Qty: {data.available_qty}</div>
-            <div>{data.image}</div>
-            <div>{data.category}</div>
-            <div>{data.description}</div>
-          </div>
-        )}
-      </section>
-    </div>
+        <section>
+          {data && (
+            <div>
+              <div>{data.name}</div>
+              <div>{data.name_slug}</div>
+              <div>{data.price}</div>
+              <div>{data.in_stock}</div>
+              <div>Qty: {data.available_qty}</div>
+              <div>{data.image}</div>
+              <div>{data.category}</div>
+              <div>{data.description}</div>
+            </div>
+          )}
+        </section>
+      </div>
+    </Layout>
   );
 };
 

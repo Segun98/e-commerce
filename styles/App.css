@@ -21,8 +21,13 @@ form label {
   color: #626262;
 }
 
-li {
+li,
+a {
   cursor: pointer;
+}
+
+a:hover {
+  text-decoration: none;
 }
 
 .indicator {
@@ -40,6 +45,102 @@ li {
 
 /* Note - ALL Imported styles represent each page and are named accordingly. 
 Class names accross components can be the same but they are wrapped by a unique class, usually named after the page or component */
+.home-page .carousel-caption {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  font-weight: bold;
+}
+
+.home-page .carousel-caption p {
+  margin: 5px 0;
+  line-height: 12px;
+}
+
+.home-page .carousel-caption Button {
+  background-color: #02247a;
+  color: white;
+  font-size: 0.7rem;
+  height: 30px;
+  width: 70px;
+  padding: 5px;
+}
+
+.home-page img {
+  height: 150px;
+  width: 100vw;
+  -o-object-fit: cover;
+     object-fit: cover;
+  /* object-fit: contain; */
+}
+
+.home-page .main-section .bar {
+  background: #02247a;
+  padding: 12px 0;
+  border-radius: 5px 5px 0 0;
+}
+
+.home-page .main-section .for-you {
+  background: #cbd8f9;
+  padding: 10px;
+}
+
+.home-page .main-section .for-you h1 {
+  font-weight: bold;
+  font-size: 1.05rem;
+  text-align: center;
+  color: #02247a;
+}
+
+.home-page .main-section .for-you .for-you-wrap {
+  margin: auto;
+  width: 89%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+
+.home-page .main-section .for-you .for-you-wrap .item {
+  border: 1px solid #626262;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.home-page .main-section .for-you .for-you-wrap .item a {
+  background: #02247a;
+  color: white;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.home-page .main-section .for-you .for-you-wrap .item img {
+  width: 90px;
+}
+
+@media only screen and (min-width: 700px) {
+  .home-page img {
+    height: 450px;
+    width: 100vw;
+    -o-object-fit: cover;
+       object-fit: cover;
+  }
+}
+
 .store_new-item {
   background: whitesmoke;
 }

@@ -1,0 +1,93 @@
+.home-page {
+    // carousel styles 
+
+    .carousel-caption {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        // background: rgb(88, 88, 104);
+
+        p {
+            // font-size: 1rem;
+            margin: 5px 0;
+            line-height: 12px;
+        }
+
+        Button {
+            background-color: $deepblue;
+            color: white;
+            font-size: 0.7rem;
+            height: 30px;
+            width: 70px;
+            padding: 5px;
+        }
+    }
+
+    img {
+        height: 150px;
+        width: 100vw;
+        object-fit: cover;
+        /* object-fit: contain; */
+    }
+
+    //section 1
+    .main-section {
+        .bar {
+            background: $deepblue;
+            padding: 12px 0;
+            border-radius: 5px 5px 0 0;
+        }
+
+        .for-you {
+            background: $lightblue;
+            padding: 10px;
+
+            h1 {
+                font-weight: bold;
+                font-size: 1.05rem;
+                text-align: center;
+                color: $deepblue;
+            }
+
+            .for-you-wrap {
+                margin: auto;
+                width: 89%;
+                display: flex;
+                justify-content: space-between;
+                flex-wrap: wrap;
+
+                .item {
+                    border: 1px solid $text;
+                    border-radius: 5px;
+                    text-align: center;
+
+                    a {
+                        background: $deepblue;
+                        color: white;
+                        padding: 10px;
+                        border-radius: 10px;
+                    }
+
+                    img {
+                        width: 90px;
+                    }
+                }
+
+            }
+        }
+    }
+
+}
+
+@media only screen and (min-width: 700px) {
+    .home-page {
+
+        img {
+            height: 450px;
+            width: 100vw;
+            object-fit: cover;
+        }
+    }
+}
