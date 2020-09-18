@@ -3,20 +3,11 @@ import {
   Input,
   InputGroup,
   InputLeftAddon,
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
-  MenuDivider,
   Button,
   Popover,
   PopoverTrigger,
   PopoverContent,
-  PopoverHeader,
-  PopoverBody,
-  PopoverFooter,
-  PopoverArrow,
-  PopoverCloseButton,
+  Divider,
 } from "@chakra-ui/core";
 import Link from "next/link";
 import React, { useState } from "react";
@@ -78,9 +69,6 @@ export const Header = () => {
                 <Popover usePortal>
                   <PopoverTrigger>
                     <Button
-                      onClick={() => {
-                        setClicked(!clicked);
-                      }}
                       style={{ color: "white", background: "var(--deepblue)" }}
                       rightIcon="chevron-down"
                     >
@@ -95,49 +83,66 @@ export const Header = () => {
                       )}
                     </Button>
                   </PopoverTrigger>
-                  <PopoverContent width="30" zIndex={4}>
-                    {!Token && !role && (
-                      <Link href="/customer/login">
+                  <PopoverContent width="30" zIndex={999}>
+                    <div className="pop-over-body">
+                      {!Token && !role && (
+                        <Link href="/customer/login">
+                          <p
+                            style={{
+                              color: "var(--deepblue)",
+                              textAlign: "center",
+                              fontWeight: "bold",
+                            }}
+                          >
+                            <a>LOGIN</a>
+                          </p>
+                        </Link>
+                      )}
+                      {!Token && !role && (
                         <p
                           style={{
-                            color: "var(--deepblue)",
                             textAlign: "center",
+                            fontWeight: "bold",
                           }}
                         >
-                          <a>Login</a>
+                          Or
                         </p>
-                      </Link>
-                    )}
-                    {!Token && !role && (
-                      <Link href="/customer/register">
-                        <p
-                          style={{
-                            color: "var(--deepblue)",
-                            textAlign: "center",
-                          }}
-                        >
-                          <a>CREATE AN ACCOUNT</a>
+                      )}
+                      {!Token && !role && (
+                        <Link href="/customer/register">
+                          <p
+                            style={{
+                              color: "var(--deepblue)",
+                              textAlign: "center",
+                              fontWeight: "bold",
+                            }}
+                          >
+                            <a>CREATE AN ACCOUNT</a>
+                          </p>
+                        </Link>
+                      )}
+                      {!Token && !role && <Divider />}
+                      <div className="pop-over-body-rest">
+                        <p>
+                          <Link href="/customer/account">
+                            <a>Account</a>
+                          </Link>
                         </p>
-                      </Link>
-                    )}
-                    {!Token && !role && <hr />}
-                    <Link href="/customer/account">
-                      <p>
-                        <a>Account</a>
-                      </p>
-                    </Link>
-                    <Link href="/customer/cart">
-                      <p>
-                        <a>Cart</a>
-                      </p>
-                    </Link>
-                    <Link href="/customer/cart">
-                      <p>
-                        <a>Contact</a>
-                      </p>
-                    </Link>
-                    <hr />
-                    <p>Logout</p>
+                        <p>
+                          <Link href="/customer/cart">
+                            <a>Cart</a>
+                          </Link>
+                        </p>
+                        <Divider />
+                        <p>
+                          <Link href="/customer/cart">
+                            <a>Contact</a>
+                          </Link>
+                        </p>
+                        <p>Help</p>
+                        <p>Logout</p>
+                      </div>
+                    </div>
                   </PopoverContent>
                 </Popover>
               </div>
@@ -214,42 +219,42 @@ export const Header = () => {
           </div>
           <h1>SHOP BY CATEGORY</h1>
           <ul>
-            <Link href="/">
-              <li>
+            <li>
+              <Link href="/">
                 <a>Gifts</a>
-              </li>
-            </Link>
-            <Link href="/">
-              <li>
+              </Link>
+            </li>
+            <li>
+              <Link href="/">
                 <a>Decoration</a>
-              </li>
-            </Link>
-            <Link href="/">
-              <li>
+              </Link>
+            </li>
+            <li>
+              <Link href="/">
                 <a>Birthdays</a>
-              </li>
-            </Link>
+              </Link>
+            </li>
 
-            <Link href="/">
-              <li>
+            <li>
+              <Link href="/">
                 <a>Decorations</a>
-              </li>
-            </Link>
-            <Link href="/">
-              <li>
+              </Link>
+            </li>
+            <li>
+              <Link href="/">
                 <a>Games</a>
-              </li>
-            </Link>
-            <Link href="/">
-              <li>
+              </Link>
+            </li>
+            <li>
+              <Link href="/">
                 <a>Drinks</a>
-              </li>
-            </Link>
-            <Link href="/">
-              <li>
+              </Link>
+            </li>
+            <li>
+              <Link href="/">
                 <a>Party Props</a>
-              </li>
-            </Link>
+              </Link>
+            </li>
           </ul>
           <h1>PROFILE</h1>
           <ul>
@@ -367,6 +372,14 @@ export const Header = () => {
           font-style: italic;
         }
 
+        /* .pop-over-body {
+          padding: 0 5px;
+        } */
+        .pop-over-body-rest p {
+          font-weight: bold;
+          padding: 0 5px;
+          border-bottom: 1px solid var(--text);
+        }
         @media only screen and (min-width: 700px) {
           .header-wrap {
             justify-content: space-around;
@@ -389,6 +402,13 @@ export const Header = () => {
         @media only screen and (min-width: 1000px) {
           .navigation nav {
             width: 30%;
+          }
+
+          /* .pop-over-body {
+            padding: 0 20px;
+          } */
+          .pop-over-body-rest p {
+            padding: 0 20px;
           }
         }
       `}</style>
