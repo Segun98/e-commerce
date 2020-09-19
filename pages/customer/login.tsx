@@ -222,6 +222,18 @@ export const Login = () => {
               display: block;
             }
           }
+
+          @media only screen and (min-width: 1400px) {
+            .login-page-wrap {
+              width: 70%;
+              margin: 100px auto;
+            }
+          }
+          @media only screen and (min-width: 2000px) {
+            .login-page-wrap {
+              width: 60%;
+            }
+          }
         `}</style>
       </div>
     </Layout>

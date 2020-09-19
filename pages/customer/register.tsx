@@ -328,6 +328,18 @@ export const Register = () => {
               display: block;
             }
           }
+
+          @media only screen and (min-width: 1400px) {
+            .register-page-wrap {
+              width: 70%;
+            }
+          }
+          @media only screen and (min-width: 2000px) {
+            .register-page-wrap {
+              width: 60%;
+              margin: 100px auto;
+            }
+          }
         `}</style>
       </div>
     </Layout>

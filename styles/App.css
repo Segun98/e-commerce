@@ -31,7 +31,7 @@ a {
 }
 
 a:hover {
-  text-decoration: none;
+  text-decoration: none !important;
 }
 
 .indicator {
@@ -236,6 +236,9 @@ Class names accross components can be the same but they are wrapped by a unique 
 }
 
 @media only screen and (min-width: 1200px) {
+  .home-page .main-section .featured h1 {
+    font-size: 1.4rem;
+  }
   .home-page .main-section .featured .featured-wrap {
     margin: 35px auto;
   }
@@ -471,6 +474,9 @@ Class names accross components can be the same but they are wrapped by a unique 
 }
 
 @media only screen and (min-width: 1000px) {
+  .home-page .categories h1 {
+    font-size: 1.4rem;
+  }
   .home-page .categories .categories-wrap .category-item-1,
   .home-page .categories .categories-wrap .category-item-2,
   .home-page .categories .categories-wrap .category-item-3,

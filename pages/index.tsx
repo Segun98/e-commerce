@@ -26,6 +26,14 @@ const Home = () => {
 
   const role = Cookies.get("role");
 
+  const featured_images = [
+    "slide1.jpg",
+    "slide2.jpeg",
+    "slide3.jpeg",
+    "slide4.jpeg",
+    "slide5.jpeg",
+  ];
+
   async function addCart(product_id, prod_creator_id) {
     const variables = {
       product_id,
@@ -196,14 +204,17 @@ const Home = () => {
             </div>
             <div className="featured-wrap" ref={scrollRef}>
               {data &&
-                data.products.map((p: ProductsRes) => (
+                data.products.map((p: ProductsRes, index) => (
                   <div className="item" key={p.id}>
                     <Link
                       href={`/product/${p.name_slug}`}
                       as={`/product/${p.name_slug}`}
                     >
                       <a>
-                        <img src="/slider/slide3.jpeg" alt={`${p.name}`} />
+                        <img
+                          src={`/slider/${featured_images[index]}`}
+                          alt={`${p.name}`}
+                        />
                         <div className="featured-desc">
                           <h2>{p.name}</h2>
                           <p>&#8358; {Commas(p.price)}</p>
@@ -309,6 +320,10 @@ const Home = () => {
               </a>
             </Link>
           </div>
+        </section>
+
+        <section className="steps">
+          <p>How It Works</p>
         </section>
       </div>
       <style jsx>{``}</style>

@@ -31,11 +31,9 @@ export const Header = () => {
       });
 
       try {
-        const res = await axios.post(`http://localhost:4000/api/logout`);
-        console.log(res);
-
+        const res = await instance.post(`http://localhost:4000/api/logout`);
         if (res.data) {
-          // router.reload();
+          router.reload();
           return;
         }
       } catch (error) {
@@ -107,17 +105,17 @@ export const Header = () => {
                   <PopoverContent width="30" zIndex={999}>
                     <div className="pop-over-body">
                       {!Token && !role && (
-                        <Link href="/customer/login">
-                          <p
-                            style={{
-                              color: "var(--deepblue)",
-                              textAlign: "center",
-                              fontWeight: "bold",
-                            }}
-                          >
+                        <p
+                          style={{
+                            color: "var(--deepblue)",
+                            textAlign: "center",
+                            fontWeight: "bold",
+                          }}
+                        >
+                          <Link href="/customer/login">
                             <a>LOGIN</a>
-                          </p>
-                        </Link>
+                          </Link>
+                        </p>
                       )}
                       {!Token && !role && (
                         <p
@@ -130,17 +128,17 @@ export const Header = () => {
                         </p>
                       )}
                       {!Token && !role && (
-                        <Link href="/customer/register">
-                          <p
-                            style={{
-                              color: "var(--deepblue)",
-                              textAlign: "center",
-                              fontWeight: "bold",
-                            }}
-                          >
+                        <p
+                          style={{
+                            color: "var(--deepblue)",
+                            textAlign: "center",
+                            fontWeight: "bold",
+                          }}
+                        >
+                          <Link href="/customer/register">
                             <a>CREATE AN ACCOUNT</a>
-                          </p>
-                        </Link>
+                          </Link>
+                        </p>
                       )}
                       {!Token && !role && <Divider />}
                       <div className="pop-over-body-rest">
@@ -157,14 +155,16 @@ export const Header = () => {
                         <Divider />
 
                         <p>Help</p>
-                        <Button
-                          variantColor="blue"
-                          width="100%"
-                          display="block"
-                          onClick={handleLogout}
-                        >
-                          Logout
-                        </Button>
+                        {Token && role && (
+                          <Button
+                            variantColor="blue"
+                            width="100%"
+                            display="block"
+                            onClick={handleLogout}
+                          >
+                            Logout
+                          </Button>
+                        )}
                       </div>
                     </div>
                   </PopoverContent>
@@ -329,6 +329,9 @@ export const Header = () => {
         .cart-icon {
           color: var(--deepblue);
           margin-left: 10px;
+          font-size: 0.8rem;
+          text-align: center;
+          font-weight: bold;
         }
         .cart-icon img {
           width: 30px;
@@ -421,6 +424,14 @@ export const Header = () => {
 
           .navigation nav {
             width: 45%;
+          }
+          .cart-icon {
+            font-size: 1rem;
+          }
+
+          .cart-icon img {
+            width: 35px;
+            height: 30px;
           }
         }
 

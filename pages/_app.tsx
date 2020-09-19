@@ -36,6 +36,7 @@ function MyApp({ Component, pageProps }: AppProps) {
             --lightblue: #cbd8f9;
             --deepblue: #02247a;
             --text: #626262;
+            --softblue: rgb(238, 238, 245);
           }
         `}</style>
       </UserProvider>

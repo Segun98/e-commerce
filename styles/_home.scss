@@ -182,8 +182,13 @@
 
             @media only screen and (min-width:1200px) {
 
+                h1 {
+                    font-size: 1.4rem;
+                }
+
                 .featured-wrap {
                     margin: 35px auto;
+
                 }
 
                 .item {
@@ -392,6 +397,10 @@
         }
 
         @media only screen and (min-width:1000px) {
+            h1 {
+                font-size: 1.4rem;
+            }
+
             .categories-wrap {
 
                 .category-item-1,
