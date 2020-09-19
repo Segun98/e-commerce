@@ -1,5 +1,5 @@
-import React from "react";
-import { Button, useToast } from "@chakra-ui/core";
+import React, { useEffect, useRef } from "react";
+import { Button, Icon, useToast } from "@chakra-ui/core";
 import { PRODUCTS } from "./../graphql/vendor";
 import { useToken } from "../Context/TokenProvider";
 import { addToCart } from "../graphql/customer";
@@ -11,14 +11,14 @@ import Cookies from "js-cookie";
 import useSwr from "swr";
 import queryFunc from "../utils/fetcher";
 import { Layout } from "../components/Layout";
-// import { Carousel } from "react-responsive-carousel";
-// const Carousel = require("react-responsive-carousel").Carousel;
 import Carousel from "react-bootstrap/Carousel";
+import { Commas } from "../utils/helpers";
 
 const Home = () => {
   const { data, error } = useSwr("PRODUCTS", () =>
-    queryFunc(PRODUCTS, { limit: null })
+    queryFunc(PRODUCTS, { limit: 5 })
   );
+  const scrollRef = useRef(null);
 
   const { Token } = useToken();
   const router = useRouter();
@@ -74,147 +74,242 @@ const Home = () => {
   return (
     <Layout>
       <div className="home-page">
-        <Carousel indicators={false} interval={7000}>
-          <Carousel.Item>
-            <img src="/slider/slide1.jpg" />
+        <section className="main-carousel">
+          <Carousel indicators={false} interval={7000}>
+            <Carousel.Item>
+              <img src="/slider/slide1.jpg" />
 
-            <Carousel.Caption>
-              <h3>Drinks Adds Life to Parties</h3>
-              <p>
-                We Sell Over 45 Different Types of Drinks From Different Brands
-              </p>
-              <Button>Buy A Drink</Button>
-            </Carousel.Caption>
-          </Carousel.Item>
-          <Carousel.Item>
-            <img src="/slider/slide2.jpeg" />
+              <Carousel.Caption>
+                <h3>We Have All You Need To Enoy Your Time At The Beach</h3>
+                <Link href="/">
+                  <a>Shop Now</a>
+                </Link>
+              </Carousel.Caption>
+              <div className="mobile-caption">
+                <h5>Beach Parties</h5>
+                <Link href="/">
+                  <a>Shop Now</a>
+                </Link>
+              </div>
+            </Carousel.Item>
+            <Carousel.Item>
+              <img src="/slider/slide2.jpeg" />
 
-            <Carousel.Caption>
-              <h3>COSTUME</h3>
-              <p>Get Freaky At Your Parties, Add New Faces</p>
-              <Button variantColor="blue">Get Costume</Button>
-            </Carousel.Caption>
-          </Carousel.Item>
-          <Carousel.Item>
-            <img src="/slider/slide3.jpeg" />
+              <Carousel.Caption>
+                <h3>Your House Parties Are About to get Real Lit</h3>
+                <Link href="/">
+                  <a>Shop Now</a>
+                </Link>
+              </Carousel.Caption>
+              <div className="mobile-caption">
+                <h5>House Parties</h5>
+                <Link href="/">
+                  <a>Shop Now</a>
+                </Link>
+              </div>
+            </Carousel.Item>
+            <Carousel.Item>
+              <img src="/slider/slide3.jpeg" />
 
-            <Carousel.Caption>
-              <h3>BALLOONS</h3>
-              <p>
-                Balloons Add Colours and Bring That Classic Party Experience
-              </p>
-              <Button variantColor="blue">Shop Now</Button>
-            </Carousel.Caption>
-          </Carousel.Item>
+              <Carousel.Caption>
+                <h3>
+                  We Have Just The Perfect Items For Birthday Celebrations
+                </h3>
+                <Link href="/">
+                  <a>Shop Now</a>
+                </Link>
+              </Carousel.Caption>
+              <div className="mobile-caption">
+                <h5>Birthdays</h5>
+                <Link href="/">
+                  <a>Shop Now</a>
+                </Link>
+              </div>
+            </Carousel.Item>
 
-          <Carousel.Item>
-            <img src="/slider/slide4.jpeg" />
+            <Carousel.Item>
+              <img src="/slider/slide4.jpeg" />
 
-            <Carousel.Caption>
-              <h3>Games</h3>
-              <p>
-                Games Come Through When Things Get Dull, and You Want No Dull
-                Moments
-              </p>
-              <Button variantColor="blue">Click To Buy</Button>
-            </Carousel.Caption>
-          </Carousel.Item>
+              <Carousel.Caption>
+                <h3>
+                  Games Come Through When Things Get Dull, and You Want No Dull
+                  Moments
+                </h3>
+                <Link href="/">
+                  <a>Shop Now</a>
+                </Link>
+              </Carousel.Caption>
+              <div className="mobile-caption">
+                <h5>Social Clubs</h5>
+                <Link href="/">
+                  <a>Shop Now</a>
+                </Link>
+              </div>
+            </Carousel.Item>
 
-          <Carousel.Item>
-            <img src="/slider/slide5.jpeg" />
+            <Carousel.Item>
+              <img src="/slider/slide5.jpeg" />
 
-            <Carousel.Caption>
-              <h3>SPECIAL LIGTHS</h3>
-              <p>Whats A Party Without Lights?</p>
-              <Button variantColor="blue">Shop Now</Button>
-            </Carousel.Caption>
-          </Carousel.Item>
-
-          <Carousel.Item>
-            <img src="/slider/slide6.jpeg" />
-
-            <Carousel.Caption>
-              <h3>Decoration</h3>
-              <p>Add Special Decorations To Your Party</p>
-              <Button variantColor="blue">Shop Now</Button>
-            </Carousel.Caption>
-          </Carousel.Item>
-        </Carousel>
+              <Carousel.Caption>
+                <h3>Whats A Party Without Lights?</h3>
+                <Link href="/">
+                  <a>Shop Now</a>
+                </Link>
+              </Carousel.Caption>
+              <div className="mobile-caption">
+                <h5>Beach Parties</h5>
+                <Link href="/">
+                  <a>Shop Now</a>
+                </Link>
+              </div>
+            </Carousel.Item>
+          </Carousel>
+        </section>
 
         <main className="main-section">
-          <div className="bar"></div>
+          <section className="featured">
+            <h1>Top Picks For You</h1>
+            <div className="scroll-direction">
+              <button>
+                <Icon
+                  name="chevron-left"
+                  onClick={() => {
+                    if (scrollRef.current) {
+                      scrollRef.current.scrollLeft -= 30;
+                    }
+                  }}
+                  size="32px"
+                />
+              </button>
 
-          <section className="for-you">
-            <h1>Products For You</h1>
-            <div className="for-you-wrap">
+              <button>
+                <Icon
+                  name="chevron-right"
+                  onClick={() => {
+                    if (scrollRef.current) {
+                      scrollRef.current.scrollLeft += 30;
+                    }
+                  }}
+                  size="32px"
+                />
+              </button>
+            </div>
+            <div className="featured-wrap" ref={scrollRef}>
               {data &&
                 data.products.map((p: ProductsRes) => (
                   <div className="item" key={p.id}>
-                    <img src="/product1.png" alt={`${p.name}`} />
-                    <h1>{p.name}</h1>
-                    <p>{p.price}</p>
                     <Link
                       href={`/product/${p.name_slug}`}
                       as={`/product/${p.name_slug}`}
                     >
-                      <a>Buy</a>
+                      <a>
+                        <img src="/slider/slide3.jpeg" alt={`${p.name}`} />
+                        <div className="featured-desc">
+                          <h2>{p.name}</h2>
+                          <p>&#8358; {Commas(p.price)}</p>
+                        </div>
+                      </a>
                     </Link>
                   </div>
                 ))}
+
+              {/* <div className="featured-wrap" ref={scrollRef}>
+                <div className="item">
+                  <a>
+                    <img src="/slider/slide2.jpeg" />
+                    <div className="featured-desc">
+                      <h2>Red Cups</h2>
+                      <p>&#8358; {Commas("45000")}</p>
+                    </div>
+                  </a>
+                </div>
+                <div className="item">
+                  <a>
+                    <img src="/slider/slide3.jpeg" />
+                    <div className="featured-desc">
+                      <h2>Champagne</h2>
+                      <p>&#8358; {Commas("95300")}</p>
+                    </div>
+                  </a>
+                </div>
+                <div className="item">
+                  <a>
+                    <img src="/slider/slide4.jpeg" />
+                    <div className="featured-desc">
+                      <h2>Balloons</h2>
+                      <p>&#8358; {Commas("3500")}</p>
+                    </div>
+                  </a>
+                </div>
+                <div className="item">
+                  <a>
+                    <img src="/slider/slide2.jpeg" />
+                    <div className="featured-desc">
+                      <h2>Masks</h2>
+                      <p>&#8358; {Commas("45900")}</p>
+                    </div>
+                  </a>
+                </div>
+              </div> */}
             </div>
           </section>
         </main>
-        <main>
-          {data &&
-            data.products.map((p: ProductsRes) => (
-              <div key={p.id}>
-                <div>
-                  <strong>PRODUCT NAME:</strong>
-                  {p.name}
+
+        <section className="sale-banner">
+          <Link href="/">
+            <a>
+              <img src="/sale.png" alt="sales-banner" />
+            </a>
+          </Link>
+        </section>
+
+        <section className="categories">
+          <h1>Shop By Categories</h1>
+          <div className="categories-wrap">
+            <Link href="/">
+              <a>
+                <div className="category-item category-item-1">
+                  <p>BIRTHDAYS</p>
                 </div>
-                <div>
-                  <Link
-                    href={`/product/${p.name_slug}`}
-                    as={`/product/${p.name_slug}`}
-                  >
-                    <a>Visit Product Page</a>
-                  </Link>
+              </a>
+            </Link>
+            <Link href="/">
+              <a>
+                <div className="category-item category-item-2">
+                  <p>GIFTS</p>
                 </div>
-                <div>
-                  <strong>Creator ID:</strong>
-                  {p.creator_id}
+              </a>
+            </Link>
+            <Link href="/">
+              <a>
+                <div className="category-item category-item-3">
+                  <p>GAMES</p>
                 </div>
-                <div>
-                  <strong>Creator business name:</strong>
-                  {p.creator.business_name}
+              </a>
+            </Link>
+            <Link href="/">
+              <a>
+                <div className="category-item category-item-4">
+                  <p>DRINKS</p>
                 </div>
-                <div>
-                  <strong>Creator name:</strong>
-                  {p.creator.first_name}
+              </a>
+            </Link>
+            <Link href="/">
+              <a>
+                <div className="category-item category-item-5">
+                  <p>DECORATIONS</p>
                 </div>
-                <div>
-                  <strong>Available Qty:</strong> {p.available_qty}
+              </a>
+            </Link>
+            <Link href="/">
+              <a>
+                <div className="category-item category-item-6">
+                  <p>PARTY PROPS</p>
                 </div>
-                <div>
-                  <strong>in stock:</strong> {p.in_stock}
-                </div>
-                <Button
-                  variantColor="yellow"
-                  onClick={() => {
-                    if (!Token) {
-                      router.push("/customer/account");
-                      return;
-                    }
-                    addCart(p.id, p.creator_id);
-                  }}
-                >
-                  Add to Cart
-                </Button>
-                <br />
-                <br />
-              </div>
-            ))}
-        </main>
+              </a>
+            </Link>
+          </div>
+        </section>
       </div>
       <style jsx>{``}</style>
     </Layout>

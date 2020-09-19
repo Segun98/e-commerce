@@ -15,6 +15,7 @@ import { useToken } from "../../Context/TokenProvider";
 import Cookies from "js-cookie";
 import { useRouter } from "next/router";
 import { useUser } from "../../Context/UserProvider";
+import axios from "axios";
 
 export const Header = () => {
   const { Token } = useToken();
@@ -22,6 +23,26 @@ export const Header = () => {
   const role = Cookies && Cookies.get("role");
   const { User } = useUser();
   const [IsOpen, setIsOpen] = useState(false);
+
+  const handleLogout = async () => {
+    if (window.confirm("Are you sure you want to LogOut?")) {
+      const instance = axios.create({
+        withCredentials: true,
+      });
+
+      try {
+        const res = await axios.post(`http://localhost:4000/api/logout`);
+        console.log(res);
+
+        if (res.data) {
+          // router.reload();
+          return;
+        }
+      } catch (error) {
+        console.log(error.message);
+      }
+    }
+  };
 
   return (
     <div>
@@ -134,13 +155,16 @@ export const Header = () => {
                           </Link>
                         </p>
                         <Divider />
-                        <p>
-                          <Link href="/customer/cart">
-                            <a>Contact</a>
-                          </Link>
-                        </p>
+
                         <p>Help</p>
-                        <p>Logout</p>
+                        <Button
+                          variantColor="blue"
+                          width="100%"
+                          display="block"
+                          onClick={handleLogout}
+                        >
+                          Logout
+                        </Button>
                       </div>
                     </div>
                   </PopoverContent>
@@ -372,14 +396,15 @@ export const Header = () => {
           font-style: italic;
         }
 
-        /* .pop-over-body {
+        .pop-over-body {
           padding: 0 5px;
-        } */
+        }
         .pop-over-body-rest p {
           font-weight: bold;
-          padding: 0 5px;
-          border-bottom: 1px solid var(--text);
+          padding: 2px 5px;
+          text-align: center;
         }
+
         @media only screen and (min-width: 700px) {
           .header-wrap {
             justify-content: space-around;

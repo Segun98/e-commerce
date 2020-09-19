@@ -8,6 +8,7 @@ import {
   InputRightElement,
   Button,
   Icon,
+  useToast,
 } from "@chakra-ui/core";
 import { useForm } from "react-hook-form";
 import { request } from "graphql-request";
@@ -20,6 +21,8 @@ import { Layout } from "../../components/Layout";
 
 export const Register = () => {
   const router = useRouter();
+  const toast = useToast();
+
   //react-hook-form
   const { handleSubmit, register, errors, watch } = useForm();
 
@@ -86,7 +89,16 @@ export const Register = () => {
     } catch (err) {
       setCustomError(err.response?.errors[0].message);
       setLoading(false);
-      // console.log(err.message);
+      if (err.message === "Network request failed") {
+        toast({
+          title: "Oops, Network Request Failed",
+          description: "PLease Check Your Internet Connection and Try Again",
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+          position: "top",
+        });
+      }
     }
   };
 
@@ -103,8 +115,7 @@ export const Register = () => {
           <h2 className="register-message">
             Enjoy A Modern Shopping Experience
           </h2>
-          <h3 style={{ color: "red" }}>{customError}</h3>
-          <h3 style={{ color: "green" }}>{success}</h3>
+
           <FormControl isRequired>
             <div>
               <FormLabel htmlFor="first_name">First Name</FormLabel>
@@ -242,6 +253,8 @@ export const Register = () => {
             </div>
           </FormControl>
 
+          <h3 style={{ color: "red" }}>{customError}</h3>
+          <h3 style={{ color: "green" }}>{success}</h3>
           <div className="btn">
             <Button
               isDisabled={Loading}
@@ -292,8 +305,11 @@ export const Register = () => {
           }
 
           .btn {
-            text-align: center;
-            margin-top: 15px;
+            margin-top: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
           }
           .register-msg a {
             color: var(--deepblue);

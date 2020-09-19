@@ -71,6 +71,7 @@ const Store: React.FC<{ id: any }> = React.memo(({ id }) => {
               <div>{d.image}</div>
               <div>{d.category}</div>
               <div>{d.description}</div>
+              <br />
             </div>
           ))}
       </section>

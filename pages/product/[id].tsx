@@ -5,15 +5,13 @@ import { useToast } from "@chakra-ui/core";
 import { useRouter } from "next/router";
 import { ProductsRes } from "../../Typescript/types";
 import { Layout } from "../../components/Layout";
-import queryFunc from "../../utils/fetcher";
-import useSwr, { responseInterface } from "swr";
 
 interface err {
   message: string;
 }
 
 interface response {
-  data: ProductsRes;
+  product: ProductsRes;
   error: err;
 }
 
@@ -37,13 +35,9 @@ export async function getServerSideProps({ params }) {
     };
   }
 }
-const Product = ({ product, error }) => {
+const Product = ({ product, error }: response) => {
   const toast = useToast();
   const router = useRouter();
-
-  const { data }: responseInterface<ProductsRes, any> = useSwr("PRODUCT", {
-    initialData: product,
-  });
 
   useEffect(() => {
     if (!product) {
@@ -65,16 +59,16 @@ const Product = ({ product, error }) => {
           })}
 
         <section>
-          {data && (
+          {product && (
             <div>
-              <div>{data.name}</div>
-              <div>{data.name_slug}</div>
-              <div>{data.price}</div>
-              <div>{data.in_stock}</div>
-              <div>Qty: {data.available_qty}</div>
-              <div>{data.image}</div>
-              <div>{data.category}</div>
-              <div>{data.description}</div>
+              <div>{product.name}</div>
+              <div>{product.name_slug}</div>
+              <div>{product.price}</div>
+              <div>{product.in_stock}</div>
+              <div>Qty: {product.available_qty}</div>
+              <div>{product.image}</div>
+              <div>{product.category}</div>
+              <div>{product.description}</div>
             </div>
           )}
         </section>

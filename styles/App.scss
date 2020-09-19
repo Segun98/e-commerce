@@ -14,6 +14,11 @@ $box: 0 1px 6px 0;
 $lightblue: #cbd8f9;
 $deepblue: #02247a;
 $text: #626262;
+$softblue: rgb(238, 238, 245);
+
+html {
+    scroll-behavior: smooth;
+}
 
 body {
     font-family: 'Open Sans', sans-serif;

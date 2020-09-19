@@ -8,6 +8,7 @@ import {
   Button,
   InputLeftAddon,
   Icon,
+  useToast,
 } from "@chakra-ui/core";
 import { useForm } from "react-hook-form";
 import { graphQLClient } from "../../utils/client";
@@ -19,6 +20,7 @@ import { Layout } from "../../components/Layout";
 import Link from "next/link";
 
 export const Login = () => {
+  const toast = useToast();
   const router = useRouter();
   const { setToken } = useToken();
 
@@ -68,6 +70,16 @@ export const Login = () => {
       }
     } catch (err) {
       // console.log(err.message);
+      if (err.message === "Network request failed") {
+        toast({
+          title: "Oops, Network Request Failed",
+          description: "PLease Check Your Internet Connection and Try Again",
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+          position: "top",
+        });
+      }
       setCustomError(err.response?.errors[0].message);
       setLoading(false);
     }
@@ -80,8 +92,7 @@ export const Login = () => {
         <form onSubmit={handleSubmit(onSubmit)}>
           <h1 className="log-in">Log In</h1>
           <h2 className="log-in-message">Enjoy A Modern Shopping Experience</h2>
-          <h3 style={{ color: "red" }}>{customError}</h3>
-          <h3 style={{ color: "green" }}>{success}</h3>
+
           <FormControl isRequired>
             <div>
               <FormLabel htmlFor="email">Email</FormLabel>
@@ -137,6 +148,10 @@ export const Login = () => {
               </InputGroup>
             </div>
           </FormControl>
+
+          <h3 style={{ color: "red" }}>{customError}</h3>
+          <h3 style={{ color: "green" }}>{success}</h3>
+
           <div className="btn">
             <Button
               isDisabled={Loading}
@@ -186,8 +201,11 @@ export const Login = () => {
           }
 
           .btn {
-            text-align: center;
             margin-top: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
           }
           .sign-up-msg a {
             color: var(--deepblue);
