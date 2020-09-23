@@ -74,6 +74,21 @@ query product($name_slug:String!){
     in_stock,
     available_qty,
     creator_id
+    related{
+      id,
+    name,
+    name_slug,
+    description,
+    price,
+    category,
+    image,
+    in_stock,
+    available_qty,
+    creator_id
+    }
+    creator{
+      business_name_slug
+    }
   }
 }
 `;

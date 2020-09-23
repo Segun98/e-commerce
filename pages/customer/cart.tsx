@@ -7,6 +7,7 @@ import { useQuery } from "../../components/useQuery";
 import { Order } from "../../components/customer/Order";
 import { useToken } from "../../Context/TokenProvider";
 import { Layout } from "../../components/Layout";
+import Head from "next/head";
 
 export const CustomerCart = () => {
   const toast = useToast();
@@ -15,6 +16,9 @@ export const CustomerCart = () => {
 
   return (
     <Layout>
+      <Head>
+        <title>Cart | PartyStore</title>
+      </Head>
       <div>
         {/* "network error" */}
         {Token &&
@@ -69,11 +73,10 @@ export const CustomerCart = () => {
           data.getCartItems.map((d: Cart) => (
             <div key={d.id}>
               <div>{d.product_id}</div>
-              <div>{d.quantity}</div>
+              <div>Quantity: {d.quantity}</div>
               <div>{d.product.price}</div>
               <div>{d.product.name}</div>
               <div>{d.product.description}</div>
-              <div>Qty: {d.product.available_qty}</div>
               <div>Subtotal - {d.product.price * d.quantity}</div>
               <div>Cart creator </div>
               <div>{d.cartCreator.first_name}</div>

@@ -7,7 +7,9 @@ export const Layout = ({ children }) => {
   return (
     <div>
       <Head>
-        <title>Ecommerce</title>
+        <title>
+          PartyStore | Shop Your Favourite Products For Your Parties In Nigeria
+        </title>
       </Head>
       <Header />
       {children}

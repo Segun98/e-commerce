@@ -48,7 +48,7 @@ export const Account = () => {
             </div>
           </div>
         )}
-        <main>{Token && <ShowUser />}</main>
+        <main>{Token ? <ShowUser /> : ""}</main>
       </Layout>
     </UserProvider>
   );

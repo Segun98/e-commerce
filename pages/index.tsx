@@ -1,84 +1,43 @@
-import React, { useEffect, useRef } from "react";
-import { Button, Icon, useToast } from "@chakra-ui/core";
+import React, { useRef } from "react";
+import { Icon } from "@chakra-ui/core";
 import { PRODUCTS } from "./../graphql/vendor";
-import { useToken } from "../Context/TokenProvider";
-import { addToCart } from "../graphql/customer";
 import { ProductsRes } from "../Typescript/types";
 import Link from "next/link";
-import { useMutation } from "../utils/useMutation";
-import { useRouter } from "next/router";
-import Cookies from "js-cookie";
-import useSwr from "swr";
-import queryFunc from "../utils/fetcher";
 import { Layout } from "../components/Layout";
 import Carousel from "react-bootstrap/Carousel";
 import { Commas } from "../utils/helpers";
+import { PurchaseSteps } from "../components/customer/PurchaseSteps";
+import { graphQLClient } from "../utils/client";
 
-const Home = () => {
-  const { data, error } = useSwr("PRODUCTS", () =>
-    queryFunc(PRODUCTS, { limit: 5 })
-  );
+export async function getServerSideProps() {
+  try {
+    const res = await graphQLClient.request(PRODUCTS, { limit: 5 });
+    const products = await res.products;
+    return {
+      props: {
+        products,
+      },
+    };
+  } catch (err) {
+    return {
+      props: {
+        error: err.message,
+      },
+    };
+  }
+}
+
+const Home = ({ products, error }) => {
   const scrollRef = useRef(null);
 
-  const { Token } = useToken();
-  const router = useRouter();
-  const toast = useToast();
-
-  const role = Cookies.get("role");
-
   const featured_images = [
-    "slide1.jpg",
-    "slide2.jpeg",
-    "slide3.jpeg",
-    "slide4.jpeg",
-    "slide5.jpeg",
+    "product3.png",
+    "product2.png",
+    "product1.png",
+    "product2.png",
+    "product3.png",
   ];
 
-  async function addCart(product_id, prod_creator_id) {
-    const variables = {
-      product_id,
-      prod_creator_id,
-    };
-    const { data, error } = await useMutation(addToCart, variables, Token);
-
-    if (data) {
-      toast({
-        title: "Item Added to Cart!",
-        description: `Your Item has been added to cart, proceed to checkout`,
-        status: "success",
-        duration: 7000,
-        isClosable: true,
-        position: "bottom",
-      });
-    }
-    if (error) {
-      //handled this error cos chakra ui "status" should be "info"
-      if (error.response?.errors[0].message === "Item is already in Cart") {
-        toast({
-          title: "Item is already in Cart",
-          description: "Please Visit your Cart page to checkout",
-          status: "info",
-          duration: 5000,
-          isClosable: true,
-          position: "bottom",
-        });
-        return;
-      }
-      toast({
-        title: "An Error occurred while adding to cart.",
-        description:
-          error.message === "Network request failed"
-            ? "Check Your Internet Connection and Refressh"
-            : role !== "customer"
-            ? "You need to Login as a customer"
-            : "",
-        status: "error",
-        duration: 7000,
-        isClosable: true,
-        position: "top",
-      });
-    }
-  }
   return (
     <Layout>
       <div className="home-page">
@@ -174,6 +133,8 @@ const Home = () => {
           </Carousel>
         </section>
 
+        {/* FEATURED PRODUCTS SECTION */}
+
         <main className="main-section">
           <section className="featured">
             <h1>Top Picks For You</h1>
@@ -203,18 +164,19 @@ const Home = () => {
               </button>
             </div>
             <div className="featured-wrap" ref={scrollRef}>
-              {data &&
-                data.products.map((p: ProductsRes, index) => (
-                  <div className="item" key={p.id}>
+              {products &&
+                products.map((p: ProductsRes, index) => (
+                  <div className="featured-item" key={p.id}>
                     <Link
                       href={`/product/${p.name_slug}`}
                       as={`/product/${p.name_slug}`}
                     >
                       <a>
                         <img
-                          src={`/slider/${featured_images[index]}`}
+                          src={`/${featured_images[index]}`}
                           alt={`${p.name}`}
                         />
+                        <hr />
                         <div className="featured-desc">
                           <h2>{p.name}</h2>
                           <p>&#8358; {Commas(p.price)}</p>
@@ -223,48 +185,11 @@ const Home = () => {
                     </Link>
                   </div>
                 ))}
-
-              {/* <div className="featured-wrap" ref={scrollRef}>
-                <div className="item">
-                  <a>
-                    <img src="/slider/slide2.jpeg" />
-                    <div className="featured-desc">
-                      <h2>Red Cups</h2>
-                      <p>&#8358; {Commas("45000")}</p>
-                    </div>
-                  </a>
-                </div>
-                <div className="item">
-                  <a>
-                    <img src="/slider/slide3.jpeg" />
-                    <div className="featured-desc">
-                      <h2>Champagne</h2>
-                      <p>&#8358; {Commas("95300")}</p>
-                    </div>
-                  </a>
-                </div>
-                <div className="item">
-                  <a>
-                    <img src="/slider/slide4.jpeg" />
-                    <div className="featured-desc">
-                      <h2>Balloons</h2>
-                      <p>&#8358; {Commas("3500")}</p>
-                    </div>
-                  </a>
-                </div>
-                <div className="item">
-                  <a>
-                    <img src="/slider/slide2.jpeg" />
-                    <div className="featured-desc">
-                      <h2>Masks</h2>
-                      <p>&#8358; {Commas("45900")}</p>
-                    </div>
-                  </a>
-                </div>
-              </div> */}
             </div>
           </section>
         </main>
+
+        {/* BANNER SECTION */}
 
         <section className="sale-banner">
           <Link href="/">
@@ -322,9 +247,13 @@ const Home = () => {
           </div>
         </section>
 
-        <section className="steps">
-          <p>How It Works</p>
-        </section>
+        {/* IMPORTED . PURCHASE STEPS SECTION */}
+
+        <PurchaseSteps />
+
+        {/* <section  style={{ padding: "40px 0" }}>
+          <h1>IDK WHAT SECTION THIS IS ABEG</h1>
+        </section> */}
       </div>
       <style jsx>{``}</style>
     </Layout>

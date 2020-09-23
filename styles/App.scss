@@ -48,8 +48,13 @@ a:hover {
     height: 90vh;
 }
 
+button {
+    cursor: pointer;
+}
+
 /* Note - ALL Imported styles represent each page and are named accordingly. 
 Class names accross components can be the same but they are wrapped by a unique class, usually named after the page or component */
 
 @import "./home";
-@import "./store_new-item"
+@import "./store_new-item";
+@import "./product"

@@ -91,14 +91,15 @@ export const Header = () => {
                       style={{ color: "white", background: "var(--deepblue)" }}
                       rightIcon="chevron-down"
                     >
-                      {!Token && !role && <div>Login</div>}
-                      {Token && role && (
+                      {Token && role ? (
                         <div
                           className="profile-icon"
                           style={{ cursor: "pointer" }}
                         >
                           <div>Hi, {Token && User && User.first_name}</div>
                         </div>
+                      ) : (
+                        <div>Login</div>
                       )}
                     </Button>
                   </PopoverTrigger>
@@ -220,19 +221,17 @@ export const Header = () => {
             className="nav-profile"
             style={{ display: "flex", justifyContent: "space-between" }}
           >
-            {!Token && !role && (
-              <Link href="/customer/login">
-                <p>
-                  <a>Hello, Login</a>
-                </p>
-              </Link>
-            )}
-            {Token && role && (
+            {Token && role ? (
               <div style={{ cursor: "pointer" }}>
                 {/* <img src="/profile.svg" alt="profile-icon" /> */}
                 <div>Hi, {Token && User && User.first_name}</div>
               </div>
+            ) : (
+              <Link href="/customer/login">
+                <a>Hello, Login</a>
+              </Link>
             )}
+
             <button
               onClick={() => {
                 setIsOpen(!IsOpen);
@@ -282,9 +281,21 @@ export const Header = () => {
           </ul>
           <h1>PROFILE</h1>
           <ul>
-            <li>Account</li>
-            <li>Cart</li>
-            <li>Contact</li>
+            <li>
+              <Link href="/customer/account">
+                <a>Account</a>
+              </Link>
+            </li>
+            <li>
+              <Link href="/customer/cart">
+                <a>Cart</a>
+              </Link>
+            </li>
+            <li>
+              <Link href="/">
+                <a>Contact</a>
+              </Link>
+            </li>
           </ul>
         </nav>
       </section>
@@ -440,11 +451,14 @@ export const Header = () => {
             width: 30%;
           }
 
-          /* .pop-over-body {
-            padding: 0 20px;
-          } */
           .pop-over-body-rest p {
             padding: 0 20px;
+          }
+        }
+
+        @media only screen and (min-width: 1200px) {
+          .navigation nav ul li {
+            font-size: 1.1rem;
           }
         }
       `}</style>

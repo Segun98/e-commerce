@@ -4,6 +4,7 @@ import Link from "next/link";
 export const Footer = () => {
   return (
     <footer>
+      <hr />
       <div className="footer-wrap">
         <section className="footer-item">
           <h1>Customer Service</h1>
@@ -105,13 +106,9 @@ export const Footer = () => {
         </div>
       </div>
       <style jsx>{`
-        footer {
-          padding: 20px 0;
-          background: var(--softblue);
-          margin-top: 15px;
-        }
         .footer-wrap {
           margin: auto;
+          margin-top: 10px;
           width: 90%;
           display: grid;
           grid-template-columns: 1fr 1fr;
@@ -127,10 +124,14 @@ export const Footer = () => {
         .footer-item {
           margin: 10px 0;
         }
+        .footer-wrap h1 {
+          margin-bottom: 15px;
+        }
         .footer-wrap ul li {
           list-style: none;
           color: var(--text);
           font-size: 0.9rem;
+          margin: 8px 0;
         }
         .attribution {
           padding: 10px 0;
@@ -143,18 +144,9 @@ export const Footer = () => {
           font-size: 0.9rem;
         }
 
-        @media only screen and (min-width: 700px) {
-          footer {
-            margin-top: 20px;
-          }
-          .footer-wrap ul li {
-            margin: 5px 0;
-          }
-        }
-
         @media only screen and (min-width: 1000px) {
           .footer-wrap {
-            grid-template-columns: 1fr 1fr 1fr 1fr;
+            grid-template-columns: repeat(4, 1fr);
           }
         }
 
@@ -189,9 +181,6 @@ export const Footer = () => {
         }
 
         @media only screen and (min-width: 2000px) {
-          footer {
-            padding: 30px 0;
-          }
           .footer-wrap {
             width: 60%;
           }

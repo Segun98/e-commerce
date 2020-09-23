@@ -21,6 +21,7 @@ query getCartItems{
         image
         in_stock
         creator_id
+        available_qty
         creator{
             email
             phone
@@ -38,10 +39,12 @@ export const addToCart = `
 mutation addToCart(
     $product_id: ID!,
     $prod_creator_id: ID!,
+    $quantity:Int
 ){
     addToCart(
         product_id: $product_id
         prod_creator_id: $prod_creator_id
+        quantity: $quantity
     ){
         message
     }

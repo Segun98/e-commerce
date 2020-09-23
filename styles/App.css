@@ -47,8 +47,16 @@ a:hover {
   height: 90vh;
 }
 
+button {
+  cursor: pointer;
+}
+
 /* Note - ALL Imported styles represent each page and are named accordingly. 
 Class names accross components can be the same but they are wrapped by a unique class, usually named after the page or component */
+.home-page h1 {
+  font-style: italic;
+}
+
 .home-page .main-carousel .carousel-item .mobile-caption {
   background: #02247a;
   padding: 5px;
@@ -118,13 +126,10 @@ Class names accross components can be the same but they are wrapped by a unique 
 
 @media only screen and (min-width: 700px) {
   .home-page .main-carousel .carousel img {
-    height: 350px;
-  }
-}
-
-@media only screen and (min-width: 1200px) {
-  .home-page .main-carousel .carousel img {
     height: 400px;
+    width: 100vw;
+    -o-object-fit: cover;
+       object-fit: cover;
   }
 }
 
@@ -167,17 +172,25 @@ Class names accross components can be the same but they are wrapped by a unique 
       -ms-flex-pack: justify;
           justify-content: space-between;
   overflow-x: scroll;
+  scroll-behavior: smooth;
+  -webkit-transition: 0.8s ease;
+  transition: 0.8s ease;
 }
 
-.home-page .main-section .featured .item {
+.home-page .main-section .featured .featured-item {
   margin: 0 10px;
   -webkit-box-shadow: 0 1px 6px 0 rgba(32, 33, 36, 0.28);
           box-shadow: 0 1px 6px 0 rgba(32, 33, 36, 0.28);
   background: white;
   border-radius: 5px;
+  padding: 3px;
 }
 
-.home-page .main-section .featured .item a {
+.home-page .main-section .featured .featured-item h2 {
+  font-style: italic;
+}
+
+.home-page .main-section .featured .featured-item a {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -187,27 +200,31 @@ Class names accross components can be the same but they are wrapped by a unique 
           flex-direction: column;
 }
 
-.home-page .main-section .featured .item a:hover {
+.home-page .main-section .featured .featured-item a:hover {
   text-decoration: none;
 }
 
-.home-page .main-section .featured .item a img {
+.home-page .main-section .featured .featured-item a img {
   min-width: 150px;
   height: 150px;
-  -o-object-fit: cover;
-     object-fit: cover;
+  -o-object-fit: contain;
+     object-fit: contain;
   border-radius: 5px;
 }
 
-.home-page .main-section .featured .item a .featured-desc {
+.home-page .main-section .featured .featured-item a .featured-desc {
   margin: 5px 0;
   text-align: center;
 }
 
-.home-page .main-section .featured .item a .featured-desc h2 {
+.home-page .main-section .featured .featured-item a .featured-desc h2 {
   color: #02247a;
   font-weight: bold;
   padding: 5px 0;
+}
+
+.home-page .main-section .featured .featured-item a .featured-desc p {
+  font-weight: bold;
 }
 
 @media only screen and (min-width: 700px) {
@@ -242,27 +259,29 @@ Class names accross components can be the same but they are wrapped by a unique 
   .home-page .main-section .featured .featured-wrap {
     margin: 35px auto;
   }
-  .home-page .main-section .featured .item {
+  .home-page .main-section .featured .featured-item {
     margin: 0 14px;
   }
-  .home-page .main-section .featured .item a:hover {
+  .home-page .main-section .featured .featured-item a:hover {
     -webkit-transform: scale(1.02);
             transform: scale(1.02);
     -webkit-transition: 0.6s ease;
     transition: 0.6s ease;
   }
-  .home-page .main-section .featured .item a img {
+  .home-page .main-section .featured .featured-item a img {
+    -o-object-fit: contain;
+       object-fit: contain;
     min-width: 200px;
     height: 200px;
   }
-  .home-page .main-section .featured .item a .featured-desc {
+  .home-page .main-section .featured .featured-item a .featured-desc {
     margin: 8px 0;
   }
 }
 
 @media only screen and (min-width: 2000px) {
   .home-page .main-section .featured .featured-wrap {
-    width: 70%;
+    width: 60%;
   }
 }
 
@@ -350,7 +369,7 @@ Class names accross components can be the same but they are wrapped by a unique 
 }
 
 .home-page .categories .categories-wrap .category-item-1 {
-  background-image: url("/slider/slide2.jpeg");
+  background-image: url("/slider/slide1.jpg");
   background-position: center;
   background-repeat: no-repeat;
   height: 120px;
@@ -492,6 +511,9 @@ Class names accross components can be the same but they are wrapped by a unique 
   .home-page .categories {
     padding: 20px;
   }
+  .home-page .categories h1 {
+    margin-bottom: 50px;
+  }
   .home-page .categories .categories-wrap .category-item-1,
   .home-page .categories .categories-wrap .category-item-2,
   .home-page .categories .categories-wrap .category-item-3,
@@ -520,12 +542,89 @@ Class names accross components can be the same but they are wrapped by a unique 
   }
 }
 
+.steps {
+  margin: 25px 0 0 0;
+  background: #eeeef5;
+  padding: 20px 0;
+}
+
+.steps h1 {
+  margin-bottom: 15px;
+  font-size: 1.2rem;
+  text-align: center;
+  font-weight: bold;
+}
+
+.steps .steps-wrap {
+  margin: auto;
+  width: 80%;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 1fr;
+      grid-template-columns: 1fr;
+  gap: 35px;
+}
+
+.steps .steps-wrap .steps-item {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.steps .steps-wrap .steps-item svg {
+  font-size: 50px;
+  color: #7070f0;
+  margin-right: 20px;
+}
+
+.steps .steps-wrap .steps-item p {
+  font-size: 0.9rem;
+}
+
 @media only screen and (min-width: 700px) {
-  .home-page img {
-    height: 450px;
-    width: 100vw;
-    -o-object-fit: cover;
-       object-fit: cover;
+  .steps .steps-wrap {
+    width: 90%;
+    -ms-grid-columns: (1fr)[4];
+        grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+  }
+  .steps .steps-wrap .steps-item {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+  }
+  .steps .steps-wrap .steps-item svg {
+    font-size: 50px;
+    color: #7070f0;
+    margin-bottom: 20px;
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  .steps h1 {
+    font-size: 1.4rem;
+  }
+}
+
+@media only screen and (min-width: 1400px) {
+  .steps .steps-wrap {
+    width: 80%;
+  }
+  .steps .steps-wrap .steps-item p {
+    font-size: 1rem;
+  }
+}
+
+@media only screen and (min-width: 2000px) {
+  .steps .steps-wrap {
+    width: 60%;
+  }
+  .steps .steps-wrap .steps-item p {
+    font-size: 1.05rem;
   }
 }
 
@@ -577,5 +676,357 @@ Class names accross components can be the same but they are wrapped by a unique 
 
 .store_new-item .btn {
   text-align: center;
+}
+
+.product-page {
+  background: #eeeef5;
+}
+
+.product-page .product {
+  padding-top: 20px;
+}
+
+.product-page .product h1 {
+  font-style: italic;
+}
+
+.product-page .product .product-wrap {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 1fr;
+      grid-template-columns: 1fr;
+  margin: auto;
+  width: 90%;
+  gap: 20px;
+}
+
+.product-page .product .product-wrap .product-info1 {
+  text-align: center;
+  background-color: white;
+  border-radius: 5px;
+  padding: 20px;
+}
+
+.product-page .product .product-wrap .product-info1 h1 {
+  font-weight: bold;
+  font-size: 1rem;
+  margin: 10px 0;
+}
+
+.product-page .product .product-wrap .product-info1 .product-name-mobile {
+  font-style: italic;
+}
+
+.product-page .product .product-wrap .product-info1 .product-img {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.product-page .product .product-wrap .product-info1 .product-price-mobile {
+  font-weight: bold;
+  font-size: 1rem;
+  text-align: center;
+  color: #02247a;
+  padding-bottom: 3px;
+}
+
+.product-page .product .product-wrap .product-info1 .share-section {
+  text-align: left;
+}
+
+.product-page .product .product-wrap .product-info1 .share-section h1 {
+  font-size: 0.9rem;
+}
+
+.product-page .product .product-wrap .product-info1 .share-section .share-icons ul {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin-top: -5px;
+  margin-bottom: 10px;
+}
+
+.product-page .product .product-wrap .product-info1 .share-section .share-icons ul li {
+  list-style: none;
+}
+
+.product-page .product .product-wrap .product-info1 .share-section .share-icons ul li img {
+  height: 25px;
+}
+
+.product-page .product .product-wrap .product-info1 .share-section .share-icons p {
+  font-size: 0.9rem;
+  color: #02247a;
+  font-weight: bold;
+}
+
+.product-page .product .product-wrap .product-info2 {
+  background-color: white;
+  border-radius: 5px;
+}
+
+.product-page .product .product-wrap .product-info2 .product-name-desktop {
+  display: none;
+}
+
+.product-page .product .product-wrap .product-info2 .product-price-desktop {
+  font-weight: bold;
+  font-size: 1.2rem;
+  margin: 10px 0;
+  text-align: center;
+  color: #02247a;
+  display: none;
+}
+
+.product-page .product .product-wrap .product-info2 .cart-btn {
+  position: fixed;
+  bottom: 0;
+  margin: 0 auto 10px auto;
+  width: 90%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  z-index: 10;
+}
+
+.product-page .product .product-wrap .product-info2 .cart-btn .qty-btn {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background: white;
+  color: #02247a;
+  border: 0.5px solid #02247a;
+  font-weight: bold;
+  width: 40%;
+  height: 50px;
+  padding: 1px;
+  margin-bottom: 8px;
+  border-radius: 5px;
+}
+
+.product-page .product .product-wrap .product-info2 .cart-btn .qty-btn button {
+  font-size: 1rem;
+  border: none;
+}
+
+.product-page .product .product-wrap .product-info2 .cart-btn Button {
+  width: 100%;
+  height: 50px;
+}
+
+.product-page .product .product-wrap .product-info3 {
+  padding: 10px 20px;
+  border-radius: 5px;
+  background-color: white;
+}
+
+.product-page .product .product-wrap .product-info3 h1 {
+  font-weight: bold;
+  font-size: 1rem;
+  margin: 10px 0;
+  text-align: center;
+}
+
+@media only screen and (min-width: 700px) {
+  .product-page .product .product-wrap {
+    -ms-grid-columns: 1fr 1fr;
+        grid-template-columns: 1fr 1fr;
+  }
+  .product-page .product .product-wrap .product-info1 .product-img {
+    margin-top: 50px;
+  }
+  .product-page .product .product-wrap .product-info1 .product-name-mobile,
+  .product-page .product .product-wrap .product-info1 .product-price-mobile {
+    display: none;
+  }
+  .product-page .product .product-wrap .product-info2 {
+    padding: 10px 0;
+    margin-bottom: 10px;
+  }
+  .product-page .product .product-wrap .product-info2 .product-name-desktop {
+    font-weight: 900;
+    display: block;
+    text-align: center;
+    font-weight: bolder;
+  }
+  .product-page .product .product-wrap .product-info2 .product-price-desktop {
+    display: block;
+  }
+  .product-page .product .product-wrap .product-info2 .cart-btn {
+    position: static;
+    margin-bottom: 0px;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+  }
+  .product-page .product .product-wrap .product-info2 .cart-btn .qty-btn {
+    background: white;
+    width: 45%;
+    height: 50px;
+    padding: 5px;
+    margin-bottom: 0;
+    margin-right: 10px;
+    border-radius: 5px;
+  }
+}
+
+@media only screen and (min-width: 1000px) {
+  .product-page .product {
+    padding-top: 50px;
+  }
+  .product-page .product .product-wrap {
+    width: 70%;
+  }
+}
+
+@media only screen and (min-width: 1400px) {
+  .product-page .product {
+    padding-top: 100px;
+  }
+  .product-page .product .product-wrap {
+    width: 60%;
+  }
+}
+
+.product-page .related-products {
+  padding: 10px;
+}
+
+.product-page .related-products h1 {
+  font-weight: bold;
+  font-size: 1.2rem;
+  text-align: center;
+  margin: 10px 0;
+}
+
+.product-page .related-products .related-wrap {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+
+.product-page .related-products .related-item {
+  margin: 8px;
+  -webkit-box-shadow: 0 1px 6px 0 rgba(32, 33, 36, 0.28);
+          box-shadow: 0 1px 6px 0 rgba(32, 33, 36, 0.28);
+  background: white;
+  border-radius: 5px;
+  width: 150px;
+}
+
+.product-page .related-products .related-item a {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.product-page .related-products .related-item a:hover {
+  text-decoration: none;
+}
+
+.product-page .related-products .related-item a img {
+  min-width: 150px;
+  height: 150px;
+  -o-object-fit: contain;
+     object-fit: contain;
+  border-radius: 5px;
+}
+
+.product-page .related-products .related-item a .related-desc {
+  margin: 5px 0;
+  text-align: center;
+  font-weight: bold;
+}
+
+.product-page .related-products .related-item a .related-desc h2 {
+  color: #02247a;
+  padding: 5px 0;
+  font-style: italic;
+}
+
+@media only screen and (min-width: 700px) {
+  .product-page .related-products h1 {
+    margin: 15px 0;
+  }
+  .product-page .related-products .related-wrap {
+    margin: auto;
+    width: 85%;
+  }
+  .product-page .related-products .related-wrap .related-item {
+    width: 200px;
+  }
+}
+
+@media only screen and (min-width: 1000px) {
+  .product-page .related-products .related-wrap {
+    margin: 15px auto;
+    overflow: hidden;
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  .product-page .related-products h1 {
+    font-size: 1.4rem;
+  }
+  .product-page .related-products .related-wrap {
+    margin: 35px auto;
+  }
+  .product-page .related-products .related-item {
+    margin: 0 14px;
+  }
+  .product-page .related-products .related-item a:hover {
+    -webkit-transform: scale(1.02);
+            transform: scale(1.02);
+    -webkit-transition: 0.6s ease;
+    transition: 0.6s ease;
+  }
+  .product-page .related-products .related-item a img {
+    -o-object-fit: contain;
+       object-fit: contain;
+    min-width: 200px;
+    height: 200px;
+  }
+  .product-page .related-products .related-item a .related-desc {
+    margin: 8px 0;
+  }
+}
+
+@media only screen and (min-width: 2000px) {
+  .product-page .related-products .related-wrap {
+    width: 60%;
+  }
 }
 /*# sourceMappingURL=App.css.map */

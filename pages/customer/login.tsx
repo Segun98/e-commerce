@@ -101,6 +101,7 @@ export const Login = () => {
                   children={<Icon name="at-sign" color="blue.400" />}
                 /> */}
                 <Input
+                  autoFocus={true}
                   type="email"
                   id="email"
                   name="email"
@@ -222,7 +223,15 @@ export const Login = () => {
               display: block;
             }
           }
-
+          @media only screen and (min-width: 1200px) {
+            .login-page-wrap {
+              width: 80%;
+              margin: 50px auto;
+            }
+            .login-vector {
+              width: 75%;
+            }
+          }
           @media only screen and (min-width: 1400px) {
             .login-page-wrap {
               width: 70%;
