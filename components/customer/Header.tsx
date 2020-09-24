@@ -23,6 +23,14 @@ export const Header = () => {
   const role = Cookies && Cookies.get("role");
   const { User } = useUser();
   const [IsOpen, setIsOpen] = useState(false);
+  const [search, setSearch] = useState("");
+
+  function handleSearch(e) {
+    e.preventDefault();
+    if (search !== "") {
+      router.push(`/search?query=${search}`);
+    }
+  }
 
   const handleLogout = async () => {
     if (window.confirm("Are you sure you want to LogOut?")) {
@@ -63,24 +71,28 @@ export const Header = () => {
               </div>
             </div>
 
+            {/* SEARCH BAR FOR DESKTOP */}
+
             <div className="large-bar">
-              <InputGroup size="md">
-                <InputLeftAddon
-                  onClick={() => {
-                    console.log("clicked");
-                  }}
-                  cursor="pointer"
-                  children={<Icon name="search" color="blue.800" />}
-                  borderTop="none"
-                  color="blue.400"
-                />
-                <Input
-                  type="search"
-                  name="search"
-                  id="search"
-                  placeholder="Search our 1000+ products"
-                />
-              </InputGroup>
+              <form onSubmit={handleSearch}>
+                <InputGroup size="md">
+                  <InputLeftAddon
+                    onClick={handleSearch}
+                    cursor="pointer"
+                    children={<Icon name="search" color="blue.800" />}
+                    borderTop="none"
+                    color="blue.400"
+                  />
+                  <Input
+                    type="search"
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                    name="search"
+                    id="search"
+                    placeholder="Search our 1000+ products"
+                  />
+                </InputGroup>
+              </form>
             </div>
 
             <div className="header-wrap_right">
@@ -88,6 +100,7 @@ export const Header = () => {
                 <Popover usePortal>
                   <PopoverTrigger>
                     <Button
+                      size="sm"
                       style={{ color: "white", background: "var(--deepblue)" }}
                       rightIcon="chevron-down"
                     >
@@ -183,39 +196,47 @@ export const Header = () => {
             </div>
           </div>
         </header>
-        {/* dont show in these routes  */}
+
+        {/* MOBILE SEARCH BAR dont show in these routes  */}
+
         {router.pathname !== "/customer/login" &&
           router.pathname !== "/customer/register" && (
             <div className="search-bar">
-              <InputGroup size="md">
-                <InputLeftAddon
-                  onClick={() => {
-                    console.log("clicked");
-                  }}
-                  cursor="pointer"
-                  children={<Icon name="search" color="blue.800" />}
-                  borderTop="none"
-                  color="blue.400"
-                />
-                <Input
-                  type="search"
-                  name="search"
-                  id="search"
-                  placeholder="Search our 1000+ products"
-                />
-              </InputGroup>
+              <form onSubmit={handleSearch}>
+                <InputGroup size="md">
+                  <InputLeftAddon
+                    onClick={handleSearch}
+                    cursor="pointer"
+                    children={<Icon name="search" color="blue.800" />}
+                    borderTop="none"
+                    color="blue.400"
+                  />
+                  <Input
+                    type="search"
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                    name="search"
+                    id="search"
+                    placeholder="Search our 1000+ products"
+                  />
+                </InputGroup>
+              </form>
             </div>
           )}
       </div>
+
+      {/* MENU SECTION */}
+
       <section className={IsOpen ? "navigation" : "navigation open-nav"}>
         <nav>
           <button
+            aria-roledescription="close menu"
             className="close-nav"
             onClick={() => {
               setIsOpen(!IsOpen);
             }}
           >
-            <img src="close-o.svg" alt="close-icon" />
+            <img src="close-o.svg" alt="close icon" />
           </button>
           <div
             className="nav-profile"
@@ -233,6 +254,7 @@ export const Header = () => {
             )}
 
             <button
+              aria-roledescription="close menu"
               onClick={() => {
                 setIsOpen(!IsOpen);
               }}
@@ -243,39 +265,33 @@ export const Header = () => {
           <h1>SHOP BY CATEGORY</h1>
           <ul>
             <li>
-              <Link href="/">
+              <Link href="/category?category=Gifts">
                 <a>Gifts</a>
               </Link>
             </li>
             <li>
-              <Link href="/">
-                <a>Decoration</a>
-              </Link>
-            </li>
-            <li>
-              <Link href="/">
-                <a>Birthdays</a>
-              </Link>
-            </li>
-
-            <li>
-              <Link href="/">
+              <Link href="/category?category=Decorations">
                 <a>Decorations</a>
               </Link>
             </li>
             <li>
-              <Link href="/">
+              <Link href="/category?category=Games">
                 <a>Games</a>
               </Link>
             </li>
             <li>
-              <Link href="/">
+              <Link href="/category?category=Drinks">
                 <a>Drinks</a>
               </Link>
             </li>
             <li>
-              <Link href="/">
+              <Link href="/category?category=Props">
                 <a>Party Props</a>
+              </Link>
+            </li>
+            <li>
+              <Link href="/category?category=Cakes">
+                <a>Cakes</a>
               </Link>
             </li>
           </ul>
