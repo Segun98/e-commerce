@@ -51,6 +51,14 @@ mutation addToCart(
 }
 `;
 
+export const updateCart = `
+mutation updateCart($id:ID, $quantity:Int){
+    updateCart(id:$id, quantity:$quantity){
+            message
+    }
+}
+`;
+
 export const deleteFromCart = `
 mutation deleteFromCart(
         $id:ID
@@ -99,3 +107,19 @@ mutation createOrder(
 }
 
 `;
+
+export const SEARCH = `
+    query search($query:String!, $limit:Int)
+    {
+        search(query:$query, limit:$limit){
+            id
+            name
+            name_slug
+            description
+            price
+            image
+            in_stock
+            creator_id
+            available_qty
+        }
+}`;

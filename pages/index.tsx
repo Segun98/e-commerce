@@ -28,6 +28,7 @@ export async function getServerSideProps() {
 }
 
 const Home = ({ products, error }) => {
+  //Featured Products Section Scroll
   const scrollRef = useRef(null);
 
   const featured_images = [
@@ -202,42 +203,42 @@ const Home = ({ products, error }) => {
         <section className="categories">
           <h1>Shop By Categories</h1>
           <div className="categories-wrap">
-            <Link href="/">
+            <Link href="/category?category=Cakes">
               <a>
                 <div className="category-item category-item-1">
-                  <p>BIRTHDAYS</p>
+                  <p>CAKES</p>
                 </div>
               </a>
             </Link>
-            <Link href="/">
+            <Link href="/category?category=Gifts">
               <a>
                 <div className="category-item category-item-2">
                   <p>GIFTS</p>
                 </div>
               </a>
             </Link>
-            <Link href="/">
+            <Link href="/category?category=Games">
               <a>
                 <div className="category-item category-item-3">
                   <p>GAMES</p>
                 </div>
               </a>
             </Link>
-            <Link href="/">
+            <Link href="/category?category=Drinks">
               <a>
                 <div className="category-item category-item-4">
                   <p>DRINKS</p>
                 </div>
               </a>
             </Link>
-            <Link href="/">
+            <Link href="/category?category=Decorations">
               <a>
                 <div className="category-item category-item-5">
                   <p>DECORATIONS</p>
                 </div>
               </a>
             </Link>
-            <Link href="/">
+            <Link href="/category?category=Props">
               <a>
                 <div className="category-item category-item-6">
                   <p>PARTY PROPS</p>
