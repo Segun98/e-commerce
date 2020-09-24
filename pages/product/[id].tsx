@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { graphQLClient } from "../../utils/client";
 import { PRODUCT } from "../../graphql/vendor";
 import { Button, Icon, useToast } from "@chakra-ui/core";
@@ -62,6 +62,7 @@ const Product = ({ product, error }: response) => {
     : [];
 
   const featured_images = [
+    "slider/slide2.jpeg",
     "product3.png",
     "product2.png",
     "product1.png",
@@ -187,6 +188,7 @@ const Product = ({ product, error }: response) => {
                   <div className="cart-btn">
                     <div className="qty-btn">
                       <button
+                        aria-roledescription="decrement quantity"
                         onClick={() => {
                           if (quantity === 1) {
                             return;
@@ -198,6 +200,7 @@ const Product = ({ product, error }: response) => {
                       </button>
                       <aside style={{ fontSize: "20px" }}>{quantity}</aside>
                       <button
+                        aria-roledescription="increment quantity"
                         onClick={() => {
                           if (quantity === product.available_qty) {
                             return;

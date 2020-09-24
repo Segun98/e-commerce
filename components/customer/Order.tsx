@@ -6,10 +6,11 @@ import { useMutation } from "../../utils/useMutation";
 import { useRouter } from "next/router";
 
 interface Iprops {
-  d: Cart;
+  c: Cart;
   Token: string;
+  getCartFn: () => Promise<void>;
 }
-export const Order: React.FC<Iprops> = ({ d, Token }) => {
+export const Order: React.FC<Iprops> = ({ c, Token, getCartFn }) => {
   const toast = useToast();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
@@ -57,7 +58,7 @@ export const Order: React.FC<Iprops> = ({ d, Token }) => {
         id,
       });
       if (data.deleteFromCart) {
-        router.reload();
+        getCartFn();
       }
     }
     if (error) {
@@ -73,33 +74,37 @@ export const Order: React.FC<Iprops> = ({ d, Token }) => {
     }
   }
   return (
-    <div>
+    <div className="order-comp">
       <Button
-        variantColor="purple"
+        className="order-btn"
+        color="white"
+        size="sm"
+        style={{ background: "var(--deepblue)" }}
         isLoading={loading}
         onClick={() => {
           handleOrder(
-            d.product.name,
-            d.product.price,
-            d.quantity,
+            c.product.name,
+            c.product.price,
+            c.quantity,
             5000,
-            d.product.price * d.quantity,
-            d.product.description,
-            d.cartCreator.email,
-            d.product.creator.email,
-            d.cartCreator.phone,
-            d.product.creator.phone,
-            d.cartCreator.customer_address,
-            d.product.creator.business_address,
-            d.product_id,
-            d.prod_creator_id,
+            c.product.price * c.quantity,
+            c.product.description,
+            c.cartCreator.email,
+            c.product.creator.email,
+            c.cartCreator.phone,
+            c.product.creator.phone,
+            c.cartCreator.customer_address,
+            c.product.creator.business_address,
+            c.product_id,
+            c.prod_creator_id,
             //cart item id to delete from cart after order is successful
-            d.id
+            c.id
           );
         }}
       >
-        Order
+        Checkout
       </Button>
+      <style jsx>{``}</style>
     </div>
   );
 };

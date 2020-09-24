@@ -24,8 +24,8 @@ body {
     font-family: 'Open Sans', sans-serif;
     font-family: 'Roboto', sans-serif;
     font-family: 'Poppins', sans-serif;
-    background: #E5E5E5;
-    background: rgb(255, 255, 255);
+    // background: #E5E5E5;
+    // background: rgb(255, 255, 255);
 }
 
 form label {
@@ -57,4 +57,5 @@ Class names accross components can be the same but they are wrapped by a unique 
 
 @import "./home";
 @import "./store_new-item";
-@import "./product"
+@import "./product";
+@import "./cart";

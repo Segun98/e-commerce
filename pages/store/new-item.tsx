@@ -194,10 +194,11 @@ export const Newitem = () => {
                     >
                       <option defaultValue="">--select--</option>
                       <option defaultValue="Cakes">Cakes</option>
-                      <option defaultValue="Props">Props</option>
+                      <option defaultValue="Games">Games</option>
                       <option defaultValue="Drinks">Drinks</option>
-                      <option defaultValue="Food">Food</option>
-                      <option defaultValue="Food">Gift</option>
+                      <option defaultValue="Drinks">Decorations</option>
+                      <option defaultValue="Food">Gifts</option>
+                      <option defaultValue="Props">Props</option>
                       <option defaultValue="Other">Other</option>
                     </Select>
                   </div>
