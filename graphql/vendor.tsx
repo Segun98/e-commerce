@@ -1,9 +1,9 @@
 export const ADD_PRODUCT = `
 mutation addProduct(
-  $name: String!, $name_slug: String!, $description: String!, $price: Int!, $category: String!, $image: String!, $available_qty: Int!
+  $name: String!, $name_slug: String!, $description: String!, $price: Int!, $category: String!,$party_category:String, $image: String!, $available_qty: Int!
 ) {
     addProduct(
-    name: $name, name_slug:$name_slug, description:$description, price:$price, category:$category, image: $image, available_qty:$available_qty
+    name: $name, name_slug:$name_slug, description:$description, price:$price, category:$category,party_category:$party_category, image: $image, available_qty:$available_qty
   ) {
     message
   }

@@ -109,7 +109,7 @@ const Product = ({ product, error }: response) => {
             : role !== "customer"
             ? "You need to Login as a customer"
             : "",
-        status: "error",
+        status: "info",
         duration: 7000,
         isClosable: true,
         position: "top",

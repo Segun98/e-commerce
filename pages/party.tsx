@@ -14,14 +14,14 @@ interface Iprops {
   products: ProductsRes[];
   error: any;
 }
-export const byCategory = `
-    query byCategory($category:String!, $limit:Int)
-    {
-        byCategory(category:$category, limit:$limit){
+export const partyCategory = `
+    query partyCategory($party_category:String, $limit:Int){
+        partyCategory(party_category:$party_category, limit:$limit){
             id
             name
             name_slug
             description
+            party_category
             price
             image
             in_stock
@@ -31,13 +31,13 @@ export const byCategory = `
 }`;
 export async function getServerSideProps({ query }) {
   const variables = {
-    category: query.category,
+    party_category: query.category,
     limit: null,
   };
 
   try {
-    const res = await graphQLClient.request(byCategory, variables);
-    const products = await res.byCategory;
+    const res = await graphQLClient.request(partyCategory, variables);
+    const products = await res.partyCategory;
     return {
       props: {
         products,
@@ -84,8 +84,8 @@ export const Category = ({ products, error }: Iprops) => {
 
         <section className="category-results">
           <h1>
-            Category : {router.query.category} ({products && products.length}{" "}
-            items)
+            Party Category : {router.query.category} (
+            {products && products.length} items)
           </h1>
 
           {products && products.length === 0 && (

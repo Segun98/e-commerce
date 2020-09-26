@@ -15,6 +15,7 @@ import { useMutation } from "../../utils/useMutation";
 import { graphQLClient } from "../../utils/client";
 import { Commas } from "../../utils/helpers";
 import Cookies from "js-cookie";
+import { PurchaseSteps } from "../../components/customer/PurchaseSteps";
 
 export const CustomerCart = () => {
   const toast = useToast();
@@ -253,6 +254,7 @@ export const CustomerCart = () => {
             </div>
           </section>
         )}
+        <PurchaseSteps />
       </div>
       <style jsx>{`
         .cart-unauthorised {

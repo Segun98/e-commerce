@@ -20,6 +20,9 @@ export type Query = {
   editUserPage?: Maybe<UsersRes>;
   products?: Maybe<Array<Maybe<ProductsRes>>>;
   product?: Maybe<ProductsRes>;
+  search?: Maybe<Array<Maybe<ProductsRes>>>;
+  byCategory?: Maybe<Array<Maybe<ProductsRes>>>;
+  partyCategory?: Maybe<Array<Maybe<ProductsRes>>>;
   editProductPage?: Maybe<ProductsRes>;
   getCartItems?: Maybe<Array<Maybe<Cart>>>;
   getCart?: Maybe<Cart>;
@@ -39,8 +42,31 @@ export type QueryEditUserPageArgs = {
 };
 
 
+export type QueryProductsArgs = {
+  limit?: Maybe<Scalars['Int']>;
+};
+
+
 export type QueryProductArgs = {
   name_slug: Scalars['String'];
+};
+
+
+export type QuerySearchArgs = {
+  query: Scalars['String'];
+  limit?: Maybe<Scalars['Int']>;
+};
+
+
+export type QueryByCategoryArgs = {
+  category: Scalars['String'];
+  limit?: Maybe<Scalars['Int']>;
+};
+
+
+export type QueryPartyCategoryArgs = {
+  party_category: Scalars['String'];
+  limit?: Maybe<Scalars['Int']>;
 };
 
 
@@ -82,6 +108,7 @@ export type ProductsRes = {
   description?: Maybe<Scalars['String']>;
   price?: Maybe<Scalars['Int']>;
   category?: Maybe<Scalars['String']>;
+  party_category?: Maybe<Scalars['String']>;
   image?: Maybe<Scalars['String']>;
   in_stock?: Maybe<Scalars['String']>;
   creator_id?: Maybe<Scalars['String']>;
@@ -195,6 +222,7 @@ export type MutationAddProductArgs = {
   description?: Maybe<Scalars['String']>;
   price: Scalars['Int'];
   category?: Maybe<Scalars['String']>;
+  party_category?: Maybe<Scalars['String']>;
   image?: Maybe<Scalars['String']>;
   available_qty: Scalars['Int'];
 };
@@ -206,6 +234,7 @@ export type MutationUpdateProductArgs = {
   description?: Maybe<Scalars['String']>;
   price: Scalars['Int'];
   category?: Maybe<Scalars['String']>;
+  party_category?: Maybe<Scalars['String']>;
   image?: Maybe<Scalars['String']>;
   available_qty?: Maybe<Scalars['Int']>;
   in_stock?: Maybe<Scalars['String']>;
@@ -222,6 +251,7 @@ export type MutationDeleteProductArgs = {
 export type MutationAddToCartArgs = {
   product_id: Scalars['ID'];
   prod_creator_id: Scalars['ID'];
+  quantity?: Maybe<Scalars['Int']>;
 };
 
 
@@ -232,7 +262,7 @@ export type MutationDeleteFromCartArgs = {
 
 export type MutationUpdateCartArgs = {
   id?: Maybe<Scalars['ID']>;
-  quantity?: Maybe<Scalars['String']>;
+  quantity?: Maybe<Scalars['Int']>;
 };
 
 
@@ -302,6 +332,7 @@ export type Products = {
   description?: Maybe<Scalars['String']>;
   price?: Maybe<Scalars['Int']>;
   category?: Maybe<Scalars['String']>;
+  party_category?: Maybe<Scalars['String']>;
   image?: Maybe<Scalars['String']>;
   in_stock?: Maybe<Scalars['String']>;
   creator_id?: Maybe<Scalars['String']>;

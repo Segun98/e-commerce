@@ -49,13 +49,13 @@ const Home = ({ products, error }) => {
 
               <Carousel.Caption>
                 <h3>We Have All You Need To Enoy Your Time At The Beach</h3>
-                <Link href="/">
+                <Link href="/party?category=Beach Party">
                   <a>Shop Now</a>
                 </Link>
               </Carousel.Caption>
               <div className="mobile-caption">
                 <h5>Beach Parties</h5>
-                <Link href="/">
+                <Link href="party?category=Beach Party">
                   <a>Shop Now</a>
                 </Link>
               </div>
@@ -65,13 +65,13 @@ const Home = ({ products, error }) => {
 
               <Carousel.Caption>
                 <h3>Your House Parties Are About to get Real Lit</h3>
-                <Link href="/">
+                <Link href="party?category=House Party">
                   <a>Shop Now</a>
                 </Link>
               </Carousel.Caption>
               <div className="mobile-caption">
                 <h5>House Parties</h5>
-                <Link href="/">
+                <Link href="party?category=House Party">
                   <a>Shop Now</a>
                 </Link>
               </div>
@@ -83,13 +83,13 @@ const Home = ({ products, error }) => {
                 <h3>
                   We Have Just The Perfect Items For Birthday Celebrations
                 </h3>
-                <Link href="/">
+                <Link href="party?category=Birthday Party">
                   <a>Shop Now</a>
                 </Link>
               </Carousel.Caption>
               <div className="mobile-caption">
                 <h5>Birthdays</h5>
-                <Link href="/">
+                <Link href="party?category=Birthday Party">
                   <a>Shop Now</a>
                 </Link>
               </div>
@@ -103,13 +103,13 @@ const Home = ({ products, error }) => {
                   Games Come Through When Things Get Dull, and You Want No Dull
                   Moments
                 </h3>
-                <Link href="/">
+                <Link href="party?category=Social Clubs">
                   <a>Shop Now</a>
                 </Link>
               </Carousel.Caption>
               <div className="mobile-caption">
                 <h5>Social Clubs</h5>
-                <Link href="/">
+                <Link href="party?category=Social Clubs">
                   <a>Shop Now</a>
                 </Link>
               </div>
@@ -120,13 +120,30 @@ const Home = ({ products, error }) => {
 
               <Carousel.Caption>
                 <h3>Whats A Party Without Lights?</h3>
-                <Link href="/">
+                <Link href="party?category=Outdoors">
                   <a>Shop Now</a>
                 </Link>
               </Carousel.Caption>
               <div className="mobile-caption">
-                <h5>Beach Parties</h5>
-                <Link href="/">
+                <h5>Outdoor Parties</h5>
+                <Link href="party?category=Outdoors">
+                  <a>Shop Now</a>
+                </Link>
+              </div>
+            </Carousel.Item>
+
+            <Carousel.Item>
+              <img src="/slider/slide5.jpeg" />
+
+              <Carousel.Caption>
+                <h3>Whats An Indoor Party Without Lights?</h3>
+                <Link href="party?category=Indoors">
+                  <a>Shop Now</a>
+                </Link>
+              </Carousel.Caption>
+              <div className="mobile-caption">
+                <h5>Indoor Parties</h5>
+                <Link href="party?category=Indoors">
                   <a>Shop Now</a>
                 </Link>
               </div>

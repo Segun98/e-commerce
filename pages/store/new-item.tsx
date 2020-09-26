@@ -45,6 +45,7 @@ export const Newitem = () => {
   const { handleSubmit, register, errors, watch } = useForm();
 
   const [category, setCategory] = useState("");
+  const [partyCategory, setPartyCategory] = useState("");
 
   const onSubmit = async (values, e): Promise<void> => {
     e.preventDefault();
@@ -62,6 +63,7 @@ export const Newitem = () => {
       description,
       price: parseInt(price),
       category: category === "" ? "other" : category,
+      party_category: partyCategory,
       image: "unsplash.com",
       available_qty: parseInt(available_qty),
     };
@@ -200,6 +202,26 @@ export const Newitem = () => {
                       <option defaultValue="Food">Gifts</option>
                       <option defaultValue="Props">Props</option>
                       <option defaultValue="Other">Other</option>
+                    </Select>
+                  </div>
+
+                  <div className="form-item">
+                    <FormLabel htmlFor="category">PARTY Category</FormLabel>
+                    <Select
+                      defaultValue={partyCategory}
+                      onChange={(e) => {
+                        setPartyCategory(e.target.value);
+                      }}
+                    >
+                      <option defaultValue="">--select--</option>
+                      <option defaultValue="Birthday Party">
+                        Birthday Party
+                      </option>
+                      <option defaultValue="Beach Party">Beach Party</option>
+                      <option defaultValue="House Party">House Party</option>
+                      <option defaultValue="Social Clubs">Social Clubs</option>
+                      <option defaultValue="Outdoors">Outdoors</option>
+                      <option defaultValue="Indoors">Indoors</option>
                     </Select>
                   </div>
 
