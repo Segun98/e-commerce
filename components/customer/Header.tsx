@@ -10,20 +10,29 @@ import {
   Divider,
 } from "@chakra-ui/core";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useToken } from "../../Context/TokenProvider";
 import Cookies from "js-cookie";
 import { useRouter } from "next/router";
 import { useUser } from "../../Context/UserProvider";
 import axios from "axios";
+import { useSelector, useDispatch } from "react-redux";
+import { cartItems } from "../../redux/features/fetchCart";
 
 export const Header = () => {
+  const { cartLength } = useSelector((state) => state.cart);
+  const dispatch = useDispatch();
+
   const { Token } = useToken();
   const router = useRouter();
   const role = Cookies && Cookies.get("role");
   const { User } = useUser();
   const [IsOpen, setIsOpen] = useState(false);
   const [search, setSearch] = useState("");
+
+  useEffect(() => {
+    dispatch(cartItems(Token));
+  }, [Token, cartLength]);
 
   function handleSearch(e) {
     e.preventDefault();
@@ -166,14 +175,13 @@ export const Header = () => {
                             <a>Cart</a>
                           </Link>
                         </p>
-                        <Divider />
-
                         <p>Help</p>
                         {Token && role && (
                           <Button
                             variantColor="blue"
                             width="100%"
                             display="block"
+                            marginTop="5px"
                             onClick={handleLogout}
                           >
                             Logout
@@ -188,8 +196,8 @@ export const Header = () => {
               <div className="cart-icon">
                 <Link href="/customer/cart">
                   <a>
+                    <aside>{cartLength}</aside>
                     <img src="/shopping-cart.svg" alt="cart-icon" />
-                    Cart
                   </a>
                 </Link>
               </div>
@@ -359,10 +367,19 @@ export const Header = () => {
           font-size: 0.8rem;
           text-align: center;
           font-weight: bold;
+          position: relative;
         }
         .cart-icon img {
           width: 30px;
           height: 25px;
+        }
+        .cart-icon a aside {
+          position: absolute;
+          top: 0;
+          margin-left: 20px;
+          margin-top: -12px;
+          color: var(--deepblue);
+          font-weight: bolder;
         }
 
         .large-bar {
@@ -427,12 +444,19 @@ export const Header = () => {
         }
 
         .pop-over-body {
-          padding: 0 5px;
+          padding: 0 2px;
+        }
+        .pop-over-body-rest {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
         }
         .pop-over-body-rest p {
           font-weight: bold;
-          padding: 2px 5px;
+          padding: 8px 0;
           text-align: center;
+          font-style: italic;
         }
 
         @media only screen and (min-width: 700px) {

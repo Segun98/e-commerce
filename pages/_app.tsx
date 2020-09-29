@@ -8,6 +8,8 @@ import { TokenProvider } from "../Context/TokenProvider";
 import React from "react";
 import { UserProvider } from "../Context/UserProvider";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { Provider } from "react-redux";
+import store from "../redux/store";
 
 function MyApp({ Component, pageProps }: AppProps) {
   //progress bar on page visit
@@ -23,24 +25,26 @@ function MyApp({ Component, pageProps }: AppProps) {
   Router.events.on("routeChangeError", () => NProgress.done());
 
   return (
-    <TokenProvider>
-      <UserProvider>
-        <ThemeProvider>
-          <CSSReset />
-          <Component {...pageProps} />
-        </ThemeProvider>
-        <style jsx global>{`
-          :root {
-            --box: 0 1px 6px 0;
-            --softgrey: rgba(32, 33, 36, 0.28);
-            --lightblue: #cbd8f9;
-            --deepblue: #02247a;
-            --text: #626262;
-            --softblue: rgb(238, 238, 245);
-          }
-        `}</style>
-      </UserProvider>
-    </TokenProvider>
+    <Provider store={store}>
+      <TokenProvider>
+        <UserProvider>
+          <ThemeProvider>
+            <CSSReset />
+            <Component {...pageProps} />
+          </ThemeProvider>
+          <style jsx global>{`
+            :root {
+              --box: 0 1px 6px 0;
+              --softgrey: rgba(32, 33, 36, 0.28);
+              --lightblue: #cbd8f9;
+              --deepblue: #02247a;
+              --text: #626262;
+              --softblue: rgb(238, 238, 245);
+            }
+          `}</style>
+        </UserProvider>
+      </TokenProvider>
+    </Provider>
   );
 }
 
