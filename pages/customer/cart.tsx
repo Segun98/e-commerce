@@ -1,9 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  deleteFromCart,
-  getCartItems,
-  updateCart,
-} from "../../graphql/customer";
+import { deleteFromCart, updateCart } from "../../graphql/customer";
 import { Icon, useToast } from "@chakra-ui/core";
 import { Cart } from "../../Typescript/types";
 import Link from "next/link";
@@ -12,18 +8,30 @@ import { useToken } from "../../Context/TokenProvider";
 import { Layout } from "../../components/Layout";
 import Head from "next/head";
 import { useMutation } from "../../utils/useMutation";
-import { graphQLClient } from "../../utils/client";
 import { Commas } from "../../utils/helpers";
 import Cookies from "js-cookie";
 import { PurchaseSteps } from "../../components/customer/PurchaseSteps";
+import { useSelector, useDispatch } from "react-redux";
+import { cartItems, IinitialState } from "./../../redux/features/fetchCart";
+
+interface DefaultRootState {
+  cart: IinitialState;
+}
 
 export const CustomerCart = () => {
+  //from redux feature - fetchCart
+  const { loading, cart, error } = useSelector<DefaultRootState, any>(
+    (state) => state.cart
+  );
+
+  const dispatch = useDispatch();
   const toast = useToast();
   const { Token } = useToken();
   const role = Cookies.get("role");
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<any>("");
-  const [data, setData] = useState<Cart[]>([]);
+
+  useEffect(() => {
+    dispatch(cartItems(Token));
+  }, [Token]);
 
   const cart_images = [
     "product3.png",
@@ -34,44 +42,6 @@ export const CustomerCart = () => {
     "product1.png",
   ];
 
-  useEffect(() => {
-    getCartFn();
-  }, [Token]);
-
-  //fetch cart items, didn't use a custom hook cos I need to refetch on every quantity update
-  const getCartFn = async () => {
-    try {
-      if (Token) {
-        graphQLClient.setHeader("authorization", `bearer ${Token}`);
-      }
-      setLoading(true);
-      const res = await graphQLClient.request(getCartItems);
-      const data = res.getCartItems;
-      if (data) {
-        setLoading(false);
-        setData(data);
-      }
-    } catch (err) {
-      setLoading(false);
-      //prevents unecessary error when Token is provision is loading
-      if (Token && err) {
-        setError(err);
-      }
-      // handle network errors
-      if (err.message === "Network request failed") {
-        setError(err);
-        toast({
-          title: "An error occurred.",
-          description: "check your internet connection and refresh.",
-          status: "error",
-          duration: 7000,
-          isClosable: true,
-          position: "top",
-        });
-      }
-    }
-  };
-
   //update quantity of an item
   const updateCartFn = async (id, quantity) => {
     const { data, error } = await useMutation(updateCart, {
@@ -79,13 +49,13 @@ export const CustomerCart = () => {
       quantity,
     });
     if (data) {
-      getCartFn();
+      dispatch(cartItems(Token));
       toast({
         title: "Quantity Updated",
         status: "info",
         duration: 3000,
         isClosable: true,
-        position: "top",
+        position: "bottom-right",
       });
     }
     if (error) {
@@ -106,7 +76,7 @@ export const CustomerCart = () => {
       id,
     });
     if (data.deleteFromCart) {
-      getCartFn();
+      dispatch(cartItems(Token));
       toast({
         title: "Item Removed From Cart",
         status: "info",
@@ -132,8 +102,20 @@ export const CustomerCart = () => {
       <Head>
         <title>Cart | PartyStore</title>
       </Head>
+      <>
+        {error &&
+          error === "Network request failed" &&
+          toast({
+            title: "An error occurred.",
+            description: "check your internet connection and refresh.",
+            status: "error",
+            duration: 7000,
+            isClosable: true,
+            position: "top",
+          })}
+      </>
       <div className="cart-page">
-        {!loading && !Token && (
+        {!loading && !Token && !role && (
           <div className="indicator">
             <div>
               <strong>
@@ -152,26 +134,24 @@ export const CustomerCart = () => {
           </div>
         )}
         {/* vendors trying to access Cart  */}
-        {error &&
-          Token &&
-          error?.response?.errors[0].message === "Unauthorised" && (
-            <div className="indicator">
-              <div>
-                <strong>Log In as a Customer To Add To Cart </strong>
-                <br />
-                <div
-                  className="cart-unauthorised"
-                  style={{ textAlign: "center" }}
-                >
-                  <Link href="/customer/login">
-                    <a>LogIn</a>
-                  </Link>
-                </div>
+        {role && role === "vendor" && !loading && (
+          <div className="indicator">
+            <div>
+              <strong>Log In as a Customer To Add To Cart </strong>
+              <br />
+              <div
+                className="cart-unauthorised"
+                style={{ textAlign: "center" }}
+              >
+                <Link href="/customer/login">
+                  <a>LogIn</a>
+                </Link>
               </div>
             </div>
-          )}
+          </div>
+        )}
 
-        {!loading && role && role !== "vendor" && data && data.length === 0 && (
+        {!loading && role && role !== "vendor" && cart && cart.length === 0 && (
           <div
             style={{
               textAlign: "center",
@@ -185,7 +165,7 @@ export const CustomerCart = () => {
           </div>
         )}
 
-        {Token && role === "customer" && data && data.length > 0 && (
+        {Token && role === "customer" && cart && cart.length > 0 && (
           <section className="cart-section">
             <div className="cart-wrap">
               <h1>In your Cart</h1>
@@ -197,8 +177,8 @@ export const CustomerCart = () => {
                 <div>Delete</div>
               </div>
               <hr />
-              {data &&
-                data.map((c: Cart, index) => (
+              {cart &&
+                cart.map((c: Cart, index) => (
                   <div key={c.id} className="cart-item">
                     <div className="cart-img">
                       <img
@@ -239,7 +219,7 @@ export const CustomerCart = () => {
                       &#8358; {Commas(c.product.price * c.quantity)}
                     </div>
                     {/* ORDER BUTTON IN ITS COMPONENT  */}
-                    <Order c={c} Token={Token} getCartFn={getCartFn} />
+                    <Order c={c} Token={Token} />
                     <button
                       name="delete cart item"
                       aria-roledescription="delete cart item"
