@@ -1,0 +1,156 @@
+.store-page {
+    background: $softblue;
+}
+
+.store-page-wrap {
+    display: flex;
+}
+
+.main-store {
+    margin: 10px 10px;
+    width: 100vw;
+
+    header {
+        font-style: italic;
+        margin-top: 10px;
+        display: flex;
+        justify-content: space-between;
+
+        .store-name {
+            font-size: 1.1rem;
+            font-weight: bold;
+        }
+
+        .store-bio {
+            margin: 10px 0;
+        }
+
+        .store-location {
+            padding-bottom: 10px
+        }
+    }
+
+    .store-products {
+        &_head {
+            display: flex;
+            justify-content: space-between;
+            margin: 20px 0;
+        }
+
+        &_wrap {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .store-item {
+            margin: 8px;
+            box-shadow: var(--box) var(--softgrey);
+            background: white;
+            border-radius: 5px;
+            width: 150px;
+            padding: 3px;
+            position: relative;
+        }
+
+        .edit-btn {
+            position: absolute;
+            top: 0;
+            right: 0;
+            margin-right: -20px;
+        }
+
+        .store-item a {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .store-item img {
+            width: 150px;
+            height: 150px;
+            object-fit: contain;
+            border-radius: 5px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .store-desc {
+            margin: 5px 0;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .store-desc h2 {
+            color: var(--deepblue);
+            padding: 5px 0;
+            font-style: italic;
+            font-size: 0.9rem;
+        }
+
+        @media only screen and (min-width: 700px) {
+            .store-results h1 {
+                margin: 15px 0;
+            }
+
+            &_wrap {
+                margin: auto;
+                width: 95%;
+                grid-template-columns: 1fr 1fr 1fr;
+            }
+
+            .store-item img {
+                display: flex;
+            }
+        }
+
+        @media only screen and (min-width: 1000px) {
+            &_wrap {
+                margin: 15px auto;
+            }
+
+            .store-item {
+                width: 200px;
+            }
+        }
+
+        @media only screen and (min-width: 1200px) {
+            margin: auto;
+            width: 80%;
+
+            &_wrap {
+                margin: 35px auto;
+                grid-template-columns: repeat(4, 1fr);
+            }
+
+            .store-item {
+                margin: 10px 14px;
+                padding: 5px;
+            }
+
+            .store-item img {
+                object-fit: contain;
+                width: 200px;
+            }
+
+            .store-desc {
+                margin: 8px 0;
+            }
+        }
+
+        @media only screen and (min-width: 2000px) {
+            &_wrap {
+                width: 60%;
+            }
+        }
+    }
+
+    @media only screen and (min-width: 1200px) {
+        header {
+            margin: auto;
+            width: 90%;
+        }
+    }
+}

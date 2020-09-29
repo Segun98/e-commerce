@@ -1,17 +1,19 @@
-import React, { useEffect } from "react";
 import { STORE } from "../../graphql/vendor";
-import { useToast } from "@chakra-ui/core";
-import { useRouter } from "next/router";
+import Link from "next/link";
+import { Icon, Input, useToast } from "@chakra-ui/core";
 import { UsersRes } from "../../Typescript/types";
 import Head from "next/head";
 import { graphQLClient } from "../../utils/client";
+import { Navigation } from "../../components/vendor/Navigation";
+import { Commas } from "../../utils/helpers";
+import { Footer } from "../../components/Footer";
 
 interface Iprops {
   data: UsersRes;
   error: any;
 }
 export async function getServerSideProps({ params, req }) {
-  //the whole point of this is to always get a value in jwt signed from the backend to acsertain if the person visiting this page is the owner of the store
+  //the whole point of this is to pass a token to the header to get a value in jwt from the backend inorder to acsertain if the person visiting this page is the owner of the store
 
   //Note: i couldn't fetch in the component because populating the "Head" tag would be impossible
 
@@ -54,18 +56,20 @@ export async function getServerSideProps({ params, req }) {
     };
   }
 }
+
 const Store = ({ data, error }: Iprops) => {
   const toast = useToast();
-  const router = useRouter();
-
-  // useEffect(() => {
-  //   if ((data && !data.id) || error === "404") {
-  //     router.push("/404");
-  //   }
-  // }, [data, error]);
+  const images = [
+    "slider/slide2.jpeg",
+    "product3.png",
+    "product2.png",
+    "product1.png",
+    "product2.png",
+    "product3.png",
+  ];
 
   return (
-    <div>
+    <div className="store-page">
       <Head>
         <title>{data ? data.business_name : "Error"} | PartyStore</title>
         <meta name="description" content={data ? data.business_name : ""} />
@@ -88,39 +92,100 @@ const Store = ({ data, error }: Iprops) => {
           </strong>
         </div>
       )}
-      <section>
-        {data && (
-          <ul>
-            <li>{data.id}</li>
-            <li>JWT ID: {data.jwt_user_id}</li>
-            <li>{data.email}</li>
-            <li>{data.role}</li>
-            <li>{data.phone}</li>
-            <li>{data.pending}</li>
-            <li>{data.business_name}</li>
-            <li>{data.business_address}</li>
-            <li>{data.business_area}</li>
-            <li>{data.business_image}</li>
-            <li>{data.business_bio}</li>
-          </ul>
-        )}
-      </section>
-      <br />
-      <section>
-        {data &&
-          data.usersProducts.map((d) => (
-            <div key={d.id}>
-              <div>{d.name}</div>
-              <div>{d.name_slug}</div>
-              <div>{d.price}</div>
-              <div>{d.in_stock}</div>
-              <div>{d.image}</div>
-              <div>{d.category}</div>
-              <div>{d.description}</div>
-              <br />
+      {!error && data && (
+        <div className="store-page-wrap">
+          <Navigation />
+          <section className="main-store">
+            <header>
+              <div>
+                <div className="store-name">
+                  <Icon name="info" /> {data.business_name}
+                </div>
+                <div className="store-bio">
+                  <Icon name="settings" />{" "}
+                  {data.business_bio ||
+                    "We seek to provide quality product and service to our customers. At " +
+                      data.business_name +
+                      ", customers come first"}
+                </div>
+                <div className="store-location">
+                  <Icon name="check" />{" "}
+                  {data.business_address || "This Store's Address"}
+                </div>
+              </div>
+              <div>
+                {data && data.id === data.jwt_user_id ? (
+                  <div className="edit-btn">
+                    <button
+                      style={{
+                        color: "var(--deepblue)",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      <Link href="/product/new-item">
+                        <a>
+                          <Icon name="edit" />
+                        </a>
+                      </Link>
+                    </button>
+                  </div>
+                ) : (
+                  ""
+                )}
+              </div>
+            </header>
+            <hr />
+            <div className="store-products">
+              <div className="store-products_head">
+                <Input
+                  type="search"
+                  width="300px"
+                  placeholder={`Search ${data.business_name}' Products`}
+                />
+              </div>
+              <div className="store-products_wrap">
+                {data &&
+                  data.usersProducts.map((p, index) => (
+                    <div className="store-item" key={p.id}>
+                      <Link
+                        href={`/product/${p.name_slug}`}
+                        as={`/product/${p.name_slug}`}
+                      >
+                        <a>
+                          <img src={`/${images[index]}`} alt={`${p.name}`} />
+                          <hr />
+                          <div className="store-desc">
+                            <h2>{p.name}</h2>
+                            <p>&#8358; {Commas(p.price)}</p>
+                          </div>
+                        </a>
+                      </Link>
+                      {data && data.id === data.jwt_user_id ? (
+                        <div className="edit-btn">
+                          <button
+                            style={{
+                              color: "var(--deepblue)",
+                              fontWeight: "bold",
+                            }}
+                          >
+                            <Link href="/product/new-item">
+                              <a>
+                                <Icon name="edit" />
+                              </a>
+                            </Link>
+                          </button>
+                        </div>
+                      ) : (
+                        ""
+                      )}
+                    </div>
+                  ))}
+              </div>
             </div>
-          ))}
-      </section>
+          </section>
+        </div>
+      )}
+      <Footer />
     </div>
   );
 };
