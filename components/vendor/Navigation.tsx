@@ -108,8 +108,12 @@ export const Navigation = () => {
               position: absolute;
               top: 0;
               right: 0;
-              margin-right: -35px;
+              margin-right: -45px;
             }
+            .vendor-menu-btn img {
+              width: 40px;
+            }
+
             @media only screen and (min-width: 700px) {
               .vendor-menu {
                 margin-left: 0px;
