@@ -95,11 +95,11 @@ export const Search = ({ products, error }: Iprops) => {
       </div>
       <style jsx>{`
         .search-results {
-          padding: 20px;
+          padding: 20px 10px;
         }
         .search-results h1 {
           font-weight: bold;
-          font-size: 1.2rem;
+          font-size: 1rem;
           text-align: center;
           margin: 10px 0;
         }
@@ -114,6 +114,7 @@ export const Search = ({ products, error }: Iprops) => {
           background: white;
           border-radius: 5px;
           width: 150px;
+          padding: 3px;
         }
         .results-wrap.serch-item a {
           display: flex;
@@ -143,6 +144,7 @@ export const Search = ({ products, error }: Iprops) => {
           color: var(--deepblue);
           padding: 5px 0;
           font-style: italic;
+          font-size: 0.9rem;
         }
 
         @media only screen and (min-width: 700px) {
@@ -172,7 +174,7 @@ export const Search = ({ products, error }: Iprops) => {
 
         @media only screen and (min-width: 1200px) {
           .search-results h1 {
-            font-size: 1.4rem;
+            font-size: 1.2rem;
           }
 
           .results-wrap {
@@ -187,7 +189,6 @@ export const Search = ({ products, error }: Iprops) => {
           .results-wrap .search-item img {
             object-fit: contain;
             width: 200px;
-            height: 200px;
           }
 
           .search-item .search-desc {

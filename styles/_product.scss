@@ -263,8 +263,9 @@
 
                     h2 {
                         color: $deepblue;
-                        padding: 5px 0;
+                        padding: 5px 2px;
                         font-style: italic;
+                        font-size: 0.9rem
                     }
                 }
             }
@@ -301,11 +302,11 @@
 
             .related-wrap {
                 margin: 35px auto;
-
+                width: 87%;
             }
 
             .related-item {
-                margin: 0 14px;
+                margin: 5px 14px;
 
                 a {
                     &:hover {
@@ -316,7 +317,6 @@
                     img {
                         object-fit: contain;
                         width: 200px;
-                        height: 200px;
                     }
 
                     .related-desc {

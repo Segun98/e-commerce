@@ -119,11 +119,11 @@ export const Category = ({ products, error }: Iprops) => {
       </div>
       <style jsx>{`
         .category-results {
-          padding: 20px;
+          padding: 20px 10px;
         }
         .category-results h1 {
           font-weight: bold;
-          font-size: 1.2rem;
+          font-size: 1rem;
           text-align: center;
           margin: 10px 0;
         }
@@ -138,6 +138,7 @@ export const Category = ({ products, error }: Iprops) => {
           background: white;
           border-radius: 5px;
           width: 150px;
+          padding: 3px;
         }
         .category-wrap.serch-item a {
           display: flex;
@@ -161,6 +162,7 @@ export const Category = ({ products, error }: Iprops) => {
           margin: 5px 0;
           text-align: center;
           font-weight: bold;
+          font-size: 0.9rem;
         }
 
         .category-wrap .category-desc h2 {
@@ -196,7 +198,7 @@ export const Category = ({ products, error }: Iprops) => {
 
         @media only screen and (min-width: 1200px) {
           .category-results h1 {
-            font-size: 1.4rem;
+            font-size: 1.2rem;
           }
 
           .category-wrap {
@@ -211,7 +213,6 @@ export const Category = ({ products, error }: Iprops) => {
           .category-wrap .category-item img {
             object-fit: contain;
             width: 200px;
-            height: 200px;
           }
 
           .category-item .category-desc {

@@ -28,6 +28,10 @@ a {
   cursor: pointer;
 }
 
+li {
+  list-style: none;
+}
+
 a:hover {
   text-decoration: none !important;
 }
@@ -219,6 +223,7 @@ Class names accross components can be the same but they are wrapped by a unique 
   color: #02247a;
   font-weight: bold;
   padding: 5px 0;
+  font-size: 0.9rem;
 }
 
 .home-page .main-section .featured .featured-item a .featured-desc p {
@@ -256,6 +261,7 @@ Class names accross components can be the same but they are wrapped by a unique 
   }
   .home-page .main-section .featured .featured-wrap {
     margin: 35px auto;
+    width: 90%;
   }
   .home-page .main-section .featured .featured-item {
     margin: 0 14px;
@@ -274,6 +280,9 @@ Class names accross components can be the same but they are wrapped by a unique 
   }
   .home-page .main-section .featured .featured-item a .featured-desc {
     margin: 8px 0;
+  }
+  .home-page .main-section .featured .featured-item a .featured-desc h2 {
+    font-size: 1rem;
   }
 }
 
@@ -971,8 +980,9 @@ Class names accross components can be the same but they are wrapped by a unique 
 
 .product-page .related-products .related-item a .related-desc h2 {
   color: #02247a;
-  padding: 5px 0;
+  padding: 5px 2px;
   font-style: italic;
+  font-size: 0.9rem;
 }
 
 @media only screen and (min-width: 700px) {
@@ -1001,9 +1011,10 @@ Class names accross components can be the same but they are wrapped by a unique 
   }
   .product-page .related-products .related-wrap {
     margin: 35px auto;
+    width: 87%;
   }
   .product-page .related-products .related-item {
-    margin: 0 14px;
+    margin: 5px 14px;
   }
   .product-page .related-products .related-item a:hover {
     -webkit-transform: scale(1.02);
@@ -1015,7 +1026,6 @@ Class names accross components can be the same but they are wrapped by a unique 
     -o-object-fit: contain;
        object-fit: contain;
     width: 200px;
-    height: 200px;
   }
   .product-page .related-products .related-item a .related-desc {
     margin: 8px 0;
@@ -1156,6 +1166,193 @@ Class names accross components can be the same but they are wrapped by a unique 
 @media only screen and (min-width: 2000px) {
   .cart-page .cart-section .cart-wrap {
     width: 60%;
+  }
+}
+
+.store-page {
+  background: #eeeef5;
+}
+
+.store-page-wrap {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.main-store {
+  margin: 10px 10px;
+  width: 100vw;
+}
+
+.main-store header {
+  font-style: italic;
+  margin-top: 10px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.main-store header .store-name {
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+.main-store header .store-bio {
+  margin: 10px 0;
+}
+
+.main-store header .store-location {
+  padding-bottom: 10px;
+}
+
+.main-store .store-products_head {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  margin: 20px 0;
+}
+
+.main-store .store-products_wrap {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 1fr 1fr;
+      grid-template-columns: 1fr 1fr;
+}
+
+.main-store .store-products .store-item {
+  margin: 8px;
+  -webkit-box-shadow: var(--box) var(--softgrey);
+          box-shadow: var(--box) var(--softgrey);
+  background: white;
+  border-radius: 5px;
+  width: 150px;
+  padding: 3px;
+  position: relative;
+}
+
+.main-store .store-products .edit-btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin-right: -20px;
+}
+
+.main-store .store-products .store-item a {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.main-store .store-products .store-item img {
+  width: 150px;
+  height: 150px;
+  -o-object-fit: contain;
+     object-fit: contain;
+  border-radius: 5px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.main-store .store-products .store-desc {
+  margin: 5px 0;
+  text-align: center;
+  font-weight: bold;
+}
+
+.main-store .store-products .store-desc h2 {
+  color: var(--deepblue);
+  padding: 5px 0;
+  font-style: italic;
+  font-size: 0.9rem;
+}
+
+@media only screen and (min-width: 700px) {
+  .main-store .store-products .store-results h1 {
+    margin: 15px 0;
+  }
+  .main-store .store-products_wrap {
+    margin: auto;
+    width: 95%;
+    -ms-grid-columns: 1fr 1fr 1fr;
+        grid-template-columns: 1fr 1fr 1fr;
+  }
+  .main-store .store-products .store-item img {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+  }
+}
+
+@media only screen and (min-width: 1000px) {
+  .main-store .store-products_wrap {
+    margin: 15px auto;
+  }
+  .main-store .store-products .store-item {
+    width: 200px;
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  .main-store .store-products {
+    margin: auto;
+    width: 80%;
+  }
+  .main-store .store-products_wrap {
+    margin: 35px auto;
+    -ms-grid-columns: (1fr)[4];
+        grid-template-columns: repeat(4, 1fr);
+  }
+  .main-store .store-products .store-item {
+    margin: 10px 14px;
+    padding: 5px;
+  }
+  .main-store .store-products .store-item img {
+    -o-object-fit: contain;
+       object-fit: contain;
+    width: 200px;
+  }
+  .main-store .store-products .store-desc {
+    margin: 8px 0;
+  }
+}
+
+@media only screen and (min-width: 2000px) {
+  .main-store .store-products_wrap {
+    width: 60%;
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  .main-store header {
+    margin: auto;
+    width: 90%;
   }
 }
 /*# sourceMappingURL=App.css.map */

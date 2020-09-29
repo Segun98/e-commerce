@@ -9,35 +9,65 @@ import {
   FormLabel,
   InputGroup,
   Input,
-  InputRightElement,
   Icon,
   InputLeftElement,
   Button,
+  useToast,
 } from "@chakra-ui/core";
 import { PurchaseSteps } from "../../components/customer/PurchaseSteps";
+import { useMutation } from "../../utils/useMutation";
 
 export const Account = () => {
   const { Token } = useToken();
   const { User } = useUser();
-
+  const toast = useToast();
   const role = Cookies && Cookies.get("role");
 
   const [readOnly, setReadOnly] = useState(true);
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
-  const [email, setEmail] = useState("");
 
   useEffect(() => {
-    setFirstName(User.first_name);
-    setLastName(User.last_name);
-    setPhone(User.phone);
-    setAddress(User.customer_address);
-    setEmail(User.email);
+    setPhone(User.phone ? User.phone : "");
+    setAddress(User.customer_address ? User.customer_address : "");
   }, [User, Token]);
 
-  function updateAccount() {}
+  const updateProfile = `
+  mutation updateProfile($first_name:String,$last_name:String,$phone:String, $customer_address:String){
+    updateProfile(first_name:$first_name,last_name:$last_name, phone:$phone, customer_address:$customer_address){
+      message
+    }
+  }
+  `;
+  async function updateAccount() {
+    const variables = {
+      first_name: User.first_name,
+      last_name: User.last_name,
+      phone,
+      customer_address: address,
+    };
+    const { data, error } = await useMutation(updateProfile, variables, Token);
+    if (data) {
+      toast({
+        title: "Account Updated Successfully",
+        status: "info",
+        duration: 3000,
+        isClosable: true,
+        position: "top",
+      });
+      setReadOnly(true);
+    }
+    if (error) {
+      toast({
+        title: "Failed To Update Your Account",
+        description: "Check Your Internet Connection and Refresh",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+        position: "top",
+      });
+    }
+  }
 
   return (
     <Layout>
@@ -169,7 +199,7 @@ export const Account = () => {
                     style={{ background: "var(--deepblue)", color: "white" }}
                     size="sm"
                   >
-                    Save
+                    Update
                   </Button>
                 )}
               </div>
@@ -204,7 +234,7 @@ export const Account = () => {
           margin-top: 20px;
         }
         .account-wrap {
-          margin: 50px auto;
+          margin: 30px auto;
           width: 70%;
         }
 
@@ -223,6 +253,16 @@ export const Account = () => {
         }
         .account-wrap p {
           font-size: 1.1rem;
+        }
+        @media only screen and (min-width: 1200px) {
+          .account-wrap {
+            width: 60%;
+          }
+        }
+        @media only screen and (min-width: 2000px) {
+          .account-wrap {
+            width: 40%;
+          }
         }
       `}</style>
     </Layout>

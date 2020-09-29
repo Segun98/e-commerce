@@ -13,6 +13,8 @@ import Cookies from "js-cookie";
 import { useMutation } from "../../utils/useMutation";
 import { addToCart } from "../../graphql/customer";
 import Head from "next/head";
+import { cartItems } from "../../redux/features/fetchCart";
+import { useDispatch } from "react-redux";
 
 interface err {
   message: string;
@@ -49,7 +51,7 @@ const Product = ({ product, error }: response) => {
   const router = useRouter();
   const [quantity, setQuantity] = useState(1);
   const role = Cookies.get("role");
-
+  const dispatch = useDispatch();
   // useEffect(() => {
   //   if (!error && !product) {
   //     router.push("/404");
@@ -79,6 +81,7 @@ const Product = ({ product, error }: response) => {
     const { data, error } = await useMutation(addToCart, variables, Token);
 
     if (data) {
+      dispatch(cartItems(Token));
       toast({
         title: "Item Added to Cart!",
         description: `Your Item has been added to cart, proceed to checkout`,

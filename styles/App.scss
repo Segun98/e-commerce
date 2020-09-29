@@ -37,6 +37,10 @@ a {
     cursor: pointer;
 }
 
+li {
+    list-style: none;
+}
+
 a:hover {
     text-decoration: none !important;
 }
@@ -59,3 +63,4 @@ Class names accross components can be the same but they are wrapped by a unique 
 @import "./store_new-item";
 @import "./product";
 @import "./cart";
+@import "./store"

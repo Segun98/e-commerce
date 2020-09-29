@@ -3,17 +3,18 @@ import React, { useState } from "react";
 import { createOrder, deleteFromCart } from "../../graphql/customer";
 import { Cart, MutationCreateOrderArgs } from "../../Typescript/types";
 import { useMutation } from "../../utils/useMutation";
-import { useRouter } from "next/router";
+import { useDispatch } from "react-redux";
+import { cartItems } from "./../../redux/features/fetchCart";
 
 interface Iprops {
   c: Cart;
   Token: string;
-  getCartFn: () => Promise<void>;
+  // getCartFn: () => Promise<void>;
 }
-export const Order: React.FC<Iprops> = ({ c, Token, getCartFn }) => {
+export const Order: React.FC<Iprops> = ({ c, Token }) => {
   const toast = useToast();
-  const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
 
   async function handleOrder(
     name,
@@ -58,7 +59,7 @@ export const Order: React.FC<Iprops> = ({ c, Token, getCartFn }) => {
         id,
       });
       if (data.deleteFromCart) {
-        getCartFn();
+        dispatch(cartItems(Token));
       }
     }
     if (error) {

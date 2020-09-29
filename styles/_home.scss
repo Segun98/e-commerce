@@ -156,6 +156,7 @@
                             color: $deepblue;
                             font-weight: bold;
                             padding: 5px 0;
+                            font-size: 0.9rem;
                         }
 
                         p {
@@ -202,7 +203,7 @@
 
                 .featured-wrap {
                     margin: 35px auto;
-
+                    width: 90%
                 }
 
                 .featured-item {
@@ -223,6 +224,9 @@
                         .featured-desc {
                             margin: 8px 0;
 
+                            h2 {
+                                font-size: 1rem;
+                            }
                         }
                     }
                 }
