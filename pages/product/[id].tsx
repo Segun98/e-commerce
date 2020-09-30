@@ -13,7 +13,7 @@ import Cookies from "js-cookie";
 import { useMutation } from "../../utils/useMutation";
 import { addToCart } from "../../graphql/customer";
 import Head from "next/head";
-import { cartItems } from "../../redux/features/fetchCart";
+import { cartItems } from "../../redux/features/cart/fetchCart";
 import { useDispatch } from "react-redux";
 
 interface err {

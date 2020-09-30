@@ -7,6 +7,8 @@ import { graphQLClient } from "../../utils/client";
 import { Navigation } from "../../components/vendor/Navigation";
 import { Commas } from "../../utils/helpers";
 import { Footer } from "../../components/Footer";
+import { Header } from "../../components/customer/Header";
+import Cookies from "js-cookie";
 
 interface Iprops {
   data: UsersRes;
@@ -59,6 +61,7 @@ export async function getServerSideProps({ params, req }) {
 
 const Store = ({ data, error }: Iprops) => {
   const toast = useToast();
+  const role = Cookies.get("role");
   const images = [
     "slider/slide2.jpeg",
     "product3.png",
@@ -113,6 +116,7 @@ const Store = ({ data, error }: Iprops) => {
                   {data.business_address || "This Store's Address"}
                 </div>
               </div>
+              {/* ONLY SHOW EDIT BUTTON TO STORE OWNER */}
               <div>
                 {data && data.id === data.jwt_user_id ? (
                   <div className="edit-btn">
@@ -137,11 +141,12 @@ const Store = ({ data, error }: Iprops) => {
             <hr />
             <div className="store-products">
               <div className="store-products_head">
-                <Input
+                {/* <Input
                   type="search"
                   width="300px"
                   placeholder={`Search ${data.business_name}' Products`}
-                />
+                /> */}
+                <h1>{data && data.usersProducts.length} Products In Store</h1>
               </div>
               <div className="store-products_wrap">
                 {data &&
@@ -160,6 +165,9 @@ const Store = ({ data, error }: Iprops) => {
                           </div>
                         </a>
                       </Link>
+
+                      {/* ONLY SHOW EDIT BUTTON TO STORE OWNER */}
+
                       {data && data.id === data.jwt_user_id ? (
                         <div className="edit-btn">
                           <button
@@ -185,7 +193,9 @@ const Store = ({ data, error }: Iprops) => {
           </section>
         </div>
       )}
-      <Footer />
+      <section style={{ background: "white" }}>
+        <Footer />
+      </section>
     </div>
   );
 };

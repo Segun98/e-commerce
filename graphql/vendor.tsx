@@ -92,3 +92,19 @@ query product($name_slug:String!){
   }
 }
 `;
+
+export const getVendorOrders = `
+query getVendorOrders($limit:Int){
+  getVendorOrders(limit:$limit){
+    id
+    name
+    price
+    quantity
+    description
+    completed
+    canceled
+    customer_email
+    created_at
+  }
+}
+`;

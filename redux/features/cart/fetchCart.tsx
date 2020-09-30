@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getCartItems } from "../../graphql/customer";
-import { Cart } from "../../Typescript/types";
-import { graphQLClient } from "../../utils/client";
+import { getCartItems } from "../../../graphql/customer";
+import { Cart } from "../../../Typescript/types";
+import { graphQLClient } from "../../../utils/client";
 
 export interface IinitialState {
   cart: Cart[];

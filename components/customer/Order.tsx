@@ -4,7 +4,7 @@ import { createOrder, deleteFromCart } from "../../graphql/customer";
 import { Cart, MutationCreateOrderArgs } from "../../Typescript/types";
 import { useMutation } from "../../utils/useMutation";
 import { useDispatch } from "react-redux";
-import { cartItems } from "./../../redux/features/fetchCart";
+import { cartItems } from "../../redux/features/cart/fetchCart";
 
 interface Iprops {
   c: Cart;

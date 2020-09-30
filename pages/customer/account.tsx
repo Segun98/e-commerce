@@ -16,6 +16,7 @@ import {
 } from "@chakra-ui/core";
 import { PurchaseSteps } from "../../components/customer/PurchaseSteps";
 import { useMutation } from "../../utils/useMutation";
+import Head from "next/head";
 
 export const Account = () => {
   const { Token } = useToken();
@@ -71,12 +72,15 @@ export const Account = () => {
 
   return (
     <Layout>
-      {Token && User && User.pending === "true" && (
+      <Head>
+        <title>Account | PartyStore</title>
+      </Head>
+      {/* {Token && User && User.pending === "true" && (
         <div className="banner">
           Your Account is Pending, You Need To Confirm Your Account in Your
           Email Inbox, Didn't Recieve An Email? <a>CLICK HERE TO RESEND</a>
         </div>
-      )}
+      )} */}
 
       {!Token && !role && (
         <div className="indicator">
@@ -126,28 +130,20 @@ export const Account = () => {
               </button>
             </div>
 
-            <div>
-              <h2>First Name:</h2>
-              <p>{User.first_name}</p>
-            </div>
-
-            <div>
-              <h2>Last Name:</h2>
-              <p>{User.last_name}</p>
-            </div>
-            <div>
-              <h2>Email:</h2>
+            <section className="account-info">
+              <h3>Personal Information</h3>
+              <hr />
+              <p>
+                {User.first_name} {User.last_name}
+              </p>
               <p>{User.email}</p>
-            </div>
+            </section>
+            <br />
             <form>
+              <h3>Address Book</h3>
+              <hr />
               <FormControl>
                 <div>
-                  <FormLabel
-                    htmlFor="Phone"
-                    style={{ color: "var(--deepblue)", marginTop: "10px" }}
-                  >
-                    Phone Number:
-                  </FormLabel>
                   <InputGroup>
                     <InputLeftElement
                       children={<Icon name="phone" color="gray.300" />}
@@ -168,17 +164,11 @@ export const Account = () => {
                 </div>
 
                 <div>
-                  <FormLabel
-                    htmlFor="Address"
-                    style={{ color: "var(--deepblue)", marginTop: "10px" }}
-                  >
-                    Address:
-                  </FormLabel>
                   <InputGroup>
                     <Input
                       isReadOnly={readOnly}
                       autoFocus={readOnly}
-                      width="350px"
+                      minWidth="350px"
                       placeholder="Click Edit to add Address"
                       type="text"
                       id="Address"
@@ -245,14 +235,25 @@ export const Account = () => {
           font-size: 1.2rem;
         }
 
-        .account-wrap h2 {
+        .account-wrap h3 {
           font-weight: bold;
           margin: 5px 0;
           color: Var(--deepblue);
           font-style: italic;
         }
         .account-wrap p {
-          font-size: 1.1rem;
+          color: Var(--text);
+          font-weight: bold;
+          margin: 2px 0;
+        }
+        .account-info h3 {
+          font-weight: bold;
+          margin: 5px 0;
+          color: Var(--deepblue);
+          font-style: italic;
+        }
+        form div {
+          margin: 10px 0;
         }
         @media only screen and (min-width: 1200px) {
           .account-wrap {

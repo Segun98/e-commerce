@@ -12,7 +12,7 @@ import { Commas } from "../../utils/helpers";
 import Cookies from "js-cookie";
 import { PurchaseSteps } from "../../components/customer/PurchaseSteps";
 import { useSelector, useDispatch } from "react-redux";
-import { cartItems, IinitialState } from "./../../redux/features/fetchCart";
+import { cartItems, IinitialState } from "../../redux/features/cart/fetchCart";
 
 interface DefaultRootState {
   cart: IinitialState;
@@ -20,7 +20,7 @@ interface DefaultRootState {
 
 export const CustomerCart = () => {
   //from redux feature - fetchCart
-  const { loading, cart, error } = useSelector<DefaultRootState, any>(
+  const { loading, cart, error } = useSelector<DefaultRootState, IinitialState>(
     (state) => state.cart
   );
 
