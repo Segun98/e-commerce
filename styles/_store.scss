@@ -1,5 +1,6 @@
 .store-page {
-    background: $softblue;
+    // background: $softblue;
+    background: white;
 }
 
 .store-page-wrap {
@@ -7,18 +8,19 @@
 }
 
 .main-store {
-    margin: 10px 10px;
+    margin: 10px 0;
     width: 100vw;
 
     header {
         font-style: italic;
-        margin-top: 20px;
         display: flex;
         justify-content: space-between;
+        margin: 20px 20px;
 
         .store-name {
             font-size: 1.1rem;
             font-weight: bold;
+            color: $deepblue;
         }
 
         .store-bio {
@@ -31,25 +33,34 @@
     }
 
     .store-products {
+        margin: auto;
+        width: 90%;
+
         &_head {
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             margin: 20px 0;
+
+            h1 {
+                font-weight: bold;
+                color: $deepblue;
+            }
         }
 
         &_wrap {
             display: grid;
             grid-template-columns: 1fr 1fr;
+
         }
 
         .store-item {
-            margin: 8px;
             box-shadow: var(--box) var(--softgrey);
             background: white;
             border-radius: 5px;
             width: 150px;
             padding: 3px;
             position: relative;
+            margin-bottom: 5px;
         }
 
         .edit-btn {
@@ -90,14 +101,16 @@
             font-size: 0.9rem;
         }
 
+        @media only screen and (min-width: 400px) {
+            width: 85%
+        }
+
         @media only screen and (min-width: 700px) {
             .store-results h1 {
                 margin: 15px 0;
             }
 
             &_wrap {
-                margin: auto;
-                width: 95%;
                 grid-template-columns: 1fr 1fr 1fr;
             }
 
@@ -142,7 +155,7 @@
 
         @media only screen and (min-width: 2000px) {
             &_wrap {
-                width: 60%;
+                grid-template-columns: repeat(6, 1fr);
             }
         }
     }

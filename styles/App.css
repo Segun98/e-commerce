@@ -1170,7 +1170,7 @@ Class names accross components can be the same but they are wrapped by a unique 
 }
 
 .store-page {
-  background: #eeeef5;
+  background: white;
 }
 
 .store-page-wrap {
@@ -1180,24 +1180,25 @@ Class names accross components can be the same but they are wrapped by a unique 
 }
 
 .main-store {
-  margin: 10px 10px;
+  margin: 10px 0;
   width: 100vw;
 }
 
 .main-store header {
   font-style: italic;
-  margin-top: 20px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
+  margin: 20px 20px;
 }
 
 .main-store header .store-name {
   font-size: 1.1rem;
   font-weight: bold;
+  color: #02247a;
 }
 
 .main-store header .store-bio {
@@ -1208,14 +1209,24 @@ Class names accross components can be the same but they are wrapped by a unique 
   padding-bottom: 10px;
 }
 
+.main-store .store-products {
+  margin: auto;
+  width: 90%;
+}
+
 .main-store .store-products_head {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   margin: 20px 0;
+}
+
+.main-store .store-products_head h1 {
+  font-weight: bold;
+  color: #02247a;
 }
 
 .main-store .store-products_wrap {
@@ -1226,7 +1237,6 @@ Class names accross components can be the same but they are wrapped by a unique 
 }
 
 .main-store .store-products .store-item {
-  margin: 8px;
   -webkit-box-shadow: var(--box) var(--softgrey);
           box-shadow: var(--box) var(--softgrey);
   background: white;
@@ -1234,6 +1244,7 @@ Class names accross components can be the same but they are wrapped by a unique 
   width: 150px;
   padding: 3px;
   position: relative;
+  margin-bottom: 5px;
 }
 
 .main-store .store-products .edit-btn {
@@ -1293,13 +1304,17 @@ Class names accross components can be the same but they are wrapped by a unique 
   font-size: 0.9rem;
 }
 
+@media only screen and (min-width: 400px) {
+  .main-store .store-products {
+    width: 85%;
+  }
+}
+
 @media only screen and (min-width: 700px) {
   .main-store .store-products .store-results h1 {
     margin: 15px 0;
   }
   .main-store .store-products_wrap {
-    margin: auto;
-    width: 95%;
     -ms-grid-columns: 1fr 1fr 1fr;
         grid-template-columns: 1fr 1fr 1fr;
   }
@@ -1345,7 +1360,8 @@ Class names accross components can be the same but they are wrapped by a unique 
 
 @media only screen and (min-width: 2000px) {
   .main-store .store-products_wrap {
-    width: 60%;
+    -ms-grid-columns: (1fr)[6];
+        grid-template-columns: repeat(6, 1fr);
   }
 }
 
@@ -1353,6 +1369,185 @@ Class names accross components can be the same but they are wrapped by a unique 
   .main-store header {
     margin: auto;
     width: 90%;
+  }
+}
+
+.dashboard .dashboard_layout {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.dashboard main {
+  margin: 0 auto;
+  width: 76%;
+}
+
+.dashboard main .headline-wrap {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  margin: 10px 0 10px 0;
+}
+
+.dashboard main .headline {
+  color: #02247a;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.dashboard main .order-status h1 {
+  color: #02247a;
+  font-style: italic;
+  font-weight: bold;
+  margin: 10px 0 10px 0;
+}
+
+.dashboard main .order-status_items {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: (1fr)[2];
+      grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.dashboard main .order-status_items .order-status_item {
+  -webkit-box-shadow: 0 1px 6px 0 rgba(32, 33, 36, 0.28);
+          box-shadow: 0 1px 6px 0 rgba(32, 33, 36, 0.28);
+  padding: 5px 15px;
+}
+
+.dashboard main .order-status_items .order-status_item .icon {
+  text-align: right;
+}
+
+.dashboard main .order-status_items .order-status_item h2 {
+  font-weight: bold;
+  font-size: 1.3rem;
+  margin-left: 10px;
+}
+
+.dashboard main .order-status_items .order-status_item p {
+  color: #626262;
+  font-size: 0.9rem;
+}
+
+.dashboard main .account-snippet h1 {
+  color: #02247a;
+  font-style: italic;
+  font-weight: bold;
+  margin: 20px 0 10px 0;
+}
+
+.dashboard main .account-snippet .account-infos {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: (1fr)[2];
+      grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.dashboard main .account-snippet .account-infos .account-info {
+  padding: 5px 15px;
+}
+
+.dashboard main .account-snippet .account-infos .account-info h2 {
+  font-size: 0.9rem;
+  color: #626262;
+  font-weight: bold;
+}
+
+.dashboard main .account-snippet .account-infos .account-info p {
+  color: #626262;
+  font-size: 0.8rem;
+  padding: 3px;
+}
+
+.dashboard main .recent-orders h1 {
+  color: #02247a;
+  font-style: italic;
+  font-weight: bold;
+  margin: 10px 0 10px 0;
+}
+
+@media only screen and (min-width: 700px) {
+  .dashboard main {
+    width: 60%;
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  .dashboard main {
+    width: 65%;
+    margin-top: 20px;
+  }
+  .dashboard main .headline {
+    font-size: 1.3rem;
+  }
+  .dashboard main .recent-orders h1 {
+    font-size: 1.3rem;
+  }
+  .dashboard main .order-status h1 {
+    font-size: 1.1rem;
+  }
+  .dashboard main .order-status_items {
+    -ms-grid-columns: (1fr)[3];
+        grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+  }
+  .dashboard main .order-status_items .order-status_item h2 {
+    font-size: 2rem;
+    padding: 5px 0;
+  }
+  .dashboard main .order-status_items .order-status_item p {
+    font-size: 1rem;
+  }
+  .dashboard main .account-snippet h1 {
+    font-size: 1.1rem;
+    padding-bottom: 2px;
+  }
+  .dashboard main .account-snippet .account-infos {
+    -ms-grid-columns: (1fr)[3];
+        grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+  }
+  .dashboard main .account-snippet .account-infos .account-info h2 {
+    font-size: 1rem;
+  }
+  .dashboard main .account-snippet .account-infos .account-info p {
+    font-size: 0.9rem;
+  }
+}
+
+@media only screen and (min-width: 1900px) {
+  .dashboard main {
+    width: 80%;
+  }
+  .dashboard main .order-status_items {
+    -ms-grid-columns: (1fr)[4];
+        grid-template-columns: repeat(4, 1fr);
+    gap: 25px;
+  }
+  .dashboard main .account-snippet .account-infos {
+    -ms-grid-columns: (1fr)[5];
+        grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+@media only screen and (min-width: 2200px) {
+  .dashboard main {
+    width: 80%;
+  }
+  .dashboard main .order-status_items {
+    -ms-grid-columns: (1fr)[6];
+        grid-template-columns: repeat(6, 1fr);
+  }
+  .dashboard main .account-snippet .account-infos {
+    -ms-grid-columns: (1fr)[8];
+        grid-template-columns: repeat(8, 1fr);
   }
 }
 /*# sourceMappingURL=App.css.map */
