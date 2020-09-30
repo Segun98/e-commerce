@@ -10,14 +10,16 @@ export const Navigation = () => {
   const { User } = useUser();
   return (
     <>
-      {role && role === "vendor" && (
-        <div className={isOpen ? "vendor-menu open" : "vendor-menu"}>
-          <header>
-            <span>PartyStore</span>
-            <button onClick={() => setIsOpen(!isOpen)}>
-              <Icon name="arrow-right" />
-            </button>
-          </header>
+      <div className={isOpen ? "vendor-menu open" : "vendor-menu"}>
+        <header>
+          <span>PartyStore</span>
+          <button onClick={() => setIsOpen(!isOpen)}>
+            <Icon name="arrow-right" />
+          </button>
+        </header>
+
+        {/* SHOW THIS TO VENDORS */}
+        {role && role === "vendor" && (
           <ul>
             <li>
               <Link href="/vendor/dashboard">
@@ -25,23 +27,31 @@ export const Navigation = () => {
               </Link>
             </li>
             <li>
-              <Link href={`/store/${User && User.business_name_slug}`}>
+              <Link
+                href={`/store/${User && User.business_name_slug}`}
+                as={`/store/${User && User.business_name_slug}`}
+              >
                 <a>Store</a>
               </Link>
             </li>
             <li>
-              <Link href="/">
+              <Link href="/vendor/orders">
                 <a>Orders</a>
               </Link>
             </li>
             <li>
-              <Link href="/">
+              <Link href="/store/new-item">
                 <a>Add New Product</a>
               </Link>
             </li>
             <li>
-              <Link href="/">
+              <Link href="/vendor/account">
                 <a>Account</a>
+              </Link>
+            </li>
+            <li>
+              <Link href="/">
+                <a>Payout?</a>
               </Link>
             </li>
             <li>
@@ -49,83 +59,165 @@ export const Navigation = () => {
                 <a>Contact Us</a>
               </Link>
             </li>
-            <li>
-              <Button style={{ color: "white", background: "var(--deepblue)" }}>
+            <div className="logout-btn">
+              <Button
+                style={{ color: "white", background: "var(--deepblue)" }}
+                width="100%"
+              >
                 Logout
               </Button>
-            </li>
+            </div>
           </ul>
-          <button
-            className="vendor-menu-btn"
-            onClick={() => setIsOpen(!isOpen)}
-          >
-            {isOpen ? (
-              <Icon name="close" />
-            ) : (
-              <img src="/menu.svg" alt="menu svg" />
-            )}
-          </button>
-          <style jsx>{`
+        )}
+
+        {/* SHOW THIS TO CUSTOMERS */}
+        {!role ||
+          (role !== "vendor" && (
+            <ul className="menu-for-customers">
+              <li>
+                <Link href="/">
+                  <a>Home</a>
+                </Link>
+              </li>
+              <li>
+                <Link href="/category?category=Gifts">
+                  <a>Gifts</a>
+                </Link>
+              </li>
+              <li>
+                <Link href="/category?category=Decorations">
+                  <a>Decorations</a>
+                </Link>
+              </li>
+              <li>
+                <Link href="/category?category=Games">
+                  <a>Games</a>
+                </Link>
+              </li>
+              <li>
+                <Link href="/category?category=Drinks">
+                  <a>Drinks</a>
+                </Link>
+              </li>
+              <li>
+                <Link href="/category?category=Props">
+                  <a>Party Props</a>
+                </Link>
+              </li>
+              <li>
+                <Link href="/category?category=Cakes">
+                  <a>Cakes</a>
+                </Link>
+              </li>
+            </ul>
+          ))}
+        <button className="vendor-menu-btn" onClick={() => setIsOpen(!isOpen)}>
+          {isOpen ? (
+            <Icon name="close" />
+          ) : (
+            <img src="/menu.svg" alt="menu svg" />
+          )}
+        </button>
+        <style jsx>{`
+          .vendor-menu {
+            background: var(--softblue);
+            width: 250px;
+            height: 100vh;
+            border-right: 0.6px solid var(--softgrey);
+            margin-left: -250px;
+            position: relative;
+            position: fixed;
+            z-index: 2;
+            transition: 0.5s ease;
+          }
+
+          .vendor-menu.open {
+            margin-left: 0px;
+            transition: 0.5s ease;
+          }
+
+          .vendor-menu ul {
+            display: flex;
+            flex-direction: column;
+          }
+
+          .vendor-menu header {
+            font-style: italic;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: white;
+            margin-bottom: 10px;
+            margin-left: 0;
+            border-bottom: 1px solid;
+            padding: 10px 15px;
+            background: var(--deepblue);
+            display: flex;
+            justify-content: space-between;
+          }
+          .vendor-menu ul li {
+            margin: 10px 0;
+            padding-left: 10px;
+            padding-bottom: 5px;
+            display: block;
+            color: var(--text);
+          }
+          .vendor-menu-btn {
+            position: absolute;
+            top: 0;
+            right: 0;
+            margin-right: -45px;
+          }
+          .vendor-menu-btn img {
+            width: 40px;
+          }
+          .menu-for-customers li {
+            font-weight: bold;
+            color: var(--text);
+            text-decoration: uppercase;
+          }
+          .logout-btn {
+            margin-top: 80px;
+          }
+
+          @media only screen and (min-width: 700px) {
             .vendor-menu {
-              background: var(--softblue);
-              width: 250px;
-              height: 100vh;
-              border-right: 0.6px solid var(--softgrey);
-              margin-left: -250px;
-              position: relative;
-              position: fixed;
-              z-index: 2;
-              transition: 0.5s ease;
-            }
-
-            .vendor-menu.open {
               margin-left: 0px;
-              transition: 0.5s ease;
-            }
-
-            .vendor-menu ul {
-              display: flex;
-              flex-direction: column;
-            }
-
-            .vendor-menu header {
-              font-style: italic;
-              font-size: 1.2rem;
-              font-weight: bold;
-              color: white;
-              margin-bottom: 10px;
-              margin-left: 0;
-              border-bottom: 1px solid;
-              padding: 10px 15px;
-              background: var(--deepblue);
-              display: flex;
-              justify-content: space-between;
-            }
-            .vendor-menu ul li {
-              margin: 10px 10px;
+              width: 200px;
+              position: static;
             }
             .vendor-menu-btn {
-              position: absolute;
-              top: 0;
-              right: 0;
-              margin-right: -45px;
+              display: none;
             }
-            .vendor-menu-btn img {
-              width: 40px;
+          }
+
+          @media only screen and (min-width: 1200px) {
+            .vendor-menu {
+              width: 250px;
             }
 
-            @media only screen and (min-width: 700px) {
-              .vendor-menu {
-                margin-left: 0px;
-                position: static;
-              }
-              .vendor-menu-btn {
-                display: none;
-              }
+            .vendor-menu ul li {
+              margin: 10px 0;
+              padding-left: 10px;
+              padding-bottom: 5px;
+              border-bottom: none;
+              text-transform: none;
             }
-          `}</style>
-        </div>
-      )}
+            .menu-for-customers li {
+              padding-bottom: 5px;
+              font-size: 1.05rem;
+            }
+          }
+
+          @media only screen and (min-width: 1800px) {
+            .vendor-menu ul li {
+              font-size: 1.2rem;
+            }
+            .menu-for-customers li {
+              font-size: 1.2rem;
+            }
+          }
+        `}</style>
+      </div>
     </>
   );
 };

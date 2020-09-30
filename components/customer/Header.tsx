@@ -17,10 +17,15 @@ import { useRouter } from "next/router";
 import { useUser } from "../../Context/UserProvider";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
-import { cartItems } from "../../redux/features/fetchCart";
+import { cartItems } from "../../redux/features/cart/fetchCart";
 
+interface DefaultRootState {
+  cart: any;
+}
 export const Header = () => {
-  const { cartLength } = useSelector((state) => state.cart);
+  const { cartLength } = useSelector<DefaultRootState, any>(
+    (state) => state.cart
+  );
   const dispatch = useDispatch();
 
   const { Token } = useToken();
@@ -499,6 +504,16 @@ export const Header = () => {
         @media only screen and (min-width: 1200px) {
           .navigation nav ul li {
             font-size: 1.1rem;
+          }
+        }
+        @media only screen and (min-width: 1400px) {
+          .navigation nav ul li {
+            font-size: 1.2rem;
+          }
+        }
+        @media only screen and (min-width: 1800px) {
+          .navigation nav ul li {
+            font-size: 1.3rem;
           }
         }
       `}</style>
