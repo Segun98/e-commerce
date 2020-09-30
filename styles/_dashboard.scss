@@ -1,0 +1,204 @@
+.dashboard {
+
+    .dashboard_layout {
+        display: flex;
+
+    }
+
+    main {
+        margin: 0 auto;
+        width: 76%;
+
+        .headline-wrap {
+            display: flex;
+            justify-content: space-between;
+            margin: 10px 0 10px 0;
+        }
+
+        .headline {
+            color: $deepblue;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .order-status {
+            h1 {
+                color: $deepblue;
+                font-style: italic;
+                font-weight: bold;
+                margin: 10px 0 10px 0;
+            }
+
+
+        }
+
+        .order-status_items {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+
+            .order-status_item {
+                box-shadow: $box $softgrey;
+                padding: 5px 15px;
+
+                .icon {
+                    text-align: right;
+                }
+
+                h2 {
+                    font-weight: bold;
+                    font-size: 1.3rem;
+                    margin-left: 10px;
+                }
+
+                p {
+                    color: $text;
+                    font-size: 0.9rem;
+                }
+            }
+        }
+
+        .account-snippet {
+            h1 {
+                color: $deepblue;
+                font-style: italic;
+                font-weight: bold;
+                margin: 20px 0 10px 0;
+            }
+
+            .account-infos {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+
+                .account-info {
+                    padding: 5px 15px;
+
+                    h2 {
+                        font-size: 0.9rem;
+                        color: $text;
+                        font-weight: bold;
+                    }
+
+                    p {
+                        color: $text;
+                        font-size: 0.8rem;
+                        padding: 3px;
+                    }
+                }
+
+            }
+        }
+
+        .recent-orders {
+            h1 {
+                color: $deepblue;
+                font-style: italic;
+                font-weight: bold;
+                margin: 10px 0 10px 0;
+            }
+        }
+
+        @media only screen and (min-width:700px) {
+            width: 60%;
+        }
+
+        @media only screen and (min-width:1200px) {
+            width: 65%;
+            margin-top: 20px;
+
+            .headline {
+                font-size: 1.3rem;
+            }
+
+            .recent-orders {
+                h1 {
+                    font-size: 1.3rem;
+                }
+            }
+
+            .order-status {
+                h1 {
+                    font-size: 1.1rem;
+                }
+
+
+            }
+
+            .order-status_items {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 25px;
+
+                .order-status_item {
+                    h2 {
+                        font-size: 2rem;
+                        padding: 5px 0;
+                    }
+
+                    p {
+                        font-size: 1rem;
+                    }
+                }
+            }
+
+            .account-snippet {
+                h1 {
+                    font-size: 1.1rem;
+                    padding-bottom: 2px;
+                }
+
+                .account-infos {
+                    grid-template-columns: repeat(3, 1fr);
+                    gap: 25px;
+
+                    .account-info {
+
+                        h2 {
+                            font-size: 1rem;
+                        }
+
+                        p {
+                            font-size: 0.9rem;
+                        }
+                    }
+
+                }
+            }
+
+        }
+
+
+        @media only screen and (min-width:1900px) {
+            width: 80%;
+
+            .order-status_items {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 25px;
+            }
+
+            .account-snippet {
+                .account-infos {
+                    grid-template-columns: repeat(5, 1fr);
+
+                }
+            }
+
+        }
+
+        @media only screen and (min-width:2200px) {
+            width: 80%;
+
+            .order-status_items {
+                grid-template-columns: repeat(6, 1fr);
+            }
+
+            .account-snippet {
+                .account-infos {
+                    grid-template-columns: repeat(8, 1fr);
+
+                }
+            }
+
+        }
+    }
+}
