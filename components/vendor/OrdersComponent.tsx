@@ -6,6 +6,7 @@ import {
   IOrderInitialState,
   ordersThunk,
 } from "../../redux/features/orders/fetchOrders";
+import { Button } from "@chakra-ui/core";
 
 interface Iprops {
   limit: number | null;
@@ -41,6 +42,7 @@ export const OrdersComponent: React.FC<Iprops> = ({ limit }) => {
   return (
     <div className="orders-table">
       <div className="order-title">
+        <div>Order ID</div>
         <div>Name</div>
         <div>Price</div>
         <div>Quantity</div>
@@ -49,9 +51,11 @@ export const OrdersComponent: React.FC<Iprops> = ({ limit }) => {
         <div>Order Date</div>
         <div>Completed</div>
         <div>Canceled</div>
+        <div>Action</div>
       </div>
       {orders.map((o) => (
         <div className="order-item" key={o.id}>
+          <div>{o.id}</div>
           <div>{o.name}</div>
           <div>{o.price}</div>
           <div>{o.quantity}</div>
@@ -60,27 +64,47 @@ export const OrdersComponent: React.FC<Iprops> = ({ limit }) => {
           <div>{toDate(o.created_at)}</div>
           <div>{o.completed === "false" ? "No" : "Yes"}</div>
           <div>{o.canceled === "false" ? "No" : "Yes"}</div>
+          <div>
+            <Button variantColor="blue">Action</Button>
+          </div>
         </div>
       ))}
-
       <style jsx>{`
         .orders-table {
           box-shadow: var(--box) var(--softgrey);
           padding: 10px;
           margin-bottom: 50px;
           border-radius: 3px;
-          width: 100%;
+          position: absolute;
         }
         .order-title {
           background: var(--softblue);
           border-radius: 10px;
           padding: 5px;
+          font-size: 0.8rem;
+          font-weight: bold;
         }
         .order-item,
         .order-title {
           display: grid;
-          grid-template-columns: repeat(8, 1fr);
+          grid-template-columns: repeat(10, 1fr);
           gap: 20px;
+        }
+
+        .order-item {
+          margin: 4px 0;
+          margin-bottom: 0.6px solid var(--softgrey);
+        }
+        @media only screen and (min-width: 1200px) {
+          .orders-table {
+            position: static;
+          }
+        }
+        @media only screen and (min-width: 1800px) {
+          .order-item,
+          .order-title {
+            gap: 1px;
+          }
         }
       `}</style>
     </div>

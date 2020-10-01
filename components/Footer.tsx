@@ -56,7 +56,17 @@ export const Footer = () => {
           <ul>
             <li>
               <Link href="/">
-                <a>Partner With Us</a>
+                <a>Start Selling Through Us</a>
+              </Link>{" "}
+            </li>
+            <li>
+              <Link href="/vendor/dashboard">
+                <a>Dashboard</a>
+              </Link>{" "}
+            </li>
+            <li>
+              <Link href="/">
+                <a>Register</a>
               </Link>{" "}
             </li>
             <li>

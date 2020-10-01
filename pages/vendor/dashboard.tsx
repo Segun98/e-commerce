@@ -3,7 +3,6 @@ import Link from "next/link";
 import { useToken } from "../../Context/TokenProvider";
 import { ProtectRouteV } from "../../utils/ProtectedRouteV";
 import { Navigation } from "../../components/vendor/Navigation";
-import { Footer } from "../../components/Footer";
 import Head from "next/head";
 import { OrdersComponent } from "./../../components/vendor/OrdersComponent";
 import { Button, Icon } from "@chakra-ui/core";
@@ -131,16 +130,23 @@ export const Dashboard: React.FC = () => {
             </div>
           </div>
           <div className="recent-orders">
-            <h1>Recent Orders</h1>
+            <div className="recent-orders_wrap">
+              <h1>Recent Orders</h1>
+              <Button
+                size="sm"
+                style={{ background: "var(--deepblue)", color: "white" }}
+              >
+                <Link href="/vendor/orders">
+                  <a>Full List</a>
+                </Link>
+              </Button>
+            </div>
             {/* ORDERS COMPONENT  */}
             <div className="orders">
               <OrdersComponent limit={5} />
             </div>
           </div>
         </main>
-      </section>
-      <section>
-        <Footer />
       </section>
     </div>
   );

@@ -2,7 +2,6 @@
 
     .dashboard_layout {
         display: flex;
-
     }
 
     main {
@@ -91,11 +90,16 @@
         }
 
         .recent-orders {
+            &_wrap {
+                display: flex;
+                justify-content: space-between;
+                margin: 10px 0 10px 0;
+            }
+
             h1 {
                 color: $deepblue;
                 font-style: italic;
                 font-weight: bold;
-                margin: 10px 0 10px 0;
             }
         }
 
@@ -104,7 +108,7 @@
         }
 
         @media only screen and (min-width:1200px) {
-            width: 65%;
+            width: 70%;
             margin-top: 20px;
 
             .headline {
