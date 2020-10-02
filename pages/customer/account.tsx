@@ -133,9 +133,11 @@ export const Account = () => {
             <section className="account-info">
               <h3>Personal Information</h3>
               <hr />
+              <h2>Name</h2>
               <p>
                 {User.first_name} {User.last_name}
               </p>
+              <h2>Email</h2>
               <p>{User.email}</p>
             </section>
             <br />
@@ -144,6 +146,7 @@ export const Account = () => {
               <hr />
               <FormControl>
                 <div>
+                  <h2>Phone Number</h2>
                   <InputGroup>
                     <InputLeftElement
                       children={<Icon name="phone" color="gray.300" />}
@@ -164,6 +167,7 @@ export const Account = () => {
                 </div>
 
                 <div>
+                  <h2>Shipping Address</h2>
                   <InputGroup>
                     <Input
                       isReadOnly={readOnly}
@@ -241,9 +245,13 @@ export const Account = () => {
           color: Var(--deepblue);
           font-style: italic;
         }
-        .account-wrap p {
-          color: Var(--text);
+
+        .account-wrap h2 {
+          margin: 5px 0;
+          color: Var(--deepblue);
           font-weight: bold;
+        }
+        .account-wrap p {
           margin: 2px 0;
         }
         .account-info h3 {

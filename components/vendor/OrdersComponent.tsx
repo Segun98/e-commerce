@@ -53,6 +53,7 @@ export const OrdersComponent: React.FC<Iprops> = ({ limit }) => {
         <div>Canceled</div>
         <div>Action</div>
       </div>
+      {orders.length === 0 ? "You Have No Orders..." : null}
       {orders.map((o) => (
         <div className="order-item" key={o.id}>
           <div>{o.id}</div>

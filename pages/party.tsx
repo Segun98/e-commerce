@@ -59,8 +59,8 @@ export const Category = ({ products, error }: Iprops) => {
     "slider/slide2.jpeg",
     "product3.png",
     "product2.png",
+    "product4.png",
     "product1.png",
-    "product2.png",
     "product3.png",
   ];
 

@@ -3,11 +3,32 @@ import Link from "next/link";
 import { Button, Icon } from "@chakra-ui/core";
 import Cookies from "js-cookie";
 import { useUser } from "../../Context/UserProvider";
+import { useRouter } from "next/router";
+import axios from "axios";
 
 export const Navigation = () => {
   const role = Cookies.get("role");
   const [isOpen, setIsOpen] = useState(false);
   const { User } = useUser();
+  const router = useRouter();
+
+  const handleLogout = async () => {
+    if (window.confirm("Are you sure you want to LogOut?")) {
+      const instance = axios.create({
+        withCredentials: true,
+      });
+
+      try {
+        const res = await instance.post(`http://localhost:4000/api/logout`);
+        if (res.data) {
+          router.reload();
+        }
+      } catch (error) {
+        console.log(error.message);
+      }
+    }
+  };
+
   return (
     <>
       <div className={isOpen ? "vendor-menu open" : "vendor-menu"}>
@@ -63,6 +84,8 @@ export const Navigation = () => {
               <Button
                 style={{ color: "white", background: "var(--deepblue)" }}
                 width="100%"
+                borderRadius="none"
+                onClick={handleLogout}
               >
                 Logout
               </Button>

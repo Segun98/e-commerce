@@ -34,7 +34,7 @@ const Home = ({ products, error }) => {
   const featured_images = [
     "product3.png",
     "product2.png",
-    "product1.png",
+    "product4.png",
     "product2.png",
     "product3.png",
   ];

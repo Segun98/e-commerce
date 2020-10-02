@@ -1,3 +1,4 @@
+import Head from "next/head";
 import React from "react";
 import { Navigation } from "../../components/vendor/Navigation";
 import { OrdersComponent } from "../../components/vendor/OrdersComponent";
@@ -5,6 +6,9 @@ import { OrdersComponent } from "../../components/vendor/OrdersComponent";
 export const Orders = () => {
   return (
     <div className="orders-page">
+      <Head>
+        <title>Orders | Vendor | PartyStore</title>
+      </Head>
       <div className="orders-layout">
         <Navigation />
         <main>

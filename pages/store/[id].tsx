@@ -65,6 +65,7 @@ const Store = ({ data, error }: Iprops) => {
   const images = [
     "slider/slide2.jpeg",
     "product3.png",
+    "product4.png",
     "product2.png",
     "product1.png",
     "product2.png",
@@ -126,7 +127,7 @@ const Store = ({ data, error }: Iprops) => {
                         fontWeight: "bold",
                       }}
                     >
-                      <Link href="/product/new-item">
+                      <Link href="/vendor/account">
                         <a>
                           <Icon name="edit" />
                         </a>

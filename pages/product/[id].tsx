@@ -67,9 +67,9 @@ const Product = ({ product, error }: response) => {
     "slider/slide2.jpeg",
     "product3.png",
     "product2.png",
-    "product1.png",
+    "product4.png",
     "product2.png",
-    "product3.png",
+    "product1.png",
   ];
 
   async function addCart(product_id, prod_creator_id, quantity) {
