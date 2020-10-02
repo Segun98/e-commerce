@@ -1,22 +1,30 @@
+.new-item-layout {
+    display: flex;
+
+    main {
+        width: 100%
+    }
+}
+
 .store_new-item {
-    background: whitesmoke;
+    background: $softblue;
 
     .main-wrap {
         margin: auto;
-        width: 70%;
-        padding: 20px;
+        width: 90%;
 
         .title {
             font-weight: bold;
-            font-size: 1.5rem;
-            margin-bottom: 15px;
+            font-style: italic;
+            color: $deepblue;
+            margin-left: 25px;
+            padding: 20px;
         }
     }
 
     form {
         label {
-            font-size: 0.8rem;
-            font-weight: bold;
+            font-size: 0.9rem;
         }
 
         .form-item {
@@ -26,18 +34,18 @@
 
         .form-wrap {
             display: grid;
-            grid-template-columns: 2fr 1fr;
+            grid-template-columns: 1fr;
             gap: 20px;
 
             textarea {
-                height: 400px;
+                height: 300px;
             }
 
             .grid-1,
             .grid-2 {
-                background: white;
-                padding: 20px;
-                border-radius: 7px;
+                // background: white;
+                padding: 10px;
+                border-radius: 5px;
                 box-shadow: $box $softgrey;
             }
         }
@@ -46,6 +54,9 @@
     }
 
     .btn {
-        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding-bottom: 10px;
     }
 }
