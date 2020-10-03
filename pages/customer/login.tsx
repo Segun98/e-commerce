@@ -18,6 +18,7 @@ import { LoginRes, MutationLogInArgs } from "../../Typescript/types";
 import { useToken } from "../../Context/TokenProvider";
 import { Layout } from "../../components/Layout";
 import Link from "next/link";
+import Head from "next/head";
 
 export const Login = () => {
   const toast = useToast();
@@ -65,11 +66,15 @@ export const Login = () => {
           router.push(`/${data.role}/login`);
           return;
         }
-        setSuccess("Login Successful");
+        toast({
+          title: "LogIn Successfull!",
+          status: "success",
+          duration: 3000,
+        });
         router.push("/customer/account");
       }
     } catch (err) {
-      // console.log(err.message);
+      setLoading(false);
       if (err.message === "Network request failed") {
         toast({
           title: "Oops, Network Request Failed",
@@ -79,16 +84,25 @@ export const Login = () => {
           isClosable: true,
           position: "top",
         });
+        return;
       }
-      setCustomError(err.response?.errors[0].message);
-      setLoading(false);
+
+      toast({
+        title: "An Error Occured",
+        description: `${err.response?.errors[0].message || ""}`,
+        status: "error",
+        duration: 5000,
+      });
     }
   };
 
   return (
     <Layout>
+      <Head>
+        <title>Customer LogIn | PartyStore</title>
+      </Head>
       <div className="login-page-wrap">
-        <img src="/login.png" alt="login-vector" className="login-vector" />
+        <img src="/login.png" alt="login vector" className="login-vector" />
         <form onSubmit={handleSubmit(onSubmit)}>
           <h1 className="log-in">Log In</h1>
           <h2 className="log-in-message">Enjoy A Modern Shopping Experience</h2>
@@ -97,9 +111,6 @@ export const Login = () => {
             <div>
               <FormLabel htmlFor="email">Email</FormLabel>
               <InputGroup>
-                {/* <InputLeftAddon
-                  children={<Icon name="at-sign" color="blue.400" />}
-                /> */}
                 <Input
                   autoFocus={true}
                   type="email"
@@ -238,7 +249,7 @@ export const Login = () => {
               margin: 100px auto;
             }
           }
-          @media only screen and (min-width: 2000px) {
+          @media only screen and (min-width: 1800px) {
             .login-page-wrap {
               width: 60%;
             }

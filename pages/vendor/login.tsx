@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   Input,
   FormControl,
@@ -6,8 +6,8 @@ import {
   InputGroup,
   InputRightElement,
   Button,
-  InputLeftAddon,
   Icon,
+  useToast,
 } from "@chakra-ui/core";
 import { useForm } from "react-hook-form";
 import { graphQLClient } from "../../utils/client";
@@ -17,8 +17,11 @@ import { useToken } from "../../Context/TokenProvider";
 import { LoginRes, MutationLogInArgs } from "../../Typescript/types";
 import Link from "next/link";
 import { Layout } from "../../components/Layout";
+import Head from "next/head";
 
 export const Login = () => {
+  const toast = useToast();
+
   //from context
   const { setToken } = useToken();
 
@@ -29,18 +32,7 @@ export const Login = () => {
   //show password or not in input field- password/confirm password
   const [show, setShow] = useState(false);
   //custom error, mostly from the server
-  const [customError, setCustomError] = useState("");
   const [Loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState("");
-
-  useEffect(() => {
-    if (customError || success) {
-      setTimeout(() => {
-        setCustomError("");
-        setSuccess("");
-      }, 5000);
-    }
-  }, [customError]);
 
   //form submit function
 
@@ -64,31 +56,53 @@ export const Login = () => {
           router.push(`/${data.role}/login`);
           return;
         }
-        setSuccess("Login Successful");
+        toast({
+          title: "LogIn Successfull!",
+          status: "success",
+          duration: 3000,
+        });
         router.push("/vendor/dashboard");
       }
     } catch (err) {
-      // console.log(err.message);
-      setCustomError(err.response?.errors[0].message);
       setLoading(false);
+      if (err.message === "Network request failed") {
+        toast({
+          title: "Oops, Network Request Failed",
+          description: "PLease Check Your Internet Connection and Try Again",
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+          position: "top",
+        });
+        return;
+      }
+      toast({
+        title: "An Error Occured",
+        description: `${err.response?.errors[0].message || ""}`,
+        status: "error",
+        duration: 5000,
+      });
     }
   };
 
   return (
     <Layout>
-      <div>
+      <Head>
+        <title>Vendor LogIn | PartyStore</title>
+      </Head>
+      <div className="login-page-wrap">
+        <img
+          src="/undraw_receipt_ecdd.svg"
+          alt="login vector"
+          className="login-vector"
+        />
         <form onSubmit={handleSubmit(onSubmit)}>
           <h1 className="log-in">Log In</h1>
           <h2 className="log-in-message">Let's Make Sales Today!</h2>
-          <h3 style={{ color: "red" }}>{customError}</h3>
-          <h3 style={{ color: "green" }}>{success}</h3>
           <FormControl isRequired>
             <div>
               <FormLabel htmlFor="email">Email</FormLabel>
               <InputGroup>
-                {/* <InputLeftAddon
-                  children={<Icon name="at-sign" color="blue.400" />}
-                /> */}
                 <Input
                   type="email"
                   id="email"
@@ -102,7 +116,7 @@ export const Login = () => {
                       message: "invalid email address",
                     },
                   })}
-                  isInvalid={errors.email || customError ? true : false}
+                  isInvalid={errors.email ? true : false}
                   errorBorderColor="red.300"
                 />
               </InputGroup>
@@ -121,15 +135,10 @@ export const Login = () => {
                   id="password"
                   placeholder="Enter Password"
                   ref={register}
-                  isInvalid={customError ? true : false}
+                  isInvalid={errors.password ? true : false}
                   errorBorderColor="red.300"
                 />
                 <InputRightElement width="4.5rem">
-                  {/* <InputLeftAddon
-                  children={<Icon name="view" color="blue.400" />}
-                  borderTop="none"
-                  color="blue.400"
-                /> */}
                   <Icon
                     name="view"
                     color="blue.400"
@@ -138,15 +147,6 @@ export const Login = () => {
                       setShow(!show);
                     }}
                   />
-                  {/* <Button
-                    h="1.75rem"
-                    size="sm"
-                    onClick={() => {
-                      setShow(!show);
-                    }}
-                  >
-                    {show ? "Hide" : "Show"}
-                  </Button> */}
                 </InputRightElement>
               </InputGroup>
             </div>
@@ -172,6 +172,12 @@ export const Login = () => {
           </div>
         </form>
         <style jsx>{`
+          .login-page-wrap {
+            display: flex;
+            flex-direction: column-reverse;
+            margin: 2rem auto;
+            width: 90%;
+          }
           form {
             margin: 2rem auto;
             width: 90%;
@@ -194,11 +200,52 @@ export const Login = () => {
           }
 
           .btn {
-            text-align: center;
             margin-top: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
           }
           .sign-up-msg a {
             color: var(--deepblue);
+          }
+          .login-vector {
+            display: none;
+          }
+          @media only screen and (min-width: 700px) {
+            .login-page-wrap {
+              flex-direction: row;
+              justify-content: space-between;
+            }
+            .login-vector {
+              width: 60%;
+              display: block;
+              margin-right: 50px;
+            }
+
+            .login-vector img {
+              margin-right: 50px;
+            }
+          }
+          @media only screen and (min-width: 1200px) {
+            .login-page-wrap {
+              width: 80%;
+              margin: 50px auto;
+            }
+            .login-vector {
+              width: 75%;
+            }
+          }
+          @media only screen and (min-width: 1400px) {
+            .login-page-wrap {
+              width: 70%;
+              margin: 100px auto;
+            }
+          }
+          @media only screen and (min-width: 1800px) {
+            .login-page-wrap {
+              width: 60%;
+            }
           }
         `}</style>
       </div>

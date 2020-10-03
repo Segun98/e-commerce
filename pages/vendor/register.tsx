@@ -9,6 +9,7 @@ import {
   Button,
   InputLeftAddon,
   Icon,
+  useToast,
 } from "@chakra-ui/core";
 import { useForm } from "react-hook-form";
 import { request } from "graphql-request";
@@ -17,26 +18,19 @@ import { endpoint } from "../../utils/client";
 import { useRouter } from "next/router";
 import slug from "slug";
 import { MutationSignUpArgs } from "../../Typescript/types";
+import { Layout } from "../../components/Layout";
+import Head from "next/head";
 
 export const Register = () => {
   const router = useRouter();
+  const toast = useToast();
   //react-hook-form
   const { handleSubmit, register, errors, watch } = useForm();
 
   //show password or not in input field- password/confirm password
   const [show, setShow] = useState(false);
   //custom error, mostly from the server
-  const [customError, setCustomError] = useState("");
   const [Loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState("");
-
-  useEffect(() => {
-    if (customError) {
-      setTimeout(() => {
-        setCustomError("");
-      }, 5000);
-    }
-  }, [customError]);
 
   //helper to convert the first letters of business name to capital letter
   function capital_letter(str: string | any) {
@@ -54,7 +48,12 @@ export const Register = () => {
   const onSubmit = async (values: MutationSignUpArgs, e): Promise<void> => {
     //i could use values.password
     if (watch("password") !== watch("confirm_password")) {
-      return setCustomError("Passwords must match");
+      toast({
+        title: "Passwords Must Match",
+        status: "info",
+        duration: 3000,
+      });
+      return;
     }
     const {
       business_name,
@@ -70,7 +69,11 @@ export const Register = () => {
       last_name.trim() === "" ||
       business_name.trim() === ""
     ) {
-      setCustomError("All Fields are Required");
+      toast({
+        title: "All Fields Are Required",
+        status: "info",
+        duration: 3000,
+      });
       return;
     }
 
@@ -100,224 +103,286 @@ export const Register = () => {
 
       if (res.signUp) {
         setLoading(false);
-        setSuccess(res.signUp.message);
+        toast({
+          title: "Sign Up Successful!",
+          status: "success",
+          duration: 3000,
+        });
         //reset form field
         e.target.reset();
         router.push("/vendor/login");
       }
     } catch (err) {
-      setCustomError(err.response?.errors[0].message);
       setLoading(false);
-      // console.log(err.message);
+      if (err.message === "Network request failed") {
+        toast({
+          title: "Oops, Network Request Failed",
+          description: "PLease Check Your Internet Connection and Try Again",
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+          position: "top",
+        });
+        return;
+      }
+      toast({
+        title: "An Error Occured",
+        description: `${err.response?.errors[0].message || ""}`,
+        status: "error",
+        duration: 5000,
+      });
     }
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <h2>Register as a Vendor</h2>
-        <h3 style={{ color: "red" }}>{customError}</h3>
-        <h3 style={{ color: "green" }}>{success}</h3>
-        <FormControl isRequired>
-          <div>
-            <FormLabel htmlFor="business_name">Business Name</FormLabel>
-            <Input
-              type="business_name"
-              id="business_name"
-              name="business_name"
-              aria-describedby="business_name-helper-text"
-              placeholder="Business Name"
-              ref={register({
-                required: true,
-                minLength: 3,
-              })}
-              isInvalid={errors.business_name ? true : false}
-              errorBorderColor="red.300"
-            />
-            <small style={{ color: "red" }}>
-              {errors.business_name &&
-                "Business name should be a minimum of 3 chracters"}
-            </small>
-          </div>
-
-          <div>
-            <FormLabel htmlFor="first_name">First Name</FormLabel>
-            <Input
-              type="first_name"
-              id="first_name"
-              name="first_name"
-              aria-describedby="first_name-helper-text"
-              placeholder="First Name"
-              ref={register({
-                required: true,
-                minLength: 3,
-                maxLength: 20,
-              })}
-              isInvalid={errors.first_name ? true : false}
-              errorBorderColor="red.300"
-            />
-            <small style={{ color: "red" }}>
-              {errors.first_name &&
-                "first name should be a minimum of 3 chracters and max of 20"}
-            </small>
-          </div>
-
-          <div>
-            <FormLabel htmlFor="last_name">Last Name</FormLabel>
-            <Input
-              type="last_name"
-              id="last_name"
-              name="last_name"
-              aria-describedby="last_name-helper-text"
-              placeholder="Last Name"
-              ref={register({
-                required: true,
-                minLength: 3,
-                maxLength: 20,
-              })}
-              isInvalid={errors.last_name ? true : false}
-              errorBorderColor="red.300"
-            />
-            <small style={{ color: "red" }}>
-              {errors.last_name &&
-                "Last name should be a minimum of 3 chracters and max of 20"}
-            </small>
-          </div>
-
-          <div>
-            <FormLabel htmlFor="email">Email address</FormLabel>
-            <InputGroup>
-              <InputLeftAddon
-                children={<Icon name="at-sign" color="blue.400" />}
-              />
+    <Layout>
+      <Head>
+        <title>Vendor Register | PartyStore</title>
+      </Head>
+      <div className="register-page-wrap">
+        <img
+          src="/undraw_receipt_ecdd.svg"
+          alt="register vector"
+          className="register-vector"
+        />
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <h1 className="register">Create Account</h1>
+          <h2 className="register-message">
+            Start Making Sales and Transform Your Business
+          </h2>
+          <FormControl isRequired>
+            <div>
+              <FormLabel htmlFor="business_name">Business Name</FormLabel>
               <Input
-                type="email"
-                id="email"
-                name="email"
-                aria-describedby="email-helper-text"
-                placeholder="email@example.com"
-                ref={register({
-                  required: "Required",
-                  pattern: {
-                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                    message: "invalid email address",
-                  },
-                })}
-                isInvalid={errors.email ? true : false}
-                errorBorderColor="red.300"
-              />
-            </InputGroup>
-            <small style={{ color: "red" }}>
-              {errors.email && errors.email.message}
-            </small>
-            <FormHelperText id="email-helper-text" color="green">
-              We'll never share your email.
-            </FormHelperText>
-          </div>
-
-          <div>
-            <FormLabel htmlFor="password">Password</FormLabel>
-            <InputGroup size="md">
-              <InputLeftAddon
-                children={<Icon name="view" color="blue.400" />}
-                borderTop="none"
-                color="blue.400"
-              />
-              <Input
-                pr="4.5rem"
-                type={show ? "text" : "password"}
-                name="password"
-                id="password"
-                placeholder="Enter Password"
+                type="business_name"
+                id="business_name"
+                name="business_name"
+                aria-describedby="business_name-helper-text"
+                placeholder="Business Name"
                 ref={register({
                   required: true,
-                  minLength: 8,
-                  maxLength: 20,
+                  minLength: 3,
                 })}
-                isInvalid={errors.password ? true : false}
+                isInvalid={errors.business_name ? true : false}
                 errorBorderColor="red.300"
               />
-              <InputRightElement width="4.5rem">
-                <Button
-                  h="1.75rem"
-                  size="sm"
-                  onClick={() => {
-                    setShow(!show);
-                  }}
-                >
-                  {show ? "Hide" : "Show"}
-                </Button>
-              </InputRightElement>
-            </InputGroup>
-            <small style={{ color: "red" }}>
-              {errors.password && "minimum of 8 characters and max of 20"}
-            </small>
-          </div>
+              <small style={{ color: "red" }}>
+                {errors.business_name &&
+                  "Business name should be a minimum of 3 chracters"}
+              </small>
+            </div>
 
-          <div>
-            <FormLabel htmlFor="confirm_password">Confirm Password</FormLabel>
-            <InputGroup size="md">
-              <InputLeftAddon
-                children={<Icon name="view" color="blue.400" />}
-                borderTop="none"
-                color="blue.400"
-              />
+            <div>
+              <FormLabel htmlFor="first_name">First Name</FormLabel>
               <Input
-                pr="4.5rem"
-                type={show ? "text" : "password"}
-                id="confirm_password"
-                name="confirm_password"
-                placeholder="Confirm Password"
+                type="first_name"
+                id="first_name"
+                name="first_name"
+                aria-describedby="first_name-helper-text"
+                placeholder="First Name"
                 ref={register({
                   required: true,
-                  minLength: 8,
+                  minLength: 3,
                   maxLength: 20,
                 })}
-                isInvalid={errors.confirm_password ? true : false}
+                isInvalid={errors.first_name ? true : false}
                 errorBorderColor="red.300"
               />
-              <InputRightElement width="4.5rem">
-                <Button
-                  h="1.75rem"
-                  size="sm"
-                  onClick={() => {
-                    setShow(!show);
-                  }}
-                >
-                  {show ? "Hide" : "Show"}
-                </Button>
-              </InputRightElement>
-            </InputGroup>
+              <small style={{ color: "red" }}>
+                {errors.first_name &&
+                  "first name should be a minimum of 3 chracters and max of 20"}
+              </small>
+            </div>
+
+            <div>
+              <FormLabel htmlFor="last_name">Last Name</FormLabel>
+              <Input
+                type="last_name"
+                id="last_name"
+                name="last_name"
+                aria-describedby="last_name-helper-text"
+                placeholder="Last Name"
+                ref={register({
+                  required: true,
+                  minLength: 3,
+                  maxLength: 20,
+                })}
+                isInvalid={errors.last_name ? true : false}
+                errorBorderColor="red.300"
+              />
+              <small style={{ color: "red" }}>
+                {errors.last_name &&
+                  "Last name should be a minimum of 3 chracters and max of 20"}
+              </small>
+            </div>
+
+            <div>
+              <FormLabel htmlFor="email">Email address</FormLabel>
+              <InputGroup>
+                <Input
+                  type="email"
+                  id="email"
+                  name="email"
+                  aria-describedby="email-helper-text"
+                  placeholder="email@example.com"
+                  ref={register({
+                    required: "Required",
+                    pattern: {
+                      value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                      message: "invalid email address",
+                    },
+                  })}
+                  isInvalid={errors.email ? true : false}
+                  errorBorderColor="red.300"
+                />
+              </InputGroup>
+              <small style={{ color: "red" }}>
+                {errors.email && errors.email.message}
+              </small>
+            </div>
+
+            <div>
+              <FormLabel htmlFor="password">Password</FormLabel>
+              <InputGroup size="md">
+                <Input
+                  pr="4.5rem"
+                  type={show ? "text" : "password"}
+                  name="password"
+                  id="password"
+                  placeholder="Enter Password"
+                  ref={register({
+                    required: true,
+                    minLength: 8,
+                    maxLength: 20,
+                  })}
+                  isInvalid={errors.password ? true : false}
+                  errorBorderColor="red.300"
+                />
+                <InputRightElement width="4.5rem">
+                  <Icon
+                    name="view"
+                    color="blue.400"
+                    cursor="pointer"
+                    onClick={() => {
+                      setShow(!show);
+                    }}
+                  />
+                </InputRightElement>
+              </InputGroup>
+              <small style={{ color: "red" }}>
+                {errors.password && "minimum of 8 characters and max of 20"}
+              </small>
+            </div>
+
+            <div>
+              <FormLabel htmlFor="confirm_password">Confirm Password</FormLabel>
+              <InputGroup size="md">
+                <Input
+                  pr="4.5rem"
+                  type={show ? "text" : "password"}
+                  id="confirm_password"
+                  name="confirm_password"
+                  placeholder="Confirm Password"
+                  ref={register({
+                    required: true,
+                    minLength: 8,
+                    maxLength: 20,
+                  })}
+                  isInvalid={errors.confirm_password ? true : false}
+                  errorBorderColor="red.300"
+                />
+                <InputRightElement width="4.5rem">
+                  <Icon
+                    name="view"
+                    color="blue.400"
+                    cursor="pointer"
+                    onClick={() => {
+                      setShow(!show);
+                    }}
+                  />
+                </InputRightElement>
+              </InputGroup>
+            </div>
+          </FormControl>
+          <div className="btn">
+            <Button
+              isDisabled={Loading}
+              style={{ background: "var(--deepblue)", color: "white" }}
+              type="submit"
+              isLoading={Loading}
+            >
+              Submit
+            </Button>
           </div>
-        </FormControl>
+        </form>
+        <style jsx>{`
+          .register-page-wrap {
+            display: flex;
+            flex-direction: column-reverse;
+            margin: 2rem auto;
+            width: 90%;
+          }
+          form {
+            margin: 2rem auto;
+            width: 90%;
+          }
 
-        <Button
-          isDisabled={Loading}
-          // variantColor="purple"
-          type="submit"
-          isLoading={Loading}
-        >
-          Submit
-        </Button>
-      </form>
-      <style jsx>{`
-        form {
-          margin: auto;
-          width: 60%;
-          box-shadow: var(--box) var(--softgrey);
-          padding: 20px;
-          margin-top: 40px;
-        }
-        form h2:first-child {
-          text-align: center;
-          color: green;
-        }
+          .register {
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: bolder;
+            color: var(--deepblue);
+          }
+          .register-message {
+            text-align: center;
+            font-size: 1.05rem;
+            color: var(--softgrey);
+            margin-bottom: 5px;
+          }
 
-        form div {
-          margin: 10px 0 !important;
-        }
-      `}</style>
-    </div>
+          form div {
+            margin: 10px 0;
+          }
+
+          .btn {
+            margin-top: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+          }
+          .register-msg a {
+            color: var(--deepblue);
+          }
+          .register-vector {
+            display: none;
+          }
+          @media only screen and (min-width: 700px) {
+            .register-page-wrap {
+              flex-direction: row;
+              width: 80%;
+            }
+            .register-vector {
+              width: 50%;
+              margin-right: 50px;
+              display: block;
+            }
+          }
+
+          @media only screen and (min-width: 1400px) {
+            .register-page-wrap {
+              width: 70%;
+            }
+          }
+          @media only screen and (min-width: 2000px) {
+            .register-page-wrap {
+              width: 60%;
+              margin: 100px auto;
+            }
+          }
+        `}</style>
+      </div>
+    </Layout>
   );
 };
 

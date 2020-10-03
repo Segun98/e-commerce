@@ -3,7 +3,6 @@ import {
   Input,
   FormControl,
   FormLabel,
-  FormHelperText,
   InputGroup,
   InputRightElement,
   Button,
@@ -18,6 +17,7 @@ import { useRouter } from "next/router";
 import { MutationSignUpArgs } from "../../Typescript/types";
 import Link from "next/link";
 import { Layout } from "../../components/Layout";
+import Head from "next/head";
 
 export const Register = () => {
   const router = useRouter();
@@ -29,29 +29,28 @@ export const Register = () => {
   //show password or not in input field- password/confirm password
   const [show, setShow] = useState(false);
   //custom error, mostly from the server
-  const [customError, setCustomError] = useState("");
   const [Loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState("");
-
-  useEffect(() => {
-    if (customError) {
-      setTimeout(() => {
-        setCustomError("");
-      }, 5000);
-    }
-  }, [customError]);
 
   //form submit function
 
   const onSubmit = async (values: MutationSignUpArgs, e): Promise<void> => {
     //i could use values.password
     if (watch("password") !== watch("confirm_password")) {
-      return setCustomError("Passwords must match");
+      toast({
+        title: "Passwords Must Match",
+        status: "info",
+        duration: 3000,
+      });
+      return;
     }
     const { first_name, last_name, email, password, confirm_password } = values;
 
     if (first_name.trim() === "" || last_name.trim() === "") {
-      setCustomError("All Fields are Required");
+      toast({
+        title: "All Fields Are Required",
+        status: "info",
+        duration: 3000,
+      });
       return;
     }
 
@@ -81,13 +80,16 @@ export const Register = () => {
 
       if (res.signUp) {
         setLoading(false);
-        setSuccess(res.signUp.message);
+        toast({
+          title: "Sign Up Successful!",
+          status: "success",
+          duration: 3000,
+        });
         //reset form field
         e.target.reset();
         router.push("/customer/login");
       }
     } catch (err) {
-      setCustomError(err.response?.errors[0].message);
       setLoading(false);
       if (err.message === "Network request failed") {
         toast({
@@ -98,16 +100,26 @@ export const Register = () => {
           isClosable: true,
           position: "top",
         });
+        return;
       }
+      toast({
+        title: "An Error Occured",
+        description: `${err.response?.errors[0].message || ""}`,
+        status: "error",
+        duration: 5000,
+      });
     }
   };
 
   return (
     <Layout>
+      <Head>
+        <title>Customer Register | PartyStore</title>
+      </Head>
       <div className="register-page-wrap">
         <img
           src="/undraw_shopping_app_flsj.svg"
-          alt="register-vector"
+          alt="register vector"
           className="register-vector"
         />
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -184,9 +196,6 @@ export const Register = () => {
               <small style={{ color: "red" }}>
                 {errors.email && errors.email.message}
               </small>
-              <FormHelperText id="email-helper-text" color="green">
-                We'll never share your email.
-              </FormHelperText>
             </div>
 
             <div>
@@ -253,8 +262,6 @@ export const Register = () => {
             </div>
           </FormControl>
 
-          <h3 style={{ color: "red" }}>{customError}</h3>
-          <h3 style={{ color: "green" }}>{success}</h3>
           <div className="btn">
             <Button
               isDisabled={Loading}
@@ -334,7 +341,7 @@ export const Register = () => {
               width: 70%;
             }
           }
-          @media only screen and (min-width: 2000px) {
+          @media only screen and (min-width: 1800px) {
             .register-page-wrap {
               width: 60%;
               margin: 100px auto;
