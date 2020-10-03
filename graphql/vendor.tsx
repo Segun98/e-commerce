@@ -33,7 +33,8 @@ query user($business_name_slug: String!){
       category,
       image,
       in_stock,
-      available_qty
+      available_qty,
+      creator_id
     }
     
   }
@@ -91,6 +92,54 @@ query product($name_slug:String!){
     }
   }
 }
+`;
+
+export const editProductPage = `
+query editProductPage($id:ID!){
+  editProductPage(id:$id){
+    id,
+    name,
+    name_slug,
+    description,
+    price,
+    category,
+    party_category,
+    image,
+    in_stock,
+    available_qty,
+    creator_id
+  }
+}
+`;
+
+export const updateProduct = `
+mutation updateProduct(
+    $id:ID!
+    $name: String!,
+    $description: String,
+    $price:Int!,
+    $category: String,
+    $party_category:String,
+    $image: String,
+    $available_qty:Int,
+    $in_stock: String,
+    $creator_id: String!){
+      updateProduct(
+        id:$id,
+        name:$name,
+        description:$description,
+        price:$price,
+        category:$category,
+        party_category:$party_category,
+        image:$image,
+        available_qty:$available_qty,
+        in_stock:$in_stock,
+        creator_id:$creator_id
+      ){
+        message
+      }
+    }
+
 `;
 
 export const getVendorOrders = `

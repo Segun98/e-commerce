@@ -29,8 +29,8 @@ export const Account = () => {
   const [address, setAddress] = useState("");
 
   useEffect(() => {
-    setPhone(User.phone ? User.phone : "");
-    setAddress(User.customer_address ? User.customer_address : "");
+    setPhone(User.phone || "");
+    setAddress(User.customer_address || "");
   }, [User, Token]);
 
   const updateProfile = `

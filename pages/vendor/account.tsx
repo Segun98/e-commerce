@@ -24,10 +24,10 @@ export const Account = () => {
   const [editMode, setEditMode] = useState(false);
 
   useEffect(() => {
-    setPhone(User.phone ? User.phone : "");
-    setAddress(User.business_address ? User.business_address : "");
-    setAbout(User.business_bio ? User.business_bio : "");
-    setImage(User.business_image ? User.business_image : "");
+    setPhone(User.phone || "");
+    setAddress(User.business_address || "");
+    setAbout(User.business_bio || "");
+    setImage(User.business_image || "");
   }, [User]);
 
   const updateProfile = `

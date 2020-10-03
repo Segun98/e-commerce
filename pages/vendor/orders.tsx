@@ -2,6 +2,7 @@ import Head from "next/head";
 import React from "react";
 import { Navigation } from "../../components/vendor/Navigation";
 import { OrdersComponent } from "../../components/vendor/OrdersComponent";
+import { ProtectRouteV } from "./../../utils/ProtectedRouteV";
 
 export const Orders = () => {
   return (
@@ -61,4 +62,4 @@ export const Orders = () => {
   );
 };
 
-export default Orders;
+export default ProtectRouteV(Orders);
