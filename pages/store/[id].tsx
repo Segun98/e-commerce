@@ -1,14 +1,15 @@
 import { STORE } from "../../graphql/vendor";
 import Link from "next/link";
-import { Icon, Input, useToast } from "@chakra-ui/core";
-import { UsersRes } from "../../Typescript/types";
+import { Icon, useToast } from "@chakra-ui/core";
+import { MutationDeleteProductArgs, UsersRes } from "../../Typescript/types";
 import Head from "next/head";
 import { graphQLClient } from "../../utils/client";
 import { Navigation } from "../../components/vendor/Navigation";
 import { Commas } from "../../utils/helpers";
 import { Footer } from "../../components/Footer";
-import { Header } from "../../components/customer/Header";
-import Cookies from "js-cookie";
+import { useMutation } from "../../utils/useMutation";
+import { useRouter } from "next/router";
+import { useToken } from "../../Context/TokenProvider";
 
 interface Iprops {
   data: UsersRes;
@@ -61,7 +62,9 @@ export async function getServerSideProps({ params, req }) {
 
 const Store = ({ data, error }: Iprops) => {
   const toast = useToast();
-  const role = Cookies.get("role");
+  const router = useRouter();
+  //from context
+  const { Token } = useToken();
   const images = [
     "slider/slide2.jpeg",
     "product3.png",
@@ -71,6 +74,51 @@ const Store = ({ data, error }: Iprops) => {
     "product2.png",
     "product3.png",
   ];
+
+  // Delete Product
+
+  const handleDelete = async (id, creator_id, name) => {
+    const variables: MutationDeleteProductArgs = {
+      id,
+      creator_id,
+    };
+
+    const deleteProduct = `
+    mutation deleteProduct
+    ($id:ID!, $creator_id: String!){
+  deleteProduct(id:$id, creator_id:$creator_id){
+    message
+  }
+}`;
+
+    if (
+      window.confirm(`Are you sure you want to Delete This Product : ${name} ?`)
+    ) {
+      const { data, error } = await useMutation(
+        deleteProduct,
+        variables,
+        Token
+      );
+
+      if (data) {
+        toast({
+          title: "Your Product Has Been Deleted",
+          status: "success",
+          duration: 5000,
+        });
+        router.reload();
+      }
+      if (error) {
+        toast({
+          title: "An Error Ocurred",
+          description: error.response?.errors[0].message
+            ? error.response?.errors[0].message
+            : "An error occurred, check your internet connection",
+          status: "error",
+        });
+      }
+    }
+  };
 
   return (
     <div className="store-page">
@@ -177,11 +225,19 @@ const Store = ({ data, error }: Iprops) => {
                               fontWeight: "bold",
                             }}
                           >
-                            <Link href="/product/new-item">
+                            <Link href={`/store/edit/${p.id}`}>
                               <a>
                                 <Icon name="edit" />
                               </a>
                             </Link>
+                          </button>
+                          <br />
+                          <button
+                            onClick={() =>
+                              handleDelete(p.id, p.creator_id, p.name)
+                            }
+                          >
+                            <Icon name="delete" />
                           </button>
                         </div>
                       ) : (
