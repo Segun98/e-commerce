@@ -94,46 +94,59 @@ export const Navigation = () => {
         )}
 
         {/* SHOW THIS TO CUSTOMERS */}
-        {!role ||
-          (role !== "vendor" && (
-            <ul className="menu-for-customers">
-              <li>
-                <Link href="/">
-                  <a>Home</a>
+        {role !== "vendor" || !role ? (
+          <ul className="menu-for-customers">
+            <li>
+              <Link href="/">
+                <a>Home</a>
+              </Link>
+            </li>
+            <li>
+              <Link href="/category?category=Gifts">
+                <a>Gifts</a>
+              </Link>
+            </li>
+            <li>
+              <Link href="/category?category=Decorations">
+                <a>Decorations</a>
+              </Link>
+            </li>
+            <li>
+              <Link href="/category?category=Games">
+                <a>Games</a>
+              </Link>
+            </li>
+            <li>
+              <Link href="/category?category=Drinks">
+                <a>Drinks</a>
+              </Link>
+            </li>
+            <li>
+              <Link href="/category?category=Props">
+                <a>Party Props</a>
+              </Link>
+            </li>
+            <li>
+              <Link href="/category?category=Cakes">
+                <a>Cakes</a>
+              </Link>
+            </li>
+            {/* LOGIN BUTTON FOR VENDORS  */}
+            <div className="logout-btn">
+              <Button
+                style={{ color: "white", background: "var(--deepblue)" }}
+                width="100%"
+                borderRadius="none"
+              >
+                <Link href="/vendor/login">
+                  <a>Vendor Login</a>
                 </Link>
-              </li>
-              <li>
-                <Link href="/category?category=Gifts">
-                  <a>Gifts</a>
-                </Link>
-              </li>
-              <li>
-                <Link href="/category?category=Decorations">
-                  <a>Decorations</a>
-                </Link>
-              </li>
-              <li>
-                <Link href="/category?category=Games">
-                  <a>Games</a>
-                </Link>
-              </li>
-              <li>
-                <Link href="/category?category=Drinks">
-                  <a>Drinks</a>
-                </Link>
-              </li>
-              <li>
-                <Link href="/category?category=Props">
-                  <a>Party Props</a>
-                </Link>
-              </li>
-              <li>
-                <Link href="/category?category=Cakes">
-                  <a>Cakes</a>
-                </Link>
-              </li>
-            </ul>
-          ))}
+              </Button>
+            </div>
+          </ul>
+        ) : (
+          ""
+        )}
         <button className="vendor-menu-btn" onClick={() => setIsOpen(!isOpen)}>
           {isOpen ? (
             <Icon name="close" />
