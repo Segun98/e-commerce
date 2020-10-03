@@ -19,6 +19,7 @@ import { ProtectRouteV } from "../../utils/ProtectedRouteV";
 import { useMutation } from "../../utils/useMutation";
 import { Navigation } from "../../components/vendor/Navigation";
 import { Footer } from "../../components/Footer";
+import Head from "next/head";
 
 export const Newitem = () => {
   const toast = useToast();
@@ -96,6 +97,9 @@ export const Newitem = () => {
 
   return (
     <div>
+      <Head>
+        <title>New Product | Vendor | PartyStore</title>
+      </Head>
       <div className="new-item-layout">
         <div>
           <Navigation />
@@ -281,7 +285,6 @@ export const Newitem = () => {
         </main>
       </div>
       <Footer />
-      <style jsx>{``}</style>
     </div>
   );
 };

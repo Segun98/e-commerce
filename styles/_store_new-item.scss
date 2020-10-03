@@ -1,16 +1,16 @@
 .new-item-layout {
+    background: $softblue;
     display: flex;
 
     main {
-        width: 100%
+        width: 100%;
     }
 }
 
 .store_new-item {
-    background: $softblue;
 
     .main-wrap {
-        margin: auto;
+        margin: 0 auto;
         width: 90%;
 
         .title {
@@ -59,4 +59,36 @@
         justify-content: center;
         padding-bottom: 10px;
     }
+
+    @media only screen and (min-width:1000px) {
+
+        form {
+            .form-wrap {
+                grid-template-columns: 2fr 1fr;
+            }
+
+        }
+
+    }
+
+    @media only screen and (min-width:1400px) {
+
+        .main-wrap {
+            width: 80%;
+
+        }
+
+    }
+
+    @media only screen and (min-width:1800px) {
+
+        .main-wrap {
+            width: 60%;
+
+        }
+
+    }
+
+
+
 }
