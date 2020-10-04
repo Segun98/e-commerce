@@ -6,17 +6,19 @@ import Link from "next/link";
 import { useUser } from "../../Context/UserProvider";
 import {
   FormControl,
-  FormLabel,
   InputGroup,
   Input,
   Icon,
   InputLeftElement,
   Button,
   useToast,
+  Textarea,
 } from "@chakra-ui/core";
 import { PurchaseSteps } from "../../components/customer/PurchaseSteps";
 import { useMutation } from "../../utils/useMutation";
 import Head from "next/head";
+import { Commas } from "../../utils/helpers";
+import { addToCart } from "../../graphql/customer";
 
 export const Account = () => {
   const { Token } = useToken();
@@ -24,6 +26,16 @@ export const Account = () => {
   const toast = useToast();
   const role = Cookies && Cookies.get("role");
 
+  const images = [
+    "slider/slide2.jpeg",
+    "product3.png",
+    "product2.png",
+    "product4.png",
+    "product2.png",
+    "product1.png",
+  ];
+
+  //Input Fileds Values
   const [readOnly, setReadOnly] = useState(true);
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
@@ -53,8 +65,6 @@ export const Account = () => {
         title: "Account Updated Successfully",
         status: "info",
         duration: 3000,
-        isClosable: true,
-        position: "top",
       });
       setReadOnly(true);
     }
@@ -64,8 +74,61 @@ export const Account = () => {
         description: "Check Your Internet Connection and Refresh",
         status: "error",
         duration: 3000,
-        isClosable: true,
-        position: "top",
+      });
+    }
+  }
+
+  //get Saved Items from Local Storage
+  const [savedItem, setSavedItem] = useState(getStorageItem);
+  useEffect(() => {
+    getStorageItem();
+  }, []);
+
+  function getStorageItem() {
+    if (typeof window === "object") {
+      const storageItem = JSON.parse(localStorage.getItem("savedItem"));
+      return storageItem || [];
+    }
+  }
+  //runs when savedItem state changes, mostly used to delete an item from localstorage after adding to Cart
+  useEffect(() => {
+    if (typeof window === "object") {
+      localStorage.setItem("savedItem", JSON.stringify(savedItem));
+    }
+  }, [savedItem]);
+
+  // add saved item to cart
+  async function addCart(product_id, prod_creator_id, quantity) {
+    const variables = {
+      product_id,
+      prod_creator_id,
+      quantity,
+    };
+    const { data, error } = await useMutation(addToCart, variables, Token);
+
+    if (data) {
+      toast({
+        title: "Item Added to Cart!",
+        description: `Your Item has been added to cart, proceed to checkout`,
+        status: "success",
+      });
+
+      //delete from saved item after adding to Cart
+      const newSaved = savedItem.filter((s) => s.product_id !== product_id);
+      setSavedItem(newSaved);
+    }
+    if (error) {
+      if (error.response?.errors[0].message === "Item is already in Cart") {
+        toast({
+          title: "Item Is Already In Cart",
+          description: "Please Visit your Cart page to checkout",
+          status: "info",
+        });
+        return;
+      }
+      toast({
+        title: "An Error occurred while adding to cart.",
+        status: "info",
       });
     }
   }
@@ -168,21 +231,17 @@ export const Account = () => {
 
                 <div>
                   <h2>Shipping Address</h2>
-                  <InputGroup>
-                    <Input
-                      isReadOnly={readOnly}
-                      autoFocus={readOnly}
-                      minWidth="350px"
-                      placeholder="Click Edit to add Address"
-                      type="text"
-                      id="Address"
-                      name="Address"
-                      value={address}
-                      onChange={(e) => {
-                        setAddress(e.target.value);
-                      }}
-                    />
-                  </InputGroup>
+                  <Textarea
+                    isReadOnly={readOnly}
+                    autoFocus={readOnly}
+                    placeholder="Click Edit to add Address"
+                    id="Address"
+                    name="Address"
+                    value={address}
+                    onChange={(e) => {
+                      setAddress(e.target.value);
+                    }}
+                  ></Textarea>
                 </div>
               </FormControl>
               <br />
@@ -198,9 +257,52 @@ export const Account = () => {
                 )}
               </div>
             </form>
+
+            {/* SAVD ITEMS  */}
+            <h3 id="saved-items">Saved Items</h3>
+            <hr />
+            {savedItem.length === 0 ? (
+              <p>
+                No Saved Item...{" "}
+                <small>
+                  *items appear here when you try to add a product to Cart
+                  without logging in
+                </small>
+              </p>
+            ) : null}
+            <div className="saved-item-wrap">
+              {savedItem.map((s, i) => (
+                <div className="saved-item" key={s.product_id}>
+                  <img src={`/${images[i]}`} alt={`${s.name}`} />
+                  <hr />
+                  <div className="saved-desc">
+                    <h2>{s.name}</h2>
+                    <p>&#8358; {Commas(s.price)}</p>
+                  </div>
+                  <hr />
+                  <Button
+                    size="xs"
+                    variantColor="blue"
+                    onClick={() => {
+                      addCart(s.product_id, s.prod_creator_id, 1);
+                    }}
+                  >
+                    Add To Cart
+                  </Button>
+                  <hr />
+                  <Link
+                    href={`/product/${s.name_slug}`}
+                    as={`/product/${s.name_slug}`}
+                  >
+                    <a>
+                      Product Page <Icon name="external-link" />
+                    </a>
+                  </Link>
+                </div>
+              ))}
+            </div>
           </div>
         )}
-
         <PurchaseSteps />
       </main>
       <style jsx>{`
@@ -229,7 +331,7 @@ export const Account = () => {
         }
         .account-wrap {
           margin: 30px auto;
-          width: 70%;
+          width: 80%;
         }
 
         .account-wrap h1 {
@@ -263,12 +365,49 @@ export const Account = () => {
         form div {
           margin: 10px 0;
         }
+
+        .saved-item-wrap {
+          display: flex;
+          flex-wrap: wrap;
+        }
+
+        .saved-item {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-direction: column;
+          box-shadow: var(--box) var(--softgrey);
+          width: 130px;
+          margin: 8px;
+          border-radius: 5px;
+          font-size: 0.9rem;
+        }
+
+        .saved-item img {
+          height: 100px;
+          width: 100px;
+        }
+
+        .saved-item a {
+          color: var(--deepblue);
+          font-size: 0.8rem;
+        }
+        .saved-item .saved-desc {
+          text-align: center;
+        }
+        .saved-desc h2 {
+          font-style: italic;
+        }
+
+        .saved-desc p {
+          font-weight: bold;
+        }
         @media only screen and (min-width: 1200px) {
           .account-wrap {
             width: 60%;
           }
         }
-        @media only screen and (min-width: 2000px) {
+        @media only screen and (min-width: 1800px) {
           .account-wrap {
             width: 40%;
           }
