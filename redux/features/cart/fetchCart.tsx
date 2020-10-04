@@ -56,6 +56,9 @@ export function cartItems(Token) {
       if (err.message === "Network request failed") {
         dispatch(errorResponse(error));
       }
+      if (error === "jwt must be provided" || error === "You have to Log In") {
+        dispatch(errorResponse(error));
+      }
     }
   };
 }
