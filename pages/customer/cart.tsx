@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { deleteFromCart, updateCart } from "../../graphql/customer";
 import { Icon, useToast } from "@chakra-ui/core";
 import { Cart } from "../../Typescript/types";
