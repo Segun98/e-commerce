@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { graphQLClient } from "../../utils/client";
 import { PRODUCT } from "../../graphql/vendor";
 import { Button, Icon, useToast } from "@chakra-ui/core";
-import { useRouter } from "next/router";
 import { ProductsRes } from "../../Typescript/types";
 import { Layout } from "../../components/Layout";
 import { Commas } from "./../../utils/helpers";
@@ -16,13 +15,9 @@ import Head from "next/head";
 import { cartItems } from "../../redux/features/cart/fetchCart";
 import { useDispatch } from "react-redux";
 
-interface err {
-  message: string;
-}
-
 interface response {
   product: ProductsRes;
-  error: err;
+  error: any;
 }
 
 export async function getServerSideProps({ params }) {
@@ -48,15 +43,9 @@ export async function getServerSideProps({ params }) {
 const Product = ({ product, error }: response) => {
   const toast = useToast();
   const { Token } = useToken();
-  const router = useRouter();
   const [quantity, setQuantity] = useState(1);
   const role = Cookies.get("role");
   const dispatch = useDispatch();
-  // useEffect(() => {
-  //   if (!error && !product) {
-  //     router.push("/404");
-  //   }
-  // }, []);
 
   //filter out the main product
   const related = product
@@ -87,20 +76,15 @@ const Product = ({ product, error }: response) => {
         description: `Your Item has been added to cart, proceed to checkout`,
         status: "success",
         duration: 7000,
-        isClosable: true,
-        position: "bottom",
       });
     }
     if (error) {
       //handled this error cos chakra ui "status" should be "info"
       if (error.response?.errors[0].message === "Item is already in Cart") {
         toast({
-          title: "Item is already in Cart",
+          title: "Item Is Already In Cart",
           description: "Please Visit your Cart page to checkout",
           status: "info",
-          duration: 5000,
-          isClosable: true,
-          position: "bottom",
         });
         return;
       }
@@ -114,11 +98,41 @@ const Product = ({ product, error }: response) => {
             : "",
         status: "info",
         duration: 7000,
-        isClosable: true,
-        position: "top",
       });
     }
   }
+
+  //save item to local storage for unauthorised customers
+  const [savedItem, setSavedItem] = useState(storeItem);
+  useEffect(() => {
+    if (typeof window === "object") {
+      localStorage.setItem("savedItem", JSON.stringify(savedItem));
+    }
+  }, [savedItem]);
+
+  function storeItem() {
+    if (typeof window === "object") {
+      const SavedItem = JSON.parse(localStorage.getItem("savedItem"));
+      return SavedItem || [];
+    }
+  }
+
+  function addToSavedItems() {
+    const newItem = {
+      image: product.image,
+      name: product.name,
+      price: product.price,
+      product_id: product.id,
+      prod_creator_id: product.creator_id,
+      name_slug: product.name_slug,
+    };
+    // prevent duplicates
+    let exists = savedItem.filter((s) => s.product_id === product.id);
+    if (exists.length === 0) {
+      setSavedItem([...savedItem, newItem]);
+    }
+  }
+
   return (
     <Layout>
       <Head>
@@ -131,9 +145,6 @@ const Product = ({ product, error }: response) => {
               title: "An error occurred.",
               description: "check your internet connection and refresh.",
               status: "error",
-              duration: 7000,
-              isClosable: true,
-              position: "bottom",
             })}
         </>
         {!error && !product && (
@@ -219,12 +230,13 @@ const Product = ({ product, error }: response) => {
                       border="none"
                       style={{ backgroundColor: "var(--deepblue" }}
                       onClick={() => {
-                        if (!Token || !role) {
+                        if (!Token || !role || role === "vendor") {
+                          addToSavedItems();
                           toast({
-                            title: "You Need To Login To Add To Cart",
+                            title:
+                              "Your Item Has Been Saved! Find It In Your Account Page After You LogIn",
                             status: "info",
                             duration: 7000,
-                            isClosable: true,
                             position: "bottom",
                           });
                           return;
@@ -278,9 +290,9 @@ const Product = ({ product, error }: response) => {
                     color: "var(--deepblue)",
                   }}
                 >
-                  <Link href="/">
+                  <Link href="/category?category=Props">
                     <a>
-                      view products list <Icon name="external-link" />
+                      suggested category <Icon name="external-link" />
                     </a>
                   </Link>
                 </p>
