@@ -240,7 +240,7 @@ export const Header = () => {
 
       {/* MENU SECTION */}
 
-      <section className={IsOpen ? "navigation" : "navigation open-nav"}>
+      <section className={IsOpen ? "navigation open-nav" : "navigation"}>
         <nav>
           <button
             aria-roledescription="close menu"
@@ -275,6 +275,29 @@ export const Header = () => {
               <Icon name="close" color="white" />
             </button>
           </div>
+          <h1>PROFILE</h1>
+          <ul>
+            <li>
+              <Link href="/customer/account">
+                <a>Account</a>
+              </Link>
+            </li>
+            <li>
+              <Link href="/customer/cart">
+                <a>Cart</a>
+              </Link>
+            </li>
+            <li>
+              <Link href="/">
+                <a>Help</a>
+              </Link>
+            </li>
+            <li>
+              <Link href="/stores">
+                <a>Stores</a>
+              </Link>
+            </li>
+          </ul>
           <h1>SHOP BY CATEGORY</h1>
           <ul>
             <li>
@@ -308,21 +331,37 @@ export const Header = () => {
               </Link>
             </li>
           </ul>
-          <h1>PROFILE</h1>
+
+          <h1>SHOP BY PARTY</h1>
           <ul>
             <li>
-              <Link href="/customer/account">
-                <a>Account</a>
+              <Link href="party?category=House Party">
+                <a>House Party</a>
               </Link>
             </li>
             <li>
-              <Link href="/customer/cart">
-                <a>Cart</a>
+              <Link href="party?category=Beach Party">
+                <a>Beach Party</a>
               </Link>
             </li>
             <li>
-              <Link href="/">
-                <a>Contact</a>
+              <Link href="/category?category=Games">
+                <a>Games</a>
+              </Link>
+            </li>
+            <li>
+              <Link href="party?category=Birthday Party">
+                <a>Birthdays</a>
+              </Link>
+            </li>
+            <li>
+              <Link href="party?category=Outdoors">
+                <a>Outdoors</a>
+              </Link>
+            </li>
+            <li>
+              <Link href="party?category=Indoors">
+                <a>Indoors</a>
               </Link>
             </li>
           </ul>
@@ -394,34 +433,31 @@ export const Header = () => {
         /* Navigation and Hamburger  */
 
         .navigation {
-          position: absolute;
-          background: var(--softgrey);
-          top: 0;
-          width: 100%;
+          background: var(--softblue);
+          width: 60%;
           height: 100%;
-          transition: ease 0.4s;
-          z-index: 100;
+          margin-left: -75%;
+          position: relative;
+          position: fixed;
+          top: 0;
+          bottom: 0;
+          z-index: 9999;
+          transition: 0.5s ease;
+          overflow-y: scroll;
         }
 
         .navigation.open-nav {
-          margin-left: -100%;
+          margin-left: 0%;
           transition: ease 0.4s;
         }
-
-        .navigation nav {
-          background: white;
-          width: 70%;
-          height: 100%;
-          position: relative;
-          padding-bottom: 20px;
-          z-index: 100;
-        }
-
         .navigation nav ul li {
           padding: 10px;
           border-bottom: 1px solid var(--lightblue);
         }
 
+        .navigation nav ul li {
+          z-index: 9999;
+        }
         .navigation h1 {
           color: $text;
           font-weight: bold;
@@ -434,6 +470,7 @@ export const Header = () => {
           right: 0;
           margin-right: -45px;
           margin-top: 50px;
+          z-index: 999;
         }
 
         .navigation .close-nav img {
@@ -478,8 +515,8 @@ export const Header = () => {
             display: none;
           }
 
-          .navigation nav {
-            width: 45%;
+          .navigation {
+            width: 50%;
           }
           .cart-icon {
             font-size: 1rem;
@@ -492,7 +529,7 @@ export const Header = () => {
         }
 
         @media only screen and (min-width: 1000px) {
-          .navigation nav {
+          .navigation {
             width: 30%;
           }
 
@@ -502,17 +539,17 @@ export const Header = () => {
         }
 
         @media only screen and (min-width: 1200px) {
-          .navigation nav ul li {
+          .navigation ul li {
             font-size: 1.1rem;
           }
         }
         @media only screen and (min-width: 1400px) {
-          .navigation nav ul li {
+          .navigation ul li {
             font-size: 1.2rem;
           }
         }
         @media only screen and (min-width: 1800px) {
-          .navigation nav ul li {
+          .navigation ul li {
             font-size: 1.3rem;
           }
         }
