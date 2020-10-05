@@ -52,7 +52,7 @@ export const Footer = () => {
           </ul>
         </section>
         <section className="footer-item">
-          <h1>Vendor Service</h1>
+          <h1>Vendor</h1>
           <ul>
             <li>
               <Link href="/">
@@ -65,7 +65,12 @@ export const Footer = () => {
               </Link>{" "}
             </li>
             <li>
-              <Link href="/">
+              <Link href="/stores">
+                <a>Find Stores</a>
+              </Link>{" "}
+            </li>
+            <li>
+              <Link href="/vendor/register">
                 <a>Register</a>
               </Link>{" "}
             </li>
