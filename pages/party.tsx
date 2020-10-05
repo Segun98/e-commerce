@@ -3,7 +3,6 @@ import Link from "next/link";
 import React from "react";
 import { PurchaseSteps } from "../components/customer/PurchaseSteps";
 import { Layout } from "../components/Layout";
-import { SEARCH } from "../graphql/customer";
 import { ProductsRes } from "../Typescript/types";
 import { graphQLClient } from "../utils/client";
 import { Commas } from "../utils/helpers";

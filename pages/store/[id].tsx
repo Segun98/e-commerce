@@ -144,6 +144,8 @@ const Store = ({ data, error }: Iprops) => {
           </strong>
         </div>
       )}
+
+      {!data && <p className="space"></p>}
       {!error && data && (
         <div className="store-page-wrap">
           <Navigation />

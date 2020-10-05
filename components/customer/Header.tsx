@@ -41,7 +41,7 @@ export const Header = () => {
 
   function handleSearch(e) {
     e.preventDefault();
-    if (search !== "") {
+    if (search.trim() !== "") {
       router.push(`/search?query=${search}`);
     }
   }
@@ -335,12 +335,12 @@ export const Header = () => {
           <h1>SHOP BY PARTY</h1>
           <ul>
             <li>
-              <Link href="party?category=House Party">
+              <Link href="/party?category=House Party">
                 <a>House Party</a>
               </Link>
             </li>
             <li>
-              <Link href="party?category=Beach Party">
+              <Link href="/party?category=Beach Party">
                 <a>Beach Party</a>
               </Link>
             </li>
@@ -350,17 +350,17 @@ export const Header = () => {
               </Link>
             </li>
             <li>
-              <Link href="party?category=Birthday Party">
+              <Link href="/party?category=Birthday Party">
                 <a>Birthdays</a>
               </Link>
             </li>
             <li>
-              <Link href="party?category=Outdoors">
+              <Link href="/party?category=Outdoors">
                 <a>Outdoors</a>
               </Link>
             </li>
             <li>
-              <Link href="party?category=Indoors">
+              <Link href="/party?category=Indoors">
                 <a>Indoors</a>
               </Link>
             </li>
@@ -467,10 +467,11 @@ export const Header = () => {
 
         .navigation .close-nav {
           position: absolute;
-          right: 0;
-          margin-right: -45px;
           margin-top: 50px;
+          right: 0;
+          margin-right: -35px;
           z-index: 999;
+          display: none;
         }
 
         .navigation .close-nav img {

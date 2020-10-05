@@ -79,6 +79,7 @@ const Stores = () => {
                 color="blue.400"
               />
               <Input
+                className="search-store"
                 type="search"
                 name="search stores"
                 id="search stores"
@@ -211,12 +212,15 @@ const Stores = () => {
           .stores-image {
             height: 400px;
           }
+          .store-img {
+            width: 280px;
+          }
           .store-items {
-            grid-template-columns: repeat(5, 1fr);
+            grid-template-columns: repeat(4, 1fr);
             gap: 22px;
           }
           .stores-wrap {
-            width: 74%;
+            width: 90%;
           }
         }
 
@@ -225,7 +229,7 @@ const Stores = () => {
             height: 500px;
           }
           .store-items {
-            grid-template-columns: repeat(6, 1fr);
+            grid-template-columns: repeat(5, 1fr);
           }
           .stores-wrap {
             width: 60%;

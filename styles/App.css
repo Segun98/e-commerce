@@ -49,6 +49,10 @@ a:hover {
   height: 90vh;
 }
 
+.space {
+  padding: 200px 0;
+}
+
 button {
   cursor: pointer;
 }

@@ -53,6 +53,12 @@ a:hover {
     height: 90vh;
 }
 
+//just space, incase there's a network error and data isn't loaded
+
+.space {
+    padding: 200px 0;
+}
+
 button {
     cursor: pointer;
 }

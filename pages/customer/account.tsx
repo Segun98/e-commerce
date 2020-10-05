@@ -194,8 +194,6 @@ export const Account = () => {
             </div>
 
             <section className="account-info">
-              <h3>Personal Information</h3>
-              <hr />
               <h2>Name</h2>
               <p>
                 {User.first_name} {User.last_name}
@@ -203,10 +201,7 @@ export const Account = () => {
               <h2>Email</h2>
               <p>{User.email}</p>
             </section>
-            <br />
             <form>
-              <h3>Address Book</h3>
-              <hr />
               <FormControl>
                 <div>
                   <h2>Phone Number</h2>
@@ -244,7 +239,6 @@ export const Account = () => {
                   ></Textarea>
                 </div>
               </FormControl>
-              <br />
               <div>
                 {!readOnly && (
                   <Button

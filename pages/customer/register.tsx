@@ -85,8 +85,6 @@ export const Register = () => {
           status: "success",
           duration: 3000,
         });
-        //reset form field
-        e.target.reset();
         router.push("/customer/login");
       }
     } catch (err) {
@@ -132,7 +130,7 @@ export const Register = () => {
             <div>
               <FormLabel htmlFor="first_name">First Name</FormLabel>
               <Input
-                type="first_name"
+                type="text"
                 id="first_name"
                 name="first_name"
                 aria-describedby="first_name-helper-text"
@@ -154,7 +152,7 @@ export const Register = () => {
             <div>
               <FormLabel htmlFor="last_name">Last Name</FormLabel>
               <Input
-                type="last_name"
+                type="text"
                 id="last_name"
                 name="last_name"
                 aria-describedby="last_name-helper-text"

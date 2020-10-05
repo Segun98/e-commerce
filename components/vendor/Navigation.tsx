@@ -149,7 +149,7 @@ export const Navigation = () => {
             </li>
             <hr />
             {/* LOGIN BUTTON FOR VENDORS  */}
-            <div className="logout-btn">
+            <div className="login-btn">
               <Button
                 style={{ color: "white", background: "var(--deepblue)" }}
                 width="100%"
@@ -227,6 +227,9 @@ export const Navigation = () => {
             font-weight: bold;
             color: var(--text);
             text-decoration: uppercase;
+          }
+          .logout-btn {
+            margin-top: 50px;
           }
 
           @media only screen and (min-width: 700px) {

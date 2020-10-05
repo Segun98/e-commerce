@@ -1,13 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   Input,
   FormControl,
   FormLabel,
-  FormHelperText,
   InputGroup,
   InputRightElement,
   Button,
-  InputLeftAddon,
   Icon,
   useToast,
 } from "@chakra-ui/core";
@@ -20,6 +18,7 @@ import slug from "slug";
 import { MutationSignUpArgs } from "../../Typescript/types";
 import { Layout } from "../../components/Layout";
 import Head from "next/head";
+import Link from "next/link";
 
 export const Register = () => {
   const router = useRouter();
@@ -108,8 +107,6 @@ export const Register = () => {
           status: "success",
           duration: 3000,
         });
-        //reset form field
-        e.target.reset();
         router.push("/vendor/login");
       }
     } catch (err) {
@@ -154,7 +151,7 @@ export const Register = () => {
             <div>
               <FormLabel htmlFor="business_name">Business Name</FormLabel>
               <Input
-                type="business_name"
+                type="text"
                 id="business_name"
                 name="business_name"
                 aria-describedby="business_name-helper-text"
@@ -175,7 +172,7 @@ export const Register = () => {
             <div>
               <FormLabel htmlFor="first_name">First Name</FormLabel>
               <Input
-                type="first_name"
+                type="text"
                 id="first_name"
                 name="first_name"
                 aria-describedby="first_name-helper-text"
@@ -197,7 +194,7 @@ export const Register = () => {
             <div>
               <FormLabel htmlFor="last_name">Last Name</FormLabel>
               <Input
-                type="last_name"
+                type="text"
                 id="last_name"
                 name="last_name"
                 aria-describedby="last_name-helper-text"
@@ -314,6 +311,14 @@ export const Register = () => {
               Submit
             </Button>
           </div>
+          <div className="register-message">
+            <small>
+              Already have an account?{" "}
+              <Link href="/vendor/login">
+                <a>Login</a>
+              </Link>{" "}
+            </small>
+          </div>
         </form>
         <style jsx>{`
           .register-page-wrap {
@@ -336,7 +341,7 @@ export const Register = () => {
           .register-message {
             text-align: center;
             font-size: 1.05rem;
-            color: var(--softgrey);
+            /* color: var(--softgrey); */
             margin-bottom: 5px;
           }
 
@@ -351,7 +356,7 @@ export const Register = () => {
             justify-content: center;
             align-items: center;
           }
-          .register-msg a {
+          .register-message a {
             color: var(--deepblue);
           }
           .register-vector {
