@@ -102,6 +102,22 @@ export const Navigation = () => {
               </Link>
             </li>
             <li>
+              <Link href="/customer/account">
+                <a>Account</a>
+              </Link>
+            </li>
+            <li>
+              <Link href="/customer/cart">
+                <a>Cart</a>
+              </Link>
+            </li>
+            <li>
+              <Link href="/stores">
+                <a>Stores</a>
+              </Link>
+            </li>
+            <hr />
+            <li>
               <Link href="/category?category=Gifts">
                 <a>Gifts</a>
               </Link>
@@ -131,6 +147,7 @@ export const Navigation = () => {
                 <a>Cakes</a>
               </Link>
             </li>
+            <hr />
             {/* LOGIN BUTTON FOR VENDORS  */}
             <div className="logout-btn">
               <Button
@@ -210,9 +227,6 @@ export const Navigation = () => {
             font-weight: bold;
             color: var(--text);
             text-decoration: uppercase;
-          }
-          .logout-btn {
-            margin-top: 80px;
           }
 
           @media only screen and (min-width: 700px) {
