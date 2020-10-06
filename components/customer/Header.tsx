@@ -345,7 +345,7 @@ export const Header = () => {
               </Link>
             </li>
             <li>
-              <Link href="/category?category=Games">
+              <Link href="/party?category=Games">
                 <a>Games</a>
               </Link>
             </li>
