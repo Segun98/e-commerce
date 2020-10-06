@@ -1,9 +1,8 @@
-import { useToast } from "@chakra-ui/core";
+import { Button, useToast } from "@chakra-ui/core";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { PurchaseSteps } from "../components/customer/PurchaseSteps";
 import { Layout } from "../components/Layout";
-import { SEARCH } from "../graphql/customer";
 import { ProductsRes } from "../Typescript/types";
 import { graphQLClient } from "../utils/client";
 import { Commas } from "../utils/helpers";
@@ -15,24 +14,23 @@ interface Iprops {
   error: any;
 }
 export const byCategory = `
-    query byCategory($category:String!, $limit:Int)
+    query byCategory($category:String!, $limit:Int, $offset:Int)
     {
-        byCategory(category:$category, limit:$limit){
+        byCategory(category:$category, limit:$limit, offset:$offset){
             id
             name
             name_slug
-            description
             price
             image
-            in_stock
-            creator_id
-            available_qty
         }
 }`;
 export async function getServerSideProps({ query }) {
+  //joining from a single digit to get 30 results per page
+  let joined = `${query.p}${0}`;
   const variables = {
     category: query.category,
-    limit: null,
+    limit: 30,
+    offset: parseInt(joined) || 0,
   };
 
   try {
@@ -53,7 +51,8 @@ export async function getServerSideProps({ query }) {
 }
 export const Category = ({ products, error }: Iprops) => {
   const toast = useToast();
-  const router = useRouter();
+  const router: any = useRouter();
+  const [page, setpage] = useState(parseInt(router.query.p) || 0);
 
   const images = [
     "slider/slide2.jpeg",
@@ -64,10 +63,17 @@ export const Category = ({ products, error }: Iprops) => {
     "product1.png",
   ];
 
+  //pagination
+  useEffect(() => {
+    router.push(`/category?category=${router.query.category}&p=${page}`);
+  }, [page]);
+
   return (
     <Layout>
       <Head>
-        <title>{router.query.category || "Category"} | PartyStore</title>
+        <title>
+          {`${router.query.category} | Category` || "Category"} | PartyStore
+        </title>
       </Head>
       <div>
         <>
@@ -84,14 +90,13 @@ export const Category = ({ products, error }: Iprops) => {
 
         <section className="category-results">
           <h1>
-            Category : {router.query.category} ({products && products.length}{" "}
-            items)
+            {router.query.category} ({products && products.length} items)
           </h1>
 
           {products && products.length === 0 && (
             <h1>
               <br />
-              no results found
+              Oops, no results found...
             </h1>
           )}
           <div className="category-wrap">
@@ -114,6 +119,32 @@ export const Category = ({ products, error }: Iprops) => {
                 </div>
               ))}
           </div>
+          <section className="paginate">
+            <div style={{ display: "flex", justifyContent: "space-between" }}>
+              {!router.query.p || page === 0 || page < 1 ? (
+                <div></div>
+              ) : (
+                <Button
+                  style={{ background: "var(--deepblue)", color: "white" }}
+                  size="xs"
+                  onClick={() => {
+                    setpage(page - 3);
+                  }}
+                >
+                  Prev Page
+                </Button>
+              )}
+              <Button
+                style={{ background: "var(--deepblue)", color: "white" }}
+                size="xs"
+                onClick={() => {
+                  setpage(page + 3);
+                }}
+              >
+                Next Page
+              </Button>
+            </div>
+          </section>
         </section>
         <PurchaseSteps />
       </div>
@@ -128,12 +159,14 @@ export const Category = ({ products, error }: Iprops) => {
           margin: 10px 0;
         }
         .category-wrap {
-          display: flex;
-          flex-wrap: wrap;
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 8px;
+          margin: auto;
+          width: 90%;
         }
 
         .category-wrap .category-item {
-          margin: 8px;
           box-shadow: var(--box) var(--softgrey);
           background: white;
           border-radius: 5px;
@@ -170,17 +203,24 @@ export const Category = ({ products, error }: Iprops) => {
           font-style: italic;
           font-size: 0.9rem;
         }
-
+        .paginate {
+          margin-top: 10px;
+          margin: auto;
+          width: 80%;
+        }
         @media only screen and (min-width: 700px) {
           .category-results h1 {
             margin: 15px 0;
           }
 
           .category-wrap {
-            margin: auto;
-            width: 95%;
+            grid-template-columns: repeat(4, 1fr);
+            column-gap: 10px;
           }
-
+          .paginate {
+            margin-top: 20px;
+            width: 70%;
+          }
           .category-wrap .category-item img {
             display: flex;
           }
@@ -189,7 +229,7 @@ export const Category = ({ products, error }: Iprops) => {
         @media only screen and (min-width: 1000px) {
           .category-wrap {
             margin: 15px auto;
-            overflow: hidden;
+            width: 70%;
           }
           .category-wrap .category-item {
             width: 200px;
@@ -204,7 +244,9 @@ export const Category = ({ products, error }: Iprops) => {
           .category-wrap {
             margin: 35px auto;
           }
-
+          .paginate {
+            width: 65%;
+          }
           .category-wrap .category-item {
             margin: 10px 14px;
             padding: 5px;
@@ -220,9 +262,12 @@ export const Category = ({ products, error }: Iprops) => {
           }
         }
 
-        @media only screen and (min-width: 2000px) {
-          .category-wrap {
-            width: 60%;
+        @media only screen and (min-width: 1800px) {
+          .results-wrap {
+            width: 50%;
+          }
+          .paginate {
+            width: 40%;
           }
         }
       `}</style>

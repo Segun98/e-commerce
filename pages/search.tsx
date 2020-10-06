@@ -1,6 +1,7 @@
-import { useToast } from "@chakra-ui/core";
+import { Button, useToast } from "@chakra-ui/core";
 import Link from "next/link";
-import React from "react";
+import { useRouter } from "next/router";
+import React, { useEffect, useState } from "react";
 import { PurchaseSteps } from "../components/customer/PurchaseSteps";
 import { Layout } from "../components/Layout";
 import { SEARCH } from "../graphql/customer";
@@ -13,9 +14,12 @@ interface Iprops {
   error: any;
 }
 export async function getServerSideProps({ query }) {
+  //joining from a single digit to get 30 results per page
+  let joined = `${query.p}${0}`;
   const variables = {
     query: query.query,
-    limit: null,
+    limit: 30,
+    offset: parseInt(joined) || 0,
   };
 
   try {
@@ -36,7 +40,12 @@ export async function getServerSideProps({ query }) {
 }
 export const Search = ({ products, error }: Iprops) => {
   const toast = useToast();
-
+  //pagination
+  const router: any = useRouter();
+  const [page, setpage] = useState(parseInt(router.query.p) || 0);
+  useEffect(() => {
+    router.push(`/search?query=${router.query.query}&p=${page}`);
+  }, [page]);
   const images = [
     "slider/slide2.jpeg",
     "product3.png",
@@ -62,12 +71,12 @@ export const Search = ({ products, error }: Iprops) => {
         </>
 
         <section className="search-results">
-          <h1>Search Results...({products && products.length} items)</h1>
+          <h1>Search Results... ({products && products.length} items)</h1>
 
           {products && products.length === 0 && (
             <h1>
               <br />
-              no results found
+              Oops! no results found
             </h1>
           )}
           <div className="results-wrap">
@@ -90,6 +99,32 @@ export const Search = ({ products, error }: Iprops) => {
                 </div>
               ))}
           </div>
+          <section className="paginate">
+            <div style={{ display: "flex", justifyContent: "space-between" }}>
+              {!router.query.p || page === 0 || page < 1 ? (
+                <div></div>
+              ) : (
+                <Button
+                  style={{ background: "var(--deepblue)", color: "white" }}
+                  size="xs"
+                  onClick={() => {
+                    setpage(page - 3);
+                  }}
+                >
+                  Prev Page
+                </Button>
+              )}
+              <Button
+                style={{ background: "var(--deepblue)", color: "white" }}
+                size="xs"
+                onClick={() => {
+                  setpage(page + 3);
+                }}
+              >
+                Next Page
+              </Button>
+            </div>
+          </section>
         </section>
         <PurchaseSteps />
       </div>
@@ -104,12 +139,18 @@ export const Search = ({ products, error }: Iprops) => {
           margin: 10px 0;
         }
         .results-wrap {
-          display: flex;
-          flex-wrap: wrap;
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 8px;
+          margin: auto;
+          width: 90%;
         }
-
+        .paginate {
+          margin-top: 10px;
+          margin: auto;
+          width: 80%;
+        }
         .results-wrap .search-item {
-          margin: 8px;
           box-shadow: var(--box) var(--softgrey);
           background: white;
           border-radius: 5px;
@@ -153,10 +194,13 @@ export const Search = ({ products, error }: Iprops) => {
           }
 
           .results-wrap {
-            margin: auto;
-            width: 95%;
+            grid-template-columns: repeat(4, 1fr);
+            column-gap: 10px;
           }
-
+          .paginate {
+            margin-top: 20px;
+            width: 70%;
+          }
           .results-wrap .search-item img {
             display: flex;
           }
@@ -165,7 +209,7 @@ export const Search = ({ products, error }: Iprops) => {
         @media only screen and (min-width: 1000px) {
           .results-wrap {
             margin: 15px auto;
-            overflow: hidden;
+            width: 70%;
           }
           .results-wrap .search-item {
             width: 200px;
@@ -180,7 +224,9 @@ export const Search = ({ products, error }: Iprops) => {
           .results-wrap {
             margin: 35px auto;
           }
-
+          .paginate {
+            width: 65%;
+          }
           .results-wrap .search-item {
             margin: 10px 14px;
             padding: 5px;
@@ -196,9 +242,12 @@ export const Search = ({ products, error }: Iprops) => {
           }
         }
 
-        @media only screen and (min-width: 2000px) {
+        @media only screen and (min-width: 1800px) {
           .results-wrap {
-            width: 60%;
+            width: 50%;
+          }
+          .paginate {
+            width: 40%;
           }
         }
       `}</style>

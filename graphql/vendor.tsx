@@ -77,15 +77,10 @@ query product($name_slug:String!){
     creator_id
     related{
       id,
-    name,
-    name_slug,
-    description,
-    price,
-    category,
-    image,
-    in_stock,
-    available_qty,
-    creator_id
+      name,
+      name_slug,
+      price,
+      image,
     }
     creator{
       business_name_slug

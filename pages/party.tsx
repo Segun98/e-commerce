@@ -1,6 +1,6 @@
-import { useToast } from "@chakra-ui/core";
+import { Button, useToast } from "@chakra-ui/core";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { PurchaseSteps } from "../components/customer/PurchaseSteps";
 import { Layout } from "../components/Layout";
 import { ProductsRes } from "../Typescript/types";
@@ -14,24 +14,22 @@ interface Iprops {
   error: any;
 }
 export const partyCategory = `
-    query partyCategory($party_category:String, $limit:Int){
-        partyCategory(party_category:$party_category, limit:$limit){
+    query partyCategory($party_category:String, $limit:Int, $offset:Int){
+        partyCategory(party_category:$party_category, limit:$limit, offset:$offset){
             id
             name
             name_slug
-            description
-            party_category
             price
             image
-            in_stock
-            creator_id
-            available_qty
         }
 }`;
 export async function getServerSideProps({ query }) {
+  //joining from a single digit to get 30 results per page
+  let joined = `${query.p}${0}`;
   const variables = {
     party_category: query.category,
     limit: null,
+    offset: parseInt(joined) || 0,
   };
 
   try {
@@ -52,8 +50,13 @@ export async function getServerSideProps({ query }) {
 }
 export const Category = ({ products, error }: Iprops) => {
   const toast = useToast();
-  const router = useRouter();
+  const router: any = useRouter();
 
+  //pagination
+  const [page, setpage] = useState(parseInt(router.query.p) || 0);
+  useEffect(() => {
+    router.push(`/party?category=${router.query.category}&p=${page}`);
+  }, [page]);
   const images = [
     "slider/slide2.jpeg",
     "product3.png",
@@ -83,8 +86,7 @@ export const Category = ({ products, error }: Iprops) => {
 
         <section className="category-results">
           <h1>
-            Party Category : {router.query.category} (
-            {products && products.length} items)
+            {router.query.category} ({products && products.length} items)
           </h1>
 
           {products && products.length === 0 && (
@@ -113,6 +115,33 @@ export const Category = ({ products, error }: Iprops) => {
                 </div>
               ))}
           </div>
+
+          <section className="paginate">
+            <div style={{ display: "flex", justifyContent: "space-between" }}>
+              {!router.query.p || page === 0 || page < 1 ? (
+                <div></div>
+              ) : (
+                <Button
+                  style={{ background: "var(--deepblue)", color: "white" }}
+                  size="xs"
+                  onClick={() => {
+                    setpage(page - 3);
+                  }}
+                >
+                  Prev Page
+                </Button>
+              )}
+              <Button
+                style={{ background: "var(--deepblue)", color: "white" }}
+                size="xs"
+                onClick={() => {
+                  setpage(page + 3);
+                }}
+              >
+                Next Page
+              </Button>
+            </div>
+          </section>
         </section>
         <PurchaseSteps />
       </div>
@@ -127,12 +156,18 @@ export const Category = ({ products, error }: Iprops) => {
           margin: 10px 0;
         }
         .category-wrap {
-          display: flex;
-          flex-wrap: wrap;
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 8px;
+          margin: auto;
+          width: 90%;
         }
-
+        .paginate {
+          margin-top: 10px;
+          margin: auto;
+          width: 80%;
+        }
         .category-wrap .category-item {
-          margin: 8px;
           box-shadow: var(--box) var(--softgrey);
           background: white;
           border-radius: 5px;
@@ -176,10 +211,13 @@ export const Category = ({ products, error }: Iprops) => {
           }
 
           .category-wrap {
-            margin: auto;
-            width: 95%;
+            grid-template-columns: repeat(4, 1fr);
+            column-gap: 10px;
           }
-
+          .paginate {
+            margin-top: 20px;
+            width: 70%;
+          }
           .category-wrap .category-item img {
             display: flex;
           }
@@ -188,7 +226,7 @@ export const Category = ({ products, error }: Iprops) => {
         @media only screen and (min-width: 1000px) {
           .category-wrap {
             margin: 15px auto;
-            overflow: hidden;
+            width: 70%;
           }
           .category-wrap .category-item {
             width: 200px;
@@ -203,7 +241,9 @@ export const Category = ({ products, error }: Iprops) => {
           .category-wrap {
             margin: 35px auto;
           }
-
+          .paginate {
+            width: 65%;
+          }
           .category-wrap .category-item {
             margin: 10px 14px;
             padding: 5px;
@@ -219,9 +259,12 @@ export const Category = ({ products, error }: Iprops) => {
           }
         }
 
-        @media only screen and (min-width: 2000px) {
+        @media only screen and (min-width: 1800px) {
           .category-wrap {
-            width: 60%;
+            width: 50%;
+          }
+          .paginate {
+            width: 40%;
           }
         }
       `}</style>

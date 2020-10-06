@@ -109,17 +109,13 @@ mutation createOrder(
 `;
 
 export const SEARCH = `
-    query search($query:String!, $limit:Int)
+    query search($query:String!, $limit:Int, $offset:Int)
     {
-        search(query:$query, limit:$limit){
+        search(query:$query, limit:$limit, offset:$offset){
             id
             name
             name_slug
-            description
             price
             image
-            in_stock
-            creator_id
-            available_qty
         }
 }`;
