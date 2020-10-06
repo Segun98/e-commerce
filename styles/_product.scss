@@ -230,12 +230,14 @@
         }
 
         .related-wrap {
-            display: flex;
-            flex-wrap: wrap;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin: auto;
+            width: 90%;
         }
 
         .related-item {
-            margin: 8px;
             box-shadow: $box $softgrey;
             background: white;
             border-radius: 5px;
@@ -277,8 +279,8 @@
             }
 
             .related-wrap {
-                margin: auto;
-                width: 85%;
+                grid-template-columns: repeat(4, 1fr);
+                column-gap: 10px;
 
                 .related-item {
                     width: 200px;
@@ -290,7 +292,7 @@
 
             .related-wrap {
                 margin: 15px auto;
-                overflow: hidden;
+                width: 70%;
             }
         }
 
@@ -302,7 +304,6 @@
 
             .related-wrap {
                 margin: 35px auto;
-                width: 87%;
             }
 
             .related-item {
@@ -321,17 +322,15 @@
 
                     .related-desc {
                         margin: 8px 0;
-
                     }
                 }
             }
         }
 
-        @media only screen and (min-width:2000px) {
+        @media only screen and (min-width:1800px) {
 
             .related-wrap {
-                width: 60%;
-                ;
+                width: 50%;
             }
         }
     }
