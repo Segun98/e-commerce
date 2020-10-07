@@ -15,6 +15,7 @@ export type Query = {
   __typename?: 'Query';
   users?: Maybe<Array<Maybe<UsersRes>>>;
   user?: Maybe<UsersRes>;
+  getStores?: Maybe<Array<Maybe<UsersRes>>>;
   getUser?: Maybe<UsersRes>;
   customerProfile?: Maybe<UsersRes>;
   editUserPage?: Maybe<UsersRes>;
@@ -55,18 +56,21 @@ export type QueryProductArgs = {
 export type QuerySearchArgs = {
   query: Scalars['String'];
   limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
 };
 
 
 export type QueryByCategoryArgs = {
   category: Scalars['String'];
   limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
 };
 
 
 export type QueryPartyCategoryArgs = {
-  party_category: Scalars['String'];
+  party_category?: Maybe<Scalars['String']>;
   limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
 };
 
 
@@ -77,6 +81,11 @@ export type QueryEditProductPageArgs = {
 
 export type QueryGetCartArgs = {
   id: Scalars['ID'];
+};
+
+
+export type QueryGetVendorOrdersArgs = {
+  limit?: Maybe<Scalars['Int']>;
 };
 
 export type UsersRes = {
@@ -92,10 +101,10 @@ export type UsersRes = {
   business_name?: Maybe<Scalars['String']>;
   business_name_slug?: Maybe<Scalars['String']>;
   business_address?: Maybe<Scalars['String']>;
-  business_area?: Maybe<Scalars['String']>;
   business_image?: Maybe<Scalars['String']>;
   business_bio?: Maybe<Scalars['String']>;
   customer_address?: Maybe<Scalars['String']>;
+  featured?: Maybe<Scalars['String']>;
   jwt_user_id?: Maybe<Scalars['String']>;
   usersProducts?: Maybe<Array<Maybe<ProductsRes>>>;
 };
@@ -114,6 +123,7 @@ export type ProductsRes = {
   creator_id?: Maybe<Scalars['String']>;
   created_at?: Maybe<Scalars['String']>;
   available_qty?: Maybe<Scalars['Int']>;
+  featured?: Maybe<Scalars['String']>;
   creator?: Maybe<UsersRes>;
   related?: Maybe<Array<Maybe<ProductsRes>>>;
 };
@@ -134,14 +144,17 @@ export type Cart = {
 export type Orders = {
   __typename?: 'orders';
   id?: Maybe<Scalars['ID']>;
+  order_id?: Maybe<Scalars['ID']>;
   name?: Maybe<Scalars['String']>;
   price?: Maybe<Scalars['Int']>;
   quantity?: Maybe<Scalars['Int']>;
   delivery_fee?: Maybe<Scalars['Int']>;
   subtotal?: Maybe<Scalars['Int']>;
   description?: Maybe<Scalars['String']>;
+  accepted?: Maybe<Scalars['String']>;
   completed?: Maybe<Scalars['String']>;
   canceled?: Maybe<Scalars['String']>;
+  request?: Maybe<Scalars['String']>;
   customer_email?: Maybe<Scalars['String']>;
   vendor_email?: Maybe<Scalars['String']>;
   customer_phone?: Maybe<Scalars['String']>;
@@ -190,7 +203,6 @@ export type MutationSignUpArgs = {
   business_name?: Maybe<Scalars['String']>;
   business_name_slug?: Maybe<Scalars['String']>;
   business_address?: Maybe<Scalars['String']>;
-  business_area?: Maybe<Scalars['String']>;
   business_image?: Maybe<Scalars['String']>;
   business_bio?: Maybe<Scalars['String']>;
   customer_address?: Maybe<Scalars['String']>;
@@ -209,7 +221,6 @@ export type MutationUpdateProfileArgs = {
   phone?: Maybe<Scalars['String']>;
   business_name?: Maybe<Scalars['String']>;
   business_address?: Maybe<Scalars['String']>;
-  business_area?: Maybe<Scalars['String']>;
   business_image?: Maybe<Scalars['String']>;
   business_bio?: Maybe<Scalars['String']>;
   customer_address?: Maybe<Scalars['String']>;
@@ -272,7 +283,7 @@ export type MutationCreateOrderArgs = {
   quantity: Scalars['Int'];
   delivery_fee?: Maybe<Scalars['Int']>;
   subtotal: Scalars['Int'];
-  description?: Maybe<Scalars['String']>;
+  request?: Maybe<Scalars['String']>;
   customer_email?: Maybe<Scalars['String']>;
   vendor_email?: Maybe<Scalars['String']>;
   customer_phone?: Maybe<Scalars['String']>;
@@ -318,10 +329,10 @@ export type Users = {
   business_name?: Maybe<Scalars['String']>;
   business_name_slug?: Maybe<Scalars['String']>;
   business_address?: Maybe<Scalars['String']>;
-  business_area?: Maybe<Scalars['String']>;
   business_image?: Maybe<Scalars['String']>;
   business_bio?: Maybe<Scalars['String']>;
   customer_address?: Maybe<Scalars['String']>;
+  featured?: Maybe<Scalars['String']>;
 };
 
 export type Products = {
@@ -337,6 +348,7 @@ export type Products = {
   in_stock?: Maybe<Scalars['String']>;
   creator_id?: Maybe<Scalars['String']>;
   available_qty?: Maybe<Scalars['Int']>;
+  featured?: Maybe<Scalars['String']>;
 };
 
 export enum CacheControlScope {

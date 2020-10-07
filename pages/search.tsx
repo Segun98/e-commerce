@@ -106,7 +106,7 @@ export const Search = ({ products, error }: Iprops) => {
               ) : (
                 <Button
                   style={{ background: "var(--deepblue)", color: "white" }}
-                  size="xs"
+                  size="sm"
                   onClick={() => {
                     setpage(page - 3);
                   }}
@@ -116,8 +116,11 @@ export const Search = ({ products, error }: Iprops) => {
               )}
               <Button
                 style={{ background: "var(--deepblue)", color: "white" }}
-                size="xs"
+                size="sm"
                 onClick={() => {
+                  if (products.length === 0) {
+                    return;
+                  }
                   setpage(page + 3);
                 }}
               >
@@ -146,8 +149,7 @@ export const Search = ({ products, error }: Iprops) => {
           width: 90%;
         }
         .paginate {
-          margin-top: 10px;
-          margin: auto;
+          margin: 10px auto;
           width: 80%;
         }
         .results-wrap .search-item {

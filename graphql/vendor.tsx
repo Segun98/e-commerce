@@ -14,13 +14,10 @@ export const STORE = `
 query user($business_name_slug: String!){
   user(business_name_slug:$business_name_slug){
     id
-    email
-    role
     phone
     pending
     business_name
     business_address
-    business_area
     business_image
     business_bio
     jwt_user_id
@@ -28,12 +25,8 @@ query user($business_name_slug: String!){
       id,
       name,
       name_slug,
-      description,
       price,
-      category,
       image,
-      in_stock,
-      available_qty,
       creator_id
     }
     
@@ -47,17 +40,8 @@ query products($limit:Int){
     id,
     name,
     name_slug,
-    description,
     price,
-    category,
     image,
-    in_stock,
-    available_qty,
-    creator_id
-    creator{
-      first_name
-      business_name
-    }
   }
 }
 `;
@@ -141,10 +125,13 @@ export const getVendorOrders = `
 query getVendorOrders($limit:Int){
   getVendorOrders(limit:$limit){
     id
+    order_id
     name
     price
     quantity
-    description
+    subtotal
+    request
+    accepted
     completed
     canceled
     customer_email

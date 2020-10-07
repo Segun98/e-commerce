@@ -46,6 +46,7 @@ export const Newitem = () => {
         title: "All Fields Are Required",
         status: "info",
         duration: 3000,
+        isClosable: true,
       });
       return;
     }
@@ -54,6 +55,7 @@ export const Newitem = () => {
         title: "Category  Must Be Selected",
         status: "info",
         duration: 3000,
+        isClosable: true,
       });
       return;
     }
@@ -78,6 +80,7 @@ export const Newitem = () => {
         title: "Your Product Has Been Successfuly Added",
         status: "success",
         duration: 5000,
+        isClosable: true,
       });
       e.target.reset();
     }
@@ -89,6 +92,7 @@ export const Newitem = () => {
           ? error.response?.errors[0].message
           : "An error occurred, check your internet connection",
         status: "error",
+        isClosable: true,
       });
       // console.log(error?.message);
       // console.log(error.response?.errors[0].message);
@@ -111,176 +115,170 @@ export const Newitem = () => {
                 You Are Not Logged In. Redirecting...
               </div>
             )}
-            {role && role === "vendor" && (
-              <div className="main-wrap">
-                <h1 className="title">Add A New Product</h1>
-                <form onSubmit={handleSubmit(onSubmit)}>
-                  <FormControl isRequired>
-                    <div className="form-wrap">
-                      <section className="grid-1">
-                        <div className="form-item">
-                          <FormLabel htmlFor="name">Name</FormLabel>
-                          <Input
-                            type="text"
-                            id="name"
-                            name="name"
-                            aria-describedby="name-helper-text"
-                            placeholder="Product Name"
-                            ref={register({
-                              required: true,
-                              minLength: 3,
-                            })}
-                            isInvalid={errors.name ? true : false}
-                            errorBorderColor="red.300"
-                          />
-                          <small style={{ color: "red" }}>
-                            {errors.name && errors.name.message}
-                          </small>
-                        </div>
+            <div className="main-wrap">
+              <h1 className="title">Add A New Product</h1>
+              <form onSubmit={handleSubmit(onSubmit)}>
+                <FormControl isRequired>
+                  <div className="form-wrap">
+                    <section className="grid-1">
+                      <div className="form-item">
+                        <FormLabel htmlFor="name">Name</FormLabel>
+                        <Input
+                          type="text"
+                          id="name"
+                          name="name"
+                          aria-describedby="name-helper-text"
+                          placeholder="Product Name"
+                          ref={register({
+                            required: true,
+                            minLength: 3,
+                          })}
+                          isInvalid={errors.name ? true : false}
+                          errorBorderColor="red.300"
+                        />
+                        <small style={{ color: "red" }}>
+                          {errors.name && errors.name.message}
+                        </small>
+                      </div>
 
-                        <div className="form-item">
-                          <FormLabel htmlFor="description">
-                            Description
-                          </FormLabel>
-                          <Textarea
-                            id="description"
-                            name="description"
-                            aria-describedby="descriptiom-helper-text"
-                            placeholder="Help your customers know all about this product."
-                            ref={register({
-                              required: true,
-                              minLength: 10,
-                            })}
-                            isInvalid={errors.description ? true : false}
-                            errorBorderColor="red.300"
-                          ></Textarea>
-                          <small style={{ color: "red" }}>
-                            {errors.description &&
-                              "minimum length of 10 characters"}
-                          </small>
-                        </div>
-                      </section>
+                      <div className="form-item">
+                        <FormLabel htmlFor="description">Description</FormLabel>
+                        <Textarea
+                          id="description"
+                          name="description"
+                          aria-describedby="descriptiom-helper-text"
+                          placeholder="Help your customers know all about this product."
+                          ref={register({
+                            required: true,
+                            minLength: 10,
+                          })}
+                          isInvalid={errors.description ? true : false}
+                          errorBorderColor="red.300"
+                        ></Textarea>
+                        <small style={{ color: "red" }}>
+                          {errors.description &&
+                            "minimum length of 10 characters"}
+                        </small>
+                      </div>
+                    </section>
 
-                      <section className="grid-2">
-                        <div className="form-item">
-                          <FormLabel htmlFor="price">Price</FormLabel>
-                          <InputGroup>
-                            {/* <InputLeftAddon
+                    <section className="grid-2">
+                      <div className="form-item">
+                        <FormLabel htmlFor="price">Price</FormLabel>
+                        <InputGroup>
+                          {/* <InputLeftAddon
                               children="&#8358;"
                               color="blue.400"
                               fontSize="0.8em"
                             /> */}
-                            <Input
-                              type="text"
-                              inputMode="numeric"
-                              pattern="[0-9]*"
-                              name="price"
-                              id="price"
-                              placeholder="Product Price"
-                              ref={register({
-                                required: true,
-                              })}
-                              isInvalid={errors.price ? true : false}
-                              errorBorderColor="red.300"
-                            />
-                          </InputGroup>
-                        </div>
+                          <Input
+                            type="text"
+                            inputMode="numeric"
+                            pattern="[0-9]*"
+                            name="price"
+                            id="price"
+                            placeholder="Product Price"
+                            ref={register({
+                              required: true,
+                            })}
+                            isInvalid={errors.price ? true : false}
+                            errorBorderColor="red.300"
+                          />
+                        </InputGroup>
+                      </div>
 
-                        <div className="form-item">
-                          <FormLabel htmlFor="category">
-                            Product Category
-                          </FormLabel>
-                          <Select
-                            defaultValue={category}
-                            onChange={(e) => {
-                              setCategory(e.target.value);
-                            }}
-                          >
-                            <option defaultValue="">--select--</option>
-                            <option defaultValue="Cakes">Cakes</option>
-                            <option defaultValue="Games">Games</option>
-                            <option defaultValue="Drinks">Drinks</option>
-                            <option defaultValue="Drinks">Decorations</option>
-                            <option defaultValue="Food">Gifts</option>
-                            <option defaultValue="Props">Props</option>
-                            <option defaultValue="Other">Other</option>
-                          </Select>
-                        </div>
+                      <div className="form-item">
+                        <FormLabel htmlFor="category">
+                          Product Category
+                        </FormLabel>
+                        <Select
+                          defaultValue={category}
+                          onChange={(e) => {
+                            setCategory(e.target.value);
+                          }}
+                        >
+                          <option defaultValue="">--select--</option>
+                          <option defaultValue="Cakes">Cakes</option>
+                          <option defaultValue="Games">Games</option>
+                          <option defaultValue="Drinks">Drinks</option>
+                          <option defaultValue="Drinks">Decorations</option>
+                          <option defaultValue="Food">Gifts</option>
+                          <option defaultValue="Props">Props</option>
+                          <option defaultValue="Other">Other</option>
+                        </Select>
+                      </div>
 
-                        <div className="form-item">
-                          <FormLabel htmlFor="category">
-                            Party Category
-                          </FormLabel>
-                          <Select
-                            defaultValue={partyCategory}
-                            onChange={(e) => {
-                              setPartyCategory(e.target.value);
-                            }}
-                          >
-                            <option defaultValue="">--select--</option>
-                            <option defaultValue="Birthday Party">
-                              Birthday Party
-                            </option>
-                            <option defaultValue="Beach Party">
-                              Beach Party
-                            </option>
-                            <option defaultValue="House Party">
-                              House Party
-                            </option>
-                            <option defaultValue="Social Clubs">
-                              Social Clubs
-                            </option>
-                            <option defaultValue="Outdoors">Outdoors</option>
-                            <option defaultValue="Indoors">Indoors</option>
-                          </Select>
-                        </div>
+                      <div className="form-item">
+                        <FormLabel htmlFor="category">Party Category</FormLabel>
+                        <Select
+                          defaultValue={partyCategory}
+                          onChange={(e) => {
+                            setPartyCategory(e.target.value);
+                          }}
+                        >
+                          <option defaultValue="">--select--</option>
+                          <option defaultValue="Birthday Party">
+                            Birthday Party
+                          </option>
+                          <option defaultValue="Beach Party">
+                            Beach Party
+                          </option>
+                          <option defaultValue="House Party">
+                            House Party
+                          </option>
+                          <option defaultValue="Social Clubs">
+                            Social Clubs
+                          </option>
+                          <option defaultValue="Outdoors">Outdoors</option>
+                          <option defaultValue="Indoors">Indoors</option>
+                        </Select>
+                      </div>
 
-                        <div className="form-item">
-                          <FormLabel htmlFor="available quantity">
-                            Available Quantity In Stock
-                          </FormLabel>
-                          <InputGroup>
-                            {/* <InputLeftAddon
+                      <div className="form-item">
+                        <FormLabel htmlFor="available quantity">
+                          Available Quantity In Stock
+                        </FormLabel>
+                        <InputGroup>
+                          {/* <InputLeftAddon
                               children="Qty"
                               color="blue.400"
                               fontSize="0.8em"
                             /> */}
-                            <Input
-                              type="text"
-                              inputMode="numeric"
-                              pattern="[0-9]*"
-                              name="available_qty"
-                              id="available quantity"
-                              placeholder="number of items in stock"
-                              defaultValue="1"
-                              maxLength={3}
-                              width="15"
-                              ref={register({
-                                required: true,
-                              })}
-                              isInvalid={errors.available_qty ? true : false}
-                              errorBorderColor="red.300"
-                            />
-                          </InputGroup>
-                        </div>
-                      </section>
-                    </div>
-                  </FormControl>
-
-                  <br />
-                  <div className="btn">
-                    <Button
-                      isDisabled={Loading}
-                      style={{ background: "var(--deepblue)", color: "white" }}
-                      type="submit"
-                      isLoading={Loading}
-                    >
-                      Add Product
-                    </Button>
+                          <Input
+                            type="text"
+                            inputMode="numeric"
+                            pattern="[0-9]*"
+                            name="available_qty"
+                            id="available quantity"
+                            placeholder="number of items in stock"
+                            defaultValue="1"
+                            maxLength={3}
+                            width="15"
+                            ref={register({
+                              required: true,
+                            })}
+                            isInvalid={errors.available_qty ? true : false}
+                            errorBorderColor="red.300"
+                          />
+                        </InputGroup>
+                      </div>
+                    </section>
                   </div>
-                </form>
-              </div>
-            )}
+                </FormControl>
+
+                <br />
+                <div className="btn">
+                  <Button
+                    isDisabled={Loading}
+                    style={{ background: "var(--deepblue)", color: "white" }}
+                    type="submit"
+                    isLoading={Loading}
+                  >
+                    Add Product
+                  </Button>
+                </div>
+              </form>
+            </div>
           </div>
         </main>
       </div>

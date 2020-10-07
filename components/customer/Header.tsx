@@ -229,7 +229,7 @@ export const Header = () => {
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
                     name="search"
-                    id="search"
+                    id="search mobile"
                     placeholder="Search our 1000+ products"
                   />
                 </InputGroup>

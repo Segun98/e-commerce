@@ -4,7 +4,6 @@ import { useToken } from "../../Context/TokenProvider";
 import { ProtectRouteV } from "../../utils/ProtectedRouteV";
 import { Navigation } from "../../components/vendor/Navigation";
 import Head from "next/head";
-import { OrdersComponent } from "./../../components/vendor/OrdersComponent";
 import { Button, Icon } from "@chakra-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -12,6 +11,7 @@ import {
   ordersThunk,
 } from "../../redux/features/orders/fetchOrders";
 import { useUser } from "../../Context/UserProvider";
+import { DashboardOrders } from "../../components/vendor/DashboardOrders";
 
 interface DefaultOrderState {
   orders: IOrderInitialState;
@@ -104,7 +104,7 @@ export const Dashboard: React.FC = () => {
 
           <div className="account-snippet">
             <h1>
-              Account Information{" "}
+              Account Information{"  "}
               <Link href="/vendor/account">
                 <a>
                   <Icon name="edit" />
@@ -141,10 +141,10 @@ export const Dashboard: React.FC = () => {
                 </Link>
               </Button>
             </div>
-            {/* ORDERS COMPONENT  */}
-            <div className="orders">
-              <OrdersComponent limit={5} />
-            </div>
+            {/* DASHBOARD ORDERS COMPONENT, IT WAS ABSTRACTED FOR MOBILE SCREENS */}
+            <section>
+              <DashboardOrders />
+            </section>
           </div>
         </main>
       </section>

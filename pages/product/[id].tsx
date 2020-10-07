@@ -84,6 +84,7 @@ const Product = ({ product, error }: response) => {
         toast({
           title: "Item Is Already In Cart",
           description: "Please Visit your Cart page to checkout",
+          isClosable: true,
           status: "info",
         });
         return;
@@ -98,6 +99,7 @@ const Product = ({ product, error }: response) => {
             : "",
         status: "info",
         duration: 7000,
+        isClosable: true,
       });
     }
   }
@@ -238,6 +240,7 @@ const Product = ({ product, error }: response) => {
                             status: "info",
                             duration: 7000,
                             position: "bottom",
+                            isClosable: true,
                           });
                           return;
                         }

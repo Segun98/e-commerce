@@ -36,7 +36,12 @@ export const OrdersComponent: React.FC<Iprops> = ({ limit }) => {
   //Parse Date
   function toDate(d) {
     let date = new Date(parseInt(d));
-    return date.toLocaleString();
+    let format = new Intl.DateTimeFormat("en-us", {
+      dateStyle: "medium",
+      timeStyle: "medium",
+    }).format(date);
+
+    return format || date.toLocaleString();
   }
 
   return (
@@ -47,7 +52,7 @@ export const OrdersComponent: React.FC<Iprops> = ({ limit }) => {
         <div>Price</div>
         <div>Quantity</div>
         <div>Subtotal</div>
-        <div>Description</div>
+        <div>Request</div>
         <div>Order Date</div>
         <div>Completed</div>
         <div>Canceled</div>
@@ -56,12 +61,12 @@ export const OrdersComponent: React.FC<Iprops> = ({ limit }) => {
       {orders.length === 0 ? "You Have No Orders..." : null}
       {orders.map((o) => (
         <div className="order-item" key={o.id}>
-          <div>{o.id}</div>
+          <div>{o.order_id}</div>
           <div>{o.name}</div>
           <div>{o.price}</div>
           <div>{o.quantity}</div>
           <div>{Commas(o.price * o.quantity)}</div>
-          <div>{o.description}</div>
+          <div>{o.request || "none"}</div>
           <div>{toDate(o.created_at)}</div>
           <div>{o.completed === "false" ? "No" : "Yes"}</div>
           <div>{o.canceled === "false" ? "No" : "Yes"}</div>

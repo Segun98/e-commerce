@@ -35,7 +35,7 @@ export const Navigation = () => {
         <header>
           <span>PartyStore</span>
           <button onClick={() => setIsOpen(!isOpen)}>
-            <Icon name="arrow-right" />
+            {isOpen ? <Icon name="close" /> : <Icon name="arrow-right" />}
           </button>
         </header>
 
@@ -116,7 +116,7 @@ export const Navigation = () => {
                 <a>Stores</a>
               </Link>
             </li>
-            <hr />
+            <br />
             <li>
               <Link href="/category?category=Gifts">
                 <a>Gifts</a>
@@ -212,7 +212,7 @@ export const Navigation = () => {
             padding-left: 10px;
             padding-bottom: 5px;
             display: block;
-            color: var(--text);
+            border-bottom: 1px solid var(--lightblue);
           }
           .vendor-menu-btn {
             position: absolute;
@@ -223,11 +223,7 @@ export const Navigation = () => {
           .vendor-menu-btn img {
             width: 40px;
           }
-          .menu-for-customers li {
-            font-weight: bold;
-            color: var(--text);
-            text-decoration: uppercase;
-          }
+
           .logout-btn {
             margin-top: 50px;
           }
@@ -252,8 +248,6 @@ export const Navigation = () => {
               margin: 10px 0;
               padding-left: 10px;
               padding-bottom: 5px;
-              border-bottom: none;
-              text-transform: none;
             }
             .menu-for-customers li {
               padding-bottom: 5px;

@@ -39,7 +39,6 @@ export const UserProvider = ({ children }) => {
         business_name,
         business_name_slug,
         business_address,
-        business_area,
         business_image,
         business_bio,
         customer_address,

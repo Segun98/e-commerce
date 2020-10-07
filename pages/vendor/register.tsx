@@ -87,13 +87,6 @@ export const Register = () => {
       role: "vendor",
       //pending status of vendor account
       pending: "true",
-      //I'm using one mutation for admin, customers and vendors so some of these have to be here
-      customer_address: null,
-      phone: null,
-      business_address: null,
-      business_area: null,
-      business_image: null,
-      business_bio: null,
     };
 
     try {

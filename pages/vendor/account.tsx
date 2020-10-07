@@ -69,6 +69,7 @@ export const Account = () => {
         title: "Failed To Update Your Account",
         description: "Check Your Internet Connection and Refresh",
         status: "error",
+        isClosable: true,
       });
     }
   }

@@ -6,7 +6,6 @@ import {
   InputGroup,
   InputRightElement,
   Button,
-  InputLeftAddon,
   Icon,
   useToast,
 } from "@chakra-ui/core";
@@ -92,6 +91,7 @@ export const Login = () => {
         description: `${err.response?.errors[0].message || ""}`,
         status: "error",
         duration: 5000,
+        isClosable: true,
       });
     }
   };
