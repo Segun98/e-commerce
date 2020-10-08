@@ -108,7 +108,7 @@ export const Search = ({ products, error }: Iprops) => {
           </div>
           <section className="paginate">
             <div style={{ display: "flex", justifyContent: "space-between" }}>
-              {!router.query.p || page === 1 ? (
+              {!router.query.p || parseInt(router.query.p) === 1 ? (
                 <div></div>
               ) : (
                 <Button
@@ -121,19 +121,23 @@ export const Search = ({ products, error }: Iprops) => {
                   Prev Page
                 </Button>
               )}
-              <Button
-                style={{ background: "var(--deepblue)", color: "white" }}
-                size="sm"
-                onClick={() => {
-                  if (products.length === 0) {
-                    return;
-                  }
-                  setpage(page + 1);
-                  firstRender.current++;
-                }}
-              >
-                Next Page
-              </Button>
+              {products.length === 0 ? (
+                <div></div>
+              ) : (
+                <Button
+                  style={{ background: "var(--deepblue)", color: "white" }}
+                  size="sm"
+                  onClick={() => {
+                    if (products.length === 0) {
+                      return;
+                    }
+                    setpage(page + 1);
+                    firstRender.current++;
+                  }}
+                >
+                  Next Page
+                </Button>
+              )}
             </div>
           </section>
         </section>

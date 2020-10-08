@@ -154,7 +154,7 @@ const Stores = () => {
         </div>
         <section className="paginate">
           <div style={{ display: "flex", justifyContent: "space-between" }}>
-            {!router.query.p || page === 1 ? (
+            {!router.query.p || parseInt(router.query.p) === 1 ? (
               <div></div>
             ) : (
               <Button
@@ -167,19 +167,23 @@ const Stores = () => {
                 Prev Page
               </Button>
             )}
-            <Button
-              style={{ background: "var(--deepblue)", color: "white" }}
-              size="sm"
-              onClick={() => {
-                if (stores.length === 0) {
-                  return;
-                }
-                setpage(page + 1);
-                firstRender.current++;
-              }}
-            >
-              Next Page
-            </Button>
+            {stores.length === 0 ? (
+              <div></div>
+            ) : (
+              <Button
+                style={{ background: "var(--deepblue)", color: "white" }}
+                size="sm"
+                onClick={() => {
+                  if (stores.length === 0) {
+                    return;
+                  }
+                  setpage(page + 1);
+                  firstRender.current++;
+                }}
+              >
+                Next Page
+              </Button>
+            )}
           </div>
         </section>
       </main>
