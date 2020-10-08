@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Layout } from "../components/Layout";
 import { UsersRes } from "../Typescript/types";
 import { graphQLClient } from "../utils/client";
@@ -12,9 +12,10 @@ import {
 import Link from "next/link";
 import { truncate } from "../utils/helpers";
 import Head from "next/head";
+import { useRouter } from "next/router";
 const getStores = `
-query getStores{
-    getStores{
+query getStores($query:String, $limit:Int, $offset:Int){
+    getStores(query:$query, limit:$limit, offset:$offset){
       business_name_slug
       business_name
       business_image
@@ -23,13 +24,27 @@ query getStores{
 }
 `;
 const Stores = () => {
-  useEffect(() => {
-    fetchStores();
-  }, []);
-
   const [stores, setStores] = useState<UsersRes[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
+  const [search, setSearch] = useState("");
+  const router: any = useRouter();
+
+  //frist page
+  const [page, setpage] = useState(parseInt(router.query.p) || 1);
+
+  //prevent useEffect from running on firts render
+  const firstRender = useRef(0);
+  useEffect(() => {
+    if (firstRender.current === 0) {
+      return;
+    }
+    router.push(`/stores?p=${page}`);
+  }, [page]);
+
+  useEffect(() => {
+    fetchStores(null);
+  }, [page, router]);
 
   const images = [
     "slider/slide2.jpeg",
@@ -40,14 +55,25 @@ const Stores = () => {
     "slider/slide7.jpeg",
   ];
 
-  async function fetchStores() {
+  async function fetchStores(query) {
+    //page -1 * limit
+    let pageCalc = (parseInt(router.query.p) - 1) * 30;
+    const variables = {
+      query: query || null,
+      limit: 30,
+      offset: pageCalc || 0,
+    };
     try {
-      const res = await graphQLClient.request(getStores);
+      const res = await graphQLClient.request(getStores, variables);
       const data = res.getStores;
       setStores(data);
     } catch (err) {
       setError(true);
     }
+  }
+
+  function handleSearch(query) {
+    fetchStores(query);
   }
   return (
     <Layout>
@@ -69,10 +95,18 @@ const Stores = () => {
 
       <main className="stores-wrap">
         <div className="stores-header">
-          <form>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              handleSearch(search);
+            }}
+          >
             <InputGroup>
               <InputLeftAddon
-                // onClick={handleSearch}
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleSearch(search);
+                }}
                 cursor="pointer"
                 children={<Icon name="search" color="blue.800" />}
                 borderTop="none"
@@ -84,12 +118,14 @@ const Stores = () => {
                 name="search stores"
                 id="search stores"
                 placeholder="Find a Store"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
               />
             </InputGroup>
           </form>
           <div></div>
         </div>
-
+        {stores.length === 0 && <strong>No results...</strong>}
         <div className="store-items">
           {stores.map((s, i) => (
             <div className="store-item" key={s.business_name_slug}>
@@ -116,6 +152,36 @@ const Stores = () => {
             </div>
           ))}
         </div>
+        <section className="paginate">
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
+            {!router.query.p || page === 1 ? (
+              <div></div>
+            ) : (
+              <Button
+                style={{ background: "var(--deepblue)", color: "white" }}
+                size="sm"
+                onClick={() => {
+                  setpage(page - 1);
+                }}
+              >
+                Prev Page
+              </Button>
+            )}
+            <Button
+              style={{ background: "var(--deepblue)", color: "white" }}
+              size="sm"
+              onClick={() => {
+                if (stores.length === 0) {
+                  return;
+                }
+                setpage(page + 1);
+                firstRender.current++;
+              }}
+            >
+              Next Page
+            </Button>
+          </div>
+        </section>
       </main>
 
       <style jsx>{`
@@ -142,7 +208,10 @@ const Stores = () => {
           margin: auto;
           width: 90%;
         }
-
+        .paginate {
+          margin: 10px auto;
+          width: 80%;
+        }
         .stores-header {
           display: flex;
           justify-content: space-between;
@@ -187,6 +256,10 @@ const Stores = () => {
           .store-items {
             grid-template-columns: repeat(3, 1fr);
           }
+          .paginate {
+            margin-top: 20px;
+            width: 70%;
+          }
         }
 
         @media only screen and (min-width: 1000px) {
@@ -222,6 +295,9 @@ const Stores = () => {
           .stores-wrap {
             width: 90%;
           }
+          .paginate {
+            width: 65%;
+          }
         }
 
         @media only screen and (min-width: 1800px) {
@@ -233,6 +309,9 @@ const Stores = () => {
           }
           .stores-wrap {
             width: 60%;
+          }
+          .paginate {
+            width: 40%;
           }
         }
       `}</style>

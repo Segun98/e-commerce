@@ -1,6 +1,6 @@
 import { Button, useToast } from "@chakra-ui/core";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { PurchaseSteps } from "../components/customer/PurchaseSteps";
 import { Layout } from "../components/Layout";
 import { ProductsRes } from "../Typescript/types";
@@ -24,12 +24,12 @@ export const partyCategory = `
         }
 }`;
 export async function getServerSideProps({ query }) {
-  //joining from a single digit to get 30 results per page
-  let joined = `${query.p}${0}`;
+  //page -1 * limit
+  let pageCalc = (parseInt(query.p) - 1) * 30;
   const variables = {
     party_category: query.category,
-    limit: null,
-    offset: parseInt(joined) || 0,
+    limit: 30,
+    offset: pageCalc || 0,
   };
 
   try {
@@ -53,8 +53,14 @@ export const Category = ({ products, error }: Iprops) => {
   const router: any = useRouter();
 
   //pagination
-  const [page, setpage] = useState(parseInt(router.query.p) || 0);
+  const [page, setpage] = useState(parseInt(router.query.p) || 1);
+  //prevent useEffect from running on firts render
+  const firstRender = useRef(0);
+
   useEffect(() => {
+    if (firstRender.current === 0) {
+      return;
+    }
     router.push(`/party?category=${router.query.category}&p=${page}`);
   }, [page]);
   const images = [
@@ -118,14 +124,14 @@ export const Category = ({ products, error }: Iprops) => {
 
           <section className="paginate">
             <div style={{ display: "flex", justifyContent: "space-between" }}>
-              {!router.query.p || page === 0 || page < 1 ? (
+              {!router.query.p || page === 1 ? (
                 <div></div>
               ) : (
                 <Button
                   style={{ background: "var(--deepblue)", color: "white" }}
                   size="sm"
                   onClick={() => {
-                    setpage(page - 3);
+                    setpage(page - 1);
                   }}
                 >
                   Prev Page
@@ -138,7 +144,8 @@ export const Category = ({ products, error }: Iprops) => {
                   if (products.length === 0) {
                     return;
                   }
-                  setpage(page + 3);
+                  setpage(page + 1);
+                  firstRender.current++;
                 }}
               >
                 Next Page
