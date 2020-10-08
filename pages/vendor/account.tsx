@@ -84,15 +84,6 @@ export const Account = () => {
           <Navigation />
         </div>
         <main>
-          <div
-            className="cover-image"
-            style={{
-              backgroundImage: `url(${User.business_image || tempImage})`,
-              // objectFit: "cover",
-            }}
-          >
-            <p>{User.business_name}</p>
-          </div>
           <aside>
             <form onSubmit={updateAccount}>
               <section className="account-head">
@@ -259,38 +250,14 @@ export const Account = () => {
           padding-bottom: 3px;
         }
 
-        .cover-image {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          background-position: center;
-          height: 120px;
-          width: 100%;
-        }
-
-        .cover-image p {
-          font-size: 1.5rem;
-          font-weight: bold;
-          background: rgba(2, 36, 122, 0.6);
-          margin-bottom: 50px;
-          padding: 5px;
-          border-radius: 2px;
-          color: white;
-        }
-
         @media only screen and (min-width: 700px) {
-          .cover-image {
-            height: 150px;
-          }
           .account-item img {
             width: 250px;
           }
         }
         @media only screen and (min-width: 1000px) {
-          .cover-image {
-            height: 200px;
-          }
           .account-layout aside {
+            margin-top: 36px;
             width: 87%;
           }
           .account-item img {
@@ -299,12 +266,6 @@ export const Account = () => {
           }
         }
         @media only screen and (min-width: 1200px) {
-          .account-items {
-            grid-template-columns: repeat(2, 1fr);
-          }
-          .cover-image {
-            height: 250px;
-          }
           .account-head h1 {
             font-size: 1.1rem;
           }
@@ -313,9 +274,6 @@ export const Account = () => {
           }
         }
         @media only screen and (min-width: 1800px) {
-          .cover-image {
-            height: 300px;
-          }
           .account-layout aside {
             width: 67%;
           }

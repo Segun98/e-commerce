@@ -171,7 +171,7 @@ export const Search = ({ products, error }: Iprops) => {
           width: 150px;
           padding: 3px;
         }
-        .results-wrap.serch-item a {
+        .results-wrap .search-item a {
           display: flex;
           flex-direction: column;
           align-items: center;
@@ -179,8 +179,8 @@ export const Search = ({ products, error }: Iprops) => {
         }
 
         .results-wrap .search-item img {
-          min-width: 150px;
-          height: 150px;
+          min-width: 100px;
+          height: 100px;
           object-fit: contain;
           border-radius: 5px;
           display: flex;
@@ -227,6 +227,10 @@ export const Search = ({ products, error }: Iprops) => {
           }
           .results-wrap .search-item {
             width: 200px;
+          }
+          .results-wrap .search-item img {
+            min-width: 150px;
+            height: 150px;
           }
         }
 

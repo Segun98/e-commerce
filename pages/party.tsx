@@ -184,7 +184,7 @@ export const Category = ({ products, error }: Iprops) => {
           width: 150px;
           padding: 3px;
         }
-        .category-wrap.serch-item a {
+        .category-wrap .category-item a {
           display: flex;
           flex-direction: column;
           align-items: center;
@@ -192,8 +192,8 @@ export const Category = ({ products, error }: Iprops) => {
         }
 
         .category-wrap .category-item img {
-          min-width: 150px;
-          height: 150px;
+          min-width: 100px;
+          height: 100px;
           object-fit: contain;
           border-radius: 5px;
           display: flex;
@@ -240,6 +240,10 @@ export const Category = ({ products, error }: Iprops) => {
           }
           .category-wrap .category-item {
             width: 200px;
+          }
+          .category-wrap .category-item img {
+            min-width: 150px;
+            height: 150px;
           }
         }
 

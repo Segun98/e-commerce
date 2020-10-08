@@ -577,15 +577,16 @@ Class names accross components can be the same but they are wrapped by a unique 
 }
 
 .steps .steps-wrap .steps-item {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 1fr 3fr;
+      grid-template-columns: 1fr 3fr;
 }
 
-.steps .steps-wrap .steps-item svg {
-  font-size: 50px;
-  color: #7070f0;
+.steps .steps-wrap .steps-item img {
   margin-right: 20px;
+  width: 60px;
+  height: 60px;
 }
 
 .steps .steps-wrap .steps-item p {
@@ -600,18 +601,8 @@ Class names accross components can be the same but they are wrapped by a unique 
     gap: 30px;
   }
   .steps .steps-wrap .steps-item {
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-        -ms-flex-direction: column;
-            flex-direction: column;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
-  }
-  .steps .steps-wrap .steps-item svg {
-    font-size: 50px;
-    color: #7070f0;
-    margin-bottom: 20px;
+    -ms-grid-columns: 1fr;
+        grid-template-columns: 1fr;
   }
 }
 
@@ -640,7 +631,6 @@ Class names accross components can be the same but they are wrapped by a unique 
 }
 
 .new-item-layout {
-  background: #eeeef5;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -657,7 +647,6 @@ Class names accross components can be the same but they are wrapped by a unique 
 
 .store_new-item .main-wrap .title {
   font-weight: bold;
-  font-style: italic;
   color: #02247a;
   margin-left: 25px;
   padding: 20px;
@@ -685,6 +674,7 @@ Class names accross components can be the same but they are wrapped by a unique 
 
 .store_new-item form .form-wrap .grid-1,
 .store_new-item form .form-wrap .grid-2 {
+  background: #eeeef5;
   padding: 10px;
   border-radius: 5px;
   -webkit-box-shadow: 0 1px 6px 0 rgba(32, 33, 36, 0.28);
@@ -705,6 +695,12 @@ Class names accross components can be the same but they are wrapped by a unique 
 }
 
 @media only screen and (min-width: 1000px) {
+  .store_new-item .main-wrap {
+    margin: 20px auto;
+  }
+  .store_new-item .main-wrap .title {
+    font-size: 1.09rem;
+  }
   .store_new-item form .form-wrap {
     -ms-grid-columns: 2fr 1fr;
         grid-template-columns: 2fr 1fr;
@@ -997,6 +993,9 @@ Class names accross components can be the same but they are wrapped by a unique 
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
 .product-page .related-products .related-item a:hover {
@@ -1004,8 +1003,8 @@ Class names accross components can be the same but they are wrapped by a unique 
 }
 
 .product-page .related-products .related-item a img {
-  width: 150px;
-  height: 150px;
+  width: 100px;
+  height: 100px;
   -o-object-fit: contain;
      object-fit: contain;
   border-radius: 5px;
@@ -1065,6 +1064,7 @@ Class names accross components can be the same but they are wrapped by a unique 
   .product-page .related-products .related-item a img {
     -o-object-fit: contain;
        object-fit: contain;
+    height: 150px;
     width: 200px;
   }
   .product-page .related-products .related-item a .related-desc {
@@ -1225,7 +1225,6 @@ Class names accross components can be the same but they are wrapped by a unique 
 }
 
 .main-store header {
-  font-style: italic;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -1311,8 +1310,8 @@ Class names accross components can be the same but they are wrapped by a unique 
 }
 
 .main-store .store-products .store-item img {
-  width: 150px;
-  height: 150px;
+  width: 100px;
+  height: 100px;
   -o-object-fit: contain;
      object-fit: contain;
   border-radius: 5px;
@@ -1371,6 +1370,10 @@ Class names accross components can be the same but they are wrapped by a unique 
   }
   .main-store .store-products .store-item {
     width: 200px;
+  }
+  .main-store .store-products .store-item img {
+    width: 150px;
+    height: 150px;
   }
 }
 

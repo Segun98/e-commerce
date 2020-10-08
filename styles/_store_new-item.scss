@@ -1,5 +1,5 @@
 .new-item-layout {
-    background: $softblue;
+    // background: $softblue;
     display: flex;
 
     main {
@@ -15,7 +15,6 @@
 
         .title {
             font-weight: bold;
-            font-style: italic;
             color: $deepblue;
             margin-left: 25px;
             padding: 20px;
@@ -23,6 +22,7 @@
     }
 
     form {
+
         label {
             font-size: 0.9rem;
         }
@@ -43,7 +43,7 @@
 
             .grid-1,
             .grid-2 {
-                // background: white;
+                background: $softblue;
                 padding: 10px;
                 border-radius: 5px;
                 box-shadow: $box $softgrey;
@@ -61,6 +61,13 @@
     }
 
     @media only screen and (min-width:1000px) {
+        .main-wrap {
+            margin: 20px auto;
+
+            .title {
+                font-size: 1.09rem
+            }
+        }
 
         form {
             .form-wrap {
