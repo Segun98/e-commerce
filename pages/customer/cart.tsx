@@ -130,6 +130,16 @@ export const CustomerCart = () => {
                   <a>LogIn</a>
                 </Link>
               </div>
+              <div style={{ textAlign: "center" }}>
+                <p className="cart-unauthorised">Or</p>
+              </div>
+              <div style={{ textAlign: "center" }}>
+                <div className="cart-unauthorised">
+                  <Link href="/customer/register">
+                    <a>SignUp</a>
+                  </Link>
+                </div>
+              </div>
             </div>
           </div>
         )}
@@ -146,6 +156,16 @@ export const CustomerCart = () => {
                 <Link href="/customer/login">
                   <a>LogIn</a>
                 </Link>
+              </div>
+              <div style={{ textAlign: "center" }}>
+                <p className="cart-unauthorised">Or</p>
+              </div>
+              <div style={{ textAlign: "center" }}>
+                <div className="cart-unauthorised">
+                  <Link href="/customer/register">
+                    <a>SignUp</a>
+                  </Link>
+                </div>
               </div>
             </div>
           </div>

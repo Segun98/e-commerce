@@ -138,13 +138,6 @@ export const Account = () => {
       <Head>
         <title>Account | PartyStore</title>
       </Head>
-      {/* {Token && User && User.pending === "true" && (
-        <div className="banner">
-          Your Account is Pending, You Need To Confirm Your Account in Your
-          Email Inbox, Didn't Recieve An Email? <a>CLICK HERE TO RESEND</a>
-        </div>
-      )} */}
-
       {!Token && !role && (
         <div className="indicator">
           <div>
@@ -154,6 +147,16 @@ export const Account = () => {
               <div className="unauthorised">
                 <Link href="/customer/login">
                   <a>LogIn</a>
+                </Link>
+              </div>
+            </div>
+            <div style={{ textAlign: "center" }}>
+              <p className="unauthorised">Or</p>
+            </div>
+            <div style={{ textAlign: "center" }}>
+              <div className="unauthorised">
+                <Link href="/customer/register">
+                  <a>SignUp</a>
                 </Link>
               </div>
             </div>
@@ -300,16 +303,6 @@ export const Account = () => {
         <PurchaseSteps />
       </main>
       <style jsx>{`
-        .banner {
-          background: var(--deepblue);
-          color: white;
-          font-weight: bold;
-          text-align: center;
-          padding: 10px;
-        }
-        .banner a {
-          color: lightgreen;
-        }
         .heading {
           display: flex;
           justify-content: space-between;
