@@ -177,7 +177,9 @@ const Product = ({ product, error }: response) => {
                       <li>
                         <img src="/twitter.svg" alt="Twitter Icon" />
                       </li>
-                      <li>Facebook</li>
+                      <li>
+                        <img src="/facebook.svg" alt="Facebook Icon" />
+                      </li>
                     </ul>
                     <hr />
                     <p>
