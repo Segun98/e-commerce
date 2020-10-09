@@ -119,3 +119,22 @@ export const SEARCH = `
             image
         }
 }`;
+
+export const getCustomerOrders = `
+query getCustomerOrders{
+  getCustomerOrders{
+    id
+    order_id
+    name
+    price
+    quantity
+    subtotal
+    request
+    accepted
+    completed
+    canceled
+    customer_email
+    created_at
+  }
+}
+`;
