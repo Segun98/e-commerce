@@ -1,3 +1,4 @@
+import { List, ListItem } from "@chakra-ui/core";
 import Head from "next/head";
 import React from "react";
 import { Navigation } from "../../components/vendor/Navigation";
@@ -13,7 +14,35 @@ export const Orders = () => {
       <div className="orders-layout">
         <Navigation />
         <main>
+          <div className="order-status">
+            <List>
+              <ListItem>
+                * <strong>Pending</strong> signifies that you have not ACCEPTED
+                an Order
+              </ListItem>
+              <ListItem>
+                * <strong>Cancelled</strong> signifies that You have cancelled
+                the order. Note: You cannnot cancel after you have accepted an
+                Order
+              </ListItem>
+              <ListItem>
+                * <strong>Delivered</strong> signifies that Your Item Has Been
+                delivered to your customer else you see NO under "Completed"
+                column
+              </ListItem>
+            </List>
+          </div>
           <h1>All Orders</h1>
+          <p>
+            <span
+              style={{
+                color: "red",
+              }}
+            >
+              "*"
+            </span>{" "}
+            Signifies Pending Orders, Please take Action
+          </p>
           <OrdersComponent limit={null} />
         </main>
       </div>

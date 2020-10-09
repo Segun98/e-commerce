@@ -1,4 +1,11 @@
-import { Button, Skeleton } from "@chakra-ui/core";
+import {
+  Button,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
+  Skeleton,
+} from "@chakra-ui/core";
 import React from "react";
 import { useToken } from "../../Context/TokenProvider";
 import { Commas, truncate } from "../../utils/helpers";
@@ -15,98 +22,131 @@ export const DashboardOrders = () => {
 
   return (
     <div className="orders-table">
-      <div className="order-title">
-        <div>Name</div>
-        <div>Price</div>
-        <div>Qty</div>
-        <div>Total</div>
-        <div>Request</div>
-        <div>Action</div>
-      </div>
-      {data && orders.length === 0 ? "You Have No Orders..." : null}
-      {loading && (
-        <section className="skeleton">
-          <div>
-            <Skeleton height="40px" my="10px" />
-          </div>
-          <div>
-            <Skeleton height="40px" my="10px" />
-          </div>
-          <div>
-            <Skeleton height="40px" my="10px" />
-          </div>
-          <div>
-            <Skeleton height="40px" my="10px" />
-          </div>
-          <div>
-            <Skeleton height="40px" my="10px" />
-          </div>
-        </section>
-      )}
-      {data &&
-        orders.map((o: Orders, i) => (
-          <div className="order-item" key={o.id}>
-            <div className="name">{o.name}</div>
-            <div className="price">{Commas(o.price)}</div>
-            <div className="qty">{o.quantity}</div>
-            <div className="total">{Commas(o.subtotal)}</div>
-            <div>{truncate(o.request) || "none"}</div>
-            <div>
-              <Button size="xs" background="var(--deepblue)" color="white">
-                Action
-              </Button>
-            </div>
-          </div>
-        ))}
+      <table style={{ width: "100%" }}>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Qty</th>
+            <th>Total</th>
+            <th>Req</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {!loading && data && orders.length === 0
+            ? "You Have No Orders..."
+            : null}
+          {loading && (
+            <tr className="skeleton">
+              <td>
+                <Skeleton height="40px" my="10px" />
+              </td>
+              <td>
+                <Skeleton height="40px" my="10px" />
+              </td>
+              <td>
+                <Skeleton height="40px" my="10px" />
+              </td>
+              <td>
+                <Skeleton height="40px" my="10px" />
+              </td>
+              <td>
+                <Skeleton height="40px" my="10px" />
+              </td>
+            </tr>
+          )}
+          {!loading &&
+            data &&
+            orders.map((o: Orders, i) => (
+              <tr key={o.id}>
+                <td className="name">
+                  {/* display "*" if order is pending */}
+                  <span
+                    style={{
+                      color: "red",
+                      display:
+                        o.accepted === "true"
+                          ? "none"
+                          : o.canceled === "true"
+                          ? "none"
+                          : "block",
+                    }}
+                  >
+                    *
+                  </span>
+                  <span>{o.name}</span>
+                </td>
+                <td>{Commas(o.price)}</td>
+                <td>{o.quantity}</td>
+                <td>{Commas(o.subtotal)}</td>
+                <td>{truncate(o.request) || "none"}</td>
+                <td>
+                  <Menu>
+                    <MenuButton
+                      as={Button}
+                      size="xs"
+                      rightIcon="chevron-down"
+                      style={{ background: "var(--deepblue)", color: "white" }}
+                    >
+                      Actions
+                    </MenuButton>
+                    <MenuList placement="left-start">
+                      <MenuItem
+                        color="var(--deepblue)"
+                        isDisabled={
+                          o.accepted === "true" || o.canceled === "true"
+                            ? true
+                            : false
+                        }
+                      >
+                        Accept
+                      </MenuItem>
+                      <MenuItem
+                        color="var(--deepblue)"
+                        isDisabled={
+                          o.accepted === "true" || o.canceled === "true"
+                            ? true
+                            : false
+                        }
+                      >
+                        Cancel
+                      </MenuItem>
+                    </MenuList>
+                  </Menu>
+                </td>
+              </tr>
+            ))}
+        </tbody>
+      </table>
+
       <style jsx>{`
-        .orders-table {
-          box-shadow: var(--box) var(--softgrey);
-          padding: 10px;
-          margin-bottom: 50px;
-          border-radius: 3px;
+        table {
+          border-spacing: 5px;
         }
-        .order-title {
-          background: var(--softblue);
-          border-radius: 10px;
-          padding: 5px;
-          font-size: 0.8rem;
-          font-weight: bold;
+        tr:nth-child(even) {
+          background-color: #f2f2f2;
         }
-        .order-item,
-        .order-title {
-          display: grid;
-          grid-template-columns: repeat(6, 1fr);
-          gap: 20px;
+        td {
+          font-size: 0.9rem;
+        }
+        .name {
+          display: flex;
         }
 
-        .order-item {
-          margin: 4px 0;
-          margin-bottom: 0.6px solid var(--softgrey);
-          font-size: 0.8rem;
+        @media only screen and (min-width: 700px) {
+          td {
+            padding: 0 10px;
+          }
         }
-        .order-item .price,
-        .total {
-          width: 40px;
-          word-wrap: break-word;
+        @media only screen and (min-width: 1000px) {
+          td {
+            padding: 10px 10px;
+          }
         }
         @media only screen and (min-width: 1200px) {
-          .order-title {
-            font-size: 1rem;
-          }
-          .order-item {
-            font-size: 1rem;
-          }
-          .order-item .price,
-          .total {
-            width: 100%;
-            word-wrap: none;
-          }
-        }
-        @media only screen and (min-width: 1800px) {
-          .order-item,
-          .order-title {
-            gap: 1px;
-            font-size: 1.1rem;
+          td {
+            padding: 10px 10px;
           }
         }
       `}</style>

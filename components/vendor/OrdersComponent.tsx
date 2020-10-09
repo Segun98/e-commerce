@@ -6,7 +6,14 @@ import {
   IOrderInitialState,
   ordersThunk,
 } from "../../redux/features/orders/fetchOrders";
-import { Button } from "@chakra-ui/core";
+import {
+  Button,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
+  Skeleton,
+} from "@chakra-ui/core";
 
 interface Iprops {
   limit: number | null;
@@ -38,43 +45,116 @@ export const OrdersComponent: React.FC<Iprops> = ({ limit }) => {
     let date = new Date(parseInt(d));
     let format = new Intl.DateTimeFormat("en-us", {
       dateStyle: "medium",
-      timeStyle: "medium",
     }).format(date);
 
     return format || date.toLocaleString();
   }
 
   return (
-    <div className="orders-table">
-      <div className="order-title">
-        <div>Order ID</div>
-        <div>Name</div>
-        <div>Price</div>
-        <div>Quantity</div>
-        <div>Subtotal</div>
-        <div>Request</div>
-        <div>Order Date</div>
-        <div>Completed</div>
-        <div>Canceled</div>
-        <div>Action</div>
-      </div>
-      {orders.length === 0 ? "You Have No Orders..." : null}
-      {orders.map((o) => (
-        <div className="order-item" key={o.id}>
-          <div>{o.order_id}</div>
-          <div>{o.name}</div>
-          <div>{o.price}</div>
-          <div>{o.quantity}</div>
-          <div>{Commas(o.price * o.quantity)}</div>
-          <div>{o.request || "none"}</div>
-          <div>{toDate(o.created_at)}</div>
-          <div>{o.completed === "false" ? "No" : "Yes"}</div>
-          <div>{o.canceled === "false" ? "No" : "Yes"}</div>
-          <div>
-            <Button variantColor="blue">Action</Button>
-          </div>
+    <div className="vendor-orders-p">
+      <div className="orders-table">
+        <div className="order-title">
+          <div>Order ID</div>
+          <div>Name</div>
+          <div>Price</div>
+          <div>Quantity</div>
+          <div>Subtotal</div>
+          <div>Request</div>
+          <div>Order Date</div>
+          <div>Completed</div>
+          <div>Status</div>
+          <div>Action</div>
         </div>
-      ))}
+        {!loading && orders.length === 0 ? "You Have No Orders..." : null}
+        {loading && (
+          <section className="skeleton">
+            <div>
+              <Skeleton height="40px" my="10px" />
+            </div>
+            <div>
+              <Skeleton height="40px" my="10px" />
+            </div>
+            <div>
+              <Skeleton height="40px" my="10px" />
+            </div>
+            <div>
+              <Skeleton height="40px" my="10px" />
+            </div>
+            <div>
+              <Skeleton height="40px" my="10px" />
+            </div>
+          </section>
+        )}
+        {orders.map((o) => (
+          <div className="order-item" key={o.id}>
+            <div style={{ display: "flex" }}>
+              {/* display "*" if order is pending */}
+              <span
+                style={{
+                  color: "red",
+                  display:
+                    o.accepted === "true"
+                      ? "none"
+                      : o.canceled === "true"
+                      ? "none"
+                      : "block",
+                }}
+              >
+                *
+              </span>
+              <span>{o.order_id}</span>
+            </div>
+            <div>{o.name}</div>
+            <div>{o.price}</div>
+            <div>{o.quantity}</div>
+            <div>{Commas(o.price * o.quantity)}</div>
+            <div>{o.request || "none"}</div>
+            <div>{toDate(o.created_at)}</div>
+            {/* completed means customer has recieved item */}
+            <div>{o.completed === "false" ? "No" : "Delivered"}</div>
+            {/* not accepted or not cancelled should mean the item is pending  */}
+            <div>
+              {o.accepted === "true"
+                ? "Accepted"
+                : o.canceled === "true"
+                ? "Cancelled"
+                : "Pending"}
+            </div>
+            <div>
+              <Menu>
+                <MenuButton
+                  as={Button}
+                  size="xs"
+                  rightIcon="chevron-down"
+                  style={{ background: "var(--deepblue)", color: "white" }}
+                >
+                  Actions
+                </MenuButton>
+                <MenuList placement="left-start">
+                  <MenuItem
+                    isDisabled={
+                      o.accepted === "true" || o.canceled === "true"
+                        ? true
+                        : false
+                    }
+                  >
+                    Accept
+                  </MenuItem>
+                  <MenuItem
+                    isDisabled={
+                      o.accepted === "true" || o.canceled === "true"
+                        ? true
+                        : false
+                    }
+                  >
+                    Cancel
+                  </MenuItem>
+                </MenuList>
+              </Menu>
+            </div>
+          </div>
+        ))}
+      </div>
       <style jsx>{`
         .orders-table {
           box-shadow: var(--box) var(--softgrey);
@@ -99,7 +179,7 @@ export const OrdersComponent: React.FC<Iprops> = ({ limit }) => {
 
         .order-item {
           margin: 4px 0;
-          margin-bottom: 0.6px solid var(--softgrey);
+          border-bottom: 0.6px solid var(--softgrey);
         }
         @media only screen and (min-width: 1200px) {
           .orders-table {
