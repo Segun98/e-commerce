@@ -162,8 +162,8 @@ export const CustomerCart = () => {
               </div>
               <div style={{ textAlign: "center" }}>
                 <div className="cart-unauthorised">
-                  <Link href="/customer/register">
-                    <a>SignUp</a>
+                  <Link href="/vendor/dashboard">
+                    <a>Visit Dashboard</a>
                   </Link>
                 </div>
               </div>

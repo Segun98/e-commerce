@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { Icon } from "@chakra-ui/core";
+import { Button, Icon } from "@chakra-ui/core";
 import { PRODUCTS } from "./../graphql/vendor";
 import { ProductsRes } from "../Typescript/types";
 import Link from "next/link";
@@ -269,11 +269,47 @@ const Home = ({ products, error }) => {
 
         <PurchaseSteps />
 
-        {/* <section  style={{ padding: "40px 0" }}>
-          <h1>IDK WHAT SECTION THIS IS ABEG</h1>
-        </section> */}
+        <section className="home-vendor-onboarding">
+          <h1>Become a vendor today</h1>
+          <div>
+            <Link href="/vendor/onboarding">
+              <a>
+                Learn More
+                <Icon name="external-link" />
+              </a>
+            </Link>
+          </div>
+        </section>
       </div>
-      <style jsx>{``}</style>
+      <style jsx>{`
+        .home-vendor-onboarding {
+          height: 200px;
+          background: var(--deepblue);
+          color: white;
+          text-align: center;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+        }
+        .home-vendor-onboarding h1 {
+          font-weight: bolder;
+          font-size: 2rem;
+          font-style: normal;
+        }
+        .home-vendor-onboarding div {
+          margin-top: 10px;
+        }
+
+        @media only screen and (min-width: 700px) {
+          .home-vendor-onboarding {
+            height: 250px;
+          }
+          .home-vendor-onboarding h1 {
+            font-size: 3rem;
+          }
+        }
+      `}</style>
     </Layout>
   );
 };

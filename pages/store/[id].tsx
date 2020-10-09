@@ -125,6 +125,11 @@ const Store = ({ data, error }: Iprops) => {
       <Head>
         <title>{data ? data.business_name : "Error"} | PartyStore</title>
         <meta name="description" content={data ? data.business_name : ""} />
+        <script
+          async
+          src="https://kit.fontawesome.com/c772bfb479.js"
+          crossOrigin="anonymous"
+        ></script>
       </Head>
       {error &&
         error !== "404" &&
@@ -153,19 +158,19 @@ const Store = ({ data, error }: Iprops) => {
             <header>
               <div>
                 <div className="store-name">
-                  <Icon name="info" /> {data.business_name}
+                  <Icon name="triangle-up" /> {data.business_name}
                 </div>
                 <div className="store-bio">
-                  <Icon name="settings" />{" "}
+                  <img src="/profile.svg" alt="profile" />{" "}
                   {data.business_bio ||
                     "We seek to provide quality product and service to our customers. At " +
                       data.business_name +
                       ", customers come first"}
                 </div>
-                <div className="store-location">
-                  <Icon name="check" />{" "}
+                {/* <div className="store-location">
+                  <i className="fas fa-map-marker-alt"></i>
                   {data.business_address || "This Store's Address"}
-                </div>
+                </div> */}
               </div>
               {/* ONLY SHOW EDIT BUTTON TO STORE OWNER */}
               <div>
@@ -192,11 +197,6 @@ const Store = ({ data, error }: Iprops) => {
             <hr />
             <div className="store-products">
               <div className="store-products_head">
-                {/* <Input
-                  type="search"
-                  width="300px"
-                  placeholder={`Search ${data.business_name}' Products`}
-                /> */}
                 <h1>{data && data.usersProducts.length} Products In Store</h1>
               </div>
               <div className="store-products_wrap">

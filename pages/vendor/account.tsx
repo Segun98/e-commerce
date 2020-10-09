@@ -77,7 +77,10 @@ export const Account = () => {
   return (
     <div>
       <Head>
-        <title>Account | Vendor | PartyStore</title>
+        <title>
+          {User && User.business_name} Account | {User && User.first_name} |
+          Vendor | PartyStore
+        </title>
       </Head>
       <div className="account-layout">
         <div>
@@ -164,6 +167,14 @@ export const Account = () => {
                   <p>
                     {User.business_address ||
                       `No5, My Business Address, Lagos.`}
+                    <small
+                      style={{
+                        color: "var(--deepblue)",
+                        display: editMode ? "block" : "none",
+                      }}
+                    >
+                      *This is your Product's pick up address
+                    </small>
                   </p>
                   <br />
                   <span style={{ display: editMode ? "block" : "none" }}>

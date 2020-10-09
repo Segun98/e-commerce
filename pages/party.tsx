@@ -56,7 +56,6 @@ export const Category = ({ products, error }: Iprops) => {
   const [page, setpage] = useState(parseInt(router.query.p) || 1);
   //prevent useEffect from running on firts render
   const firstRender = useRef(0);
-
   useEffect(() => {
     if (firstRender.current === 0) {
       return;

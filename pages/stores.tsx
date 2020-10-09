@@ -81,16 +81,17 @@ const Stores = () => {
         <title>Stores | PartyStore</title>
       </Head>
       <header>
-        <div className="stores-image">
+        <section className="home-vendor-onboarding">
           <h1>Find Your Favourite Stores</h1>
-          <Button marginTop="10px" background="var(--deepblue)" color="white">
+          <div>
             <Link href="/vendor/onboarding">
               <a>
-                Open Your Store <Icon name="external-link" />
+                Open Your Store
+                <Icon name="external-link" />
               </a>
             </Link>
-          </Button>
-        </div>
+          </div>
+        </section>
       </header>
 
       <main className="stores-wrap">
@@ -189,25 +190,6 @@ const Stores = () => {
       </main>
 
       <style jsx>{`
-        /* Header Image */
-        .stores-image {
-          background-image: url("/slider/slide5.jpeg");
-          background-position: center;
-          height: 150px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          flex-direction: column;
-        }
-
-        .stores-image h1 {
-          color: white;
-          background: rgba(2, 36, 122, 0.6);
-          font-weight: bold;
-          font-size: 1.2rem;
-          padding: 0 3px;
-        }
-
         .stores-wrap {
           margin: auto;
           width: 90%;
@@ -254,9 +236,6 @@ const Stores = () => {
           font-size: 0.9rem;
         }
         @media only screen and (min-width: 700px) {
-          .stores-image {
-            height: 120px;
-          }
           .store-items {
             grid-template-columns: repeat(3, 1fr);
           }
@@ -267,13 +246,6 @@ const Stores = () => {
         }
 
         @media only screen and (min-width: 1000px) {
-          .stores-image {
-            height: 250px;
-            object-fit: cover;
-          }
-          .stores-image h1 {
-            font-size: 2rem;
-          }
           .stores-wrap {
             width: 80%;
           }
@@ -305,9 +277,6 @@ const Stores = () => {
         }
 
         @media only screen and (min-width: 1800px) {
-          .stores-image {
-            height: 500px;
-          }
           .store-items {
             grid-template-columns: repeat(5, 1fr);
           }
@@ -316,6 +285,35 @@ const Stores = () => {
           }
           .paginate {
             width: 40%;
+          }
+        }
+
+        /* //heading */
+        .home-vendor-onboarding {
+          height: 200px;
+          background: var(--deepblue);
+          color: white;
+          text-align: center;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+        }
+        .home-vendor-onboarding h1 {
+          font-weight: bolder;
+          font-size: 1.1rem;
+          font-style: normal;
+        }
+        .home-vendor-onboarding div {
+          margin-top: 10px;
+        }
+
+        @media only screen and (min-width: 700px) {
+          .home-vendor-onboarding {
+            height: 250px;
+          }
+          .home-vendor-onboarding h1 {
+            font-size: 3rem;
           }
         }
       `}</style>

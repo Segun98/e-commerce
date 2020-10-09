@@ -24,10 +24,23 @@
 
         .store-bio {
             margin: 10px 0;
+            display: flex;
+
+            img {
+                margin-right: 5px;
+                height: 20px;
+                width: 20px
+            }
         }
 
         .store-location {
-            padding-bottom: 10px
+            padding-bottom: 10px;
+
+            i {
+                margin-right: 5px;
+                height: 20px;
+                width: 20px
+            }
         }
     }
 

@@ -1242,10 +1242,25 @@ Class names accross components can be the same but they are wrapped by a unique 
 
 .main-store header .store-bio {
   margin: 10px 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.main-store header .store-bio img {
+  margin-right: 5px;
+  height: 20px;
+  width: 20px;
 }
 
 .main-store header .store-location {
   padding-bottom: 10px;
+}
+
+.main-store header .store-location i {
+  margin-right: 5px;
+  height: 20px;
+  width: 20px;
 }
 
 .main-store .store-products {
