@@ -38,7 +38,7 @@ export const Dashboard: React.FC = () => {
   //Order Status
   const completed = orders.filter((c) => c.completed === "true");
   const pending = orders.filter(
-    (c) => c.completed === "false" && c.canceled === "false"
+    (c) => c.accepted === "false" && c.canceled === "false"
   );
   const canceled = orders.filter((c) => c.canceled === "true"); // order.length - completed.length - pending.length
 
@@ -69,15 +69,22 @@ export const Dashboard: React.FC = () => {
             <div className="order-status_items">
               <div className="order-status_item">
                 <div className="icon">
-                  <Icon name="check-circle" color="blue" />
+                  <Icon name="repeat" color="#805AD5" size="30px" />
                 </div>
                 <h2>{orders.length}</h2>
                 <p>Total Orders</p>
               </div>
 
               <div className="order-status_item">
-                <div className="icon">
-                  <Icon name="unlock" color="green" />
+                <div
+                  className="icon"
+                  style={{
+                    color: "#41C7BF",
+                    fontSize: "30px",
+                    fontWeight: "bolder",
+                  }}
+                >
+                  &#42;
                 </div>
                 <h2>{pending.length}</h2>
                 <p>Pending Orders</p>
@@ -85,7 +92,7 @@ export const Dashboard: React.FC = () => {
 
               <div className="order-status_item">
                 <div className="icon">
-                  <Icon color="yellow" name="star" />
+                  <Icon name="check-circle" color="#32CD32" size="30px" />
                 </div>
                 <hr />
                 <h2>{completed.length}</h2>
@@ -94,7 +101,11 @@ export const Dashboard: React.FC = () => {
 
               <div className="order-status_item">
                 <div className="icon">
-                  <Icon name="not-allowed" />
+                  <Icon
+                    name="not-allowed"
+                    style={{ color: "red" }}
+                    size="30px"
+                  />
                 </div>
                 <h2>{canceled.length}</h2>
                 <p>Canceled Orders</p>
@@ -131,7 +142,20 @@ export const Dashboard: React.FC = () => {
           </div>
           <div className="recent-orders">
             <div className="recent-orders_wrap">
-              <h1>Recent Orders</h1>
+              <div>
+                <h1>Recent Orders</h1>
+                <p style={{ fontSize: "0.8rem" }}>
+                  <span
+                    style={{
+                      color: "red",
+                    }}
+                  >
+                    "*"
+                  </span>{" "}
+                  Signifies Pending Orders, Please take Action
+                </p>
+              </div>
+
               <Button
                 size="sm"
                 style={{ background: "var(--deepblue)", color: "white" }}
