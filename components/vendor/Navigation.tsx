@@ -244,11 +244,12 @@ export const Navigation = () => {
           .vendor-menu ul li {
             margin: 10px 0;
             padding-left: 10px;
-            padding-bottom: 5px;
+            padding-bottom: 8px;
+            font-size: 1.1rem;
           }
           .menu-for-customers li {
             padding-bottom: 5px;
-            font-size: 1.05rem;
+            font-size: 1.1rem;
           }
         }
 
