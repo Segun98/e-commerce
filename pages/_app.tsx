@@ -10,6 +10,7 @@ import { UserProvider } from "../Context/UserProvider";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Provider } from "react-redux";
 import store from "../redux/store";
+import Head from "next/head";
 
 function MyApp({ Component, pageProps }: AppProps) {
   //progress bar on page visit
@@ -30,6 +31,13 @@ function MyApp({ Component, pageProps }: AppProps) {
         <UserProvider>
           <ThemeProvider>
             <CSSReset />
+            <Head>
+              <meta
+                name="viewport"
+                content="width=device-width, initial-scale=1"
+              />
+              <meta name="theme-color" content="#02247a" />
+            </Head>
             <Component {...pageProps} />
           </ThemeProvider>
           <style jsx global>{`
