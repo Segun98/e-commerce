@@ -126,32 +126,33 @@ const Stores = () => {
           </form>
           <div></div>
         </div>
-        {stores.length === 0 && <strong>No results...</strong>}
+        {stores && stores.length === 0 && <strong>No results...</strong>}
         <div className="store-items">
-          {stores.map((s, i) => (
-            <div className="store-item" key={s.business_name_slug}>
-              <Link href={`/store/${s.business_name_slug}`}>
-                <a>
-                  <div
-                    className="store-img"
-                    style={{
-                      backgroundImage: `url(${images[i]})`,
-                      backgroundPosition: "center",
-                    }}
-                  >
-                    <h3>{s.business_name}</h3>
-                  </div>
+          {stores &&
+            stores.map((s, i) => (
+              <div className="store-item" key={s.business_name_slug}>
+                <Link href={`/store/${s.business_name_slug}`}>
+                  <a>
+                    <div
+                      className="store-img"
+                      style={{
+                        backgroundImage: `url(${images[i]})`,
+                        backgroundPosition: "center",
+                      }}
+                    >
+                      <h3>{s.business_name}</h3>
+                    </div>
 
-                  <div className="store-desc">
-                    <h4 className="bio">
-                      {truncate(s.business_bio) ||
-                        `We Are A Customer First Business`}
-                    </h4>
-                  </div>
-                </a>
-              </Link>
-            </div>
-          ))}
+                    <div className="store-desc">
+                      <h4 className="bio">
+                        {truncate(s.business_bio) ||
+                          `We Are A Customer First Business`}
+                      </h4>
+                    </div>
+                  </a>
+                </Link>
+              </div>
+            ))}
         </div>
         <section className="paginate">
           <div style={{ display: "flex", justifyContent: "space-between" }}>
@@ -168,7 +169,7 @@ const Stores = () => {
                 Prev Page
               </Button>
             )}
-            {stores.length === 0 ? (
+            {stores && stores.length === 0 ? (
               <div></div>
             ) : (
               <Button
