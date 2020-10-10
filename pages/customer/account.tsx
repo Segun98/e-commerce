@@ -19,12 +19,15 @@ import { useMutation } from "../../utils/useMutation";
 import Head from "next/head";
 import { Commas } from "../../utils/helpers";
 import { addToCart } from "../../graphql/customer";
+import { cartItems } from "../../redux/features/cart/fetchCart";
+import { useDispatch } from "react-redux";
 
 export const Account = () => {
   const { Token } = useToken();
   const { User } = useUser();
   const toast = useToast();
   const role = Cookies && Cookies.get("role");
+  const dispatch = useDispatch();
 
   const images = [
     "slider/slide2.jpeg",
@@ -112,6 +115,8 @@ export const Account = () => {
         description: `Your Item has been added to cart, proceed to checkout`,
         status: "success",
       });
+      //update store
+      dispatch(cartItems(Token));
 
       //delete from saved item after adding to Cart
       const newSaved = savedItem.filter((s) => s.product_id !== product_id);
@@ -276,7 +281,7 @@ export const Account = () => {
                     <h2>{s.name}</h2>
                     <p>&#8358; {Commas(s.price)}</p>
                   </div>
-                  <hr />
+                  {/* <hr />
                   <Button
                     size="xs"
                     variantColor="blue"
@@ -285,7 +290,7 @@ export const Account = () => {
                     }}
                   >
                     Add To Cart
-                  </Button>
+                  </Button> */}
                   <hr />
                   <Link
                     href={`/product/${s.name_slug}`}
