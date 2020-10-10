@@ -136,7 +136,7 @@ export const Category = ({ products, error }: Iprops) => {
                   Prev Page
                 </Button>
               )}
-              {products.length === 0 ? (
+              {products && products.length === 0 ? (
                 <div></div>
               ) : (
                 <Button
