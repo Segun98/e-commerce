@@ -237,10 +237,24 @@ const Product = ({ product, error }: response) => {
                         if (!Token || !role || role === "vendor") {
                           addToSavedItems();
                           toast({
-                            title:
-                              "Your Item Has Been Saved! Find It In Your Account Page After You LogIn",
+                            title: "Your Item Has Been Saved!",
+                            description:
+                              "Find It In Your Account Page After You LogIn",
                             status: "info",
                             duration: 7000,
+                            position: "bottom",
+                            isClosable: true,
+                          });
+                          return;
+                        }
+                        if (product.in_stock === "false") {
+                          addToSavedItems();
+                          toast({
+                            title: "This Product is Currently Out of Stock!",
+                            description:
+                              "It has been added to Saved Items in your Account page",
+                            status: "info",
+                            duration: 5000,
                             position: "bottom",
                             isClosable: true,
                           });
