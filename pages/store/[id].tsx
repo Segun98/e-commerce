@@ -142,18 +142,18 @@ const Store = ({ data, error }: Iprops) => {
           position: "top",
         })}
 
-      {error === "404" && (
-        <div className="indicator">
-          <strong>
-            Oops!! This Page Could Not Be Found, Please Check The URL
-          </strong>
-        </div>
-      )}
-
-      {!data && <p className="space"></p>}
-      {!error && data && (
-        <div className="store-page-wrap">
-          <Navigation />
+      <div className="store-page-wrap">
+        <Navigation />
+        {/* store doesn't exist */}
+        {error === "404" && (
+          <div style={{ textAlign: "center", marginTop: "30px" }}>
+            <strong>
+              Oops!! This Store Could Not Be Found, Please Check The URL
+            </strong>
+          </div>
+        )}
+        {!data && <p className="space"></p>}
+        {!error && data && (
           <section className="main-store">
             <header>
               <div>
@@ -250,8 +250,8 @@ const Store = ({ data, error }: Iprops) => {
               </div>
             </div>
           </section>
-        </div>
-      )}
+        )}
+      </div>
       <section style={{ background: "white" }}>
         <Footer />
       </section>
