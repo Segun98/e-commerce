@@ -3,7 +3,12 @@ import { graphQLClient } from "../utils/client";
 
 //custom react hook
 
-export const useQuery = (Query: any, Variables?: {}, Token?: string) => {
+export const useQuery = (
+  Query: any,
+  Variables?: {},
+  Token?: string,
+  dependency?: any
+) => {
   const [data, setData] = useState(undefined);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -38,6 +43,6 @@ export const useQuery = (Query: any, Variables?: {}, Token?: string) => {
       }
     }
     query();
-  }, [Token]);
+  }, [Token, dependency]);
   return [data, loading, error];
 };
