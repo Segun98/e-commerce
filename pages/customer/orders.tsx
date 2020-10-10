@@ -7,8 +7,10 @@ import {
   MenuItem,
   MenuList,
   Skeleton,
+  useToast,
 } from "@chakra-ui/core";
-import React from "react";
+import Head from "next/head";
+import React, { useState } from "react";
 import { PurchaseSteps } from "../../components/customer/PurchaseSteps";
 import { Layout } from "../../components/Layout";
 import { useQuery } from "../../components/useQuery";
@@ -16,19 +18,54 @@ import { useToken } from "../../Context/TokenProvider";
 import { getCustomerOrders } from "../../graphql/customer";
 import { Orders } from "../../Typescript/types";
 import { Commas } from "../../utils/helpers";
+import { useMutation } from "../../utils/useMutation";
 import { ProtectRouteC } from "./../../utils/ProtectedRouteC";
 
 export const CustomerOrders = () => {
   const { Token } = useToken();
-
-  const [data, loading] = useQuery(getCustomerOrders, {}, Token);
+  const toast = useToast();
+  //point is to cause custome hook useQuery to refecth after i cancel or complete an order
+  const [FakeDependency, setFakeDependency] = useState(false);
+  const [data, loading] = useQuery(
+    getCustomerOrders,
+    {},
+    Token,
+    FakeDependency
+  );
   let orders = data && data.getCustomerOrders;
+
+  //cancel order
+  async function handleOrderCancel(id) {
+    const cancelOrder = `
+    mutation cancelOrder($id:ID!){
+      cancelOrder(id:$id){
+        message
+      }
+    }
+    `;
+    const { data, error } = await useMutation(cancelOrder, { id }, Token);
+    if (data) {
+      setFakeDependency(!FakeDependency);
+      toast({
+        title: "Order Has Been Cancelled",
+        status: "info",
+      });
+    }
+    if (error) {
+      toast({
+        title: "Error Cancelling Order",
+        status: "error",
+      });
+    }
+  }
 
   //Parse Date
   function toDate(d) {
     let date = new Date(parseInt(d));
     let format = new Intl.DateTimeFormat("en-us", {
-      dateStyle: "medium",
+      day: "numeric",
+      month: "short",
+      year: "numeric",
     }).format(date);
 
     return format || date.toLocaleString();
@@ -36,6 +73,9 @@ export const CustomerOrders = () => {
 
   return (
     <Layout>
+      <Head>
+        <title>Orders | Customer | PartyStore</title>
+      </Head>
       <main className="customer-orders">
         <div className="order-status">
           <List>
@@ -45,12 +85,16 @@ export const CustomerOrders = () => {
             </ListItem>
             <ListItem>
               * <strong>Cancelled</strong> signifies that Your Item has been
-              cancelled by you or our vendor. Note: You cannnot cancel when our
-              vendor has accepted your Order
+              cancelled by you or our vendor. Note: You cannnot cancel when
+              order is being shipped.
             </ListItem>
             <ListItem>
               * <strong>Delivered</strong> signifies that Your Item Has Been
               delivered and accepted by You
+            </ListItem>
+            <ListItem>
+              * Please Click <strong>Action</strong> to find your{" "}
+              <strong>Order ID</strong>
             </ListItem>
           </List>
         </div>
@@ -136,11 +180,15 @@ export const CustomerOrders = () => {
                               ? true
                               : false
                           }
+                          onClick={() => handleOrderCancel(o.id)}
                         >
                           Cancel
                         </MenuItem>
                         <MenuItem color="var(--deepblue)" isDisabled={true}>
                           Return
+                        </MenuItem>
+                        <MenuItem color="var(--deepblue)">
+                          Order ID: {o.order_id}
                         </MenuItem>
                       </MenuList>
                     </Menu>
