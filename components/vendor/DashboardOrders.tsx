@@ -5,20 +5,100 @@ import {
   MenuItem,
   MenuList,
   Skeleton,
+  useToast,
 } from "@chakra-ui/core";
-import React from "react";
+import React, { useState } from "react";
 import { useToken } from "../../Context/TokenProvider";
 import { Commas, truncate } from "../../utils/helpers";
 import { useQuery } from "./../useQuery";
 import { getVendorOrders } from "./../../graphql/vendor";
 import { Orders } from "../../Typescript/types";
+import { useMutation } from "../../utils/useMutation";
+import { ordersThunk } from "../../redux/features/orders/fetchOrders";
+import { useDispatch } from "react-redux";
 
-//Recent Orders displayed in dashboard. was created specifically for mobile screens
+//Recent Orders displayed in /vendor/dashboard.
 export const DashboardOrders = () => {
   const { Token } = useToken();
-
-  const [data, loading] = useQuery(getVendorOrders, { limit: 5 }, Token);
+  const toast = useToast();
+  const dispatch = useDispatch();
+  //point is to cause custome hook useQuery to refecth after i cancel or complete an order
+  const [FakeDependency, setFakeDependency] = useState(false);
+  const [data, loading] = useQuery(
+    getVendorOrders,
+    { limit: 5 },
+    Token,
+    FakeDependency
+  );
   let orders = data && data.getVendorOrders;
+
+  //accept order
+  async function handleOrderAccept(id) {
+    const acceptOrder = `
+    mutation acceptOrder($id:ID!){
+      acceptOrder(id:$id){
+        message
+      }
+    }
+    `;
+    const { data, error } = await useMutation(acceptOrder, { id }, Token);
+    if (data) {
+      //causes useQuery to refecth and store to update
+      setFakeDependency(!FakeDependency);
+      dispatch(ordersThunk(Token, { limit: null }));
+      toast({
+        title: "Order Has Been Accepted",
+        description: "A Dispatch Rider Will Get In Touch Soon",
+        status: "info",
+        duration: 7000,
+      });
+    }
+    if (error) {
+      toast({
+        title: "Error Accepting Order",
+        description: "Check Your Internet Connection",
+        status: "error",
+      });
+    }
+  }
+
+  //cancel order
+  async function handleOrderCancel(id) {
+    const cancelOrder = `
+    mutation cancelOrder($id:ID!){
+      cancelOrder(id:$id){
+        message
+      }
+    }
+    `;
+    const { data, error } = await useMutation(cancelOrder, { id }, Token);
+    if (data) {
+      setFakeDependency(!FakeDependency);
+      dispatch(ordersThunk(Token, { limit: null }));
+      toast({
+        title: "Order Has Been Cancelled",
+        status: "info",
+      });
+    }
+    if (error) {
+      toast({
+        title: "Error Cancelling Order",
+        status: "error",
+      });
+    }
+  }
+
+  //Parse Date
+  function toDate(d) {
+    let date = new Date(parseInt(d));
+    let format = new Intl.DateTimeFormat("en-us", {
+      day: "numeric",
+      month: "short",
+      year: "numeric",
+    }).format(date);
+
+    return format || date.toLocaleString();
+  }
 
   return (
     <div className="orders-table">
@@ -76,6 +156,9 @@ export const DashboardOrders = () => {
                     *
                   </span>
                   <span>{o.name}</span>
+                  <span style={{ color: "var(--deepblue)" }}>
+                    {toDate(o.created_at)}
+                  </span>
                 </td>
                 <td>{Commas(o.price)}</td>
                 <td>{o.quantity}</td>
@@ -99,6 +182,7 @@ export const DashboardOrders = () => {
                             ? true
                             : false
                         }
+                        onClick={() => handleOrderAccept(o.id)}
                       >
                         Accept
                       </MenuItem>
@@ -109,6 +193,7 @@ export const DashboardOrders = () => {
                             ? true
                             : false
                         }
+                        onClick={() => handleOrderCancel(o.id)}
                       >
                         Cancel
                       </MenuItem>
@@ -127,8 +212,17 @@ export const DashboardOrders = () => {
         tr:nth-child(even) {
           background-color: #f2f2f2;
         }
+        td:nth-child(4) {
+          color: var(--deepblue);
+          font-weight: bold;
+        }
+        th {
+          font-size: 0.8rem;
+          background-color: #f2f2f2;
+        }
         td {
-          font-size: 0.9rem;
+          font-size: 0.8rem;
+          padding: 5px 0;
         }
         .name {
           display: flex;
@@ -147,6 +241,10 @@ export const DashboardOrders = () => {
         @media only screen and (min-width: 1200px) {
           td {
             padding: 10px 10px;
+            font-size: 1rem;
+          }
+          th {
+            font-size: 1rem;
           }
         }
       `}</style>

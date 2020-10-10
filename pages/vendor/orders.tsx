@@ -48,6 +48,9 @@ export const Orders = () => {
       </div>
 
       <style jsx>{`
+        .order-status {
+          margin: 20px 0;
+        }
         .orders-page h1 {
           margin: 10px 0 10px 0;
           color: var(--deepblue);
