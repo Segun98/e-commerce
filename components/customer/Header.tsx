@@ -247,22 +247,12 @@ export const Header = () => {
 
       <section className={IsOpen ? "navigation open-nav" : "navigation"}>
         <nav>
-          <button
-            aria-roledescription="close menu"
-            className="close-nav"
-            onClick={() => {
-              setIsOpen(!IsOpen);
-            }}
-          >
-            <img src="close-o.svg" alt="close icon" />
-          </button>
           <div
             className="nav-profile"
             style={{ display: "flex", justifyContent: "space-between" }}
           >
             {Token && role ? (
               <div style={{ cursor: "pointer" }}>
-                {/* <img src="/profile.svg" alt="profile-icon" /> */}
                 <div>Hi, {Token && User && User.first_name}</div>
               </div>
             ) : (
@@ -473,19 +463,6 @@ export const Header = () => {
           font-weight: bold;
           padding: 8px;
           text-align: center;
-        }
-
-        .navigation .close-nav {
-          position: absolute;
-          margin-top: 50px;
-          right: 0;
-          margin-right: -35px;
-          z-index: 999;
-          display: none;
-        }
-
-        .navigation .close-nav img {
-          height: 40px;
         }
 
         .nav-profile {
