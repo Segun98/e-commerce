@@ -106,40 +106,44 @@ export const Search = ({ products, error }: Iprops) => {
                 </div>
               ))}
           </div>
-          <section className="paginate">
-            <div style={{ display: "flex", justifyContent: "space-between" }}>
-              {!router.query.p || parseInt(router.query.p) === 1 ? (
-                <div></div>
-              ) : (
-                <Button
-                  style={{ background: "var(--deepblue)", color: "white" }}
-                  size="sm"
-                  onClick={() => {
-                    setpage(page - 1);
-                  }}
-                >
-                  Prev Page
-                </Button>
-              )}
-              {products && products.length === 0 ? (
-                <div></div>
-              ) : (
-                <Button
-                  style={{ background: "var(--deepblue)", color: "white" }}
-                  size="sm"
-                  onClick={() => {
-                    if (products.length === 0) {
-                      return;
-                    }
-                    setpage(page + 1);
-                    firstRender.current++;
-                  }}
-                >
-                  Next Page
-                </Button>
-              )}
-            </div>
-          </section>
+
+          {/* show pagination only when products are up to 30 */}
+          {products && products.length < 30 ? null : (
+            <section className="paginate">
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                {!router.query.p || parseInt(router.query.p) === 1 ? (
+                  <div></div>
+                ) : (
+                  <Button
+                    style={{ background: "var(--deepblue)", color: "white" }}
+                    size="sm"
+                    onClick={() => {
+                      setpage(page - 1);
+                    }}
+                  >
+                    Prev Page
+                  </Button>
+                )}
+                {products && products.length === 0 ? (
+                  <div></div>
+                ) : (
+                  <Button
+                    style={{ background: "var(--deepblue)", color: "white" }}
+                    size="sm"
+                    onClick={() => {
+                      if (products.length === 0) {
+                        return;
+                      }
+                      setpage(page + 1);
+                      firstRender.current++;
+                    }}
+                  >
+                    Next Page
+                  </Button>
+                )}
+              </div>
+            </section>
+          )}
         </section>
         <PurchaseSteps />
       </div>

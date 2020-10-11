@@ -8,6 +8,7 @@ import {
   Input,
   InputGroup,
   InputLeftAddon,
+  useToast,
 } from "@chakra-ui/core";
 import Link from "next/link";
 import { truncate } from "../utils/helpers";
@@ -25,15 +26,15 @@ query getStores($query:String, $limit:Int, $offset:Int){
 `;
 const Stores = () => {
   const [stores, setStores] = useState<UsersRes[]>([]);
-  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [search, setSearch] = useState("");
   const router: any = useRouter();
+  const toast = useToast();
 
   //frist page
   const [page, setpage] = useState(parseInt(router.query.p) || 1);
 
-  //prevent useEffect from running on firts render
+  //prevent useEffect from running on first render
   const firstRender = useRef(0);
   useEffect(() => {
     if (firstRender.current === 0) {
@@ -80,6 +81,15 @@ const Stores = () => {
       <Head>
         <title>Stores | PartyStore</title>
       </Head>
+      <>
+        {error &&
+          toast({
+            title: "Oops, Network Request Failed",
+            description: "PLease Check Your Internet Connection and Try Again",
+            status: "error",
+            isClosable: true,
+          })}
+      </>
       <header>
         <section className="home-vendor-onboarding">
           <h1>Find Your Favourite Stores</h1>
@@ -154,40 +164,44 @@ const Stores = () => {
               </div>
             ))}
         </div>
-        <section className="paginate">
-          <div style={{ display: "flex", justifyContent: "space-between" }}>
-            {!router.query.p || parseInt(router.query.p) === 1 ? (
-              <div></div>
-            ) : (
-              <Button
-                style={{ background: "var(--deepblue)", color: "white" }}
-                size="sm"
-                onClick={() => {
-                  setpage(page - 1);
-                }}
-              >
-                Prev Page
-              </Button>
-            )}
-            {stores && stores.length === 0 ? (
-              <div></div>
-            ) : (
-              <Button
-                style={{ background: "var(--deepblue)", color: "white" }}
-                size="sm"
-                onClick={() => {
-                  if (stores.length === 0) {
-                    return;
-                  }
-                  setpage(page + 1);
-                  firstRender.current++;
-                }}
-              >
-                Next Page
-              </Button>
-            )}
-          </div>
-        </section>
+
+        {/* show pagination only when stores are up to 30 */}
+        {stores && stores.length < 30 ? null : (
+          <section className="paginate">
+            <div style={{ display: "flex", justifyContent: "space-between" }}>
+              {!router.query.p || parseInt(router.query.p) === 1 ? (
+                <div></div>
+              ) : (
+                <Button
+                  style={{ background: "var(--deepblue)", color: "white" }}
+                  size="sm"
+                  onClick={() => {
+                    setpage(page - 1);
+                  }}
+                >
+                  Prev Page
+                </Button>
+              )}
+              {stores && stores.length === 0 ? (
+                <div></div>
+              ) : (
+                <Button
+                  style={{ background: "var(--deepblue)", color: "white" }}
+                  size="sm"
+                  onClick={() => {
+                    if (stores.length === 0) {
+                      return;
+                    }
+                    setpage(page + 1);
+                    firstRender.current++;
+                  }}
+                >
+                  Next Page
+                </Button>
+              )}
+            </div>
+          </section>
+        )}
       </main>
 
       <style jsx>{`
