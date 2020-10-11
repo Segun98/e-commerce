@@ -51,22 +51,28 @@ export const OrdersComponent: React.FC<Iprops> = ({ limit }) => {
       }
     }
     `;
-    const { data, error } = await useMutation(acceptOrder, { id }, Token);
-    if (data) {
-      dispatch(ordersThunk(Token, { limit: null }));
-      toast({
-        title: "Order Has Been Accepted",
-        description: "A Dispatch Rider Will Get In Touch Soon",
-        status: "info",
-        duration: 7000,
-      });
-    }
-    if (error) {
-      toast({
-        title: "Error Accepting Order",
-        description: "Check Your Internet Connection",
-        status: "error",
-      });
+    if (
+      window.confirm(`Are you sure you want to Accept this Order? 
+      
+      *Note: Accepting an order means the product is READILY AVAILABLE. Expect a dispatch rider soon.`)
+    ) {
+      const { data, error } = await useMutation(acceptOrder, { id }, Token);
+      if (data) {
+        dispatch(ordersThunk(Token, { limit: null }));
+        toast({
+          title: "Order Has Been Accepted",
+          description: "A Dispatch Rider Will Get In Touch Soon",
+          status: "info",
+          duration: 7000,
+        });
+      }
+      if (error) {
+        toast({
+          title: "Error Accepting Order",
+          description: "Check Your Internet Connection",
+          status: "error",
+        });
+      }
     }
   }
 
@@ -124,13 +130,13 @@ export const OrdersComponent: React.FC<Iprops> = ({ limit }) => {
             <th>Action</th>
           </tr>
         </thead>
+        {!loading && orders && orders.length === 0
+          ? "You Have No Orders..."
+          : null}
+        {!loading &&
+          error &&
+          "error Fetching Your Orders, Check your internet connection and refresh"}
         <tbody>
-          {!loading && orders && orders.length === 0
-            ? "You Have No Orders..."
-            : null}
-          {!loading &&
-            error &&
-            "error Fetching Your Orders, Check your internet connection and refresh"}
           {loading && (
             <tr className="skeleton">
               <td>
@@ -169,6 +175,7 @@ export const OrdersComponent: React.FC<Iprops> = ({ limit }) => {
             </tr>
           )}
           {!loading &&
+            !error &&
             orders &&
             orders.map((o) => (
               <tr className="order-item" key={o.id}>

@@ -24,7 +24,7 @@ export const DashboardOrders = () => {
   const dispatch = useDispatch();
   //point is to cause custome hook useQuery to refecth after i cancel or complete an order
   const [FakeDependency, setFakeDependency] = useState(false);
-  const [data, loading] = useQuery(
+  const [data, loading, error] = useQuery(
     getVendorOrders,
     { limit: 5 },
     Token,
@@ -41,24 +41,30 @@ export const DashboardOrders = () => {
       }
     }
     `;
-    const { data, error } = await useMutation(acceptOrder, { id }, Token);
-    if (data) {
-      //causes useQuery to refecth and store to update
-      setFakeDependency(!FakeDependency);
-      dispatch(ordersThunk(Token, { limit: null }));
-      toast({
-        title: "Order Has Been Accepted",
-        description: "A Dispatch Rider Will Get In Touch Soon",
-        status: "info",
-        duration: 7000,
-      });
-    }
-    if (error) {
-      toast({
-        title: "Error Accepting Order",
-        description: "Check Your Internet Connection",
-        status: "error",
-      });
+    if (
+      window.confirm(`Are you sure you want to Accept this Order? 
+      
+      *Note: Accepting an order means the product is READILY AVAILABLE. Expect a dispatch rider soon.`)
+    ) {
+      const { data, error } = await useMutation(acceptOrder, { id }, Token);
+      if (data) {
+        //causes useQuery to refecth and store to update
+        setFakeDependency(!FakeDependency);
+        dispatch(ordersThunk(Token, { limit: null }));
+        toast({
+          title: "Order Has Been Accepted",
+          description: "A Dispatch Rider Will Get In Touch Soon",
+          status: "info",
+          duration: 7000,
+        });
+      }
+      if (error) {
+        toast({
+          title: "Error Accepting Order",
+          description: "Check Your Internet Connection",
+          status: "error",
+        });
+      }
     }
   }
 
@@ -113,10 +119,13 @@ export const DashboardOrders = () => {
             <th>Action</th>
           </tr>
         </thead>
+        {!loading && data && orders.length === 0
+          ? "You Have No Orders..."
+          : null}
+        {!loading &&
+          error &&
+          "error Fetching Your Orders, Check your internet connection and refresh"}
         <tbody>
-          {!loading && data && orders.length === 0
-            ? "You Have No Orders..."
-            : null}
           {loading && (
             <tr className="skeleton">
               <td>
@@ -137,6 +146,7 @@ export const DashboardOrders = () => {
             </tr>
           )}
           {!loading &&
+            !error &&
             data &&
             orders.map((o: Orders, i) => (
               <tr key={o.id}>

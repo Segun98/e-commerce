@@ -44,6 +44,7 @@ export const CustomerOrders = () => {
     }
     `;
     const { data, error } = await useMutation(cancelOrder, { id }, Token);
+
     if (data) {
       setFakeDependency(!FakeDependency);
       toast({
@@ -52,8 +53,10 @@ export const CustomerOrders = () => {
       });
     }
     if (error) {
+      let msg = error.response.errors[0].message || error.message;
       toast({
         title: "Error Cancelling Order",
+        description: msg,
         status: "error",
       });
     }
@@ -109,10 +112,10 @@ export const CustomerOrders = () => {
               <th>Action</th>
             </tr>
           </thead>
+          {!loading && data && orders.length === 0
+            ? "You Have No Orders..."
+            : null}
           <tbody>
-            {!loading && data && orders.length === 0
-              ? "You Have No Orders..."
-              : null}
             {loading && (
               <tr className="skeleton">
                 <td>
