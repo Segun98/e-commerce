@@ -20,11 +20,13 @@ import { useMutation } from "../../utils/useMutation";
 import { Navigation } from "../../components/vendor/Navigation";
 import { Footer } from "../../components/Footer";
 import Head from "next/head";
+import { useUser } from "../../Context/UserProvider";
 
 export const Newitem = () => {
   const toast = useToast();
   //from context
   const { Token } = useToken();
+  const { User } = useUser();
   //role from cookie
   let role = Cookies.get("role");
 
@@ -38,7 +40,16 @@ export const Newitem = () => {
   // form submit
   const onSubmit = async (values, e): Promise<void> => {
     e.preventDefault();
-
+    if (User.pending === "true") {
+      toast({
+        title: "You Cannot Add A Product Yet, Your Profile is Under Review",
+        description: "Please Fast-Track The Process by Completing Your Profile",
+        status: "info",
+        duration: 5000,
+        isClosable: true,
+      });
+      return;
+    }
     const { name, description, price, available_qty } = values;
 
     if (name.trim() === "" || description.trim() === "") {

@@ -43,8 +43,10 @@ export async function getServerSideProps({ params }) {
 const Product = ({ product, error }: response) => {
   const toast = useToast();
   const { Token } = useToken();
-  const [quantity, setQuantity] = useState(1);
   const role = Cookies.get("role");
+
+  //Cart Qunatity
+  const [quantity, setQuantity] = useState(1);
   const dispatch = useDispatch();
 
   //filter out the main product
@@ -253,6 +255,19 @@ const Product = ({ product, error }: response) => {
                             title: "This Product is Currently Out of Stock!",
                             description:
                               "It has been added to Saved Items in your Account page",
+                            status: "info",
+                            duration: 5000,
+                            position: "bottom",
+                            isClosable: true,
+                          });
+                          return;
+                        }
+                        if (product.creator.online === "false") {
+                          addToSavedItems();
+                          toast({
+                            title: "The Vendor is Currently OFFLINE",
+                            description:
+                              "This Item Has Been Saved In Your Account Page. Please Try Again Later",
                             status: "info",
                             duration: 5000,
                             position: "bottom",

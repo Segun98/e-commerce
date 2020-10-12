@@ -238,7 +238,7 @@ export const CustomerCart = () => {
                     <div className="subtotal">
                       &#8358; {Commas(c.product.price * c.quantity)}
                     </div>
-                    {/* ORDER BUTTON IN ITS COMPONENT  */}
+                    {/* ORDER BUTTON IN ITS COMPONENT  .. remeber to restrict checkout for offline vendors*/}
                     <Order c={c} Token={Token} />
                     <button
                       name="delete cart item"

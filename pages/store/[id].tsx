@@ -153,7 +153,17 @@ const Store = ({ data, error }: Iprops) => {
           </div>
         )}
         {!data && <p className="space"></p>}
-        {!error && data && (
+
+        {/* Only show the store if VENDOR IS ONLINE and IS NOT PENDING  */}
+        {!error && data && data.pending === "true" ? (
+          <div className="indicator">
+            <div className="status">
+              {data.jwt_user_id === data.id
+                ? "Your Profile Is Currently Under Review. Please, Fill Out Your Profile Information In Your ACCOUNT PAGE for a Quick Review"
+                : "This Store Is Currently Under Review"}
+            </div>
+          </div>
+        ) : data.online === "true" ? (
           <section className="main-store">
             <header>
               <div>
@@ -163,7 +173,7 @@ const Store = ({ data, error }: Iprops) => {
                 <div className="store-bio">
                   <img src="/profile.svg" alt="profile" />{" "}
                   {data.business_bio ||
-                    "We seek to provide quality product and service to our customers. At " +
+                    "We seek to provide quality products and services to our customers. At " +
                       data.business_name +
                       ", customers come first"}
                 </div>
@@ -250,11 +260,49 @@ const Store = ({ data, error }: Iprops) => {
               </div>
             </div>
           </section>
+        ) : data.jwt_user_id === data.id ? (
+          <div className="indicator">
+            <div className=" status">
+              You Are Currently OFFLINE, You will no longer recieve any orders.
+              Visit Your Account page to return ONLINE
+            </div>
+          </div>
+        ) : (
+          <div className="indicator">
+            <div className=" status">
+              This Store is currenlty OFFLINE, explore other stores
+              <Link href="/stores">
+                <a>
+                  {" "}
+                  Here
+                  <Icon name="external-link" />
+                </a>
+              </Link>
+            </div>
+          </div>
         )}
       </div>
       <section style={{ background: "white" }}>
         <Footer />
       </section>
+      <style jsx>{`
+        .indicator {
+          margin: auto;
+          width: 90%;
+        }
+        .status {
+          background: var(--deepblue);
+          padding: 10px;
+          border-radius: 10px;
+          color: white;
+          font-size: 1.1rem;
+        }
+        @media only screen and (min-width: 700px) {
+          .indicator {
+            width: 70%;
+          }
+        }
+      `}</style>
     </div>
   );
 };

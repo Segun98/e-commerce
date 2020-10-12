@@ -138,6 +138,12 @@ export const Account = () => {
     }
   }
 
+  //delete from saved item
+  function removeSavedItem(product_id) {
+    const newSaved = savedItem.filter((s) => s.product_id !== product_id);
+    setSavedItem(newSaved);
+  }
+
   return (
     <Layout>
       <Head>
@@ -281,6 +287,9 @@ export const Account = () => {
                     <h2>{s.name}</h2>
                     <p>&#8358; {Commas(s.price)}</p>
                   </div>
+                  <button onClick={() => removeSavedItem(s.product_id)}>
+                    <Icon name="delete" />
+                  </button>
                   {/* <hr />
                   <Button
                     size="xs"
