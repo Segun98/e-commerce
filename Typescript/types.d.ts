@@ -38,6 +38,13 @@ export type QueryUserArgs = {
 };
 
 
+export type QueryGetStoresArgs = {
+  query?: Maybe<Scalars['String']>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+};
+
+
 export type QueryEditUserPageArgs = {
   id: Scalars['ID'];
 };
@@ -97,6 +104,7 @@ export type UsersRes = {
   role?: Maybe<Scalars['String']>;
   phone?: Maybe<Scalars['String']>;
   pending?: Maybe<Scalars['String']>;
+  online?: Maybe<Scalars['String']>;
   created_at?: Maybe<Scalars['String']>;
   business_name?: Maybe<Scalars['String']>;
   business_name_slug?: Maybe<Scalars['String']>;
@@ -181,7 +189,7 @@ export type Mutation = {
   updateCart?: Maybe<CustomRes>;
   createOrder?: Maybe<CustomRes>;
   cancelOrder?: Maybe<CustomRes>;
-  completeOrder?: Maybe<CustomRes>;
+  acceptOrder?: Maybe<CustomRes>;
 };
 
 
@@ -300,7 +308,7 @@ export type MutationCancelOrderArgs = {
 };
 
 
-export type MutationCompleteOrderArgs = {
+export type MutationAcceptOrderArgs = {
   id: Scalars['ID'];
 };
 
@@ -326,6 +334,7 @@ export type Users = {
   role?: Maybe<Scalars['String']>;
   phone?: Maybe<Scalars['String']>;
   pending?: Maybe<Scalars['String']>;
+  online?: Maybe<Scalars['String']>;
   business_name?: Maybe<Scalars['String']>;
   business_name_slug?: Maybe<Scalars['String']>;
   business_address?: Maybe<Scalars['String']>;
