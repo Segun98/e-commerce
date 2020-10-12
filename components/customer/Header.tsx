@@ -434,9 +434,9 @@ export const Header = () => {
 
         .navigation {
           background: var(--softblue);
-          width: 60%;
+          width: 80%;
           height: 100%;
-          margin-left: -75%;
+          margin-left: -85%;
           position: relative;
           position: fixed;
           top: 0;

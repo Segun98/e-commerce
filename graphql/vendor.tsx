@@ -16,6 +16,7 @@ query user($business_name_slug: String!){
     id
     phone
     pending
+    online
     business_name
     business_address
     business_image
@@ -68,6 +69,7 @@ query product($name_slug:String!){
     }
     creator{
       business_name_slug
+      online
     }
   }
 }

@@ -11,6 +11,7 @@ query getCartItems{
         email
         customer_address
         phone
+        online
     }
     product{
         id

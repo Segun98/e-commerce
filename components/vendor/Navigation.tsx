@@ -171,10 +171,10 @@ export const Navigation = () => {
       <style jsx>{`
         .vendor-menu {
           background: var(--softblue);
-          width: 250px;
-          height: 100vh;
+          width: 300px;
+          /* height: 100%; */
           border-right: 0.6px solid var(--softgrey);
-          margin-left: -250px;
+          margin-left: -300px;
           position: relative;
           position: fixed;
           z-index: 2;
