@@ -223,6 +223,7 @@ export const Navigation = () => {
 
         .logout-btn {
           margin-top: 50px;
+          padding-bottom: 2rem;
         }
 
         @media only screen and (min-width: 700px) {
@@ -251,11 +252,17 @@ export const Navigation = () => {
             padding-bottom: 5px;
             font-size: 1.1rem;
           }
+          .logout-btn {
+            padding-bottom: 10rem;
+          }
         }
 
         @media only screen and (min-width: 1800px) {
           .vendor-menu ul li {
             font-size: 1.2rem;
+          }
+          .logout-btn {
+            padding-bottom: 20rem;
           }
           .menu-for-customers li {
             font-size: 1.2rem;

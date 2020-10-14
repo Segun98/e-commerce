@@ -1,4 +1,14 @@
-import { Button, Icon, Input, Textarea, useToast } from "@chakra-ui/core";
+import {
+  Button,
+  FormLabel,
+  Icon,
+  Input,
+  Radio,
+  RadioGroup,
+  Spinner,
+  Textarea,
+  useToast,
+} from "@chakra-ui/core";
 import Head from "next/head";
 import React, { useEffect, useState } from "react";
 import { Footer } from "../../components/Footer";
@@ -9,6 +19,7 @@ import { MutationUpdateProfileArgs } from "../../Typescript/types";
 import { useMutation } from "../../utils/useMutation";
 import { ProtectRouteV } from "./../../utils/ProtectedRouteV";
 import { useRouter } from "next/router";
+import Upload from "rc-upload";
 
 export const Account = () => {
   const { User } = useUser();
@@ -22,22 +33,54 @@ export const Account = () => {
   const [about, setAbout] = useState("");
   const [image, setImage] = useState("");
   const [editMode, setEditMode] = useState(false);
+  const [online, setOnline] = useState("");
 
   useEffect(() => {
     setPhone(User.phone || "");
     setAddress(User.business_address || "");
     setAbout(User.business_bio || "");
     setImage(User.business_image || "");
+    setOnline(User.online || "");
   }, [User]);
+
+  const [imageLoad, setImageLoad] = useState(false);
+
+  //image upload
+  const uploaderProps = {
+    action: () => {
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          resolve("http://localhost:4000/api/upload");
+        }, 2000);
+      });
+    },
+    onSuccess(ImageLink) {
+      setImage(ImageLink);
+      setImageLoad(false);
+    },
+    onProgress(step, file) {
+      setImageLoad(true);
+    },
+    onError(err) {
+      setImageLoad(false);
+      toast({
+        title: "Error Uploading Image",
+        description: "Check Your Internet Connection and Try Again",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
+    },
+  };
 
   const updateProfile = `
   mutation updateProfile($first_name:String,$last_name:String,$business_name:String,$phone:String,
     $business_address: String,
     $business_image: String,
-    $business_bio: String  ){
+    $business_bio: String, $online:String  ){
     updateProfile(first_name:$first_name,last_name:$last_name, business_name:$business_name,phone:$phone,business_address: $business_address,
       business_image: $business_image,
-      business_bio: $business_bio ){
+      business_bio: $business_bio, online:$online ){
       message
     }
   }
@@ -52,6 +95,7 @@ export const Account = () => {
       business_address: address,
       business_image: image,
       business_bio: about,
+      online,
     };
 
     const { data, error } = await useMutation(updateProfile, variables, Token);
@@ -112,15 +156,21 @@ export const Account = () => {
                       *This will be displayed in the public "Stores" Page
                     </small>
                   </h2>
-                  <img src={`${tempImage}`} alt="store image" />
+                  <img src={`${image || tempImage}`} alt="store image" />
                   <br />
                   <span style={{ display: editMode ? "block" : "none" }}>
-                    <Input
-                      type="file"
-                      name="upload store image"
-                      value={image}
-                      onChange={(e) => setImage(e.target.value)}
-                    ></Input>
+                    <div className="form-item image-upload">
+                      <Upload {...uploaderProps} id="test">
+                        {imageLoad ? (
+                          <Spinner speed="0.7s"></Spinner>
+                        ) : image ? null : (
+                          <div>
+                            <a>Click or Drag to Upload Store Image</a>
+                            <img src="/upload-icon.png" />
+                          </div>
+                        )}
+                      </Upload>
+                    </div>
                   </span>
                 </div>
 
@@ -199,6 +249,53 @@ export const Account = () => {
                       onChange={(e) => setPhone(e.target.value)}
                     ></Input>
                   </span>
+
+                  <div className="form-item">
+                    <FormLabel htmlFor="online">
+                      Your Status :{" "}
+                      {User && online === "true" ? (
+                        <h6
+                          style={{
+                            color: "#32CD32",
+                          }}
+                        >
+                          Online{" "}
+                        </h6>
+                      ) : (
+                        <h6
+                          style={{
+                            color: "red",
+                          }}
+                        >
+                          Offline
+                        </h6>
+                      )}
+                      <small
+                        style={{
+                          color: "var(--deepblue)",
+                          display: editMode ? "block" : "none",
+                        }}
+                      >
+                        *Going offline temporarily takes off your products from
+                        the website, meaning you will recieve no Orders
+                      </small>
+                    </FormLabel>
+                    <span style={{ display: editMode ? "block" : "none" }}>
+                      <RadioGroup
+                        spacing={5}
+                        isInline
+                        value={online}
+                        onChange={(e: any) => setOnline(e.target.value)}
+                      >
+                        <Radio name="inStock" value="true">
+                          online
+                        </Radio>
+                        <Radio name="inStock" value="false">
+                          offline
+                        </Radio>
+                      </RadioGroup>
+                    </span>
+                  </div>
                 </div>
               </div>
               {editMode && (
@@ -261,6 +358,20 @@ export const Account = () => {
           padding-bottom: 3px;
         }
 
+        .form-item.image-upload {
+          box-shadow: var(--box) var(--softgrey);
+          padding: 10px;
+        }
+        .image-upload a {
+          font-size: 0.9rem;
+        }
+
+        .image-upload div {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+        }
         @media only screen and (min-width: 700px) {
           .account-item img {
             width: 250px;

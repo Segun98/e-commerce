@@ -232,6 +232,7 @@ export type MutationUpdateProfileArgs = {
   business_image?: Maybe<Scalars['String']>;
   business_bio?: Maybe<Scalars['String']>;
   customer_address?: Maybe<Scalars['String']>;
+  online?: Maybe<Scalars['String']>;
 };
 
 

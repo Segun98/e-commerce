@@ -257,6 +257,12 @@ export const DashboardOrders = () => {
             font-size: 1rem;
           }
         }
+
+        @media only screen and (min-width: 1700px) {
+          .orders-table {
+            width: 70%;
+          }
+        }
       `}</style>
     </div>
   );

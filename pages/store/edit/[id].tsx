@@ -7,6 +7,7 @@ import {
   Radio,
   RadioGroup,
   Select,
+  Spinner,
   Textarea,
   useToast,
 } from "@chakra-ui/core";
@@ -25,6 +26,7 @@ import {
 import { graphQLClient } from "../../../utils/client";
 import { ProtectRouteV } from "../../../utils/ProtectedRouteV";
 import { useMutation } from "../../../utils/useMutation";
+import Upload from "rc-upload";
 
 interface Iprops {
   product: ProductsRes;
@@ -70,6 +72,38 @@ const Edit = ({ product, error }: Iprops) => {
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState<any>("");
   const [available_qty, setAvailableQty] = useState<any>("");
+  const [image, setImage] = useState("");
+  const [imageLoad, setImageLoad] = useState(false);
+
+  //Image Upload Library
+  const uploaderProps = {
+    action: () => {
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          resolve("http://localhost:4000/api/upload");
+        }, 2000);
+      });
+    },
+    onSuccess(ImageLink) {
+      setImage(ImageLink);
+      setImageLoad(false);
+      if (ImageLink["error"]) {
+        toast({
+          title: "Error Uploading Image",
+          description: "Check Your Internet Connection and Try Again",
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+        });
+      }
+    },
+    onProgress(step, file) {
+      setImageLoad(true);
+    },
+    onError(err) {
+      setImageLoad(false);
+    },
+  };
 
   useEffect(() => {
     if (product) {
@@ -80,6 +114,7 @@ const Edit = ({ product, error }: Iprops) => {
       setCategory(product.category || "");
       setPartyCategory(product.party_category || "");
       setInStock(product.in_stock || "");
+      setImage(product.image || "");
     }
   }, [product]);
 
@@ -103,6 +138,16 @@ const Edit = ({ product, error }: Iprops) => {
       });
       return;
     }
+    if (!image) {
+      toast({
+        title: "Please Upload an Image of Your Product",
+        description: "White Background Preferably",
+        status: "info",
+        duration: 5000,
+        isClosable: true,
+      });
+      return;
+    }
     const variables: MutationUpdateProductArgs = {
       id: product.id,
       creator_id: product.creator_id,
@@ -111,7 +156,7 @@ const Edit = ({ product, error }: Iprops) => {
       price: parseInt(price),
       category,
       party_category: partyCategory,
-      image: "",
+      image,
       in_stock: inStock,
       available_qty: parseInt(available_qty),
     };
@@ -302,12 +347,29 @@ const Edit = ({ product, error }: Iprops) => {
                             onChange={(e: any) => setInStock(e.target.value)}
                           >
                             <Radio name="inStock" value="true">
-                              true
+                              In Stock
                             </Radio>
                             <Radio name="inStock" value="false">
-                              false
+                              Out Of Stock
                             </Radio>
                           </RadioGroup>
+                        </div>
+
+                        <div className="form-item image-upload">
+                          <Upload {...uploaderProps} id="test">
+                            {imageLoad ? (
+                              <Spinner speed="0.7s"></Spinner>
+                            ) : image ? null : (
+                              <div>
+                                <a>
+                                  Click or Drag Here to Update Product Image.
+                                  White Background Preferably
+                                </a>
+                                <img src="/upload-icon.png" />
+                              </div>
+                            )}
+                            <img src={`${image}`} />
+                          </Upload>
                         </div>
                       </section>
                     </div>
@@ -331,6 +393,23 @@ const Edit = ({ product, error }: Iprops) => {
         </main>
       </div>
       <Footer />
+
+      <style jsx>{`
+        .form-item.image-upload {
+          box-shadow: var(--box) var(--softgrey);
+          padding: 10px;
+        }
+        .image-upload a {
+          font-size: 0.9rem;
+        }
+
+        .image-upload div {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+        }
+      `}</style>
     </div>
   );
 };

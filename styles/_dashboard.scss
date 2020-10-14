@@ -28,7 +28,9 @@
                 margin: 10px 0 10px 0;
             }
 
-
+            .dashboard_chart {
+                padding: 5px 0;
+            }
         }
 
         .order-status_items {
@@ -42,6 +44,7 @@
 
                 .icon {
                     text-align: right;
+                    // border-bottom: 0.5px solid $softgrey;
                 }
 
                 h2 {
@@ -119,6 +122,7 @@
                 h1 {
                     font-size: 1.3rem;
                 }
+
             }
 
             .order-status {
@@ -126,6 +130,9 @@
                     font-size: 1.1rem;
                 }
 
+                .dashboard_chart {
+                    width: 60%
+                }
 
             }
 
@@ -172,12 +179,18 @@
         }
 
 
-        @media only screen and (min-width:1900px) {
+        @media only screen and (min-width:1700px) {
             width: 80%;
 
             .order-status_items {
                 grid-template-columns: repeat(4, 1fr);
                 gap: 25px;
+            }
+
+            .recent-orders {
+                &_wrap {
+                    width: 70%;
+                }
             }
 
             .account-snippet {
@@ -194,6 +207,13 @@
 
             .order-status_items {
                 grid-template-columns: repeat(6, 1fr);
+            }
+
+            .order-status {
+
+                .dashboard_chart {
+                    width: 40%
+                }
             }
 
             .account-snippet {

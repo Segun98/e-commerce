@@ -35,6 +35,7 @@ export const UserProvider = ({ children }) => {
         email,
         phone,
         pending,
+        online
         created_at,
         business_name,
         business_name_slug,

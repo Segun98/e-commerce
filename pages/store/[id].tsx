@@ -16,7 +16,7 @@ interface Iprops {
   error: any;
 }
 export async function getServerSideProps({ params, req }) {
-  //the whole point of this is to pass a token to the header to get a value in jwt from the backend inorder to acsertain if the person visiting this page is the owner of the store
+  //the whole point of this is to pass a token to the request header to get a value in jwt from the backend inorder to acsertain if the person visiting this page is the owner of the store
 
   //Note: i couldn't fetch in the component because populating the "Head" tag would be impossible
 
@@ -158,12 +158,12 @@ const Store = ({ data, error }: Iprops) => {
         {!error && data && data.pending === "true" ? (
           <div className="indicator">
             <div className="status">
-              {data.jwt_user_id === data.id
+              {data && data.jwt_user_id === data.id
                 ? "Your Profile Is Currently Under Review. Please, Fill Out Your Profile Information In Your ACCOUNT PAGE for a Quick Review"
                 : "This Store Is Currently Under Review"}
             </div>
           </div>
-        ) : data.online === "true" ? (
+        ) : data && data.online === "true" ? (
           <section className="main-store">
             <header>
               <div>
@@ -260,7 +260,7 @@ const Store = ({ data, error }: Iprops) => {
               </div>
             </div>
           </section>
-        ) : data.jwt_user_id === data.id ? (
+        ) : data && data.jwt_user_id === data.id ? (
           <div className="indicator">
             <div className=" status">
               You Are Currently OFFLINE, You will no longer recieve any orders.

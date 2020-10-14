@@ -12,6 +12,7 @@ import {
 } from "../../redux/features/orders/fetchOrders";
 import { useUser } from "../../Context/UserProvider";
 import { DashboardOrders } from "../../components/vendor/DashboardOrders";
+import { Chart } from "../../components/vendor/Chart";
 
 interface DefaultOrderState {
   orders: IOrderInitialState;
@@ -80,11 +81,12 @@ export const Dashboard: React.FC = () => {
                   className="icon"
                   style={{
                     color: "#41C7BF",
-                    fontSize: "30px",
+                    // fontSize: "30px",
                     fontWeight: "bolder",
                   }}
                 >
-                  &#42;
+                  {/* &#42; */}
+                  <Icon name="triangle-up" color="#41C7BF" size="30px" />
                 </div>
                 <h2>{pending.length}</h2>
                 <p>Pending Orders</p>
@@ -111,9 +113,12 @@ export const Dashboard: React.FC = () => {
                 <p>Canceled Orders</p>
               </div>
             </div>
+            <div className="dashboard_chart">
+              <Chart orders={orders} />
+            </div>
           </div>
 
-          <div className="account-snippet">
+          {/* <div className="account-snippet">
             <h1>
               Account Information{"  "}
               <Link href="/vendor/account">
@@ -139,7 +144,7 @@ export const Dashboard: React.FC = () => {
                 </p>
               </div>
             </div>
-          </div>
+          </div> */}
           <div className="recent-orders">
             <div className="recent-orders_wrap">
               <div>
@@ -168,6 +173,8 @@ export const Dashboard: React.FC = () => {
             {/* DASHBOARD ORDERS COMPONENT, IT WAS ABSTRACTED FOR MOBILE SCREENS */}
             <section>
               <DashboardOrders />
+              <br />
+              <br />
             </section>
           </div>
         </main>

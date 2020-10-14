@@ -146,8 +146,11 @@ const Stores = () => {
                     <div
                       className="store-img"
                       style={{
-                        backgroundImage: `url(${images[i]})`,
+                        backgroundImage: `url(${
+                          s.business_image || images[i]
+                        })`,
                         backgroundPosition: "center",
+                        objectFit: "cover",
                       }}
                     >
                       <h3>{s.business_name}</h3>
@@ -235,6 +238,7 @@ const Stores = () => {
           display: flex;
           align-items: center;
           justify-content: center;
+          object-fit: cover;
         }
         .store-img h3 {
           color: white;

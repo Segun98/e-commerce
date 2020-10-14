@@ -7,6 +7,7 @@ import {
   Select,
   useToast,
   InputGroup,
+  Spinner,
 } from "@chakra-ui/core";
 import Cookies from "js-cookie";
 import React, { useState } from "react";
@@ -21,6 +22,7 @@ import { Navigation } from "../../components/vendor/Navigation";
 import { Footer } from "../../components/Footer";
 import Head from "next/head";
 import { useUser } from "../../Context/UserProvider";
+import Upload from "rc-upload";
 
 export const Newitem = () => {
   const toast = useToast();
@@ -36,6 +38,38 @@ export const Newitem = () => {
   const { handleSubmit, register, errors, watch } = useForm();
   const [category, setCategory] = useState("");
   const [partyCategory, setPartyCategory] = useState("");
+  const [image, setImage] = useState("");
+  const [imageLoad, setImageLoad] = useState(false);
+
+  //Image Upload Library
+  const uploaderProps = {
+    action: () => {
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          resolve("http://localhost:4000/api/upload");
+        }, 2000);
+      });
+    },
+    onSuccess(ImageLink) {
+      setImage(ImageLink);
+      setImageLoad(false);
+      if (ImageLink["error"]) {
+        toast({
+          title: "Error Uploading Image",
+          description: "Check Your Internet Connection and Try Again",
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+        });
+      }
+    },
+    onProgress(step, file) {
+      setImageLoad(true);
+    },
+    onError(err) {
+      setImageLoad(false);
+    },
+  };
 
   // form submit
   const onSubmit = async (values, e): Promise<void> => {
@@ -50,6 +84,18 @@ export const Newitem = () => {
       });
       return;
     }
+
+    if (!image) {
+      toast({
+        title: "Please Upload an Image of Your Product",
+        description: "White Background Preferably",
+        status: "info",
+        duration: 5000,
+        isClosable: true,
+      });
+      return;
+    }
+
     const { name, description, price, available_qty } = values;
 
     if (name.trim() === "" || description.trim() === "") {
@@ -77,7 +123,7 @@ export const Newitem = () => {
       price: parseInt(price),
       category: category,
       party_category: partyCategory,
-      image: "",
+      image,
       available_qty: parseInt(available_qty),
     };
 
@@ -250,11 +296,6 @@ export const Newitem = () => {
                           Available Quantity In Stock
                         </FormLabel>
                         <InputGroup>
-                          {/* <InputLeftAddon
-                              children="Qty"
-                              color="blue.400"
-                              fontSize="0.8em"
-                            /> */}
                           <Input
                             type="text"
                             inputMode="numeric"
@@ -272,6 +313,22 @@ export const Newitem = () => {
                             errorBorderColor="red.300"
                           />
                         </InputGroup>
+                      </div>
+                      <div className="form-item image-upload">
+                        <Upload {...uploaderProps} id="test">
+                          {imageLoad ? (
+                            <Spinner speed="0.7s"></Spinner>
+                          ) : image ? null : (
+                            <div>
+                              <a>
+                                Click or Drag Here to Upload Product Image.
+                                White Background Preferably
+                              </a>
+                              <img src="/upload-icon.png" />
+                            </div>
+                          )}
+                          <img src={`${image}`} />
+                        </Upload>
                       </div>
                     </section>
                   </div>
@@ -294,6 +351,23 @@ export const Newitem = () => {
         </main>
       </div>
       <Footer />
+
+      <style jsx>{`
+        .form-item.image-upload {
+          box-shadow: var(--box) var(--softgrey);
+          padding: 10px;
+        }
+        .image-upload a {
+          font-size: 0.9rem;
+        }
+
+        .image-upload div {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+        }
+      `}</style>
     </div>
   );
 };
