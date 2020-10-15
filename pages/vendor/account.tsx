@@ -163,7 +163,12 @@ export const Account = () => {
                       <Upload {...uploaderProps} id="test">
                         {imageLoad ? (
                           <Spinner speed="0.7s"></Spinner>
-                        ) : image ? null : (
+                        ) : image ? (
+                          <div>
+                            <h1>Click To Edit</h1>
+                            <img src={`${image}`} />
+                          </div>
+                        ) : (
                           <div>
                             <a>Click or Drag to Upload Store Image</a>
                             <img src="/upload-icon.png" />
