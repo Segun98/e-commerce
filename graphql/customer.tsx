@@ -3,11 +3,29 @@ query getCartItems{
     getCartItems{
     id,
     quantity,
+    product{
+        id
+        name
+        price
+        image
+        in_stock
+        available_qty
+    }
+    }
+}
+`;
+
+export const getCart = `
+query getCart($id:ID!){
+    getCart(id:$id){
+    id,
+    quantity,
     product_id,
     prod_creator_id,
     customer_id,
     cartCreator{
         first_name
+        last_name
         email
         customer_address
         phone

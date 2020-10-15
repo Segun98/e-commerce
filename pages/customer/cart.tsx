@@ -1,9 +1,8 @@
 import React, { useEffect } from "react";
 import { deleteFromCart, updateCart } from "../../graphql/customer";
-import { Icon, useToast } from "@chakra-ui/core";
+import { Button, Icon, useToast } from "@chakra-ui/core";
 import { Cart } from "../../Typescript/types";
 import Link from "next/link";
-import { Order } from "../../components/customer/Order";
 import { useToken } from "../../Context/TokenProvider";
 import { Layout } from "../../components/Layout";
 import Head from "next/head";
@@ -238,8 +237,17 @@ export const CustomerCart = () => {
                     <div className="subtotal">
                       &#8358; {Commas(c.product.price * c.quantity)}
                     </div>
-                    {/* ORDER BUTTON IN ITS COMPONENT  .. remeber to restrict checkout for offline vendors*/}
-                    <Order c={c} Token={Token} />
+                    <Button
+                      className="order-btn"
+                      color="white"
+                      size="sm"
+                      background="var(--deepblue)"
+                      isDisabled={c.product.in_stock === "false" ? true : false}
+                    >
+                      <Link href={`/product/checkout/${c.id}`}>
+                        <a>Checkout</a>
+                      </Link>
+                    </Button>
                     <button
                       name="delete cart item"
                       aria-roledescription="delete cart item"
