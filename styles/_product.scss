@@ -37,6 +37,11 @@
                     align-items: center;
                 }
 
+                .product-img img {
+                    height: 200px;
+                }
+
+
                 .product-price-mobile {
                     font-weight: bold;
                     font-size: 1rem;
@@ -200,6 +205,11 @@
 
         @media only screen and (min-width: 1000px) {
             padding-top: 50px;
+
+            .product-img img {
+                width: 100%;
+                object-fit: contain;
+            }
 
             .product-wrap {
                 width: 70%;

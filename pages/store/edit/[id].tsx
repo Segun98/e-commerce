@@ -368,6 +368,7 @@ const Edit = ({ product, error }: Iprops) => {
                                 <img src="/upload-icon.png" />
                               </div>
                             )}
+                            <p>{image && "Click to Edit"}</p>
                             <img src={`${image}`} />
                           </Upload>
                         </div>
