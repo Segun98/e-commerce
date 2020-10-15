@@ -191,7 +191,7 @@ const Home = ({ products, error }) => {
                     >
                       <a>
                         <img
-                          src={`/${featured_images[index]}`}
+                          src={`${p.image || "/" + featured_images[index]}`}
                           alt={`${p.name}`}
                         />
                         <hr />

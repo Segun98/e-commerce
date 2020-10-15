@@ -164,7 +164,10 @@ const Product = ({ product, error }: response) => {
             <div className="product-wrap">
               <div className="product-info1">
                 <div className="product-img">
-                  <img src="/product2.png" alt={`${product.name}`} />
+                  <img
+                    src={`${product.image}` || "/product1.png"}
+                    alt={`${product.name}`}
+                  />
                 </div>
                 <hr />
                 <h1 className="product-name-mobile">{product.name}</h1>
@@ -341,7 +344,7 @@ const Product = ({ product, error }: response) => {
                     >
                       <a>
                         <img
-                          src={`/${featured_images[index]}`}
+                          src={`${r.image || "/" + featured_images[index]}`}
                           alt={`${r.name}`}
                         />
                         <hr />

@@ -95,7 +95,10 @@ export const Search = ({ products, error }: Iprops) => {
                     as={`/product/${p.name_slug}`}
                   >
                     <a>
-                      <img src={`/${images[index]}`} alt={`${p.name}`} />
+                      <img
+                        src={`${p.image || "/" + images[index]}`}
+                        alt={`${p.name}`}
+                      />
                       <hr />
                       <div className="search-desc">
                         <h2>{p.name}</h2>
