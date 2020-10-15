@@ -45,29 +45,41 @@ const Checkout = ({ variables }) => {
   }, [cart]);
 
   async function handleOrder() {
+    let sub = cart.product.price * cart.quantity + 1000;
     const variables: MutationCreateOrderArgs | any = {
       name: cart.product.name,
       price: cart.product.price,
       quantity: cart.quantity,
       delivery_fee: 1000,
-      subtotal: () => cart.product.price * cart.quantity,
+      subtotal: parseInt(sub),
       request,
       customer_email: cart.cartCreator.email,
-      vendor_email: cart.productCreator.email,
+      vendor_email: cart.product.creator.email,
       customer_phone: cart.cartCreator.phone,
-      vendor_phone: cart.productCreator.phone,
+      vendor_phone: cart.product.creator.phone,
       customer_address: address,
-      business_address: cart.productCreator.business_address,
+      business_address: cart.product.creator.business_address,
       product_id: cart.product_id,
       prod_creator_id: cart.prod_creator_id,
     };
+    if (!address || !phone) {
+      toast({
+        title: "Address Details Cannot Be Empty",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+        position: "top",
+      });
+      return;
+    }
     const { data, error } = await useMutation(createOrder, variables, Token);
+
     if (data) {
       const { data } = await useMutation(deleteFromCart, {
         id: cart.id,
       });
       if (data.deleteFromCart) {
-        router.push("/cart");
+        router.push("/customer/cart");
       }
     }
     if (error) {
@@ -176,11 +188,13 @@ const Checkout = ({ variables }) => {
                   </span>
                 </p>
                 <p>
-                  Price: <span>{cart.product.price}</span>
+                  Price: <span>&#8358; {cart.product.price}</span>
                 </p>
                 <p>
                   Subtotal:{" "}
-                  <span>{Commas(cart.quantity * cart.product.price)}</span>
+                  <span>
+                    &#8358; {Commas(cart.quantity * cart.product.price)}
+                  </span>
                 </p>
                 <p>
                   Delivery Fee: <span>{Commas(1000)}</span>
@@ -189,7 +203,7 @@ const Checkout = ({ variables }) => {
                 <p>
                   Total:{" "}
                   <span>
-                    {Commas(cart.quantity * cart.product.price + 1000)}
+                    &#8358; {Commas(cart.quantity * cart.product.price + 1000)}
                   </span>
                 </p>
               </div>
@@ -204,24 +218,28 @@ const Checkout = ({ variables }) => {
               </Button>
             </div>
             <div className="product-info">
+              <h1>Your Order</h1>
+              <hr />
               <div className="wrap">
                 <img src={`${cart.product.image}`} alt="product image" />
                 <div>
                   <p>{cart.product.name}</p>
                   <p style={{ color: "var(--deepblue)" }}>
-                    {cart.product.price}
+                    &#8358; {cart.product.price}
                   </p>
-                  <p>{cart.quantity}</p>
+                  <p>Qty: {cart.quantity}</p>
                 </div>
               </div>
               <hr />
               <div className="wrap-2">
                 <p>Subtotal</p>
-                <p>{Commas(cart.quantity * cart.product.price)}</p>
+                <p>&#8358; {Commas(cart.quantity * cart.product.price)}</p>
                 <p>Delivery Fee</p>
-                <p>{Commas(1000)}</p>
+                <p>&#8358; {Commas(1000)}</p>
                 <p>Total</p>
-                <p>{Commas(cart.quantity * cart.product.price + 1000)}</p>
+                <p>
+                  &#8358; {Commas(cart.quantity * cart.product.price + 1000)}
+                </p>
               </div>
             </div>
           </div>
