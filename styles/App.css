@@ -1,4 +1,3 @@
-@import url("https://fonts.googleapis.com/css2?family=Open+Sans&family=Roboto:wght@100;300&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;600&display=swap");
 *,
 *::before,
@@ -14,8 +13,6 @@ html {
 }
 
 body {
-  font-family: 'Open Sans', sans-serif;
-  font-family: 'Roboto', sans-serif;
   font-family: 'Poppins', sans-serif !important;
 }
 
@@ -770,6 +767,10 @@ Class names accross components can be the same but they are wrapped by a unique 
           align-items: center;
 }
 
+.product-page .product .product-wrap .product-info1 .product-img img {
+  height: 200px;
+}
+
 .product-page .product .product-wrap .product-info1 .product-price-mobile {
   font-weight: bold;
   font-size: 1rem;
@@ -941,6 +942,11 @@ Class names accross components can be the same but they are wrapped by a unique 
 @media only screen and (min-width: 1000px) {
   .product-page .product {
     padding-top: 50px;
+  }
+  .product-page .product .product-img img {
+    width: 100%;
+    -o-object-fit: contain;
+       object-fit: contain;
   }
   .product-page .product .product-wrap {
     width: 70%;
@@ -1628,6 +1634,132 @@ Class names accross components can be the same but they are wrapped by a unique 
   .dashboard main .account-snippet .account-infos {
     -ms-grid-columns: (1fr)[8];
         grid-template-columns: repeat(8, 1fr);
+  }
+}
+
+.checkout-page {
+  background: #eeeef5;
+}
+
+.checkout-wrap {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 1fr;
+      grid-template-columns: 1fr;
+  margin: auto;
+  width: 90%;
+  padding: 20px 0;
+}
+
+.checkout-wrap .product-info {
+  display: none;
+}
+
+.checkout-wrap Button:hover {
+  color: #02247a;
+}
+
+.delivery-info {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 1fr;
+      grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+.delivery-info .grid-1,
+.delivery-info .grid-2,
+.delivery-info .grid-3,
+.delivery-info .grid-4 {
+  background: white;
+  padding: 10px;
+  border-radius: 7px;
+}
+
+.delivery-info .grid-1 p,
+.delivery-info .grid-2 p,
+.delivery-info .grid-3 p,
+.delivery-info .grid-4 p {
+  color: #626262;
+  padding: 3px 0;
+}
+
+.delivery-info .head {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  padding: 5px 0;
+  color: #02247a;
+  font-weight: bold;
+}
+
+.delivery-info span {
+  color: #02247a;
+}
+
+.product-info {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+}
+
+@media only screen and (min-width: 700px) {
+  .checkout-wrap {
+    width: 80%;
+    padding: 25px 0;
+  }
+}
+
+@media only screen and (min-width: 1000px) {
+  .checkout-wrap {
+    -ms-grid-columns: 3fr 1fr;
+        grid-template-columns: 3fr 1fr;
+    gap: 20px;
+  }
+  .checkout-wrap .product-info {
+    display: block;
+    background: white;
+  }
+  .checkout-wrap .product-info h1 {
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #02247a;
+    text-align: center;
+    padding: 5px 0;
+  }
+  .checkout-wrap .product-info .wrap {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    padding: 5px 10px;
+  }
+  .checkout-wrap .product-info .wrap img {
+    height: 80px;
+    width: 90px;
+    margin-right: 30px;
+  }
+  .checkout-wrap .product-info .wrap-2 {
+    display: -ms-grid;
+    display: grid;
+    -ms-grid-columns: 1fr 1fr;
+        grid-template-columns: 1fr 1fr;
+    padding: 0 10px;
+  }
+}
+
+@media only screen and (min-width: 1400px) {
+  .checkout-wrap {
+    width: 70%;
+  }
+}
+
+@media only screen and (min-width: 1800px) {
+  .checkout-wrap {
+    width: 50%;
+    padding: 80px 0;
   }
 }
 /*# sourceMappingURL=App.css.map */
