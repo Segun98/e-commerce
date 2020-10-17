@@ -1,7 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { graphQLClient } from "../../utils/client";
 import { PRODUCT } from "../../graphql/vendor";
-import { Button, Icon, useToast } from "@chakra-ui/core";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  Button,
+  Icon,
+  useToast,
+} from "@chakra-ui/core";
 import { ProductsRes } from "../../Typescript/types";
 import { Layout } from "../../components/Layout";
 import { Commas } from "./../../utils/helpers";
@@ -161,6 +168,39 @@ const Product = ({ product, error }: response) => {
         )}
         {product && (
           <main className="product">
+            <div className="bread-crumb">
+              <Breadcrumb
+                separator={<Icon color="gray.300" name="chevron-right" />}
+              >
+                <BreadcrumbItem>
+                  <BreadcrumbLink>
+                    <Link href="/">
+                      <a>Home</a>
+                    </Link>
+                  </BreadcrumbLink>
+                </BreadcrumbItem>
+
+                <BreadcrumbItem>
+                  <BreadcrumbLink>
+                    <Link href={`/party?category=${product.party_category}`}>
+                      <a>{product.party_category}</a>
+                    </Link>
+                  </BreadcrumbLink>
+                </BreadcrumbItem>
+
+                <BreadcrumbItem>
+                  <BreadcrumbLink>
+                    <Link href={`/category?category=${product.category}`}>
+                      <a>{product.category}</a>
+                    </Link>
+                  </BreadcrumbLink>
+                </BreadcrumbItem>
+
+                <BreadcrumbItem isCurrentPage>
+                  <BreadcrumbLink>{product.name}</BreadcrumbLink>
+                </BreadcrumbItem>
+              </Breadcrumb>
+            </div>
             <div className="product-wrap">
               <div className="product-info1">
                 <div className="product-img">
@@ -361,6 +401,24 @@ const Product = ({ product, error }: response) => {
           </section>
         )}
       </div>
+      <style jsx>{`
+        .bread-crumb {
+          width: 90%;
+          margin: 0 auto 5px auto;
+        }
+        @media only screen and (min-width: 1000px) {
+          .bread-crumb {
+            width: 70%;
+            margin-bottom: 10px;
+          }
+        }
+
+        @media only screen and (min-width: 1400px) {
+          .bread-crumb {
+            width: 60%;
+          }
+        }
+      `}</style>
     </Layout>
   );
 };
