@@ -170,6 +170,13 @@ export const Header = () => {
                       )}
                       {!Token && !role && <Divider />}
                       <div className="pop-over-body-rest">
+                        {Token && role === "vendor" && (
+                          <p>
+                            <Link href="/vendor/dashboard">
+                              <a>Dashboard</a>
+                            </Link>
+                          </p>
+                        )}
                         <p>
                           <Link href="/customer/account">
                             <a>Account</a>
