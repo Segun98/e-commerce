@@ -15,8 +15,11 @@ export const Chart: React.FC<Iprops> = ({ orders }) => {
     return format;
   }
 
+  //array of completed orders
+  const completed = orders.filter((o) => o.completed === "true");
+
   // return array of months from DB
-  const months = orders.map((o) => getMonth(o.created_at));
+  const months = completed.map((c) => getMonth(c.created_at));
 
   //create an object that maps months to frequency e.g{January: 2, February:5}
   function repeatMonths() {
@@ -65,7 +68,7 @@ export const Chart: React.FC<Iprops> = ({ orders }) => {
     datasets: [
       {
         label: "Sales",
-        fill: false,
+        fill: true,
         lineTension: 0.1,
         backgroundColor: "rgba(75,192,192,0.4)",
         borderColor: "rgba(75,192,192,1)",
@@ -82,7 +85,8 @@ export const Chart: React.FC<Iprops> = ({ orders }) => {
         pointHoverBorderWidth: 2,
         pointRadius: 1,
         pointHitRadius: 10,
-        data: final(),
+        data: [2, 7, 12, 5, 8, 14, 12, 1, 19],
+        // data: final(),
       },
     ],
   };
