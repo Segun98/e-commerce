@@ -33,7 +33,7 @@ export const DashboardOrders = () => {
   let orders = data && data.getVendorOrders;
 
   //accept order
-  async function handleOrderAccept(id) {
+  async function handleOrderAccept(id, name, quantity, subtotal) {
     const acceptOrder = `
     mutation acceptOrder($id:ID!){
       acceptOrder(id:$id){
@@ -44,7 +44,16 @@ export const DashboardOrders = () => {
     if (
       window.confirm(`Are you sure you want to Accept this Order? 
       
-      *Note: Accepting an order means the product is READILY AVAILABLE. Expect a dispatch rider soon.`)
+      *Note: Accepting an order means the product is READILY AVAILABLE. Expect a dispatch rider soon.
+      
+      *Details -
+
+       Product: ${name}
+
+       Quantity: ${quantity}
+       
+       Subtotal: ${subtotal}
+      `)
     ) {
       const { data, error } = await useMutation(acceptOrder, { id }, Token);
       if (data) {
@@ -69,7 +78,7 @@ export const DashboardOrders = () => {
   }
 
   //cancel order
-  async function handleOrderCancel(id) {
+  async function handleOrderCancel(id, name, quantity, subtotal) {
     const cancelOrder = `
     mutation cancelOrder($id:ID!){
       cancelOrder(id:$id){
@@ -77,20 +86,35 @@ export const DashboardOrders = () => {
       }
     }
     `;
-    const { data, error } = await useMutation(cancelOrder, { id }, Token);
-    if (data) {
-      setFakeDependency(!FakeDependency);
-      dispatch(ordersThunk(Token, { limit: null }));
-      toast({
-        title: "Order Has Been Cancelled",
-        status: "info",
-      });
-    }
-    if (error) {
-      toast({
-        title: "Error Cancelling Order",
-        status: "error",
-      });
+
+    let answer = window.prompt(
+      `Please Tell Us Why You wish to cancel This Order
+
+      *Details -
+
+      Product: ${name}
+
+      Quantity: ${quantity}
+      
+      Subtotal: ${subtotal}
+      `
+    );
+    if (answer) {
+      const { data, error } = await useMutation(cancelOrder, { id }, Token);
+      if (data) {
+        setFakeDependency(!FakeDependency);
+        dispatch(ordersThunk(Token, { limit: null }));
+        toast({
+          title: "Order Has Been Cancelled",
+          status: "info",
+        });
+      }
+      if (error) {
+        toast({
+          title: "Error Cancelling Order",
+          status: "error",
+        });
+      }
     }
   }
 
@@ -165,7 +189,7 @@ export const DashboardOrders = () => {
                   >
                     *
                   </span>
-                  <span>{o.name}</span>
+                  <span>{o.name} </span>
                   <span style={{ color: "var(--deepblue)" }}>
                     {toDate(o.created_at)}
                   </span>
@@ -192,7 +216,14 @@ export const DashboardOrders = () => {
                             ? true
                             : false
                         }
-                        onClick={() => handleOrderAccept(o.id)}
+                        onClick={() =>
+                          handleOrderAccept(
+                            o.id,
+                            o.name,
+                            o.quantity,
+                            o.subtotal
+                          )
+                        }
                       >
                         Accept
                       </MenuItem>
@@ -203,7 +234,14 @@ export const DashboardOrders = () => {
                             ? true
                             : false
                         }
-                        onClick={() => handleOrderCancel(o.id)}
+                        onClick={() =>
+                          handleOrderCancel(
+                            o.id,
+                            o.name,
+                            o.quantity,
+                            o.subtotal
+                          )
+                        }
                       >
                         Cancel
                       </MenuItem>
