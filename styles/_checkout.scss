@@ -98,6 +98,12 @@
                 grid-template-columns: 1fr 1fr;
                 padding: 0 10px;
             }
+
+            aside {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                padding: 20px 10px;
+            }
         }
     }
 }

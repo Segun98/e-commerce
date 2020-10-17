@@ -1748,6 +1748,13 @@ Class names accross components can be the same but they are wrapped by a unique 
         grid-template-columns: 1fr 1fr;
     padding: 0 10px;
   }
+  .checkout-wrap .product-info aside {
+    display: -ms-grid;
+    display: grid;
+    -ms-grid-columns: 1fr 1fr;
+        grid-template-columns: 1fr 1fr;
+    padding: 20px 10px;
+  }
 }
 
 @media only screen and (min-width: 1400px) {

@@ -72,6 +72,24 @@ const Checkout = ({ variables }) => {
       });
       return;
     }
+
+    //check if product is out of stock or creator is offline
+
+    if (
+      cart.product.creator.online === "false" ||
+      cart.product.in_stock === "false"
+    ) {
+      toast({
+        title: "Sorry you cannot make this Order at this time",
+        description:
+          "The product is either out of stock or Vendor is unavailable. Sorry for the incovinience, do check back later",
+        status: "info",
+        duration: 5000,
+        isClosable: true,
+        position: "top",
+      });
+      return;
+    }
     const { data, error } = await useMutation(createOrder, variables, Token);
 
     if (data) {
@@ -171,7 +189,9 @@ const Checkout = ({ variables }) => {
                 </div>
                 <hr />
                 <p>&#42;Deliveries are within Lagos Only</p>
-                <p>&#42;Products Are Delivered within 2-4 days form Order</p>
+                <p>
+                  &#42;Products Are Delivered within 2-4 days form Order date
+                </p>
                 <p>&#42;Track Your Orders in your Orders Page</p>
               </div>
 
@@ -237,10 +257,16 @@ const Checkout = ({ variables }) => {
                 <p>Delivery Fee</p>
                 <p>&#8358; {Commas(1000)}</p>
                 <p>Total</p>
-                <p>
+                <p style={{ color: "var(--deepblue)" }}>
                   &#8358; {Commas(cart.quantity * cart.product.price + 1000)}
                 </p>
               </div>
+              <aside>
+                <p>Vendor</p>
+                <p style={{ color: "var(--deepblue)" }}>
+                  {cart.product.creator.business_name}
+                </p>
+              </aside>
             </div>
           </div>
         )}
