@@ -48,6 +48,7 @@ query getCart($id:ID!){
             business_address
             first_name
             business_name
+            online
         }
     }
     }

@@ -56,6 +56,7 @@ query product($name_slug:String!){
     description,
     price,
     category,
+    party_category,
     image,
     in_stock,
     available_qty,

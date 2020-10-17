@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { Button, Icon } from "@chakra-ui/core";
+import { Icon } from "@chakra-ui/core";
 import { PRODUCTS } from "./../graphql/vendor";
 import { ProductsRes } from "../Typescript/types";
 import Link from "next/link";

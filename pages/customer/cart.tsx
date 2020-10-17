@@ -242,7 +242,6 @@ export const CustomerCart = () => {
                       color="white"
                       size="sm"
                       background="var(--deepblue)"
-                      isDisabled={c.product.in_stock === "false" ? true : false}
                     >
                       <Link href={`/product/checkout/${c.id}`}>
                         <a>Checkout</a>

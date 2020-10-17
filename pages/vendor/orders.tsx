@@ -21,9 +21,9 @@ export const Orders = () => {
                 an Order
               </ListItem>
               <ListItem>
-                * <strong>Cancelled</strong> signifies that You have cancelled
-                the order. Note: You cannnot cancel after you have accepted an
-                Order
+                * <strong>Cancelled</strong> signifies that You or a customer
+                has cancelled the order. Note: You cannnot cancel after you have
+                accepted an Order
               </ListItem>
               <ListItem>
                 * <strong>Delivered</strong> signifies that Your Item Has Been

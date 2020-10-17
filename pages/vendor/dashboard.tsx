@@ -13,6 +13,7 @@ import {
 import { useUser } from "../../Context/UserProvider";
 import { DashboardOrders } from "../../components/vendor/DashboardOrders";
 import { Chart } from "../../components/vendor/Chart";
+import { Commas } from "../../utils/helpers";
 
 interface DefaultOrderState {
   orders: IOrderInitialState;
@@ -38,6 +39,12 @@ export const Dashboard: React.FC = () => {
 
   //Order Status
   const completed = orders.filter((c) => c.completed === "true");
+
+  //Getting Revenue
+  const subtotal = completed.map((c) => c.subtotal);
+  //ensure subtotal has run before reducing
+  const revenue = subtotal.length > 0 ? subtotal.reduce((a, c) => a + c) : 0;
+
   const pending = orders.filter(
     (c) => c.accepted === "false" && c.canceled === "false"
   );
@@ -111,6 +118,18 @@ export const Dashboard: React.FC = () => {
                 </div>
                 <h2>{canceled.length}</h2>
                 <p>Canceled Orders</p>
+              </div>
+
+              <div className="order-status_item">
+                <div className="icon">
+                  <Icon
+                    name="lock"
+                    style={{ color: "var(--deepblue)" }}
+                    size="30px"
+                  />
+                </div>
+                <h2>&#8358; {Commas(revenue)}</h2>
+                <p>Revenue</p>
               </div>
             </div>
             <div className="dashboard_chart">
