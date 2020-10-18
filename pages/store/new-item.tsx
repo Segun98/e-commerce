@@ -23,6 +23,7 @@ import { Footer } from "../../components/Footer";
 import Head from "next/head";
 import { useUser } from "../../Context/UserProvider";
 import Upload from "rc-upload";
+import { restLinks } from "./../../utils/client";
 
 export const Newitem = () => {
   const toast = useToast();
@@ -46,7 +47,7 @@ export const Newitem = () => {
     action: () => {
       return new Promise((resolve) => {
         setTimeout(() => {
-          resolve("http://localhost:4000/api/upload");
+          resolve(restLinks[1]);
         }, 2000);
       });
     },

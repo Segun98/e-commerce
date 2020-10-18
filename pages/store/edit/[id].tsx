@@ -27,6 +27,7 @@ import { graphQLClient } from "../../../utils/client";
 import { ProtectRouteV } from "../../../utils/ProtectedRouteV";
 import { useMutation } from "../../../utils/useMutation";
 import Upload from "rc-upload";
+import { restLinks } from "./../../../utils/client";
 
 interface Iprops {
   product: ProductsRes;
@@ -80,7 +81,7 @@ const Edit = ({ product, error }: Iprops) => {
     action: () => {
       return new Promise((resolve) => {
         setTimeout(() => {
-          resolve("http://localhost:4000/api/upload");
+          resolve(restLinks[1]);
         }, 2000);
       });
     },

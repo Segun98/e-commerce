@@ -10,7 +10,6 @@ import {
   IOrderInitialState,
   ordersThunk,
 } from "../../redux/features/orders/fetchOrders";
-import { useUser } from "../../Context/UserProvider";
 import { DashboardOrders } from "../../components/vendor/DashboardOrders";
 import { Chart } from "../../components/vendor/Chart";
 import { Commas } from "../../utils/helpers";
@@ -20,7 +19,6 @@ interface DefaultOrderState {
 }
 
 export const Dashboard: React.FC = () => {
-  const { User } = useUser();
   // Redux stuff
   const dispatch = useDispatch();
 

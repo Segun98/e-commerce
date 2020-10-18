@@ -20,6 +20,7 @@ import { useMutation } from "../../utils/useMutation";
 import { ProtectRouteV } from "./../../utils/ProtectedRouteV";
 import { useRouter } from "next/router";
 import Upload from "rc-upload";
+import { restLinks } from "./../../utils/client";
 
 export const Account = () => {
   const { User } = useUser();
@@ -50,7 +51,7 @@ export const Account = () => {
     action: () => {
       return new Promise((resolve) => {
         setTimeout(() => {
-          resolve("http://localhost:4000/api/upload");
+          resolve(restLinks[1]);
         }, 2000);
       });
     },

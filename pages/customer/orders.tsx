@@ -35,7 +35,7 @@ export const CustomerOrders = () => {
   let orders = data && data.getCustomerOrders;
 
   //cancel order
-  async function handleOrderCancel(id) {
+  async function handleOrderCancel(id, name, quantity, subtotal) {
     const cancelOrder = `
     mutation cancelOrder($id:ID!){
       cancelOrder(id:$id){
@@ -43,22 +43,37 @@ export const CustomerOrders = () => {
       }
     }
     `;
-    const { data, error } = await useMutation(cancelOrder, { id }, Token);
 
-    if (data) {
-      setFakeDependency(!FakeDependency);
-      toast({
-        title: "Order Has Been Cancelled",
-        status: "info",
-      });
-    }
-    if (error) {
-      let msg = error.response.errors[0].message || error.message;
-      toast({
-        title: "Error Cancelling Order",
-        description: msg,
-        status: "error",
-      });
+    let answer = window.prompt(
+      `Please Tell Us Why You wish to cancel This Order
+
+      *Details -
+
+      Product: ${name}
+
+      Quantity: ${quantity}
+      
+      Subtotal: ${subtotal}
+      `
+    );
+    if (answer) {
+      const { data, error } = await useMutation(cancelOrder, { id }, Token);
+
+      if (data) {
+        setFakeDependency(!FakeDependency);
+        toast({
+          title: "Order Has Been Cancelled",
+          status: "info",
+        });
+      }
+      if (error) {
+        let msg = error.response.errors[0].message || error.message;
+        toast({
+          title: "Error Cancelling Order",
+          description: msg,
+          status: "error",
+        });
+      }
     }
   }
 
@@ -183,7 +198,14 @@ export const CustomerOrders = () => {
                               ? true
                               : false
                           }
-                          onClick={() => handleOrderCancel(o.id)}
+                          onClick={() =>
+                            handleOrderCancel(
+                              o.id,
+                              o.name,
+                              o.quantity,
+                              o.subtotal
+                            )
+                          }
                         >
                           Cancel
                         </MenuItem>

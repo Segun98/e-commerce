@@ -8,6 +8,7 @@ import React, {
 } from "react";
 import Cookies from "js-cookie";
 import axios from "axios";
+import { restLinks } from "./../utils/client";
 
 interface props {
   Token: string;
@@ -30,7 +31,8 @@ export const TokenProvider = ({ children }) => {
     });
 
     try {
-      const res = await instance.post(`http://localhost:4000/api/refreshtoken`);
+      const res = await instance.post(restLinks[0]);
+      // const res = await instance.post(`http://localhost:4000/api/refreshtoken`);
       if (res.data) {
         setToken(res.data.accessToken);
       }

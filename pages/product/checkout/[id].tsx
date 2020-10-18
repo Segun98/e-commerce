@@ -178,6 +178,7 @@ const Checkout = ({ variables }) => {
                 <Textarea
                   placeholder="Send a personalised request along with your order"
                   value={request}
+                  maxLength={200}
                   onChange={(e) => setRequest(e.target.value)}
                 ></Textarea>
               </div>
