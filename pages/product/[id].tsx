@@ -402,6 +402,9 @@ const Product = ({ product, error }: response) => {
         )}
       </div>
       <style jsx>{`
+        button {
+          border: none;
+        }
         .bread-crumb {
           width: 90%;
           margin: 0 auto 5px auto;

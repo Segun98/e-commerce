@@ -23,7 +23,7 @@ import { Footer } from "../../components/Footer";
 import Head from "next/head";
 import { useUser } from "../../Context/UserProvider";
 import Upload from "rc-upload";
-import { restLinks } from "./../../utils/client";
+import { uploadLink } from "./../../utils/client";
 
 export const Newitem = () => {
   const toast = useToast();
@@ -47,7 +47,7 @@ export const Newitem = () => {
     action: () => {
       return new Promise((resolve) => {
         setTimeout(() => {
-          resolve(restLinks[1]);
+          resolve(uploadLink[0]);
         }, 2000);
       });
     },
@@ -316,6 +316,7 @@ export const Newitem = () => {
                         </InputGroup>
                       </div>
                       <div className="form-item image-upload">
+                        {/* @ts-ignore */}
                         <Upload {...uploaderProps} id="test">
                           {imageLoad ? (
                             <Spinner speed="0.7s"></Spinner>

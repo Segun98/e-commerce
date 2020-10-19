@@ -51,6 +51,7 @@ const Checkout = ({ variables }) => {
       price: cart.product.price,
       quantity: cart.quantity,
       delivery_fee: 1000,
+      //@ts-ignore
       subtotal: parseInt(sub),
       request,
       customer_email: cart.cartCreator.email,

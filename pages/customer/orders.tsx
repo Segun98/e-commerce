@@ -182,6 +182,7 @@ export const CustomerOrders = () => {
                       <MenuButton
                         as={Button}
                         size="xs"
+                        // @ts-ignore
                         rightIcon="chevron-down"
                         style={{
                           background: "var(--deepblue)",

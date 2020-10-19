@@ -252,6 +252,7 @@ export const OrdersComponent: React.FC<Iprops> = ({ limit }) => {
                     <MenuButton
                       as={Button}
                       size="xs"
+                      // @ts-ignore
                       rightIcon="chevron-down"
                       style={{ background: "var(--deepblue)", color: "white" }}
                     >

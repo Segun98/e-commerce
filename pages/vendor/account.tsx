@@ -20,7 +20,7 @@ import { useMutation } from "../../utils/useMutation";
 import { ProtectRouteV } from "./../../utils/ProtectedRouteV";
 import { useRouter } from "next/router";
 import Upload from "rc-upload";
-import { restLinks } from "./../../utils/client";
+import { uploadLink } from "./../../utils/client";
 
 export const Account = () => {
   const { User } = useUser();
@@ -51,7 +51,7 @@ export const Account = () => {
     action: () => {
       return new Promise((resolve) => {
         setTimeout(() => {
-          resolve(restLinks[1]);
+          resolve(uploadLink[0]);
         }, 2000);
       });
     },
@@ -161,6 +161,7 @@ export const Account = () => {
                   <br />
                   <span style={{ display: editMode ? "block" : "none" }}>
                     <div className="form-item image-upload">
+                      {/* @ts-ignore */}
                       <Upload {...uploaderProps} id="test">
                         {imageLoad ? (
                           <Spinner speed="0.7s"></Spinner>

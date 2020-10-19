@@ -55,6 +55,7 @@ export const Login = () => {
 
     try {
       setLoading(true);
+      graphQLClient.setHeader("credentials", "include");
       const res = await graphQLClient.request(LOG_IN, variables);
       const data: LoginRes = res.logIn;
 

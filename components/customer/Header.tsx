@@ -213,7 +213,7 @@ export const Header = () => {
               <div className="cart-icon">
                 <Link href="/customer/cart">
                   <a>
-                    <aside>{cartLength}</aside>
+                    <aside>{cartLength === 0 ? null : cartLength}</aside>
                     <img src="/shopping-cart.svg" alt="cart-icon" />
                   </a>
                 </Link>

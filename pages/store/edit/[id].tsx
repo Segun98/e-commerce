@@ -23,11 +23,10 @@ import {
   ProductsRes,
   MutationUpdateProductArgs,
 } from "../../../Typescript/types";
-import { graphQLClient } from "../../../utils/client";
+import { graphQLClient, uploadLink } from "../../../utils/client";
 import { ProtectRouteV } from "../../../utils/ProtectedRouteV";
 import { useMutation } from "../../../utils/useMutation";
 import Upload from "rc-upload";
-import { restLinks } from "./../../../utils/client";
 
 interface Iprops {
   product: ProductsRes;
@@ -81,7 +80,7 @@ const Edit = ({ product, error }: Iprops) => {
     action: () => {
       return new Promise((resolve) => {
         setTimeout(() => {
-          resolve(restLinks[1]);
+          resolve(uploadLink[0]);
         }, 2000);
       });
     },
@@ -357,6 +356,7 @@ const Edit = ({ product, error }: Iprops) => {
                         </div>
 
                         <div className="form-item image-upload">
+                          {/* @ts-ignore */}
                           <Upload {...uploaderProps} id="test">
                             {imageLoad ? (
                               <Spinner speed="0.7s"></Spinner>
