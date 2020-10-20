@@ -18,6 +18,7 @@ import { LoginRes, MutationLogInArgs } from "../../Typescript/types";
 import Link from "next/link";
 import { Layout } from "../../components/Layout";
 import Head from "next/head";
+import Cookies from "js-cookie";
 
 export const Login = () => {
   const toast = useToast();
@@ -48,7 +49,9 @@ export const Login = () => {
       setLoading(true);
       const res = await graphQLClient.request(LOG_IN, variables);
       const data: LoginRes = res.logIn;
-
+      // Cookies.set("role", data.role, {
+      //   expires: 7,
+      // });
       if (data) {
         setLoading(false);
         setToken(data.accesstoken);
@@ -77,8 +80,7 @@ export const Login = () => {
         return;
       }
       toast({
-        title: "An Error Occured",
-        description: `${err.response?.errors[0].message || ""}`,
+        title: `${err.response?.errors[0].message || "An error Occurred"}`,
         status: "error",
         duration: 5000,
       });

@@ -1,11 +1,16 @@
 import {
   Button,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuList,
   Skeleton,
   useToast,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  PopoverHeader,
+  PopoverBody,
+  PopoverFooter,
+  PopoverArrow,
+  PopoverCloseButton,
+  Text,
 } from "@chakra-ui/core";
 import React, { useState } from "react";
 import { useToken } from "../../Context/TokenProvider";
@@ -190,64 +195,92 @@ export const DashboardOrders = () => {
                     *
                   </span>
                   <span>{o.name} </span>
-                  <span style={{ color: "var(--deepblue)" }}>
-                    {toDate(o.created_at)}
-                  </span>
                 </td>
                 <td>{Commas(o.price)}</td>
                 <td>{o.quantity}</td>
                 <td>{Commas(o.subtotal)}</td>
                 <td>{truncate(o.request) || "none"}</td>
                 <td>
-                  <Menu>
-                    <MenuButton
-                      as={Button}
-                      size="xs"
-                      // @ts-ignore
-                      rightIcon="chevron-down"
-                      style={{ background: "var(--deepblue)", color: "white" }}
-                    >
-                      Actions
-                    </MenuButton>
-                    <MenuList placement="left-start">
-                      <MenuItem
-                        color="var(--deepblue)"
-                        isDisabled={
-                          o.accepted === "true" || o.canceled === "true"
-                            ? true
-                            : false
-                        }
-                        onClick={() =>
-                          handleOrderAccept(
-                            o.id,
-                            o.name,
-                            o.quantity,
-                            o.subtotal
-                          )
-                        }
+                  <Popover placement="left" usePortal={true}>
+                    <PopoverTrigger>
+                      <Button
+                        size="xs"
+                        rightIcon="chevron-down"
+                        style={{
+                          background: "var(--deepblue)",
+                          color: "white",
+                        }}
                       >
-                        Accept
-                      </MenuItem>
-                      <MenuItem
-                        color="var(--deepblue)"
-                        isDisabled={
-                          o.accepted === "true" || o.canceled === "true"
-                            ? true
-                            : false
-                        }
-                        onClick={() =>
-                          handleOrderCancel(
-                            o.id,
-                            o.name,
-                            o.quantity,
-                            o.subtotal
-                          )
-                        }
-                      >
-                        Cancel
-                      </MenuItem>
-                    </MenuList>
-                  </Menu>
+                        Action
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent zIndex={4}>
+                      <PopoverArrow />
+                      <PopoverCloseButton />
+                      <PopoverHeader>
+                        <Text as="span">
+                          Order ID:{" "}
+                          <Text as="span" color="var(--deepblue)">
+                            {o.order_id}
+                          </Text>
+                          <Text as="span" padding="0 12px">
+                            |
+                          </Text>
+                          <Text as="span" color="var(--deepblue)">
+                            {toDate(o.created_at)}
+                          </Text>
+                        </Text>
+                      </PopoverHeader>
+                      <PopoverBody>
+                        <div
+                          style={{
+                            display: "flex",
+                            justifyContent: "space-around",
+                          }}
+                        >
+                          <Button
+                            color="var(--deepblue)"
+                            isDisabled={
+                              o.accepted === "true" || o.canceled === "true"
+                                ? true
+                                : false
+                            }
+                            onClick={() =>
+                              handleOrderAccept(
+                                o.id,
+                                o.name,
+                                o.quantity,
+                                o.subtotal
+                              )
+                            }
+                          >
+                            Accept
+                          </Button>
+                          <Button
+                            color="var(--deepblue)"
+                            isDisabled={
+                              o.accepted === "true" || o.canceled === "true"
+                                ? true
+                                : false
+                            }
+                            onClick={() =>
+                              handleOrderCancel(
+                                o.id,
+                                o.name,
+                                o.quantity,
+                                o.subtotal
+                              )
+                            }
+                          >
+                            Cancel
+                          </Button>
+                        </div>
+                      </PopoverBody>
+                      <PopoverFooter fontSize="0.7rem">
+                        Ensure the product is readily available before accepting
+                      </PopoverFooter>
+                    </PopoverContent>
+                  </Popover>
                 </td>
               </tr>
             ))}

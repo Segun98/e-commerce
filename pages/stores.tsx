@@ -210,7 +210,7 @@ const Stores = () => {
       <style jsx>{`
         .stores-wrap {
           margin: auto;
-          width: 90%;
+          width: 95%;
         }
         .paginate {
           margin: 10px auto;
@@ -229,12 +229,12 @@ const Stores = () => {
         }
 
         .store-item {
-          width: 180px;
+          width: 150px;
         }
         /* Stores' images  */
         .store-img {
           height: 200px;
-          width: 180px;
+          width: 150px;
           display: flex;
           align-items: center;
           justify-content: center;
@@ -253,6 +253,15 @@ const Stores = () => {
           margin: 3px 0;
           font-weight: bold;
           font-size: 0.9rem;
+        }
+
+        @media only screen and (min-width: 400px) {
+          .store-item {
+            width: 180px;
+          }
+          .store-img {
+            width: 180px;
+          }
         }
         @media only screen and (min-width: 700px) {
           .store-items {

@@ -9,6 +9,7 @@
 }
 
 $softgrey: rgba(32, 33, 36, 0.28);
+//boxshadow
 $box: 0 1px 6px 0;
 $lightblue: #cbd8f9;
 $deepblue: #02247a;
@@ -17,6 +18,10 @@ $softblue: rgb(238, 238, 245);
 
 html {
     scroll-behavior: smooth;
+}
+
+button:focus {
+    outline: 0.6px solid $softgrey !important;
 }
 
 body {

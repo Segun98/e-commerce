@@ -12,6 +12,10 @@ html {
   scroll-behavior: smooth;
 }
 
+button:focus {
+  outline: 0.6px solid rgba(32, 33, 36, 0.28) !important;
+}
+
 body {
   font-family: 'Poppins', sans-serif !important;
 }
@@ -1185,6 +1189,7 @@ Class names accross components can be the same but they are wrapped by a unique 
 
 .cart-page .cart-section .cart-item .order-btn {
   font-size: 0.9rem;
+  margin-left: 5px;
 }
 
 @media only screen and (min-width: 700px) {

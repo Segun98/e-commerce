@@ -332,7 +332,7 @@ export const Account = () => {
         }
         .account-wrap {
           margin: 30px auto;
-          width: 80%;
+          width: 85%;
         }
 
         .account-wrap h1 {
@@ -368,8 +368,8 @@ export const Account = () => {
         }
 
         .saved-item-wrap {
-          display: flex;
-          flex-wrap: wrap;
+          display: grid;
+          grid-template-columns: 1fr 1fr;
         }
 
         .saved-item {
@@ -403,9 +403,21 @@ export const Account = () => {
         .saved-desc p {
           font-weight: bold;
         }
+
+        @media only screen and (min-width: 700px) {
+          .saved-item-wrap {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+          }
+        }
+
         @media only screen and (min-width: 1200px) {
           .account-wrap {
             width: 60%;
+          }
+          .saved-item-wrap {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
           }
         }
         @media only screen and (min-width: 1800px) {

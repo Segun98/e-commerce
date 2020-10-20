@@ -54,7 +54,7 @@ export const CustomerCart = () => {
         status: "info",
         duration: 3000,
         isClosable: true,
-        position: "bottom-right",
+        position: "top",
       });
     }
     if (error) {
@@ -240,7 +240,7 @@ export const CustomerCart = () => {
                     <Button
                       className="order-btn"
                       color="white"
-                      size="sm"
+                      size="xs"
                       background="var(--deepblue)"
                     >
                       <Link href={`/product/checkout/${c.id}`}>

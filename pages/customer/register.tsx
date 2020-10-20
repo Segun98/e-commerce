@@ -92,8 +92,7 @@ export const Register = () => {
         return;
       }
       toast({
-        title: "An Error Occured",
-        description: `${err.response?.errors[0].message || ""}`,
+        title: `${err.response?.errors[0].message || "An Error Occured"}`,
         status: "error",
         duration: 5000,
       });

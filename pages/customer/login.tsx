@@ -18,6 +18,7 @@ import { useToken } from "../../Context/TokenProvider";
 import { Layout } from "../../components/Layout";
 import Link from "next/link";
 import Head from "next/head";
+import Cookies from "js-cookie";
 
 export const Login = () => {
   const toast = useToast();
@@ -55,9 +56,12 @@ export const Login = () => {
 
     try {
       setLoading(true);
-      graphQLClient.setHeader("credentials", "include");
       const res = await graphQLClient.request(LOG_IN, variables);
       const data: LoginRes = res.logIn;
+
+      // Cookies.set("role", data.role, {
+      //   expires: 7,
+      // });
 
       if (data) {
         setLoading(false);
@@ -88,8 +92,7 @@ export const Login = () => {
       }
 
       toast({
-        title: "An Error Occured",
-        description: `${err.response?.errors[0].message || ""}`,
+        title: `${err.response?.errors[0].message || "An Error Occured"}`,
         status: "error",
         duration: 5000,
         isClosable: true,

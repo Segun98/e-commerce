@@ -7,17 +7,15 @@ import {
   ordersThunk,
 } from "../../redux/features/orders/fetchOrders";
 import {
-  AlertDialog,
-  AlertDialogBody,
-  AlertDialogContent,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogOverlay,
   Button,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuList,
+  Popover,
+  PopoverArrow,
+  PopoverBody,
+  PopoverCloseButton,
+  PopoverContent,
+  PopoverFooter,
+  PopoverHeader,
+  PopoverTrigger,
   Skeleton,
   useToast,
 } from "@chakra-ui/core";
@@ -248,53 +246,73 @@ export const OrdersComponent: React.FC<Iprops> = ({ limit }) => {
                     : "Pending"}
                 </td>
                 <td>
-                  <Menu>
-                    <MenuButton
-                      as={Button}
-                      size="xs"
-                      // @ts-ignore
-                      rightIcon="chevron-down"
-                      style={{ background: "var(--deepblue)", color: "white" }}
-                    >
-                      Actions
-                    </MenuButton>
-                    <MenuList placement="left-start">
-                      <MenuItem
-                        isDisabled={
-                          o.accepted === "true" || o.canceled === "true"
-                            ? true
-                            : false
-                        }
-                        onClick={() =>
-                          handleOrderAccept(
-                            o.id,
-                            o.name,
-                            o.quantity,
-                            o.subtotal
-                          )
-                        }
+                  <Popover placement="left" usePortal={true}>
+                    <PopoverTrigger>
+                      <Button
+                        size="sm"
+                        rightIcon="chevron-down"
+                        style={{
+                          background: "var(--deepblue)",
+                          color: "white",
+                        }}
                       >
-                        Accept
-                      </MenuItem>
-                      <MenuItem
-                        isDisabled={
-                          o.accepted === "true" || o.canceled === "true"
-                            ? true
-                            : false
-                        }
-                        onClick={() =>
-                          handleOrderCancel(
-                            o.id,
-                            o.name,
-                            o.quantity,
-                            o.subtotal
-                          )
-                        }
-                      >
-                        Cancel
-                      </MenuItem>
-                    </MenuList>
-                  </Menu>
+                        Action
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent zIndex={4}>
+                      <PopoverArrow />
+                      <PopoverCloseButton />
+                      <PopoverHeader>Order ID: {o.order_id}</PopoverHeader>
+                      <PopoverBody>
+                        <div
+                          style={{
+                            display: "flex",
+                            justifyContent: "space-around",
+                          }}
+                        >
+                          <Button
+                            color="var(--deepblue)"
+                            isDisabled={
+                              o.accepted === "true" || o.canceled === "true"
+                                ? true
+                                : false
+                            }
+                            onClick={() =>
+                              handleOrderAccept(
+                                o.id,
+                                o.name,
+                                o.quantity,
+                                o.subtotal
+                              )
+                            }
+                          >
+                            Accept
+                          </Button>
+                          <Button
+                            color="var(--deepblue)"
+                            isDisabled={
+                              o.accepted === "true" || o.canceled === "true"
+                                ? true
+                                : false
+                            }
+                            onClick={() =>
+                              handleOrderCancel(
+                                o.id,
+                                o.name,
+                                o.quantity,
+                                o.subtotal
+                              )
+                            }
+                          >
+                            Cancel
+                          </Button>
+                        </div>
+                      </PopoverBody>
+                      <PopoverFooter fontSize="0.7rem">
+                        Ensure the product is readily available before accepting
+                      </PopoverFooter>
+                    </PopoverContent>
+                  </Popover>
                 </td>
               </tr>
             ))}

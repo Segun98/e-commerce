@@ -2,12 +2,17 @@ import {
   Button,
   List,
   ListItem,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuList,
+  Popover,
+  PopoverArrow,
+  PopoverBody,
+  PopoverCloseButton,
+  PopoverContent,
+  PopoverFooter,
+  PopoverHeader,
+  PopoverTrigger,
   Skeleton,
   useToast,
+  Text,
 } from "@chakra-ui/core";
 import Head from "next/head";
 import React, { useState } from "react";
@@ -154,12 +159,7 @@ export const CustomerOrders = () => {
               data &&
               orders.map((o: Orders, i) => (
                 <tr key={o.id}>
-                  <td>
-                    {o.name} -
-                    <span style={{ color: "var(--deepblue)" }}>
-                      {toDate(o.created_at)}
-                    </span>
-                  </td>
+                  <td>{o.name}</td>
                   <td>{Commas(o.price)}</td>
                   <td>{o.quantity}</td>
                   <td>{Commas(o.subtotal)}</td>
@@ -178,46 +178,71 @@ export const CustomerOrders = () => {
                     )}
                   </td>
                   <td>
-                    <Menu>
-                      <MenuButton
-                        as={Button}
-                        size="xs"
-                        // @ts-ignore
-                        rightIcon="chevron-down"
-                        style={{
-                          background: "var(--deepblue)",
-                          color: "white",
-                        }}
-                      >
-                        Actions
-                      </MenuButton>
-                      <MenuList placement="left-start">
-                        <MenuItem
-                          color="var(--deepblue)"
-                          isDisabled={
-                            o.accepted === "true" || o.canceled === "true"
-                              ? true
-                              : false
-                          }
-                          onClick={() =>
-                            handleOrderCancel(
-                              o.id,
-                              o.name,
-                              o.quantity,
-                              o.subtotal
-                            )
-                          }
+                    <Popover placement="left" usePortal={true}>
+                      <PopoverTrigger>
+                        <Button
+                          size="xs"
+                          rightIcon="chevron-down"
+                          style={{
+                            background: "var(--deepblue)",
+                            color: "white",
+                          }}
                         >
-                          Cancel
-                        </MenuItem>
-                        <MenuItem color="var(--deepblue)" isDisabled={true}>
-                          Return
-                        </MenuItem>
-                        <MenuItem color="var(--deepblue)">
-                          Order ID: {o.order_id}
-                        </MenuItem>
-                      </MenuList>
-                    </Menu>
+                          Action
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent zIndex={4}>
+                        <PopoverArrow />
+                        <PopoverCloseButton />
+                        <PopoverHeader>
+                          <Text as="span">
+                            Order ID:{" "}
+                            <Text as="span" color="var(--deepblue)">
+                              {o.order_id}
+                            </Text>
+                            <Text as="span" padding="0 12px">
+                              |
+                            </Text>
+                            <Text as="span" color="var(--deepblue)">
+                              {toDate(o.created_at)}
+                            </Text>
+                          </Text>
+                        </PopoverHeader>
+                        <PopoverBody>
+                          <div
+                            style={{
+                              display: "flex",
+                              justifyContent: "space-around",
+                            }}
+                          >
+                            <Button
+                              color="var(--deepblue)"
+                              isDisabled={
+                                o.accepted === "true" || o.canceled === "true"
+                                  ? true
+                                  : false
+                              }
+                              onClick={() =>
+                                handleOrderCancel(
+                                  o.id,
+                                  o.name,
+                                  o.quantity,
+                                  o.subtotal
+                                )
+                              }
+                            >
+                              Cancel
+                            </Button>
+                            <Button color="var(--deepblue)" isDisabled={true}>
+                              Return
+                            </Button>
+                          </div>
+                        </PopoverBody>
+                        <PopoverFooter fontSize="0.7rem">
+                          Orders are fulfilled within 2-4 days of placement
+                        </PopoverFooter>
+                      </PopoverContent>
+                    </Popover>
                   </td>
                 </tr>
               ))}
