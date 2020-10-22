@@ -261,21 +261,21 @@ export const Account = () => {
                     <FormLabel htmlFor="online">
                       Your Status :{" "}
                       {User && online === "true" ? (
-                        <h6
+                        <span
                           style={{
                             color: "#32CD32",
                           }}
                         >
                           Online{" "}
-                        </h6>
+                        </span>
                       ) : (
-                        <h6
+                        <span
                           style={{
                             color: "red",
                           }}
                         >
                           Offline
-                        </h6>
+                        </span>
                       )}
                       <small
                         style={{
@@ -287,7 +287,14 @@ export const Account = () => {
                         the website, meaning you will recieve no Orders
                       </small>
                     </FormLabel>
-                    <span style={{ display: editMode ? "block" : "none" }}>
+                    <span
+                      style={{
+                        display:
+                          editMode && User.pending === "false"
+                            ? "block"
+                            : "none",
+                      }}
+                    >
                       <RadioGroup
                         spacing={5}
                         isInline
