@@ -85,7 +85,7 @@ export const Chart: React.FC<Iprops> = ({ orders }) => {
         pointHoverBorderWidth: 2,
         pointRadius: 1,
         pointHitRadius: 10,
-        data: [2, 7, 12, 5, 8, 14, 12, 1, 19],
+        data: [2, 7, 12, 5, 8, 14, 12, 1, 19, 30],
         // data: final(),
       },
     ],
