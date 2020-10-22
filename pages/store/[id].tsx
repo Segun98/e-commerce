@@ -177,10 +177,10 @@ const Store = ({ data, error }: Iprops) => {
                       data.business_name +
                       ", customers come first"}
                 </div>
-                {/* <div className="store-location">
-                  <i className="fas fa-map-marker-alt"></i>
-                  {data.business_address || "This Store's Address"}
-                </div> */}
+                <div className="store-location">
+                  <Icon name="phone" mr="10px" />
+                  {data.phone || "080123456789"}
+                </div>
               </div>
               {/* ONLY SHOW EDIT BUTTON TO STORE OWNER */}
               <div>
