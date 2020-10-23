@@ -9,7 +9,7 @@ import {
   Icon,
   useToast,
 } from "@chakra-ui/core";
-import { ProductsRes } from "../../Typescript/types";
+import { MutationAddToCartArgs, ProductsRes } from "../../Typescript/types";
 import { Layout } from "../../components/Layout";
 import { Commas } from "./../../utils/helpers";
 import Link from "next/link";
@@ -47,6 +47,7 @@ export async function getServerSideProps({ params }) {
     };
   }
 }
+
 const Product = ({ product, error }: response) => {
   const toast = useToast();
   const { Token } = useToken();
@@ -56,6 +57,7 @@ const Product = ({ product, error }: response) => {
   const [quantity, setQuantity] = useState(1);
   const dispatch = useDispatch();
 
+  const [loading, setLoading] = useState(false);
   //filter out the main product
   const related = product
     ? product.related.filter((p) => p.id !== product.id)
@@ -71,14 +73,15 @@ const Product = ({ product, error }: response) => {
   ];
 
   async function addCart(product_id, prod_creator_id, quantity) {
-    const variables = {
+    setLoading(true);
+    const variables: MutationAddToCartArgs = {
       product_id,
       prod_creator_id,
       quantity,
     };
     const { data, error } = await useMutation(addToCart, variables, Token);
-
     if (data) {
+      setLoading(false);
       dispatch(cartItems(Token));
       toast({
         title: "Item Added to Cart!",
@@ -88,6 +91,7 @@ const Product = ({ product, error }: response) => {
       });
     }
     if (error) {
+      setLoading(false);
       //handled this error cos chakra ui "status" should be "info"
       if (error.response?.errors[0].message === "Item is already in Cart") {
         toast({
@@ -277,6 +281,7 @@ const Product = ({ product, error }: response) => {
                     <Button
                       variantColor="blue"
                       border="none"
+                      isLoading={loading ? true : false}
                       style={{ backgroundColor: "var(--deepblue" }}
                       onClick={() => {
                         if (!Token || !role || role === "vendor") {
