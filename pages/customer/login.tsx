@@ -8,6 +8,7 @@ import {
   Button,
   Icon,
   useToast,
+  Text,
 } from "@chakra-ui/core";
 import { useForm } from "react-hook-form";
 import { graphQLClient } from "../../utils/client";
@@ -18,7 +19,9 @@ import { useToken } from "../../Context/TokenProvider";
 import { Layout } from "../../components/Layout";
 import Link from "next/link";
 import Head from "next/head";
+import axios from "axios";
 import Cookies from "js-cookie";
+import { GoogleLogin } from "react-google-login";
 
 export const Login = () => {
   const toast = useToast();
@@ -100,6 +103,15 @@ export const Login = () => {
     }
   };
 
+  //succesful ouuath response
+  const responseGoogle = (response) => {
+    console.log(response);
+  };
+  //failed oauth response
+  const failureGoogle = (response) => {
+    console.log(response);
+  };
+
   return (
     <Layout>
       <Head>
@@ -169,15 +181,28 @@ export const Login = () => {
           <h3 style={{ color: "green" }}>{success}</h3>
 
           <div className="btn">
-            <Button
-              isDisabled={Loading}
-              style={{ background: "var(--deepblue)" }}
-              color="white"
-              type="submit"
-              isLoading={Loading}
-            >
-              Log in
-            </Button>
+            <Text as="div" display="flex">
+              <Button
+                isDisabled={Loading}
+                style={{ background: "var(--deepblue)" }}
+                color="white"
+                type="submit"
+                isLoading={Loading}
+              >
+                Log in
+              </Button>
+
+              <span className="ml-2 mr-2 mt-2">Or</span>
+              <GoogleLogin
+                clientId="649409125932-gr4408gcakrmumvia7ju9k83c0o72cv1.apps.googleusercontent.com"
+                buttonText="Login"
+                onSuccess={responseGoogle}
+                onFailure={failureGoogle}
+                cookiePolicy={"single_host_origin"}
+              >
+                Login With Google{" "}
+              </GoogleLogin>
+            </Text>
             <div className="sign-up-msg">
               <small>
                 Don't have an account?{" "}
