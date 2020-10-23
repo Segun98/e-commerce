@@ -204,6 +204,7 @@ export const Account = () => {
                       name="about"
                       id="about"
                       value={about}
+                      maxLength={250}
                       onChange={(e) => setAbout(e.target.value)}
                       placeholder="Enter your business bio"
                     >
