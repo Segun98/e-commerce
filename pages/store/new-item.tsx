@@ -52,7 +52,6 @@ export const Newitem = () => {
       });
     },
     onSuccess(ImageLink) {
-      setImage(ImageLink);
       setImageLoad(false);
       if (ImageLink["error"]) {
         toast({
@@ -62,12 +61,21 @@ export const Newitem = () => {
           duration: 5000,
           isClosable: true,
         });
+        return;
       }
+      setImage(ImageLink);
     },
     onProgress(step, file) {
       setImageLoad(true);
     },
     onError(err) {
+      toast({
+        title: "Error Uploading Image",
+        description: "Check Your Internet Connection and Try Again",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
       setImageLoad(false);
     },
   };

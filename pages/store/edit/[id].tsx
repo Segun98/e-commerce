@@ -85,7 +85,6 @@ const Edit = ({ product, error }: Iprops) => {
       });
     },
     onSuccess(ImageLink) {
-      setImage(ImageLink);
       setImageLoad(false);
       if (ImageLink["error"]) {
         toast({
@@ -95,16 +94,26 @@ const Edit = ({ product, error }: Iprops) => {
           duration: 5000,
           isClosable: true,
         });
+        return;
       }
+      setImage(ImageLink);
     },
     onProgress(step, file) {
       setImageLoad(true);
     },
     onError(err) {
       setImageLoad(false);
+      toast({
+        title: "Error Uploading Image",
+        description: "Check Your Internet Connection and Try Again",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
     },
   };
 
+  //populate product input fields with exisiting data from DB
   useEffect(() => {
     if (product) {
       setName(product.name || "");
