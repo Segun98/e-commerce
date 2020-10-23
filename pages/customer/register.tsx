@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   Input,
   FormControl,
@@ -8,6 +8,7 @@ import {
   Button,
   Icon,
   useToast,
+  Text,
 } from "@chakra-ui/core";
 import { useForm } from "react-hook-form";
 import { request } from "graphql-request";
@@ -18,6 +19,8 @@ import { MutationSignUpArgs } from "../../Typescript/types";
 import Link from "next/link";
 import { Layout } from "../../components/Layout";
 import Head from "next/head";
+import axios from "axios";
+import { GoogleLogin } from "react-google-login";
 
 export const Register = () => {
   const router = useRouter();
@@ -97,6 +100,48 @@ export const Register = () => {
         duration: 5000,
       });
     }
+  };
+
+  //succesful ouath response
+  const responseGoogle = async (response) => {
+    let data = {
+      first_name: response.profileObj.givenName,
+      last_name: response.profileObj.familyName,
+      password: response.profileObj.googleId,
+      email: response.profileObj.email,
+    };
+    const instance = axios.create({
+      withCredentials: true,
+    });
+
+    try {
+      if (response) {
+        const res = await instance.post(
+          "http://localhost:4000/api/oauth/signup",
+          {
+            first_name: data.first_name,
+            last_name: data.last_name,
+            password: data.password,
+            email: data.email,
+          }
+        );
+        //check for EXISITING user
+        if (res.data) {
+          toast({
+            title: "Sign Up Successful!",
+            status: "success",
+            duration: 3000,
+          });
+          router.push("/customer/login");
+        }
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+  //failed oauth response
+  const failureGoogle = (response) => {
+    console.log(response);
   };
 
   return (
@@ -251,15 +296,28 @@ export const Register = () => {
           </FormControl>
 
           <div className="btn">
-            <Button
-              isDisabled={Loading}
-              style={{ background: "var(--deepblue)" }}
-              color="white"
-              type="submit"
-              isLoading={Loading}
-            >
-              Create Account
-            </Button>
+            <Text as="div" display="flex" flexDirection="column">
+              <Button
+                isDisabled={Loading}
+                style={{ background: "var(--deepblue)" }}
+                color="white"
+                type="submit"
+                isLoading={Loading}
+              >
+                Create Account
+              </Button>
+              <span className="ml-2 mr-2 mt-2">Or</span>
+              <GoogleLogin
+                clientId="649409125932-gr4408gcakrmumvia7ju9k83c0o72cv1.apps.googleusercontent.com"
+                buttonText="Login"
+                onSuccess={responseGoogle}
+                onFailure={failureGoogle}
+                cookiePolicy={"single_host_origin"}
+                style={{ fontSize: "0.8rem" }}
+              >
+                Signup With Google{" "}
+              </GoogleLogin>
+            </Text>
             <div className="register-msg">
               <small>
                 Already have an account?{" "}

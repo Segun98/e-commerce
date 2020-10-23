@@ -103,9 +103,37 @@ export const Login = () => {
     }
   };
 
-  //succesful ouuath response
-  const responseGoogle = (response) => {
-    console.log(response);
+  //succesful ouath response
+  const responseGoogle = async (response) => {
+    let data = {
+      email: response.profileObj.email,
+    };
+    const instance = axios.create({
+      withCredentials: true,
+    });
+
+    try {
+      if (response) {
+        const res = await instance.post(
+          "http://localhost:4000/api/oauth/login",
+          {
+            email: data.email,
+          }
+        );
+        //check for inexisting user
+        if (res.data) {
+          setToken(res.data.accesstoken);
+          toast({
+            title: "LogIn Successfull!",
+            status: "success",
+            duration: 3000,
+          });
+          router.push("/customer/account");
+        }
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
   };
   //failed oauth response
   const failureGoogle = (response) => {
@@ -181,7 +209,7 @@ export const Login = () => {
           <h3 style={{ color: "green" }}>{success}</h3>
 
           <div className="btn">
-            <Text as="div" display="flex">
+            <Text as="div" display="flex" flexDirection="column">
               <Button
                 isDisabled={Loading}
                 style={{ background: "var(--deepblue)" }}
@@ -199,6 +227,7 @@ export const Login = () => {
                 onSuccess={responseGoogle}
                 onFailure={failureGoogle}
                 cookiePolicy={"single_host_origin"}
+                style={{ fontSize: "0.8rem" }}
               >
                 Login With Google{" "}
               </GoogleLogin>
