@@ -306,7 +306,11 @@ export const Header = () => {
             </li>
           </ul>
           <h1>SHOP BY CATEGORY</h1>
-          <ul>
+          <ul
+            onClick={() => {
+              setIsOpen(!IsOpen);
+            }}
+          >
             <li>
               <Link href="/category?category=Gifts">
                 <a>Gifts</a>
@@ -340,7 +344,11 @@ export const Header = () => {
           </ul>
 
           <h1>SHOP BY PARTY</h1>
-          <ul>
+          <ul
+            onClick={() => {
+              setIsOpen(!IsOpen);
+            }}
+          >
             <li>
               <Link href="/party?category=House Party">
                 <a>House Party</a>
@@ -349,11 +357,6 @@ export const Header = () => {
             <li>
               <Link href="/party?category=Beach Party">
                 <a>Beach Party</a>
-              </Link>
-            </li>
-            <li>
-              <Link href="/party?category=Games">
-                <a>Games</a>
               </Link>
             </li>
             <li>
