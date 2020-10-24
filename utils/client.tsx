@@ -24,8 +24,7 @@ export let oAuthSignupLink = [
 ];
 
 //GOOGLE CLIENT ID
-export let CLIENT_ID =
-  "649409125932-gr4408gcakrmumvia7ju9k83c0o72cv1.apps.googleusercontent.com";
+export let CLIENT_ID = "";
 
 //GRAPHQL API ENDPOINTS
 let links = [
