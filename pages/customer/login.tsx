@@ -130,12 +130,34 @@ export const Login = () => {
         }
       }
     } catch (error) {
-      console.log(error.message);
+      if (error.message === "Network Error") {
+        toast({
+          title: "Check your internet connection",
+          status: "error",
+          duration: 3000,
+        });
+        return;
+      }
+      //user doesn't exist
+      if (error.message === "Request failed with status code 404") {
+        toast({
+          title: "You Need To Signup",
+          description: "Redirecting...",
+          status: "info",
+          duration: 3000,
+        });
+        router.push("/customer/register#google");
+      }
     }
   };
   //failed oauth response
   const failureGoogle = (response) => {
-    console.log(response);
+    toast({
+      title: "Google Error",
+      description: "Please Login the other way if this error persists",
+      status: "error",
+      duration: 3000,
+    });
   };
 
   return (

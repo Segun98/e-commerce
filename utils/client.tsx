@@ -39,5 +39,5 @@ export const graphQLClient = new GraphQLClient(endpoint, {
   // headers: {
   //   authorization: `bearer ${Token}`,
   // },
-  credentials: "include", //"omit"
+  credentials: "include",
 });

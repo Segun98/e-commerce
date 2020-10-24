@@ -133,12 +133,34 @@ export const Register = () => {
         }
       }
     } catch (error) {
-      console.log(error.message);
+      if (error.message === "Network Error") {
+        toast({
+          title: "Check your internet connection",
+          status: "error",
+          duration: 3000,
+        });
+        return;
+      }
+      //user exists
+      if (error.message === "Request failed with status code 404") {
+        toast({
+          title: "User Already Exists, Login ",
+          description: "Redirecting...",
+          status: "info",
+          duration: 3000,
+        });
+        router.push("/customer/login");
+      }
     }
   };
   //failed oauth response
   const failureGoogle = (response) => {
-    console.log(response);
+    toast({
+      title: "Google Error",
+      description: "Please Signup the other way if this error persists",
+      status: "error",
+      duration: 3000,
+    });
   };
 
   return (
@@ -303,7 +325,9 @@ export const Register = () => {
               >
                 Create Account
               </Button>
-              <span className="ml-2 mr-2 mt-2">Or</span>
+              <span className="ml-2 mr-2 mt-2" id="google">
+                Or
+              </span>
               <GoogleLogin
                 clientId={CLIENT_ID}
                 buttonText="Login"
