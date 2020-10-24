@@ -13,7 +13,7 @@ import {
 import { useForm } from "react-hook-form";
 import { request } from "graphql-request";
 import { SIGN_UP } from "./../../graphql/users";
-import { endpoint } from "../../utils/client";
+import { CLIENT_ID, endpoint, oAuthSignupLink } from "../../utils/client";
 import { useRouter } from "next/router";
 import { MutationSignUpArgs } from "../../Typescript/types";
 import Link from "next/link";
@@ -116,15 +116,12 @@ export const Register = () => {
 
     try {
       if (response) {
-        const res = await instance.post(
-          "http://localhost:4000/api/oauth/signup",
-          {
-            first_name: data.first_name,
-            last_name: data.last_name,
-            password: data.password,
-            email: data.email,
-          }
-        );
+        const res = await instance.post(oAuthSignupLink[0], {
+          first_name: data.first_name,
+          last_name: data.last_name,
+          password: data.password,
+          email: data.email,
+        });
         //check for EXISITING user
         if (res.data) {
           toast({
@@ -308,7 +305,7 @@ export const Register = () => {
               </Button>
               <span className="ml-2 mr-2 mt-2">Or</span>
               <GoogleLogin
-                clientId="649409125932-gr4408gcakrmumvia7ju9k83c0o72cv1.apps.googleusercontent.com"
+                clientId={CLIENT_ID}
                 buttonText="Login"
                 onSuccess={responseGoogle}
                 onFailure={failureGoogle}

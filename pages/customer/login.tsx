@@ -11,7 +11,7 @@ import {
   Text,
 } from "@chakra-ui/core";
 import { useForm } from "react-hook-form";
-import { graphQLClient } from "../../utils/client";
+import { graphQLClient, oAuthLoginLink } from "../../utils/client";
 import { useRouter } from "next/router";
 import { LOG_IN } from "../../graphql/users";
 import { LoginRes, MutationLogInArgs } from "../../Typescript/types";
@@ -22,6 +22,7 @@ import Head from "next/head";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { GoogleLogin } from "react-google-login";
+import { CLIENT_ID } from "./../../utils/client";
 
 export const Login = () => {
   const toast = useToast();
@@ -114,12 +115,9 @@ export const Login = () => {
 
     try {
       if (response) {
-        const res = await instance.post(
-          "http://localhost:4000/api/oauth/login",
-          {
-            email: data.email,
-          }
-        );
+        const res = await instance.post(oAuthLoginLink[0], {
+          email: data.email,
+        });
         //check for inexisting user
         if (res.data) {
           setToken(res.data.accesstoken);
@@ -222,7 +220,7 @@ export const Login = () => {
 
               <span className="ml-2 mr-2 mt-2">Or</span>
               <GoogleLogin
-                clientId="649409125932-gr4408gcakrmumvia7ju9k83c0o72cv1.apps.googleusercontent.com"
+                clientId={CLIENT_ID}
                 buttonText="Login"
                 onSuccess={responseGoogle}
                 onFailure={failureGoogle}
