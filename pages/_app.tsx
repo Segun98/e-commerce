@@ -31,6 +31,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <UserProvider>
           <ThemeProvider>
             <CSSReset />
+            {/* GLOBAL HEAD TAGS  */}
             <Head>
               <meta
                 name="viewport"
@@ -38,8 +39,10 @@ function MyApp({ Component, pageProps }: AppProps) {
               />
               <meta name="theme-color" content="#02247a" />
             </Head>
+            {/* COMPONENTS  */}
             <Component {...pageProps} />
           </ThemeProvider>
+          {/* GLOBAL STYLES  */}
           <style jsx global>{`
             :root {
               --box: 0 1px 6px 0;
