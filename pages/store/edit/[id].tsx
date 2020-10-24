@@ -285,7 +285,9 @@ const Edit = ({ product, error }: Iprops) => {
                               setCategory(e.target.value);
                             }}
                           >
-                            <option defaultValue="">--select--</option>
+                            <option defaultValue={`${category}`}>
+                              {category}
+                            </option>
                             <option defaultValue="Cakes">Cakes</option>
                             <option defaultValue="Games">Games</option>
                             <option defaultValue="Drinks">Drinks</option>
@@ -306,7 +308,9 @@ const Edit = ({ product, error }: Iprops) => {
                               setPartyCategory(e.target.value);
                             }}
                           >
-                            <option defaultValue="">--select--</option>
+                            <option defaultValue={`${partyCategory}`}>
+                              {partyCategory}
+                            </option>
                             <option defaultValue="Birthday Party">
                               Birthday Party
                             </option>
