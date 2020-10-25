@@ -63,9 +63,15 @@ export const Login = () => {
       const res = await graphQLClient.request(LOG_IN, variables);
       const data: LoginRes = res.logIn;
 
-      // Cookies.set("role", data.role, {
-      //   expires: 7,
-      // });
+      //setting cookies client side, should be done over server, but i ran into heroku/vercel problems in production
+      Cookies.set("role", data.role, {
+        expires: 7,
+      });
+
+      Cookies.set("ecom", data.refreshtoken, {
+        expires: 7,
+        // secure: true,
+      });
 
       if (data) {
         setLoading(false);
@@ -118,6 +124,17 @@ export const Login = () => {
         const res = await instance.post(oAuthLoginLink[0], {
           email: data.email,
         });
+
+        //setting cookies client side, should be done over server, but i ran into heroku/vercel problems in production
+        Cookies.set("role", res.data.role, {
+          expires: 7,
+        });
+
+        Cookies.set("ecom", res.data.refreshtoken, {
+          expires: 7,
+          // secure: true,
+        });
+
         //check for inexisting user
         if (res.data) {
           setToken(res.data.accesstoken);

@@ -190,6 +190,8 @@ export type Mutation = {
   createOrder?: Maybe<CustomRes>;
   cancelOrder?: Maybe<CustomRes>;
   acceptOrder?: Maybe<CustomRes>;
+  completeOrder?: Maybe<CustomRes>;
+  cancelOrderAdmin?: Maybe<CustomRes>;
 };
 
 
@@ -313,6 +315,16 @@ export type MutationAcceptOrderArgs = {
   id: Scalars['ID'];
 };
 
+
+export type MutationCompleteOrderArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type MutationCancelOrderAdminArgs = {
+  id: Scalars['ID'];
+};
+
 export type CustomRes = {
   __typename?: 'customRes';
   message?: Maybe<Scalars['String']>;
@@ -320,6 +332,7 @@ export type CustomRes = {
 
 export type LoginRes = {
   __typename?: 'loginRes';
+  refreshtoken?: Maybe<Scalars['String']>;
   accesstoken?: Maybe<Scalars['String']>;
   role?: Maybe<Scalars['String']>;
 };

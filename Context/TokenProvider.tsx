@@ -31,10 +31,21 @@ export const TokenProvider = ({ children }) => {
     });
 
     try {
-      const res = await instance.post(restLink[0]);
-      // const res = await instance.post(`http://localhost:4000/api/refreshtoken`);
+      const res = await instance.post(restLink[0], {
+        rToken: Cookies.get("ecom"),
+      });
+
       if (res.data) {
-        setToken(res.data.accessToken);
+        //setting cookies client side, should be done over server, but i ran into heroku/vercel problems in production
+        Cookies.set("role", res.data.role, {
+          expires: 7,
+        });
+
+        Cookies.set("ecom", res.data.refreshtoken, {
+          expires: 7,
+          // secure: true,
+        });
+        setToken(res.data.accesstoken);
       }
     } catch (error) {
       if (error.message === "Request failed with status code 401") {

@@ -18,6 +18,7 @@ export const SIGN_UP = `
 export const LOG_IN = `
   mutation logIn($email: String!, $password: String!){
       logIn(email: $email, password: $password){
+          refreshtoken
           accesstoken
           role
       }
