@@ -18,6 +18,7 @@ import { useUser } from "../../Context/UserProvider";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { cartItems } from "../../redux/features/cart/fetchCart";
+import { logoutLink } from "./../../utils/client";
 
 interface DefaultRootState {
   cart: any;
@@ -39,6 +40,24 @@ export const Header = () => {
     dispatch(cartItems(Token));
   }, [Token, cartLength]);
 
+  //close menu when you click outside of the menu
+  useEffect(() => {
+    if (typeof window === "object") {
+      const body = document.body;
+      body.addEventListener("click", (e) => {
+        //@ts-ignore
+        if (e.target.parentNode.nodeName === "NAV") {
+          return;
+        } else {
+          if (IsOpen) {
+            setIsOpen(false);
+            return;
+          }
+        }
+      });
+    }
+  }, [IsOpen]);
+
   function handleSearch(e) {
     e.preventDefault();
     if (search.trim() !== "") {
@@ -48,19 +67,23 @@ export const Header = () => {
 
   const handleLogout = async () => {
     if (window.confirm("Are you sure you want to LogOut?")) {
-      const instance = axios.create({
-        withCredentials: true,
-      });
+      Cookies.remove("ecom");
+      Cookies.remove("role");
+      router.reload();
 
-      try {
-        const res = await instance.post(`http://localhost:4000/api/logout`);
-        if (res.data) {
-          router.reload();
-          return;
-        }
-      } catch (error) {
-        console.log(error.message);
-      }
+      // const instance = axios.create({
+      //   withCredentials: true,
+      // });
+
+      // try {
+      //   const res = await instance.post(logoutLink[0]);
+      //   if (res.data) {
+      //     router.reload();
+      //     return;
+      //   }
+      // } catch (error) {
+      //   console.log(error.message);
+      // }
     }
   };
 
@@ -258,7 +281,7 @@ export const Header = () => {
             className="nav-profile"
             style={{ display: "flex", justifyContent: "space-between" }}
           >
-            {Token && role ? (
+            {role ? (
               <div style={{ cursor: "pointer" }}>
                 <div>Hi, {Token && User && User.first_name}</div>
               </div>
@@ -271,7 +294,7 @@ export const Header = () => {
             <button
               aria-roledescription="close menu"
               onClick={() => {
-                setIsOpen(!IsOpen);
+                setIsOpen(false);
               }}
             >
               <Icon name="close" color="white" />
@@ -279,31 +302,31 @@ export const Header = () => {
           </div>
           <h1>PROFILE</h1>
           <ul>
-            <li>
-              <Link href="/customer/account">
-                <a>Account</a>
-              </Link>
-            </li>
-            <li>
-              <Link href="/customer/cart">
-                <a>Cart</a>
-              </Link>
-            </li>
-            <li>
-              <Link href="/customer/orders">
-                <a>Orders</a>
-              </Link>
-            </li>
-            <li>
-              <Link href="/">
-                <a>Help</a>
-              </Link>
-            </li>
-            <li>
-              <Link href="/stores">
-                <a>Stores</a>
-              </Link>
-            </li>
+            <Link href="/customer/account">
+              <a>
+                <li>Account</li>
+              </a>
+            </Link>
+            <Link href="/customer/cart">
+              <a>
+                <li>Cart</li>
+              </a>
+            </Link>
+            <Link href="/customer/orders">
+              <a>
+                <li>Orders</li>
+              </a>
+            </Link>
+            <Link href="/">
+              <a>
+                <li>Help</li>
+              </a>
+            </Link>
+            <Link href="/stores">
+              <a>
+                <li>Stores</li>
+              </a>
+            </Link>
           </ul>
           <h1>SHOP BY CATEGORY</h1>
           <ul
@@ -311,36 +334,37 @@ export const Header = () => {
               setIsOpen(!IsOpen);
             }}
           >
-            <li>
-              <Link href="/category?category=Gifts">
-                <a>Gifts</a>
-              </Link>
-            </li>
-            <li>
-              <Link href="/category?category=Decorations">
-                <a>Decorations</a>
-              </Link>
-            </li>
-            <li>
-              <Link href="/category?category=Games">
-                <a>Games</a>
-              </Link>
-            </li>
-            <li>
-              <Link href="/category?category=Drinks">
-                <a>Drinks</a>
-              </Link>
-            </li>
-            <li>
-              <Link href="/category?category=Props">
-                <a>Party Props</a>
-              </Link>
-            </li>
-            <li>
-              <Link href="/category?category=Cakes">
-                <a>Cakes</a>
-              </Link>
-            </li>
+            <Link href="/category?category=Gifts">
+              <a>
+                <li>Gifts</li>
+              </a>
+            </Link>
+
+            <Link href="/category?category=Decorations">
+              <a>
+                <li>Decorations</li>
+              </a>
+            </Link>
+            <Link href="/category?category=Games">
+              <a>
+                <li>Games</li>
+              </a>
+            </Link>
+            <Link href="/category?category=Drinks">
+              <a>
+                <li>Drinks</li>
+              </a>
+            </Link>
+            <Link href="/category?category=Props">
+              <a>
+                <li>Party Props</li>
+              </a>
+            </Link>
+            <Link href="/category?category=Cakes">
+              <a>
+                <li>Cakes</li>
+              </a>
+            </Link>
           </ul>
 
           <h1>SHOP BY PARTY</h1>
@@ -349,31 +373,31 @@ export const Header = () => {
               setIsOpen(!IsOpen);
             }}
           >
-            <li>
-              <Link href="/party?category=House Party">
-                <a>House Party</a>
-              </Link>
-            </li>
-            <li>
-              <Link href="/party?category=Beach Party">
-                <a>Beach Party</a>
-              </Link>
-            </li>
-            <li>
-              <Link href="/party?category=Birthday Party">
-                <a>Birthdays</a>
-              </Link>
-            </li>
-            <li>
-              <Link href="/party?category=Outdoors">
-                <a>Outdoors</a>
-              </Link>
-            </li>
-            <li>
-              <Link href="/party?category=Indoors">
-                <a>Indoors</a>
-              </Link>
-            </li>
+            <Link href="/party?category=House Party">
+              <a>
+                <li>House Party</li>
+              </a>
+            </Link>
+            <Link href="/party?category=Beach Party">
+              <a>
+                <li>Beach Party</li>
+              </a>
+            </Link>
+            <Link href="/party?category=Birthday Party">
+              <a>
+                <li>Birthdays</li>
+              </a>
+            </Link>
+            <Link href="/party?category=Outdoors">
+              <a>
+                <li>Outdoors</li>
+              </a>
+            </Link>
+            <Link href="/party?category=Indoors">
+              <a>
+                <li>Indoors</li>
+              </a>
+            </Link>
           </ul>
         </nav>
       </section>
