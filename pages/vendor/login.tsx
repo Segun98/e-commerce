@@ -49,9 +49,16 @@ export const Login = () => {
       setLoading(true);
       const res = await graphQLClient.request(LOG_IN, variables);
       const data: LoginRes = res.logIn;
-      // Cookies.set("role", data.role, {
-      //   expires: 7,
-      // });
+      //setting cookies client side, should be done over server, but i ran into heroku/vercel problems in production
+      Cookies.set("role", data.role, {
+        expires: 7,
+      });
+
+      Cookies.set("ecom", data.refreshtoken, {
+        expires: 7,
+        // secure: true,
+      });
+
       if (data) {
         setLoading(false);
         setToken(data.accesstoken);
