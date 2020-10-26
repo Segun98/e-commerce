@@ -34,7 +34,7 @@ export let logoutLink = [
 ];
 
 //GOOGLE CLIENT ID
-export let CLIENT_ID = "";
+export let CLIENT_ID = process.env.CLIENT_ID;
 
 //GRAPHQL API ENDPOINTS
 let links = [

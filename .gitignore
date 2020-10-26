@@ -35,6 +35,7 @@ yarn-error.log*
 .vercel
 
 #Environments
-/utils/client.tsx
 utils/client.tsx
-client.tsx
+
+#config
+next.config.js
