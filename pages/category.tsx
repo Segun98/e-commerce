@@ -173,22 +173,20 @@ export const Category = ({ products, error }: Iprops) => {
           font-weight: bold;
           font-size: 1rem;
           text-align: center;
-          margin: 10px 0;
+          margin: 10px 0 20px 0;
         }
         .category-wrap {
+          margin: auto;
+          width: 90%;
           display: grid;
           grid-template-columns: 1fr 1fr;
           gap: 8px;
-          margin: auto;
-          width: 90%;
         }
 
         .category-wrap .category-item {
           box-shadow: var(--box) var(--softgrey);
-          background: white;
           border-radius: 5px;
-          width: 150px;
-          padding: 3px;
+          margin: 0 5px;
         }
         .category-wrap .category-item a {
           display: flex;
@@ -210,6 +208,7 @@ export const Category = ({ products, error }: Iprops) => {
 
         .category-wrap .category-desc {
           margin: 5px 0;
+          padding: 3px;
           text-align: center;
           font-weight: bold;
         }
@@ -269,7 +268,6 @@ export const Category = ({ products, error }: Iprops) => {
           }
           .category-wrap .category-item {
             margin: 10px 14px;
-            padding: 5px;
           }
 
           .category-wrap .category-item img {
@@ -279,6 +277,7 @@ export const Category = ({ products, error }: Iprops) => {
 
           .category-item .category-desc {
             margin: 8px 0;
+            padding: 5px;
           }
         }
 

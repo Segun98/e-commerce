@@ -116,10 +116,10 @@ export const CustomerCart = () => {
       <div className="cart-page">
         {!loading && !Token && !role && (
           <div className="indicator">
-            <div>
-              <strong>
+            <div className="status">
+              <div>
                 Looks Like You're Not Logged in, Click Login to Use Cart
-              </strong>
+              </div>
               <br />
               <div
                 className="cart-unauthorised"
@@ -145,8 +145,8 @@ export const CustomerCart = () => {
         {/* vendors trying to access Cart  */}
         {role && role === "vendor" && !loading && (
           <div className="indicator">
-            <div>
-              <strong>Log In as a Customer To Add To Cart </strong>
+            <div className="status">
+              <div>Log In as a Customer To Add To Cart </div>
               <br />
               <div
                 className="cart-unauthorised"
@@ -272,6 +272,22 @@ export const CustomerCart = () => {
           color: white;
           padding: 10px 30px;
           margin-top: 20px;
+        }
+
+        /* notification */
+        .indicator {
+          margin: auto;
+          width: 90%;
+        }
+        .status {
+          padding: 10px;
+          border-radius: 10px;
+          font-size: 1.1rem;
+        }
+        @media only screen and (min-width: 700px) {
+          .indicator {
+            width: 70%;
+          }
         }
       `}</style>
     </Layout>

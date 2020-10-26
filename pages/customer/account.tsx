@@ -151,8 +151,8 @@ export const Account = () => {
       </Head>
       {!Token && !role && (
         <div className="indicator">
-          <div>
-            <strong>Looks Like You're Not Logged in</strong>
+          <div className="status">
+            <div>Looks Like You're Not Logged in</div>
             <br />
             <div style={{ textAlign: "center" }}>
               <div className="unauthorised">
@@ -177,11 +177,11 @@ export const Account = () => {
       {/* vendors trying to access this Page  */}
       {Token && role === "vendor" && (
         <div className="indicator">
-          <div>
-            <strong>
+          <div className="status">
+            <div>
               This Page is Unauthorised For Vendors, Login as a Customer or
               Visit Your Dashboard{" "}
-            </strong>
+            </div>
             <br />
             <div style={{ textAlign: "center" }}>
               <div className="unauthorised">
@@ -337,7 +337,6 @@ export const Account = () => {
 
         .account-wrap h1 {
           font-weight: bold;
-          font-style: italic;
           margin: 20px 0;
           font-size: 1.2rem;
         }
@@ -346,7 +345,6 @@ export const Account = () => {
           font-weight: bold;
           margin: 5px 0;
           color: Var(--deepblue);
-          font-style: italic;
         }
 
         .account-wrap h2 {
@@ -361,7 +359,6 @@ export const Account = () => {
           font-weight: bold;
           margin: 5px 0;
           color: Var(--deepblue);
-          font-style: italic;
         }
         form div {
           margin: 10px 0;
@@ -402,6 +399,22 @@ export const Account = () => {
 
         .saved-desc p {
           font-weight: bold;
+        }
+
+        /* notification */
+        .indicator {
+          margin: auto;
+          width: 90%;
+        }
+        .status {
+          padding: 10px;
+          border-radius: 10px;
+          font-size: 1.1rem;
+        }
+        @media only screen and (min-width: 700px) {
+          .indicator {
+            width: 70%;
+          }
         }
 
         @media only screen and (min-width: 700px) {

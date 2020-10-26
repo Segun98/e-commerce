@@ -11,6 +11,7 @@
         .headline-wrap {
             display: flex;
             justify-content: space-between;
+            align-items: center;
             margin: 10px 0 10px 30px;
         }
 
@@ -23,7 +24,7 @@
         .order-status {
             h1 {
                 color: $deepblue;
-                font-style: italic;
+                // font-style: italic;
                 font-weight: bold;
                 margin: 10px 0 10px 0;
             }
@@ -102,7 +103,6 @@
 
             h1 {
                 color: $deepblue;
-                font-style: italic;
                 font-weight: bold;
             }
         }

@@ -1,4 +1,5 @@
 import { Button, useToast } from "@chakra-ui/core";
+import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useEffect, useRef, useState } from "react";
@@ -64,6 +65,9 @@ export const Search = ({ products, error }: Iprops) => {
 
   return (
     <Layout>
+      <Head>
+        <title>Search | PartyStore</title>
+      </Head>
       <div>
         <>
           {error &&
@@ -158,14 +162,14 @@ export const Search = ({ products, error }: Iprops) => {
           font-weight: bold;
           font-size: 1rem;
           text-align: center;
-          margin: 10px 0;
+          margin: 10px 0 20px 0;
         }
         .results-wrap {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 8px;
           margin: auto;
           width: 90%;
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 10px;
         }
         .paginate {
           margin: 10px auto;
@@ -173,10 +177,8 @@ export const Search = ({ products, error }: Iprops) => {
         }
         .results-wrap .search-item {
           box-shadow: var(--box) var(--softgrey);
-          background: white;
           border-radius: 5px;
-          width: 150px;
-          padding: 3px;
+          margin: 0 5px;
         }
         .results-wrap .search-item a {
           display: flex;
@@ -186,7 +188,7 @@ export const Search = ({ products, error }: Iprops) => {
         }
 
         .results-wrap .search-item img {
-          min-width: 100px;
+          width: 100%;
           height: 100px;
           object-fit: contain;
           border-radius: 5px;
@@ -198,6 +200,7 @@ export const Search = ({ products, error }: Iprops) => {
 
         .results-wrap .search-desc {
           margin: 5px 0;
+          padding: 3px;
           text-align: center;
           font-weight: bold;
         }
@@ -209,6 +212,12 @@ export const Search = ({ products, error }: Iprops) => {
           font-size: 0.9rem;
         }
 
+        @media only screen and (min-width: 400px) {
+          .results-wrap {
+            width: 80%;
+          }
+        }
+
         @media only screen and (min-width: 700px) {
           .search-results h1 {
             margin: 15px 0;
@@ -217,6 +226,7 @@ export const Search = ({ products, error }: Iprops) => {
           .results-wrap {
             grid-template-columns: repeat(4, 1fr);
             column-gap: 10px;
+            width: 90%;
           }
           .paginate {
             margin-top: 20px;
@@ -254,16 +264,16 @@ export const Search = ({ products, error }: Iprops) => {
           }
           .results-wrap .search-item {
             margin: 10px 14px;
-            padding: 5px;
           }
 
           .results-wrap .search-item img {
             object-fit: contain;
-            width: 200px;
+            width: 100%;
           }
 
           .search-item .search-desc {
             margin: 8px 0;
+            padding: 5px;
           }
         }
 

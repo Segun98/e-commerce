@@ -483,9 +483,16 @@ Class names accross components can be the same but they are wrapped by a unique 
           justify-content: center;
 }
 
+@media only screen and (min-width: 400px) {
+  .home-page .categories .categories-wrap {
+    width: 80%;
+  }
+}
+
 @media only screen and (min-width: 700px) {
   .home-page .categories .categories-wrap {
     gap: 15px;
+    width: 90%;
   }
   .home-page .categories .categories-wrap a:hover {
     -webkit-transform: scale(1.02);
@@ -1243,10 +1250,16 @@ Class names accross components can be the same but they are wrapped by a unique 
       -ms-flex-pack: justify;
           justify-content: space-between;
   margin: 20px 20px;
+  font-size: 0.9rem;
+}
+
+@media only screen and (min-width: 700px) {
+  .main-store header {
+    font-size: 1rem;
+  }
 }
 
 .main-store header .store-name {
-  font-size: 1.1rem;
   font-weight: bold;
   color: #02247a;
 }
@@ -1265,7 +1278,7 @@ Class names accross components can be the same but they are wrapped by a unique 
 }
 
 .main-store header .store-location {
-  padding-bottom: 10px;
+  padding-bottom: 2px;
 }
 
 .main-store header .store-location i {
@@ -1276,7 +1289,8 @@ Class names accross components can be the same but they are wrapped by a unique 
 
 .main-store .store-products {
   margin: auto;
-  width: 90%;
+  width: 85%;
+  padding-bottom: 50px;
 }
 
 .main-store .store-products_head {
@@ -1299,24 +1313,30 @@ Class names accross components can be the same but they are wrapped by a unique 
   display: grid;
   -ms-grid-columns: 1fr 1fr;
       grid-template-columns: 1fr 1fr;
+  -webkit-column-gap: 10px;
+          column-gap: 10px;
+  row-gap: 20px;
 }
 
 .main-store .store-products .store-item {
-  -webkit-box-shadow: var(--box) var(--softgrey);
-          box-shadow: var(--box) var(--softgrey);
-  background: white;
+  -webkit-box-shadow: 0 1px 6px 0 rgba(32, 33, 36, 0.28);
+          box-shadow: 0 1px 6px 0 rgba(32, 33, 36, 0.28);
   border-radius: 5px;
   width: 150px;
-  padding: 3px;
   position: relative;
   margin-bottom: 5px;
 }
 
 .main-store .store-products .edit-btn {
   position: absolute;
-  top: 0;
-  right: 0;
-  margin-right: -20px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  width: 150px;
+  font-size: 0.8rem;
+  padding: 2px 0;
 }
 
 .main-store .store-products .store-item a {
@@ -1336,11 +1356,10 @@ Class names accross components can be the same but they are wrapped by a unique 
 }
 
 .main-store .store-products .store-item img {
-  width: 100px;
+  width: 100%;
   height: 100px;
   -o-object-fit: contain;
      object-fit: contain;
-  border-radius: 5px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -1360,6 +1379,7 @@ Class names accross components can be the same but they are wrapped by a unique 
   margin: 5px 0;
   text-align: center;
   font-weight: bold;
+  padding: 3px;
 }
 
 .main-store .store-products .store-desc h2 {
@@ -1371,7 +1391,7 @@ Class names accross components can be the same but they are wrapped by a unique 
 
 @media only screen and (min-width: 400px) {
   .main-store .store-products {
-    width: 85%;
+    width: 80%;
   }
 }
 
@@ -1398,8 +1418,12 @@ Class names accross components can be the same but they are wrapped by a unique 
     width: 200px;
   }
   .main-store .store-products .store-item img {
-    width: 150px;
     height: 150px;
+  }
+  .main-store .store-products .edit-btn {
+    padding: 7px 0;
+    font-size: 1rem;
+    width: 200px;
   }
 }
 
@@ -1412,25 +1436,21 @@ Class names accross components can be the same but they are wrapped by a unique 
     margin: 35px auto;
     -ms-grid-columns: (1fr)[4];
         grid-template-columns: repeat(4, 1fr);
+    -webkit-column-gap: 1px;
+            column-gap: 1px;
   }
   .main-store .store-products .store-item {
     margin: 10px 14px;
-    padding: 5px;
-  }
-  .main-store .store-products .store-item img {
-    -o-object-fit: contain;
-       object-fit: contain;
-    width: 200px;
   }
   .main-store .store-products .store-desc {
     margin: 8px 0;
   }
 }
 
-@media only screen and (min-width: 2000px) {
+@media only screen and (min-width: 1800px) {
   .main-store .store-products_wrap {
-    -ms-grid-columns: (1fr)[6];
-        grid-template-columns: repeat(6, 1fr);
+    -ms-grid-columns: (1fr)[8];
+        grid-template-columns: repeat(8, 1fr);
   }
 }
 
@@ -1459,6 +1479,9 @@ Class names accross components can be the same but they are wrapped by a unique 
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   margin: 10px 0 10px 30px;
 }
 
@@ -1470,7 +1493,6 @@ Class names accross components can be the same but they are wrapped by a unique 
 
 .dashboard main .order-status h1 {
   color: #02247a;
-  font-style: italic;
   font-weight: bold;
   margin: 10px 0 10px 0;
 }
@@ -1552,7 +1574,6 @@ Class names accross components can be the same but they are wrapped by a unique 
 
 .dashboard main .recent-orders h1 {
   color: #02247a;
-  font-style: italic;
   font-weight: bold;
 }
 

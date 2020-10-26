@@ -7,29 +7,15 @@ import { Layout } from "../components/Layout";
 import Carousel from "react-bootstrap/Carousel";
 import { Commas } from "../utils/helpers";
 import { PurchaseSteps } from "../components/customer/PurchaseSteps";
-import { graphQLClient } from "../utils/client";
+import { useQuery } from "./../components/useQuery";
 
-export async function getServerSideProps() {
-  try {
-    const res = await graphQLClient.request(PRODUCTS, { limit: 5 });
-    const products = await res.products;
-    return {
-      props: {
-        products,
-      },
-    };
-  } catch (err) {
-    return {
-      props: {
-        error: err.message,
-      },
-    };
-  }
-}
-
-const Home = ({ products, error }) => {
+const Home = () => {
   //Featured Products Section Scroll
   const scrollRef = useRef(null);
+
+  //fetch products with custom hook
+  const [data, error] = useQuery(PRODUCTS, { limit: 5 });
+  const products = data ? data.products : [];
 
   const featured_images = [
     "product3.png",

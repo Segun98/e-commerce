@@ -48,8 +48,11 @@ export const Orders = () => {
       </div>
 
       <style jsx>{`
+        .orders-layout {
+          display: flex;
+        }
         .order-status {
-          margin: 20px 0;
+          margin: 30px 0;
         }
         .orders-page h1 {
           margin: 10px 0 10px 0;
@@ -57,13 +60,10 @@ export const Orders = () => {
           font-weight: bold;
           font-size: 1.2rem;
         }
-        .orders-layout {
-          display: flex;
-        }
 
         .orders-layout main {
           margin: 0 auto;
-          width: 76%;
+          width: 90%;
         }
 
         @media only screen and (min-width: 700px) {

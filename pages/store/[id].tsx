@@ -146,15 +146,21 @@ const Store = ({ data, error }: Iprops) => {
         <Navigation />
         {/* store doesn't exist */}
         {error === "404" && (
-          <div style={{ textAlign: "center", marginTop: "30px" }}>
-            <strong>
-              Oops!! This Store Could Not Be Found, Please Check The URL
-            </strong>
+          <div className="indicator">
+            <div className="status">
+              Oops!! This store could not be found, please ensure the URL is
+              correct.{" "}
+              <Link href="/stores">
+                <a style={{ color: "lightgreen", textDecoration: "underline" }}>
+                  Explore Stores <Icon name="external-link" />{" "}
+                </a>
+              </Link>
+            </div>
           </div>
         )}
         {!data && <p className="space"></p>}
 
-        {/* Only show the store if VENDOR IS ONLINE and IS NOT PENDING  */}
+        {/* USER/STORE IS PENDING  */}
         {!error && data && data.pending === "true" ? (
           <div className="indicator">
             <div className="status">
@@ -163,7 +169,8 @@ const Store = ({ data, error }: Iprops) => {
                 : "This Store Is Currently Under Review"}
             </div>
           </div>
-        ) : data && data.online === "true" ? (
+        ) : //ELSE IF USER IS NOT PENDING, CHECK IF THEY ARE ONLINE
+        !error && data && data.online === "true" ? (
           <section className="main-store">
             <header>
               <div>
@@ -209,6 +216,31 @@ const Store = ({ data, error }: Iprops) => {
               <div className="store-products_head">
                 <h1>{data && data.usersProducts.length} Products In Store</h1>
               </div>
+
+              {/* IF NO PRODUCT IN STORE */}
+              <div>
+                {data && data.usersProducts.length === 0 && (
+                  <div>
+                    {/* MESSAGE FOR STORE OWNER */}
+                    {data.id === data.jwt_user_id ? (
+                      <div
+                        className="status"
+                        style={{ color: "black", background: "white" }}
+                      >
+                        Your Store is empty, Add a new product,{" "}
+                        <Link href="/store/new-item">
+                          <a style={{ color: "var(--deepblue)" }}>Click Here</a>
+                        </Link>
+                      </div>
+                    ) : (
+                      <p className="space"></p>
+                    )}
+                  </div>
+                )}
+              </div>
+
+              {/* STORE PRODUCTS  */}
+
               <div className="store-products_wrap">
                 {data &&
                   data.usersProducts.map((p, index) => (
@@ -226,8 +258,7 @@ const Store = ({ data, error }: Iprops) => {
                           </div>
                         </a>
                       </Link>
-
-                      {/* ONLY SHOW EDIT BUTTON TO STORE OWNER */}
+                      {/* ONLY SHOW PRODUCT EDIT BUTTON TO STORE OWNER */}
 
                       {data && data.id === data.jwt_user_id ? (
                         <div className="edit-btn">
@@ -238,18 +269,21 @@ const Store = ({ data, error }: Iprops) => {
                             }}
                           >
                             <Link href={`/store/edit/${p.id}`}>
-                              <a>
-                                <Icon name="edit" />
-                              </a>
+                              <a>Edit</a>
+                              {/* <Icon name="edit" /> */}
                             </Link>
                           </button>
-                          <br />
                           <button
                             onClick={() =>
                               handleDelete(p.id, p.creator_id, p.name)
                             }
+                            style={{
+                              color: "red",
+                              fontWeight: "bold",
+                            }}
                           >
-                            <Icon name="delete" />
+                            Delete
+                            {/* <Icon name="delete" /> */}
                           </button>
                         </div>
                       ) : (
@@ -260,28 +294,32 @@ const Store = ({ data, error }: Iprops) => {
               </div>
             </div>
           </section>
-        ) : data && data.jwt_user_id === data.id ? (
-          <div className="indicator">
-            <div className=" status">
-              You Are Currently OFFLINE, You will no longer recieve any orders.
-              Visit Your Account page to return ONLINE
-            </div>
-          </div>
         ) : (
-          <div className="indicator">
-            <div className=" status">
-              This Store is currenlty OFFLINE, explore other stores
-              <Link href="/stores">
-                <a>
-                  {" "}
-                  Here
-                  <Icon name="external-link" />
-                </a>
-              </Link>
+          //OFFLINE SCREEN
+          <div className="indicator" style={{ display: error ? "none" : "" }}>
+            <div className="status">
+              {data && data.jwt_user_id === data.id ? (
+                "You are currently OFFLINE, you will no longer recieve any orders. Visit your account page to return ONLINE"
+              ) : (
+                <div>
+                  This Store is currently OFFLINE,{" "}
+                  <Link href="/stores">
+                    <a
+                      style={{
+                        color: "lightgreen",
+                        textDecoration: "underline",
+                      }}
+                    >
+                      Explore Stores <Icon name="external-link" />{" "}
+                    </a>
+                  </Link>
+                </div>
+              )}
             </div>
           </div>
         )}
       </div>
+
       <section style={{ background: "white" }}>
         <Footer />
       </section>

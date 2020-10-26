@@ -61,7 +61,7 @@ export const Dashboard: React.FC = () => {
           <div className="headline-wrap">
             <h1 className="headline"> Your Dashboard</h1>
             <Button
-              size="sm"
+              size="xs"
               style={{ background: "var(--deepblue)", color: "white" }}
             >
               <Link href="/store/new-item">
@@ -77,6 +77,7 @@ export const Dashboard: React.FC = () => {
                 <div className="icon">
                   <Icon name="repeat" color="#805AD5" size="30px" />
                 </div>
+                <hr />
                 <h2>{orders.length}</h2>
                 <p>Total Orders</p>
               </div>
@@ -86,13 +87,13 @@ export const Dashboard: React.FC = () => {
                   className="icon"
                   style={{
                     color: "#41C7BF",
-                    // fontSize: "30px",
                     fontWeight: "bolder",
                   }}
                 >
                   {/* &#42; */}
                   <Icon name="triangle-up" color="#41C7BF" size="30px" />
                 </div>
+                <hr />
                 <h2>{pending.length}</h2>
                 <p>Pending Orders</p>
               </div>
@@ -114,6 +115,7 @@ export const Dashboard: React.FC = () => {
                     size="30px"
                   />
                 </div>
+                <hr />
                 <h2>{canceled.length}</h2>
                 <p>Canceled Orders</p>
               </div>
@@ -126,6 +128,7 @@ export const Dashboard: React.FC = () => {
                     size="30px"
                   />
                 </div>
+                <hr />
                 <h2>&#8358; {Commas(revenue)}</h2>
                 <p>Revenue</p>
               </div>
@@ -179,7 +182,7 @@ export const Dashboard: React.FC = () => {
               </div>
 
               <Button
-                size="sm"
+                size="xs"
                 style={{ background: "var(--deepblue)", color: "white" }}
               >
                 <Link href="/vendor/orders">

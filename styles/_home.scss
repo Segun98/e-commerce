@@ -390,9 +390,16 @@
         }
 
 
+        @media only screen and (min-width:400px) {
+            .categories-wrap {
+                width: 80%;
+            }
+        }
+
         @media only screen and (min-width:700px) {
             .categories-wrap {
                 gap: 15px;
+                width: 90%;
 
                 a {
                     &:hover {

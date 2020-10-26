@@ -5,6 +5,7 @@ import Cookies from "js-cookie";
 import { useUser } from "../../Context/UserProvider";
 import { useRouter } from "next/router";
 import axios from "axios";
+import { logoutLink } from "./../../utils/client";
 
 export const Navigation = () => {
   const role = Cookies.get("role");
@@ -14,18 +15,21 @@ export const Navigation = () => {
 
   const handleLogout = async () => {
     if (window.confirm("Are you sure you want to LogOut?")) {
-      const instance = axios.create({
-        withCredentials: true,
-      });
+      Cookies.remove("ecom");
+      Cookies.remove("role");
+      router.reload();
+      // const instance = axios.create({
+      //   withCredentials: true,
+      // });
 
-      try {
-        const res = await instance.post(`http://localhost:4000/api/logout`);
-        if (res.data) {
-          router.reload();
-        }
-      } catch (error) {
-        console.log(error.message);
-      }
+      // try {
+      //   const res = await instance.post(logoutLink[0]);
+      //   if (res.data) {
+      //     router.reload();
+      //   }
+      // } catch (error) {
+      //   console.log(error.message);
+      // }
     }
   };
 
@@ -218,7 +222,7 @@ export const Navigation = () => {
           margin-right: -45px;
         }
         .vendor-menu-btn img {
-          width: 40px;
+          width: 35px;
         }
 
         .logout-btn {
