@@ -17,7 +17,7 @@ export const Orders = () => {
           <div className="order-status">
             <List>
               <ListItem>
-                * <strong>Pending</strong> signifies that you have not ACCEPTED
+                * <strong>Pending</strong> signifies that you have NOT ACCEPTED
                 an Order
               </ListItem>
               <ListItem>
