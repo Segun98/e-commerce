@@ -9,10 +9,20 @@ import {
 } from "../../../graphql/customer";
 import { Cart, MutationCreateOrderArgs } from "../../../Typescript/types";
 import { useQuery } from "./../../../components/useQuery";
-import { Button, Icon, Input, Textarea, useToast } from "@chakra-ui/core";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  Button,
+  Icon,
+  Input,
+  Textarea,
+  useToast,
+} from "@chakra-ui/core";
 import { Commas } from "../../../utils/helpers";
 import { useMutation } from "../../../utils/useMutation";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 export async function getServerSideProps({ params }) {
   const variables = {
@@ -120,6 +130,29 @@ const Checkout = ({ variables }) => {
       </Head>
       <div className="checkout-page">
         {error || (!cart && <div className="space"></div>)}
+        {cart && (
+          <div className="bread-crumb">
+            <Breadcrumb
+              separator={<Icon color="gray.300" name="chevron-right" />}
+            >
+              <BreadcrumbItem>
+                <Link href={`/product/${cart.product.name_slug}`}>
+                  <a>{cart.product.name}</a>
+                </Link>
+              </BreadcrumbItem>
+
+              <BreadcrumbItem>
+                <Link href={`/customer/cart`}>
+                  <a>Cart</a>
+                </Link>
+              </BreadcrumbItem>
+
+              <BreadcrumbItem isCurrentPage>
+                <BreadcrumbLink>Checkout</BreadcrumbLink>
+              </BreadcrumbItem>
+            </Breadcrumb>
+          </div>
+        )}
         {cart && (
           <div className="checkout-wrap">
             <div className="delivery-info">
@@ -293,10 +326,19 @@ const Checkout = ({ variables }) => {
           font-size: 0.8rem;
           padding: 5px 0;
         }
+        .bread-crumb {
+          margin: auto;
+          width: 90%;
+          padding-top: 10px;
+        }
 
         @media only screen and (min-width: 700px) {
           td {
             padding: 5px 10px;
+          }
+          .bread-crumb {
+            width: 80%;
+            padding-top: 15px;
           }
         }
         @media only screen and (min-width: 1000px) {
@@ -311,6 +353,15 @@ const Checkout = ({ variables }) => {
           }
           th {
             font-size: 1rem;
+          }
+          .bread-crumb {
+            width: 70%;
+          }
+        }
+
+        @media only screen and (min-width: 1800px) {
+          .bread-crumb {
+            width: 50%;
           }
         }
       `}</style>

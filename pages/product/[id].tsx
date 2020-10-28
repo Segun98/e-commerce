@@ -177,27 +177,21 @@ const Product = ({ product, error }: response) => {
                 separator={<Icon color="gray.300" name="chevron-right" />}
               >
                 <BreadcrumbItem>
-                  <BreadcrumbLink>
-                    <Link href="/">
-                      <a>Home</a>
-                    </Link>
-                  </BreadcrumbLink>
+                  <Link href="/">
+                    <a>Home</a>
+                  </Link>
                 </BreadcrumbItem>
 
                 <BreadcrumbItem>
-                  <BreadcrumbLink>
-                    <Link href={`/party?category=${product.party_category}`}>
-                      <a>{product.party_category}</a>
-                    </Link>
-                  </BreadcrumbLink>
+                  <Link href={`/party?category=${product.party_category}`}>
+                    <a>{product.party_category}</a>
+                  </Link>
                 </BreadcrumbItem>
 
                 <BreadcrumbItem>
-                  <BreadcrumbLink>
-                    <Link href={`/category?category=${product.category}`}>
-                      <a>{product.category}</a>
-                    </Link>
-                  </BreadcrumbLink>
+                  <Link href={`/category?category=${product.category}`}>
+                    <a>{product.category}</a>
+                  </Link>
                 </BreadcrumbItem>
 
                 <BreadcrumbItem isCurrentPage>
