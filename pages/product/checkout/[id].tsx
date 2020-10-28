@@ -160,6 +160,7 @@ const Checkout = ({ variables }) => {
                 <div className="head">
                   <h1>Address Details</h1>
                   <Icon
+                    aria-label="edit address"
                     name="edit"
                     cursor="pointer"
                     onClick={() => setEditMode(!editMode)}
@@ -176,6 +177,7 @@ const Checkout = ({ variables }) => {
                   Shipping Address: <span>{address}</span>{" "}
                 </p>
                 <Input
+                  aria-label="address"
                   display={editMode ? "block" : "none"}
                   type="text"
                   name="address"
@@ -187,9 +189,10 @@ const Checkout = ({ variables }) => {
                   Phone Number: <span>{phone}</span>{" "}
                 </p>
                 <Input
+                  aria-label="phone number"
                   display={editMode ? "block" : "none"}
                   type="tel"
-                  name="address"
+                  name="phone number"
                   placeholder="update Your Phone Number"
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}

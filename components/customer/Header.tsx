@@ -94,6 +94,8 @@ export const Header = () => {
           <div className="header-wrap">
             <div className="header-wrap_left">
               <button
+                aria-label="menu"
+                title="menu"
                 className="hamburger"
                 onClick={() => {
                   setIsOpen(!IsOpen);
@@ -103,7 +105,7 @@ export const Header = () => {
               </button>
               <div className="logo">
                 <Link href="/">
-                  <a>PartyStore</a>
+                  <a title="logo">PartyStore</a>
                 </Link>
               </div>
             </div>
@@ -121,6 +123,8 @@ export const Header = () => {
                     color="blue.400"
                   />
                   <Input
+                    aria-label="menu"
+                    title="search"
                     type="search"
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
@@ -235,9 +239,9 @@ export const Header = () => {
 
               <div className="cart-icon">
                 <Link href="/customer/cart">
-                  <a>
+                  <a title="visit cart">
                     <aside>{cartLength === 0 ? null : cartLength}</aside>
-                    <img src="/shopping-cart.svg" alt="cart-icon" />
+                    <img src="/shopping-cart.svg" alt="cart icon" />
                   </a>
                 </Link>
               </div>
@@ -260,6 +264,8 @@ export const Header = () => {
                     color="blue.400"
                   />
                   <Input
+                    aria-label="search"
+                    title="search"
                     type="search"
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}

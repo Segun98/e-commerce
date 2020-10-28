@@ -224,6 +224,8 @@ export const CustomerCart = () => {
                       <p className="price">&#8358; {Commas(c.product.price)}</p>
                       <div className="qty-btn">
                         <button
+                          title="decrement quantity"
+                          aria-label="decrement quantity"
                           aria-roledescription="decrement quantity"
                           onClick={() => {
                             if (c.quantity === 1) {
@@ -236,6 +238,8 @@ export const CustomerCart = () => {
                         </button>
                         <aside className="cart-item-qty">{c.quantity}</aside>
                         <button
+                          title="increment quantity"
+                          aria-label="increment quantity"
                           aria-roledescription="increment quantity"
                           onClick={() => {
                             if (c.quantity === c.product.available_qty) {
@@ -262,7 +266,9 @@ export const CustomerCart = () => {
                       </Link>
                     </Button>
                     <button
+                      title="delete cart item"
                       name="delete cart item"
+                      aria-label="delete cart item"
                       aria-roledescription="delete cart item"
                       onClick={() => {
                         deleteCartFn(c.id);

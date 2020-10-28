@@ -190,6 +190,7 @@ export const Account = () => {
                   <br />
                   <span style={{ display: editMode ? "block" : "none" }}>
                     <Textarea
+                      aria-label="about"
                       name="about"
                       id="about"
                       value={about}
@@ -226,6 +227,7 @@ export const Account = () => {
                   <br />
                   <span style={{ display: editMode ? "block" : "none" }}>
                     <Input
+                      aria-label="Address"
                       isRequired
                       type="text"
                       placeholder="enter your address"
@@ -239,6 +241,7 @@ export const Account = () => {
                   <br />
                   <span style={{ display: editMode ? "block" : "none" }}>
                     <Input
+                      aria-label="Phone"
                       isRequired
                       type="tel"
                       placeholder="enter your phone number"
@@ -286,6 +289,7 @@ export const Account = () => {
                       }}
                     >
                       <RadioGroup
+                        aria-label="online status"
                         spacing={5}
                         isInline
                         value={online}

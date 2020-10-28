@@ -143,7 +143,7 @@ const Home = () => {
           <section className="featured">
             <h1>Top Picks For You</h1>
             <div className="scroll-direction">
-              <button>
+              <button title="scroll left" aria-label="scroll left">
                 <Icon
                   name="chevron-left"
                   onClick={() => {
@@ -155,7 +155,7 @@ const Home = () => {
                 />
               </button>
 
-              <button>
+              <button title="scroll right" aria-label="scroll right">
                 <Icon
                   name="chevron-right"
                   onClick={() => {

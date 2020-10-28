@@ -249,6 +249,7 @@ const Product = ({ product, error }: response) => {
                   <div className="cart-btn">
                     <div className="qty-btn">
                       <button
+                        aria-label="decrement quantity"
                         aria-roledescription="decrement quantity"
                         onClick={() => {
                           if (quantity === 1) {
@@ -261,6 +262,7 @@ const Product = ({ product, error }: response) => {
                       </button>
                       <aside style={{ fontSize: "20px" }}>{quantity}</aside>
                       <button
+                        aria-label="increment quantity"
                         aria-roledescription="increment quantity"
                         onClick={() => {
                           if (quantity === product.available_qty) {

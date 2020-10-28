@@ -211,6 +211,8 @@ export const Account = () => {
             <div className="heading">
               <h1>{User && "Hello, " + User.first_name}</h1>
               <button
+                title="edit profile"
+                aria-label="edit profile"
                 onClick={() => setReadOnly(!readOnly)}
                 style={{ color: "var(--deepblue)", fontWeight: "bold" }}
               >
@@ -235,6 +237,7 @@ export const Account = () => {
                       children={<Icon name="phone" color="gray.300" />}
                     />
                     <Input
+                      aria-label="phone number"
                       isReadOnly={readOnly}
                       autoFocus={readOnly}
                       placeholder="Click Edit to add Phone Number"
@@ -252,6 +255,7 @@ export const Account = () => {
                 <div>
                   <h2>Shipping Address</h2>
                   <Textarea
+                    aria-label="Address"
                     isReadOnly={readOnly}
                     autoFocus={readOnly}
                     placeholder="Click Edit to add Address"

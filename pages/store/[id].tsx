@@ -195,6 +195,8 @@ const Store = ({ data, error }: Iprops) => {
                 {data && data.id === data.jwt_user_id ? (
                   <div className="edit-btn">
                     <button
+                      aria-label="edit account"
+                      title="edit account"
                       style={{
                         color: "var(--deepblue)",
                         fontWeight: "bold",
@@ -264,6 +266,7 @@ const Store = ({ data, error }: Iprops) => {
                       {data && data.id === data.jwt_user_id ? (
                         <div className="edit-btn">
                           <button
+                            title="edit product"
                             style={{
                               color: "var(--deepblue)",
                               fontWeight: "bold",
@@ -275,6 +278,7 @@ const Store = ({ data, error }: Iprops) => {
                             </Link>
                           </button>
                           <button
+                            title="delete product"
                             onClick={() =>
                               handleDelete(p.id, p.creator_id, p.name)
                             }
