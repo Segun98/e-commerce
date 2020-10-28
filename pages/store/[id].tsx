@@ -10,6 +10,7 @@ import { Footer } from "../../components/Footer";
 import { useMutation } from "../../utils/useMutation";
 import { useRouter } from "next/router";
 import { useToken } from "../../Context/TokenProvider";
+import { gql } from "graphql-request";
 
 interface Iprops {
   data: UsersRes;
@@ -83,13 +84,13 @@ const Store = ({ data, error }: Iprops) => {
       creator_id,
     };
 
-    const deleteProduct = `
-    mutation deleteProduct
-    ($id:ID!, $creator_id: String!){
-  deleteProduct(id:$id, creator_id:$creator_id){
-    message
-  }
-}`;
+    const deleteProduct = gql`
+      mutation deleteProduct($id: ID!, $creator_id: String!) {
+        deleteProduct(id: $id, creator_id: $creator_id) {
+          message
+        }
+      }
+    `;
 
     if (
       window.confirm(`Are you sure you want to Delete This Product : ${name} ?`)

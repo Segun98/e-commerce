@@ -55,8 +55,8 @@ export const Footer = () => {
           <h1>Vendor</h1>
           <ul>
             <li>
-              <Link href="/">
-                <a>Start Selling Through Us</a>
+              <Link href="/vendor/become-a-vendor">
+                <a>Become a Vendor</a>
               </Link>{" "}
             </li>
             <li>
@@ -82,6 +82,31 @@ export const Footer = () => {
             <li>
               <Link href="/">
                 <a>Contact Us</a>
+              </Link>{" "}
+            </li>
+          </ul>
+        </section>
+        <section className="footer-item">
+          <h1>Quick Links</h1>
+          <ul>
+            <li>
+              <Link href="/">
+                <a>Home</a>
+              </Link>{" "}
+            </li>
+            <li>
+              <Link href="/">
+                <a>Contact</a>
+              </Link>{" "}
+            </li>
+            <li>
+              <Link href="/stores">
+                <a>Stores</a>
+              </Link>{" "}
+            </li>
+            <li>
+              <Link href="/customer/login">
+                <a>Login</a>
               </Link>{" "}
             </li>
           </ul>
@@ -168,6 +193,7 @@ export const Footer = () => {
         @media only screen and (min-width: 1200px) {
           .footer-wrap {
             width: 80%;
+            grid-template-columns: repeat(5, 1fr);
           }
 
           .footer-wrap h1 {
@@ -195,7 +221,7 @@ export const Footer = () => {
           }
         }
 
-        @media only screen and (min-width: 2000px) {
+        @media only screen and (min-width: 1800px) {
           .footer-wrap {
             width: 60%;
           }

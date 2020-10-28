@@ -176,13 +176,14 @@ export const Navigation = () => {
         .vendor-menu {
           background: var(--softblue);
           width: 300px;
-          /* height: 100%; */
+          height: 100%;
           border-right: 0.6px solid var(--softgrey);
           margin-left: -300px;
           position: relative;
           position: fixed;
           z-index: 2;
           transition: 0.5s ease;
+          min-height: 100vh;
         }
 
         .vendor-menu.open {

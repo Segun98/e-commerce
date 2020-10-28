@@ -302,6 +302,11 @@ export const Header = () => {
           </div>
           <h1>PROFILE</h1>
           <ul>
+            <Link href="/">
+              <a>
+                <li>Home</li>
+              </a>
+            </Link>
             <Link href="/customer/account">
               <a>
                 <li>Account</li>
@@ -520,7 +525,6 @@ export const Header = () => {
           font-weight: bold;
           padding: 8px 0;
           text-align: center;
-          font-style: italic;
         }
 
         @media only screen and (min-width: 700px) {

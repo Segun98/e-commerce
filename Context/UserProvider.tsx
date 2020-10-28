@@ -9,6 +9,7 @@ import React, {
 import { graphQLClient } from "../utils/client";
 import { useToken } from "./TokenProvider";
 import { UsersRes } from "../Typescript/types";
+import { gql } from "graphql-request";
 
 interface props {
   User: UsersRes;
@@ -27,25 +28,25 @@ export const UserProvider = ({ children }) => {
     fetchUser();
   }, [Token]);
 
-  const getUser = `
-    query getUser{
-      getUser{
-        first_name,
-        last_name,
-        email,
-        phone,
-        pending,
+  const getUser = gql`
+    query getUser {
+      getUser {
+        first_name
+        last_name
+        email
+        phone
+        pending
         online
-        created_at,
-        business_name,
-        business_name_slug,
-        business_address,
-        business_image,
-        business_bio,
-        customer_address,
+        created_at
+        business_name
+        business_name_slug
+        business_address
+        business_image
+        business_bio
+        customer_address
       }
     }
-    `;
+  `;
   async function fetchUser() {
     graphQLClient.setHeader("authorization", `bearer ${Token}`);
     try {

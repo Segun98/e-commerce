@@ -21,6 +21,7 @@ import { ProtectRouteV } from "./../../utils/ProtectedRouteV";
 import { useRouter } from "next/router";
 import Upload from "rc-upload";
 import { uploadLink } from "./../../utils/client";
+import { updateProfile } from "../../graphql/vendor";
 
 export const Account = () => {
   const { User } = useUser();
@@ -74,18 +75,6 @@ export const Account = () => {
     },
   };
 
-  const updateProfile = `
-  mutation updateProfile($first_name:String,$last_name:String,$business_name:String,$phone:String,
-    $business_address: String,
-    $business_image: String,
-    $business_bio: String, $online:String  ){
-    updateProfile(first_name:$first_name,last_name:$last_name, business_name:$business_name,phone:$phone,business_address: $business_address,
-      business_image: $business_image,
-      business_bio: $business_bio, online:$online ){
-      message
-    }
-  }
-  `;
   async function updateAccount(e) {
     e.preventDefault();
     const variables: MutationUpdateProfileArgs = {

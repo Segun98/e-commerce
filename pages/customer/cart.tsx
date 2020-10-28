@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { deleteFromCart, updateCart } from "../../graphql/customer";
-import { Button, Icon, useToast } from "@chakra-ui/core";
+import { Button, Icon, Spinner, useToast } from "@chakra-ui/core";
 import { Cart } from "../../Typescript/types";
 import Link from "next/link";
 import { useToken } from "../../Context/TokenProvider";
@@ -28,6 +28,9 @@ export const CustomerCart = () => {
   const { Token } = useToken();
   const role = Cookies.get("role");
 
+  //update cart quantity loading state
+  const [loadingCart, setLoadingCart] = useState(false);
+
   useEffect(() => {
     dispatch(cartItems(Token));
   }, [Token]);
@@ -43,12 +46,14 @@ export const CustomerCart = () => {
 
   //update quantity of an item
   const updateCartFn = async (id, quantity) => {
+    setLoadingCart(true);
     const { data, error } = await useMutation(updateCart, {
       id,
       quantity,
     });
     if (data) {
       dispatch(cartItems(Token));
+      setLoadingCart(false);
       toast({
         title: "Quantity Updated",
         status: "info",
@@ -58,6 +63,7 @@ export const CustomerCart = () => {
       });
     }
     if (error) {
+      setLoadingCart(false);
       toast({
         title: "Updating Cart Item Quantity Failed",
         description: "check your internet connection and refresh.",
@@ -71,11 +77,13 @@ export const CustomerCart = () => {
 
   //delete from cart
   const deleteCartFn = async (id) => {
+    setLoadingCart(true);
     const { data, error } = await useMutation(deleteFromCart, {
       id,
     });
     if (data.deleteFromCart) {
       dispatch(cartItems(Token));
+      setLoadingCart(false);
       toast({
         title: "Item Removed From Cart",
         status: "info",
@@ -85,6 +93,7 @@ export const CustomerCart = () => {
       });
     }
     if (error) {
+      setLoadingCart(false);
       toast({
         title: "Failed To Remove From Cart",
         description: "check your internet connection and refresh.",
@@ -113,6 +122,11 @@ export const CustomerCart = () => {
             position: "top",
           })}
       </>
+      {loadingCart && (
+        <div className="spinner">
+          <Spinner speed="0.5s"></Spinner>
+        </div>
+      )}
       <div className="cart-page">
         {!loading && !Token && !role && (
           <div className="indicator">
@@ -272,6 +286,12 @@ export const CustomerCart = () => {
           color: white;
           padding: 10px 30px;
           margin-top: 20px;
+        }
+
+        .spinner {
+          position: fixed;
+          top: 50%;
+          left: 50%;
         }
 
         /* notification */

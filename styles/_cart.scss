@@ -9,7 +9,7 @@
         .cart-wrap {
             margin: auto;
             width: 98%;
-            padding: 50px 0;
+            padding: 10px 0;
 
             h1 {
                 font-size: 1.3rem;
@@ -98,6 +98,7 @@
         @media only screen and (min-width:1000px) {
             .cart-wrap {
                 width: 80%;
+                padding: 50px 0;
             }
         }
 

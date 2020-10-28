@@ -140,8 +140,7 @@ const Checkout = ({ variables }) => {
                   </span>
                 </p>
                 <p>
-                  Shipping Address:{" "}
-                  <span>{cart?.cartCreator.customer_address}</span>{" "}
+                  Shipping Address: <span>{address}</span>{" "}
                 </p>
                 <Input
                   display={editMode ? "block" : "none"}
@@ -152,7 +151,7 @@ const Checkout = ({ variables }) => {
                   onChange={(e) => setAddress(e.target.value)}
                 />
                 <p>
-                  Phone Number: <span>{cart?.cartCreator.phone}</span>{" "}
+                  Phone Number: <span>{phone}</span>{" "}
                 </p>
                 <Input
                   display={editMode ? "block" : "none"}
@@ -168,10 +167,7 @@ const Checkout = ({ variables }) => {
                 <div className="head">
                   <h1>
                     Order Notes
-                    <small style={{ fontSize: "0.8rem" }}>
-                      {" "}
-                      *Please Request appropriately
-                    </small>
+                    <small style={{ fontSize: "0.8rem" }}> *Not required</small>
                   </h1>
                   <div></div>
                 </div>
@@ -203,25 +199,38 @@ const Checkout = ({ variables }) => {
                   <div></div>
                 </div>
                 <hr />
-                <p>
-                  Product:{" "}
-                  <span>
-                    {cart.quantity}X {cart.product.name}
-                  </span>
-                </p>
-                <p>
-                  Price: <span>&#8358; {cart.product.price}</span>
-                </p>
-                <p>
-                  Subtotal:{" "}
-                  <span>
-                    &#8358; {Commas(cart.quantity * cart.product.price)}
-                  </span>
-                </p>
-                <p>
-                  Delivery Fee: <span>{Commas(1000)}</span>
-                </p>
-
+                <table style={{ width: "100%" }}>
+                  <thead>
+                    <tr>
+                      <th>Product</th>
+                      <th>Price</th>
+                      <th>Qty</th>
+                      <th>Subtotal</th>
+                      <th>Delivery Fee</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <span>{cart.product.name}</span>
+                      </td>
+                      <td>
+                        <span>&#8358; {cart.product.price}</span>
+                      </td>
+                      <td>
+                        <span>{cart.quantity}</span>
+                      </td>
+                      <td>
+                        <span>
+                          &#8358; {Commas(cart.quantity * cart.product.price)}
+                        </span>
+                      </td>
+                      <td>
+                        <span>{Commas(1000)}</span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
                 <p>
                   Total:{" "}
                   <span>
@@ -273,7 +282,38 @@ const Checkout = ({ variables }) => {
           </div>
         )}
       </div>
-      <style jsx>{``}</style>
+      <style jsx>{`
+        table {
+          border-spacing: 5px;
+        }
+        th {
+          font-size: 0.8rem;
+        }
+        td {
+          font-size: 0.8rem;
+          padding: 5px 0;
+        }
+
+        @media only screen and (min-width: 700px) {
+          td {
+            padding: 5px 10px;
+          }
+        }
+        @media only screen and (min-width: 1000px) {
+          td {
+            padding: 10px 10px;
+          }
+        }
+        @media only screen and (min-width: 1200px) {
+          td {
+            padding: 10px 10px;
+            font-size: 1rem;
+          }
+          th {
+            font-size: 1rem;
+          }
+        }
+      `}</style>
     </Layout>
   );
 };

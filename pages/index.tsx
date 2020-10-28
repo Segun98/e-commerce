@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { Icon } from "@chakra-ui/core";
+import { Icon, Spinner } from "@chakra-ui/core";
 import { PRODUCTS } from "./../graphql/vendor";
 import { ProductsRes } from "../Typescript/types";
 import Link from "next/link";
@@ -14,7 +14,7 @@ const Home = () => {
   const scrollRef = useRef(null);
 
   //fetch products with custom hook
-  const [data, error] = useQuery(PRODUCTS, { limit: 5 });
+  const [data, loading] = useQuery(PRODUCTS, { limit: 5 });
   const products = data ? data.products : [];
 
   const featured_images = [
@@ -167,6 +167,11 @@ const Home = () => {
                 />
               </button>
             </div>
+            {loading && (
+              <div style={{ textAlign: "center" }}>
+                <Spinner speed="1s"></Spinner>
+              </div>
+            )}
             <div className="featured-wrap" ref={scrollRef}>
               {products &&
                 products.map((p: ProductsRes, index) => (
@@ -258,7 +263,7 @@ const Home = () => {
         <section className="home-vendor-onboarding">
           <h1>Become a vendor today</h1>
           <div>
-            <Link href="/vendor/onboarding">
+            <Link href="/vendor/become-a-vendor">
               <a>
                 Learn More
                 <Icon name="external-link" />

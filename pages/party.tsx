@@ -8,21 +8,27 @@ import { graphQLClient } from "../utils/client";
 import { Commas } from "../utils/helpers";
 import { useRouter } from "next/router";
 import Head from "next/head";
+import { gql } from "graphql-request";
 
 interface Iprops {
   products: ProductsRes[];
   error: any;
 }
-export const partyCategory = `
-    query partyCategory($party_category:String, $limit:Int, $offset:Int){
-        partyCategory(party_category:$party_category, limit:$limit, offset:$offset){
-            id
-            name
-            name_slug
-            price
-            image
-        }
-}`;
+export const partyCategory = gql`
+  query partyCategory($party_category: String, $limit: Int, $offset: Int) {
+    partyCategory(
+      party_category: $party_category
+      limit: $limit
+      offset: $offset
+    ) {
+      id
+      name
+      name_slug
+      price
+      image
+    }
+  }
+`;
 export async function getServerSideProps({ query }) {
   //page -1 * limit
   let pageCalc = (parseInt(query.p) - 1) * 30;

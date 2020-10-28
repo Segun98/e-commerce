@@ -14,15 +14,17 @@ import Link from "next/link";
 import { truncate } from "../utils/helpers";
 import Head from "next/head";
 import { useRouter } from "next/router";
-const getStores = `
-query getStores($query:String, $limit:Int, $offset:Int){
-    getStores(query:$query, limit:$limit, offset:$offset){
+import { gql } from "graphql-request";
+
+const getStores = gql`
+  query getStores($query: String, $limit: Int, $offset: Int) {
+    getStores(query: $query, limit: $limit, offset: $offset) {
       business_name_slug
       business_name
       business_image
       business_bio
     }
-}
+  }
 `;
 const Stores = () => {
   const [stores, setStores] = useState<UsersRes[]>([]);
@@ -94,7 +96,7 @@ const Stores = () => {
         <section className="home-vendor-onboarding">
           <h1>Find Your Favourite Stores</h1>
           <div>
-            <Link href="/vendor/onboarding">
+            <Link href="/vendor/become-a-vendor">
               <a>
                 Open Your Store
                 <Icon name="external-link" />

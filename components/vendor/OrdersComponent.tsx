@@ -20,6 +20,7 @@ import {
   useToast,
 } from "@chakra-ui/core";
 import { useMutation } from "../../utils/useMutation";
+import { gql } from "graphql-request";
 
 interface Iprops {
   limit: number | null;
@@ -30,11 +31,6 @@ interface DefaultOrderState {
 }
 
 export const OrdersComponent: React.FC<Iprops> = ({ limit }) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const onClose = () => setIsOpen(false);
-  const cancelRef = React.useRef();
-
-  const [cancel, setCancel] = useState(false);
   // Redux stuff
   const dispatch = useDispatch();
   const toast = useToast();
@@ -54,12 +50,12 @@ export const OrdersComponent: React.FC<Iprops> = ({ limit }) => {
 
   //accept order
   async function handleOrderAccept(id, name, quantity, subtotal) {
-    const acceptOrder = `
-    mutation acceptOrder($id:ID!){
-      acceptOrder(id:$id){
-        message
+    const acceptOrder = gql`
+      mutation acceptOrder($id: ID!) {
+        acceptOrder(id: $id) {
+          message
+        }
       }
-    }
     `;
     if (
       window.confirm(`Are you sure you want to Accept this Order? 
@@ -97,12 +93,12 @@ export const OrdersComponent: React.FC<Iprops> = ({ limit }) => {
 
   //cancel order
   async function handleOrderCancel(id, name, quantity, subtotal) {
-    const cancelOrder = `
-    mutation cancelOrder($id:ID!){
-      cancelOrder(id:$id){
-        message
+    const cancelOrder = gql`
+      mutation cancelOrder($id: ID!) {
+        cancelOrder(id: $id) {
+          message
+        }
       }
-    }
     `;
     let answer = window.prompt(
       `Please Tell Us Why You wish to cancel This Order
@@ -342,7 +338,7 @@ export const OrdersComponent: React.FC<Iprops> = ({ limit }) => {
         }
         @media only screen and (min-width: 700px) {
           td {
-            padding: 0 10px;
+            padding: 5px 10px;
           }
         }
         @media only screen and (min-width: 1000px) {

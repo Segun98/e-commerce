@@ -21,6 +21,7 @@ import { Orders } from "../../Typescript/types";
 import { useMutation } from "../../utils/useMutation";
 import { ordersThunk } from "../../redux/features/orders/fetchOrders";
 import { useDispatch } from "react-redux";
+import { gql } from "graphql-request";
 
 //Recent Orders displayed in /vendor/dashboard.
 export const DashboardOrders = () => {
@@ -39,12 +40,12 @@ export const DashboardOrders = () => {
 
   //accept order
   async function handleOrderAccept(id, name, quantity, subtotal) {
-    const acceptOrder = `
-    mutation acceptOrder($id:ID!){
-      acceptOrder(id:$id){
-        message
+    const acceptOrder = gql`
+      mutation acceptOrder($id: ID!) {
+        acceptOrder(id: $id) {
+          message
+        }
       }
-    }
     `;
     if (
       window.confirm(`Are you sure you want to Accept this Order? 
@@ -84,12 +85,12 @@ export const DashboardOrders = () => {
 
   //cancel order
   async function handleOrderCancel(id, name, quantity, subtotal) {
-    const cancelOrder = `
-    mutation cancelOrder($id:ID!){
-      cancelOrder(id:$id){
-        message
+    const cancelOrder = gql`
+      mutation cancelOrder($id: ID!) {
+        cancelOrder(id: $id) {
+          message
+        }
       }
-    }
     `;
 
     let answer = window.prompt(
@@ -312,7 +313,7 @@ export const DashboardOrders = () => {
 
         @media only screen and (min-width: 700px) {
           td {
-            padding: 0 10px;
+            padding: 5px 10px;
           }
         }
         @media only screen and (min-width: 1000px) {

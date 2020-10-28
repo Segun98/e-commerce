@@ -25,6 +25,7 @@ import { Orders } from "../../Typescript/types";
 import { Commas } from "../../utils/helpers";
 import { useMutation } from "../../utils/useMutation";
 import { ProtectRouteC } from "./../../utils/ProtectedRouteC";
+import { gql } from "graphql-request";
 
 export const CustomerOrders = () => {
   const { Token } = useToken();
@@ -41,12 +42,12 @@ export const CustomerOrders = () => {
 
   //cancel order
   async function handleOrderCancel(id, name, quantity, subtotal) {
-    const cancelOrder = `
-    mutation cancelOrder($id:ID!){
-      cancelOrder(id:$id){
-        message
+    const cancelOrder = gql`
+      mutation cancelOrder($id: ID!) {
+        cancelOrder(id: $id) {
+          message
+        }
       }
-    }
     `;
 
     let answer = window.prompt(
@@ -271,7 +272,7 @@ export const CustomerOrders = () => {
             width: 80%;
           }
           td {
-            padding: 0 10px;
+            padding: 5px 10px;
           }
         }
         @media only screen and (min-width: 1000px) {

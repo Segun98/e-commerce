@@ -21,6 +21,7 @@ import { Commas } from "../../utils/helpers";
 import { addToCart } from "../../graphql/customer";
 import { cartItems } from "../../redux/features/cart/fetchCart";
 import { useDispatch } from "react-redux";
+import { gql } from "graphql-request";
 
 export const Account = () => {
   const { Token } = useToken();
@@ -48,12 +49,22 @@ export const Account = () => {
     setAddress(User.customer_address || "");
   }, [User, Token]);
 
-  const updateProfile = `
-  mutation updateProfile($first_name:String,$last_name:String,$phone:String, $customer_address:String){
-    updateProfile(first_name:$first_name,last_name:$last_name, phone:$phone, customer_address:$customer_address){
-      message
+  const updateProfile = gql`
+    mutation updateProfile(
+      $first_name: String
+      $last_name: String
+      $phone: String
+      $customer_address: String
+    ) {
+      updateProfile(
+        first_name: $first_name
+        last_name: $last_name
+        phone: $phone
+        customer_address: $customer_address
+      ) {
+        message
+      }
     }
-  }
   `;
   async function updateAccount() {
     const variables = {
@@ -281,34 +292,40 @@ export const Account = () => {
             <div className="saved-item-wrap">
               {savedItem.map((s, i) => (
                 <div className="saved-item" key={s.product_id}>
-                  <img src={`/${images[i]}`} alt={`${s.name}`} />
-                  <hr />
-                  <div className="saved-desc">
-                    <h2>{s.name}</h2>
-                    <p>&#8358; {Commas(s.price)}</p>
+                  <div className="main-saved">
+                    <Link
+                      href={`/product/${s.name_slug}`}
+                      as={`/product/${s.name_slug}`}
+                    >
+                      <a>
+                        <img src={`/${images[i]}`} alt={`${s.name}`} />
+                        <hr />
+                        <div className="saved-desc">
+                          <h2>{s.name}</h2>
+                          <p>&#8358; {Commas(s.price)}</p>
+                        </div>
+                      </a>
+                    </Link>
                   </div>
-                  <button onClick={() => removeSavedItem(s.product_id)}>
-                    <Icon name="delete" />
-                  </button>
-                  {/* <hr />
-                  <Button
-                    size="xs"
-                    variantColor="blue"
-                    onClick={() => {
-                      addCart(s.product_id, s.prod_creator_id, 1);
-                    }}
-                  >
-                    Add To Cart
-                  </Button> */}
-                  <hr />
-                  <Link
-                    href={`/product/${s.name_slug}`}
-                    as={`/product/${s.name_slug}`}
-                  >
-                    <a>
-                      Product Page <Icon name="external-link" />
-                    </a>
-                  </Link>
+                  <div className="saved-btns">
+                    <Button
+                      size="xs"
+                      background="var(--deepblue)"
+                      color="white"
+                      borderRadius="none"
+                      onClick={() => {
+                        addCart(s.product_id, s.prod_creator_id, 1);
+                      }}
+                    >
+                      Add To Cart
+                    </Button>
+                    <button
+                      onClick={() => removeSavedItem(s.product_id)}
+                      className="ml-2"
+                    >
+                      <Icon name="delete" color="var(--deepblue)" />
+                    </button>
+                  </div>
                 </div>
               ))}
             </div>
@@ -364,6 +381,8 @@ export const Account = () => {
           margin: 10px 0;
         }
 
+        /* SAVED ITEMS  */
+
         .saved-item-wrap {
           display: grid;
           grid-template-columns: 1fr 1fr;
@@ -374,16 +393,20 @@ export const Account = () => {
           align-items: center;
           justify-content: center;
           flex-direction: column;
-          box-shadow: var(--box) var(--softgrey);
           width: 130px;
           margin: 8px;
-          border-radius: 5px;
           font-size: 0.9rem;
+        }
+
+        .main-saved {
+          box-shadow: var(--box) var(--softgrey);
+          border-radius: 5px;
         }
 
         .saved-item img {
           height: 100px;
-          width: 100px;
+          width: 100%;
+          object-fit: contain;
         }
 
         .saved-item a {
@@ -393,6 +416,7 @@ export const Account = () => {
         .saved-item .saved-desc {
           text-align: center;
         }
+
         .saved-desc h2 {
           font-style: italic;
         }
@@ -400,7 +424,12 @@ export const Account = () => {
         .saved-desc p {
           font-weight: bold;
         }
-
+        .saved-btns {
+          display: flex;
+          justify-content: space-between;
+          margin: 5px 0;
+          width: 100px;
+        }
         /* notification */
         .indicator {
           margin: auto;
