@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useToken } from "../../Context/TokenProvider";
 import { Commas } from "./../../utils/helpers";
@@ -327,10 +327,12 @@ export const OrdersComponent: React.FC<Iprops> = ({ limit }) => {
         }
         th {
           font-size: 0.7rem;
+          text-align: center;
           background-color: #f2f2f2;
         }
         td {
           font-size: 0.8rem;
+          text-align: center;
           padding: 5px 0;
         }
         .name {

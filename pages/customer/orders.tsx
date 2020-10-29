@@ -105,12 +105,11 @@ export const CustomerOrders = () => {
           <List>
             <ListItem>
               * <strong>Processing</strong> signifies that your Order is being
-              processed. It is either being Shipped or Has been Acknowledged
+              processed. It Has been Acknowledged
             </ListItem>
             <ListItem>
               * <strong>Cancelled</strong> signifies that Your Item has been
-              cancelled by you or our vendor. Note: You cannnot cancel when
-              order is being shipped.
+              cancelled by you or our vendor.
             </ListItem>
             <ListItem>
               * <strong>Delivered</strong> signifies that Your Item Has Been
@@ -264,6 +263,12 @@ export const CustomerOrders = () => {
         }
         .order-status {
           margin: 25px 0;
+        }
+        th {
+          text-align: center;
+        }
+        td {
+          text-align: center;
         }
 
         @media only screen and (min-width: 700px) {

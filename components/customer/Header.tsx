@@ -299,6 +299,7 @@ export const Header = () => {
 
             <button
               aria-roledescription="close menu"
+              aria-label="close menu"
               onClick={() => {
                 setIsOpen(false);
               }}

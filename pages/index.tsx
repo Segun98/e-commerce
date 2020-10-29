@@ -8,6 +8,7 @@ import Carousel from "react-bootstrap/Carousel";
 import { Commas } from "../utils/helpers";
 import { PurchaseSteps } from "../components/customer/PurchaseSteps";
 import { useQuery } from "./../components/useQuery";
+import Image from "next/image";
 
 const Home = () => {
   //Featured Products Section Scroll
@@ -31,7 +32,7 @@ const Home = () => {
         <section className="main-carousel">
           <Carousel indicators={false} interval={7000}>
             <Carousel.Item>
-              <img src="/slider/slide1.jpg" />
+              <Image unsized src="/slider/slide1.jpg" alt="slider" />
 
               <Carousel.Caption>
                 <h3>We Have All You Need To Enoy Your Time At The Beach</h3>
@@ -47,7 +48,7 @@ const Home = () => {
               </div>
             </Carousel.Item>
             <Carousel.Item>
-              <img src="/slider/slide2.jpeg" />
+              <Image unsized src="/slider/slide2.jpeg" alt="slider" />
 
               <Carousel.Caption>
                 <h3>Your House Parties Are About to get Real Lit</h3>
@@ -63,7 +64,7 @@ const Home = () => {
               </div>
             </Carousel.Item>
             <Carousel.Item>
-              <img src="/slider/slide3.jpeg" />
+              <Image unsized src="/slider/slide3.jpeg" alt="slider" />
 
               <Carousel.Caption>
                 <h3>
@@ -82,7 +83,7 @@ const Home = () => {
             </Carousel.Item>
 
             <Carousel.Item>
-              <img src="/slider/slide4.jpeg" />
+              <Image unsized src="/slider/slide4.jpeg" alt="slider" />
 
               <Carousel.Caption>
                 <h3>
@@ -102,7 +103,7 @@ const Home = () => {
             </Carousel.Item>
 
             <Carousel.Item>
-              <img src="/slider/slide5.jpeg" />
+              <Image unsized src="/slider/slide5.jpeg" alt="slider" />
 
               <Carousel.Caption>
                 <h3>Whats A Party Without Lights?</h3>
@@ -119,7 +120,7 @@ const Home = () => {
             </Carousel.Item>
 
             <Carousel.Item>
-              <img src="/slider/slide5.jpeg" />
+              <Image unsized src="/slider/slide5.jpeg" alt="slider" />
 
               <Carousel.Caption>
                 <h3>Whats An Indoor Party Without Lights?</h3>

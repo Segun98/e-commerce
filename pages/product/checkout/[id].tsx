@@ -137,7 +137,7 @@ const Checkout = ({ variables }) => {
             >
               <BreadcrumbItem>
                 <Link href={`/product/${cart.product.name_slug}`}>
-                  <a>{cart.product.name}</a>
+                  <a>Product</a>
                 </Link>
               </BreadcrumbItem>
 
@@ -242,7 +242,7 @@ const Checkout = ({ variables }) => {
                       <th>Price</th>
                       <th>Qty</th>
                       <th>Subtotal</th>
-                      <th>Delivery Fee</th>
+                      <th>Delivery</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -324,10 +324,13 @@ const Checkout = ({ variables }) => {
         }
         th {
           font-size: 0.8rem;
+          text-align: center;
         }
         td {
           font-size: 0.8rem;
           padding: 5px 0;
+          text-align: center;
+          border-right: 1px solid var(--softgrey);
         }
         .bread-crumb {
           margin: auto;

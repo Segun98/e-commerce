@@ -302,10 +302,12 @@ export const DashboardOrders = () => {
         th {
           font-size: 0.8rem;
           background-color: #f2f2f2;
+          text-align: center;
         }
         td {
           font-size: 0.8rem;
           padding: 5px 0;
+          text-align: center;
         }
         .name {
           display: flex;
