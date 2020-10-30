@@ -1846,7 +1846,7 @@ header p {
 
 @media only screen and (min-width: 700px) {
   header .intro-image {
-    height: 150px;
+    height: 400px;
   }
   header .intro-image h1 {
     display: block;
