@@ -185,7 +185,7 @@ export const CustomerCart = () => {
           </div>
         )}
 
-        {!loading && !error && role !== "vendor" && cart && cart.length === 0 && (
+        {!loading && role !== "vendor" && Token && cart.length === 0 && (
           <div
             style={{
               textAlign: "center",

@@ -268,9 +268,11 @@ export const CustomerOrders = () => {
         }
         th {
           text-align: center;
+          font-size: 0.8rem;
         }
         td {
           text-align: center;
+          font-size: 0.8rem;
         }
 
         @media only screen and (min-width: 700px) {
@@ -286,8 +288,12 @@ export const CustomerOrders = () => {
           .order-status {
             margin: 30px 0;
           }
+          th {
+            font-size: 1rem;
+          }
           td {
             padding: 10px 10px;
+            font-size: 1rem;
           }
         }
 

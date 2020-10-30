@@ -4,7 +4,7 @@ import { useToken } from "../../Context/TokenProvider";
 import { ProtectRouteV } from "../../utils/ProtectedRouteV";
 import { Navigation } from "../../components/vendor/Navigation";
 import Head from "next/head";
-import { Button, Icon } from "@chakra-ui/core";
+import { Button, Icon, useToast } from "@chakra-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import {
   IOrderInitialState,
@@ -22,10 +22,11 @@ export const Dashboard: React.FC = () => {
   // Redux stuff
   const dispatch = useDispatch();
 
-  const { orders } = useSelector<DefaultOrderState, IOrderInitialState>(
+  const { orders, error } = useSelector<DefaultOrderState, IOrderInitialState>(
     (state) => state.orders
   );
 
+  const toast = useToast();
   //Token from context
   const { Token } = useToken();
 
@@ -53,6 +54,18 @@ export const Dashboard: React.FC = () => {
       <Head>
         <title>Dashboard | Vendor | PartyStore</title>
       </Head>
+      <>
+        {error &&
+          error === "Network request failed" &&
+          toast({
+            title: "Network Error",
+            description: "Check your internet connection and refresh.",
+            status: "error",
+            duration: 5000,
+            isClosable: true,
+            position: "top",
+          })}
+      </>
       <section className="dashboard_layout">
         <div>
           <Navigation />
