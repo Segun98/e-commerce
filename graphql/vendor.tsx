@@ -49,9 +49,9 @@ export const STORE = gql`
   }
 `;
 
-export const PRODUCTS = gql`
-  query products($limit: Int) {
-    products(limit: $limit) {
+export const featuredProducts = gql`
+  query featuredProducts($limit: Int) {
+    featuredProducts(limit: $limit) {
       id
       name
       name_slug

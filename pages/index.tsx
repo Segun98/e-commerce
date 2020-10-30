@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 import { Icon, Spinner } from "@chakra-ui/core";
-import { PRODUCTS } from "./../graphql/vendor";
+import { featuredProducts } from "./../graphql/vendor";
 import { ProductsRes } from "../Typescript/types";
 import Link from "next/link";
 import { Layout } from "../components/Layout";
@@ -15,8 +15,8 @@ const Home = () => {
   const scrollRef = useRef(null);
 
   //fetch products with custom hook
-  const [data, loading] = useQuery(PRODUCTS, { limit: 5 });
-  const products = data ? data.products : [];
+  const [data, loading] = useQuery(featuredProducts, { limit: 5 });
+  const products = data ? data.featuredProducts : [];
 
   const featured_images = [
     "product3.png",
