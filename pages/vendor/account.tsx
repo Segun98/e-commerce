@@ -18,15 +18,13 @@ import { useUser } from "../../Context/UserProvider";
 import { MutationUpdateProfileArgs } from "../../Typescript/types";
 import { useMutation } from "../../utils/useMutation";
 import { ProtectRouteV } from "./../../utils/ProtectedRouteV";
-import { useRouter } from "next/router";
 import Upload from "rc-upload";
 import { uploadLink } from "./../../utils/client";
 import { updateProfile } from "../../graphql/vendor";
 
 export const Account = () => {
-  const { User } = useUser();
+  const { User, userDependency, setUserDependency } = useUser();
   const { Token } = useToken();
-  const router = useRouter();
   const toast = useToast();
   const tempImage = `/slider/service.jpg`;
 
@@ -94,9 +92,12 @@ export const Account = () => {
       toast({
         title: "Account Updated Successfully",
         status: "info",
+        position: "top",
+        isClosable: true,
       });
       setEditMode(false);
-      router.reload();
+      //update user in useEffect
+      setUserDependency(!userDependency);
     }
     if (error) {
       toast({
@@ -104,17 +105,28 @@ export const Account = () => {
         description: "Check Your Internet Connection and Refresh",
         status: "error",
         isClosable: true,
+        position: "top",
       });
+    }
+  }
+
+  //Parse Date
+  function toDate(d) {
+    if (User["created_at"]) {
+      let date = new Date(parseInt(d));
+      let format = new Intl.DateTimeFormat("en-us", {
+        day: "numeric",
+        month: "short",
+        year: "numeric",
+      }).format(date);
+      return format || date.toLocaleString();
     }
   }
 
   return (
     <div>
       <Head>
-        <title>
-          {User && User.business_name} Account | {User && User.first_name} |
-          Vendor | PartyStore
-        </title>
+        <title>{User && User.business_name} Account | PartyStore</title>
       </Head>
       <div className="account-layout">
         <div>
@@ -124,7 +136,8 @@ export const Account = () => {
           <aside>
             <form onSubmit={updateAccount}>
               <section className="account-head">
-                <h1>Account Information</h1>
+                <h1>Account</h1>
+
                 <button
                   type="button"
                   onClick={() => setEditMode(!editMode)}
@@ -171,16 +184,7 @@ export const Account = () => {
                 </div>
 
                 <div className="account-item">
-                  <h2>
-                    About Store{" "}
-                    <small
-                      style={{
-                        display: editMode ? "block" : "none",
-                      }}
-                    >
-                      *This will be displayed on your public store page
-                    </small>
-                  </h2>
+                  <h2>About Store </h2>
                   <p>
                     {(User && User.business_bio) ||
                       "We seek to provide quality product and service to our customers. At " +
@@ -305,19 +309,23 @@ export const Account = () => {
                     </span>
                   </div>
                 </div>
+
+                <span style={{ color: "var(--deepblue)", fontWeight: "bold" }}>
+                  Vendor since {toDate(User.created_at)}
+                </span>
+                <br />
+                {editMode && (
+                  <Button
+                    type="submit"
+                    size="sm"
+                    background="var(--deepblue)"
+                    color="white"
+                    display="block"
+                  >
+                    Update
+                  </Button>
+                )}
               </div>
-              {editMode && (
-                <Button
-                  type="submit"
-                  size="sm"
-                  style={{
-                    background: "var(--deepblue)",
-                    color: "white",
-                  }}
-                >
-                  Update
-                </Button>
-              )}
               <br />
               <br />
             </form>
@@ -337,8 +345,10 @@ export const Account = () => {
 
         .account-head {
           display: flex;
-          justify-content: space-around;
-          margin-top: 20px;
+          justify-content: space-between;
+          align-items: baseline;
+          margin: 28px auto 0 auto;
+          width: 80%;
         }
 
         .account-head h1 {
@@ -398,6 +408,10 @@ export const Account = () => {
         @media only screen and (min-width: 1200px) {
           .account-head h1 {
             font-size: 1.1rem;
+          }
+
+          .account-head {
+            width: 100%;
           }
           .account-item h2 {
             font-size: 1rem;

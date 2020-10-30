@@ -115,14 +115,19 @@ export const Search = ({ products, error }: Iprops) => {
           </div>
 
           {/* show pagination only when products are up to 30 */}
-          {products && products.length < 30 ? null : (
+          {!error && products && products.length < 30 ? null : (
             <section className="paginate">
               <div style={{ display: "flex", justifyContent: "space-between" }}>
+                {/* dont show previous page button on page 1  */}
                 {!router.query.p || parseInt(router.query.p) === 1 ? (
                   <div></div>
                 ) : (
                   <Button
-                    style={{ background: "var(--deepblue)", color: "white" }}
+                    style={{
+                      display: error ? "none" : "",
+                      background: "var(--deepblue)",
+                      color: "white",
+                    }}
                     size="sm"
                     onClick={() => {
                       setpage(page - 1);
@@ -135,7 +140,11 @@ export const Search = ({ products, error }: Iprops) => {
                   <div></div>
                 ) : (
                   <Button
-                    style={{ background: "var(--deepblue)", color: "white" }}
+                    style={{
+                      display: error ? "none" : "",
+                      background: "var(--deepblue)",
+                      color: "white",
+                    }}
                     size="sm"
                     onClick={() => {
                       if (products.length === 0) {
@@ -152,6 +161,7 @@ export const Search = ({ products, error }: Iprops) => {
             </section>
           )}
         </section>
+        {error && <div className="space"></div>}
         <PurchaseSteps />
       </div>
       <style jsx>{`

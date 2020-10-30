@@ -25,7 +25,7 @@ import { gql } from "graphql-request";
 
 export const Account = () => {
   const { Token } = useToken();
-  const { User } = useUser();
+  const { User, setUserDependency, userDependency } = useUser();
   const toast = useToast();
   const role = Cookies && Cookies.get("role");
   const dispatch = useDispatch();
@@ -79,7 +79,10 @@ export const Account = () => {
         title: "Account Updated Successfully",
         status: "info",
         duration: 3000,
+        isClosable: true,
       });
+      //update user in useEffect
+      setUserDependency(!userDependency);
       setReadOnly(true);
     }
     if (error) {
@@ -206,7 +209,7 @@ export const Account = () => {
       )}
 
       <main>
-        {Token && User && role === "customer" && (
+        {Token && User["first_name"] && role === "customer" && (
           <div className="account-wrap">
             <div className="heading">
               <h1>{User && "Hello, " + User.first_name}</h1>
@@ -316,7 +319,7 @@ export const Account = () => {
                       size="xs"
                       background="var(--deepblue)"
                       color="white"
-                      borderRadius="none"
+                      borderRadius="2px"
                       onClick={() => {
                         addCart(s.product_id, s.prod_creator_id, 1);
                       }}

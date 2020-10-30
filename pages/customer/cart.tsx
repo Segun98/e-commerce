@@ -114,14 +114,15 @@ export const CustomerCart = () => {
         {error &&
           error === "Network request failed" &&
           toast({
-            title: "An error occurred.",
-            description: "check your internet connection and refresh.",
+            title: "Network Error",
+            description: "Check your internet connection and refresh.",
             status: "error",
-            duration: 7000,
+            duration: 5000,
             isClosable: true,
             position: "top",
           })}
       </>
+
       {loadingCart && (
         <div className="spinner">
           <Spinner speed="0.5s"></Spinner>
@@ -184,7 +185,7 @@ export const CustomerCart = () => {
           </div>
         )}
 
-        {!loading && role && role !== "vendor" && cart && cart.length === 0 && (
+        {!loading && !error && role !== "vendor" && cart && cart.length === 0 && (
           <div
             style={{
               textAlign: "center",
@@ -193,13 +194,14 @@ export const CustomerCart = () => {
               fontStyle: "italic",
               fontSize: "2rem",
             }}
+            id="cart-top"
           >
             Your Cart Is Empty
           </div>
         )}
 
         {Token && role === "customer" && cart && cart.length > 0 && (
-          <section className="cart-section">
+          <section className="cart-section" id="cart-top">
             <div className="cart-wrap">
               <h1>In your Cart</h1>
               <div className="cart-item-title">
@@ -280,6 +282,10 @@ export const CustomerCart = () => {
                 ))}
             </div>
           </section>
+        )}
+        {/* NETWORK ERROR  */}
+        {error && error === "Network request failed" && (
+          <div className="space"></div>
         )}
         <PurchaseSteps />
       </div>

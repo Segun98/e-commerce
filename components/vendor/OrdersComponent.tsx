@@ -78,6 +78,7 @@ export const OrdersComponent: React.FC<Iprops> = ({ limit }) => {
           title: "Order Has Been Accepted",
           description: "A Dispatch Rider Will Get In Touch Soon",
           status: "info",
+          position: "top",
           duration: 7000,
         });
       }
@@ -85,6 +86,7 @@ export const OrdersComponent: React.FC<Iprops> = ({ limit }) => {
         toast({
           title: "Error Accepting Order",
           description: "Check Your Internet Connection",
+          position: "top",
           status: "error",
         });
       }
@@ -118,12 +120,14 @@ export const OrdersComponent: React.FC<Iprops> = ({ limit }) => {
         dispatch(ordersThunk(Token, { limit: null }));
         toast({
           title: "Order Has Been Cancelled",
+          position: "top",
           status: "info",
         });
       }
       if (error) {
         toast({
           title: "Error Cancelling Order",
+          position: "top",
           status: "error",
         });
       }

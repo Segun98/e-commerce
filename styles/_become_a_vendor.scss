@@ -1,0 +1,48 @@
+header {
+
+    .intro-image {
+        background-image: url("/slider/service.jpg");
+        background-position: center;
+        background-repeat: no-repeat;
+        height: 120px;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        text-align: center;
+        justify-content: center;
+
+        h1 {
+            font-size: 1.5rem;
+            font-weight: bold;
+            background: rgba(2, 36, 122, 0.6);
+            margin-bottom: 50px;
+            padding: 5px;
+            border-radius: 2px;
+            color: white;
+            display: none;
+        }
+    }
+
+    p {
+        background: var(--deepblue);
+        padding: 5px;
+        text-align: center;
+        color: white;
+        font-weight: bold;
+    }
+
+    @media only screen and (min-width: 700px) {
+        .intro-image {
+            height: 150px;
+        }
+
+        .intro-image h1 {
+            display: block;
+        }
+
+        p {
+            display: none;
+        }
+    }
+
+}

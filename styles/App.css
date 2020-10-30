@@ -1806,4 +1806,53 @@ Class names accross components can be the same but they are wrapped by a unique 
     padding: 80px 0;
   }
 }
+
+header .intro-image {
+  background-image: url("/slider/service.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 120px;
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  text-align: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+header .intro-image h1 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  background: rgba(2, 36, 122, 0.6);
+  margin-bottom: 50px;
+  padding: 5px;
+  border-radius: 2px;
+  color: white;
+  display: none;
+}
+
+header p {
+  background: var(--deepblue);
+  padding: 5px;
+  text-align: center;
+  color: white;
+  font-weight: bold;
+}
+
+@media only screen and (min-width: 700px) {
+  header .intro-image {
+    height: 150px;
+  }
+  header .intro-image h1 {
+    display: block;
+  }
+  header p {
+    display: none;
+  }
+}
 /*# sourceMappingURL=App.css.map */

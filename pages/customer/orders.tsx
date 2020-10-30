@@ -70,6 +70,7 @@ export const CustomerOrders = () => {
         toast({
           title: "Order Has Been Cancelled",
           status: "info",
+          position: "top",
         });
       }
       if (error) {
@@ -78,6 +79,7 @@ export const CustomerOrders = () => {
           title: "Error Cancelling Order",
           description: msg,
           status: "error",
+          position: "top",
         });
       }
     }

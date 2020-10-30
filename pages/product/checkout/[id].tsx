@@ -108,7 +108,7 @@ const Checkout = ({ variables }) => {
         id: cart.id,
       });
       if (data.deleteFromCart) {
-        router.push("/customer/cart");
+        router.push("/customer/cart#cart-top");
       }
     }
     if (error) {

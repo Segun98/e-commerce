@@ -70,6 +70,7 @@ export const DashboardOrders = () => {
           title: "Order Has Been Accepted",
           description: "A Dispatch Rider Will Get In Touch Soon",
           status: "info",
+          position: "top",
           duration: 7000,
         });
       }
@@ -78,6 +79,7 @@ export const DashboardOrders = () => {
           title: "Error Accepting Order",
           description: "Check Your Internet Connection",
           status: "error",
+          position: "top",
         });
       }
     }
@@ -112,6 +114,7 @@ export const DashboardOrders = () => {
         dispatch(ordersThunk(Token, { limit: null }));
         toast({
           title: "Order Has Been Cancelled",
+          position: "top",
           status: "info",
         });
       }
@@ -119,6 +122,7 @@ export const DashboardOrders = () => {
         toast({
           title: "Error Cancelling Order",
           status: "error",
+          position: "top",
         });
       }
     }

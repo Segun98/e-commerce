@@ -9,14 +9,19 @@ const BecomeAVendor = () => {
       <Head>
         <title>Become a Vendor | PartyStore</title>
       </Head>
-      <br />
-      <br />
-      <br />
-      <br />
-      <Text as="div" textAlign="center">
-        Become a Vendor, partner with us
-      </Text>
-      <div className="space"></div>
+      <div className="become-vendor">
+        <header>
+          <div className="intro-image">
+            {/* Large screen  */}
+            <h1>Partner With Us, Grow Your Business The Right Way!</h1>
+          </div>
+          {/* Mobile screen  */}
+          <p>Partner With Us, Grow Your Business The Right Way!</p>
+        </header>
+        <section className="content-1"></section>
+      </div>
+
+      <style jsx>{``}</style>
     </Layout>
   );
 };

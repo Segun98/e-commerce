@@ -14,6 +14,8 @@ import { gql } from "graphql-request";
 interface props {
   User: UsersRes;
   setUser: Dispatch<SetStateAction<any>>;
+  userDependency: boolean;
+  setUserDependency: Dispatch<SetStateAction<boolean>>;
 }
 
 export const UserContext = createContext<props>(undefined);
@@ -22,11 +24,13 @@ export const useUser = () => useContext(UserContext);
 export const UserProvider = ({ children }) => {
   const [User, setUser] = useState<UsersRes>({});
 
+  //to refetch "fetchUser()" effect on user update
+  const [userDependency, setUserDependency] = useState(false);
   const { Token } = useToken();
 
   useEffect(() => {
     fetchUser();
-  }, [Token]);
+  }, [Token, userDependency]);
 
   const getUser = gql`
     query getUser {
@@ -61,7 +65,9 @@ export const UserProvider = ({ children }) => {
   }
 
   return (
-    <UserContext.Provider value={{ User, setUser }}>
+    <UserContext.Provider
+      value={{ User, setUser, userDependency, setUserDependency }}
+    >
       {children}
     </UserContext.Provider>
   );
