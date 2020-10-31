@@ -1836,23 +1836,69 @@ header .intro-image h1 {
   display: none;
 }
 
-header p {
-  background: var(--deepblue);
+header .intro-mobile-caption {
+  background: #02247a;
   padding: 5px;
   text-align: center;
   color: white;
   font-weight: bold;
 }
 
+header .intro-mobile-caption h5 {
+  font-size: 1rem;
+}
+
+header .intro-mobile-caption a {
+  font-size: 0.9rem;
+  text-decoration: underline;
+}
+
+@media only screen and (min-width: 700px) {
+  header .intro-mobile-caption {
+    display: none;
+  }
+}
+
+header .intro-desktop-caption {
+  display: none;
+}
+
+@media only screen and (min-width: 700px) {
+  header .intro-desktop-caption {
+    display: block;
+    margin-bottom: 25px;
+    color: white;
+  }
+  header .intro-desktop-caption h3 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    background: rgba(2, 36, 122, 0.6);
+    margin-bottom: 50px;
+    padding: 5px;
+    border-radius: 2px;
+  }
+  header .intro-desktop-caption a {
+    background: rgba(2, 36, 122, 0.6);
+    padding: 10px;
+    margin-top: 15px;
+    border-radius: 2px;
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  header .intro-desktop-caption a {
+    font-size: 1.3rem;
+    border-radius: 4px;
+  }
+  header .intro-desktop-caption h3 {
+    margin-bottom: 80px;
+    border-radius: 4px;
+  }
+}
+
 @media only screen and (min-width: 700px) {
   header .intro-image {
     height: 400px;
-  }
-  header .intro-image h1 {
-    display: block;
-  }
-  header p {
-    display: none;
   }
 }
 /*# sourceMappingURL=App.css.map */

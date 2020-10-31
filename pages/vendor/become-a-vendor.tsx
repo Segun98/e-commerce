@@ -15,7 +15,7 @@ const BecomeAVendor = () => {
           <div className="intro-image">
             {/* Large screen  */}
             <div className="intro-desktop-caption">
-              <h1>Partner With Us, Grow Your Business The Right Way!</h1>
+              <h3>Partner With Us, Grow Your Business The Right Way!</h3>
               <Link href="/vendor/register">
                 <a>Get Started</a>
               </Link>
@@ -23,7 +23,7 @@ const BecomeAVendor = () => {
           </div>
           {/* Mobile screen  */}
           <div className="intro-mobile-caption">
-            <p>Partner With Us, Grow Your Business The Right Way!</p>
+            <h5>Partner With Us, Grow Your Business The Right Way!</h5>
             <Link href="/vendor/register">
               <a>Get Started</a>
             </Link>
