@@ -217,7 +217,7 @@ export const CustomerCart = () => {
                   <div key={c.id} className="cart-item">
                     <div className="cart-img">
                       <img
-                        src={`/${cart_images[index]}`}
+                        src={`${c.product.image || "/" + cart_images[index]}`}
                         alt={`${c.product.name}`}
                       />
                     </div>
