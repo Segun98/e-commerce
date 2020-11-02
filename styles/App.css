@@ -1808,7 +1808,6 @@ Class names accross components can be the same but they are wrapped by a unique 
 }
 
 header .intro-image {
-  background-image: url("/slider/service.jpg");
   background-position: center;
   background-repeat: no-repeat;
   height: 120px;

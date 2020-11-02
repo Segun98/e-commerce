@@ -12,7 +12,10 @@ const BecomeAVendor = () => {
       </Head>
       <div className="become-vendor">
         <header>
-          <div className="intro-image">
+          <div
+            className="intro-image"
+            style={{ backgroundImage: 'url("/slider/service.jpg")' }}
+          >
             {/* Large screen  */}
             <div className="intro-desktop-caption">
               <h3>Partner With Us, Grow Your Business The Right Way!</h3>
