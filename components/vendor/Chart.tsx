@@ -6,6 +6,16 @@ interface Iprops {
   orders: Orders[];
 }
 export const Chart: React.FC<Iprops> = ({ orders }) => {
+  //Parse date to get year
+  function getYear(d) {
+    let date = new Date(parseInt(d));
+    return date.getFullYear();
+  }
+  //array of orders for this year
+  const OrdersThisYear = orders.filter(
+    (c) => getYear(c.created_at) === new Date().getFullYear()
+  );
+
   //Parse date to get month
   function getMonth(d) {
     let date = new Date(parseInt(d));
@@ -16,7 +26,7 @@ export const Chart: React.FC<Iprops> = ({ orders }) => {
   }
 
   //array of completed orders
-  const completed = orders.filter((o) => o.completed === "true");
+  const completed = OrdersThisYear.filter((o) => o.completed === "true");
 
   // return array of months from DB
   const months = completed.map((c) => getMonth(c.created_at));
@@ -56,6 +66,8 @@ export const Chart: React.FC<Iprops> = ({ orders }) => {
     "August",
     "September",
     "October",
+    "November",
+    "December",
   ];
   //returns ["","","March", ""] to work with chart library
   function final() {
@@ -67,7 +79,7 @@ export const Chart: React.FC<Iprops> = ({ orders }) => {
     labels,
     datasets: [
       {
-        label: "Sales",
+        label: "Sales by Month for the Year",
         fill: true,
         lineTension: 0.1,
         backgroundColor: "rgba(75,192,192,0.4)",
@@ -85,8 +97,8 @@ export const Chart: React.FC<Iprops> = ({ orders }) => {
         pointHoverBorderWidth: 2,
         pointRadius: 1,
         pointHitRadius: 10,
-        data: [2, 7, 12, 5, 8, 14, 12, 1, 19, 30],
-        // data: final(),
+        // data: [2, 7, 12, 5, 8, 14, 12, 1, 19, 30],
+        data: final(),
       },
     ],
   };

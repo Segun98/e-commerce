@@ -151,33 +151,6 @@ export const Dashboard: React.FC = () => {
             </div>
           </div>
 
-          {/* <div className="account-snippet">
-            <h1>
-              Account Information{"  "}
-              <Link href="/vendor/account">
-                <a>
-                  <Icon name="edit" />
-                </a>
-              </Link>
-            </h1>
-
-            <div className="account-infos">
-              <div className="account-info">
-                <h2>Email</h2>
-                <hr />
-                <p>{User.email}</p>
-              </div>
-
-              <div className="account-info">
-                <h2>Address Book</h2>
-                <hr />
-                <p>{User.phone || `090 3000 4000 55`}</p>
-                <p>
-                  {User.business_address || `No5, My Business Address, Lagos.`}
-                </p>
-              </div>
-            </div>
-          </div> */}
           <div className="recent-orders">
             <div className="recent-orders_wrap">
               <div>
@@ -203,7 +176,6 @@ export const Dashboard: React.FC = () => {
                 </Link>
               </Button>
             </div>
-            {/* DASHBOARD ORDERS COMPONENT, IT WAS ABSTRACTED FOR MOBILE SCREENS */}
             <section>
               <DashboardOrders />
               <br />
