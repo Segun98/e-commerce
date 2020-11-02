@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   Input,
   FormControl,
@@ -34,19 +34,7 @@ export const Login = () => {
 
   //show password or not in input field- password/confirm password
   const [show, setShow] = useState(false);
-  //custom error, mostly from the server
-  const [customError, setCustomError] = useState("");
   const [Loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState("");
-
-  useEffect(() => {
-    if (customError || success) {
-      setTimeout(() => {
-        setCustomError("");
-        setSuccess("");
-      }, 5000);
-    }
-  }, [customError]);
 
   //form submit function
 
@@ -161,9 +149,12 @@ export const Login = () => {
           title: "You Need To Signup",
           description: "Redirecting...",
           status: "info",
+          position: "top",
           duration: 3000,
         });
-        router.push("/customer/register#google");
+        setTimeout(() => {
+          router.push("/customer/register#google");
+        }, 2000);
       }
     }
   };
@@ -206,7 +197,7 @@ export const Login = () => {
                       message: "invalid email address",
                     },
                   })}
-                  isInvalid={errors.email || customError ? true : false}
+                  isInvalid={errors.email ? true : false}
                   errorBorderColor="red.300"
                 />
               </InputGroup>
@@ -225,7 +216,7 @@ export const Login = () => {
                   id="password"
                   placeholder="Enter Password"
                   ref={register}
-                  isInvalid={customError ? true : false}
+                  isInvalid={errors.email ? true : false}
                   errorBorderColor="red.300"
                 />
                 <InputRightElement width="4.5rem">
@@ -241,9 +232,6 @@ export const Login = () => {
               </InputGroup>
             </div>
           </FormControl>
-
-          <h3 style={{ color: "red" }}>{customError}</h3>
-          <h3 style={{ color: "green" }}>{success}</h3>
 
           <div className="btn">
             <Text as="div" display="flex" flexDirection="column">

@@ -126,10 +126,15 @@ export const Register = () => {
         if (res.data) {
           toast({
             title: "Sign Up Successful!",
+            description: "Redirecting to Login",
             status: "success",
-            duration: 3000,
+            position: "top",
+            duration: 4000,
+            isClosable: true,
           });
-          router.push("/customer/login");
+          setTimeout(() => {
+            router.push("/customer/login");
+          }, 2000);
         }
       }
     } catch (error) {
@@ -148,8 +153,11 @@ export const Register = () => {
           description: "Redirecting...",
           status: "info",
           duration: 3000,
+          isClosable: true,
         });
-        router.push("/customer/login");
+        setTimeout(() => {
+          router.push("/customer/login");
+        }, 2000);
       }
     }
   };

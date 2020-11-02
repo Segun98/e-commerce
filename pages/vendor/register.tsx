@@ -97,6 +97,7 @@ export const Register = () => {
         setLoading(false);
         toast({
           title: "Sign Up Successful!",
+          description: "Redirecting to Login",
           status: "success",
           duration: 3000,
         });
@@ -107,7 +108,7 @@ export const Register = () => {
       if (err.message === "Network request failed") {
         toast({
           title: "Oops, Network Request Failed",
-          description: "PLease Check Your Internet Connection and Try Again",
+          description: "Please Check Your Internet Connection and Try Again",
           status: "error",
           duration: 5000,
           isClosable: true,
