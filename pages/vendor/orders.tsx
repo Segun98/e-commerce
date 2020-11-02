@@ -52,6 +52,7 @@ export const Orders = () => {
           display: flex;
         }
         .order-status {
+          font-size: 0.9rem;
           margin: 30px 0;
         }
         .orders-page h1 {
@@ -67,6 +68,9 @@ export const Orders = () => {
         }
 
         @media only screen and (min-width: 700px) {
+          .order-status {
+            font-size: 1rem;
+          }
           .orders-layout main {
             margin: 0 auto;
             width: 60%;

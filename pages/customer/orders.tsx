@@ -107,18 +107,18 @@ export const CustomerOrders = () => {
           <List>
             <ListItem>
               * <strong>Processing</strong> signifies that your Order is being
-              processed. It Has been Acknowledged
+              processed. It has been acknowledged
             </ListItem>
             <ListItem>
-              * <strong>Cancelled</strong> signifies that Your Item has been
+              * <strong>Cancelled</strong> signifies that your item has been
               cancelled by you or our vendor.
             </ListItem>
             <ListItem>
-              * <strong>Delivered</strong> signifies that Your Item Has Been
-              delivered and accepted by You
+              * <strong>Delivered</strong> signifies that your item has been
+              delivered and accepted by you
             </ListItem>
             <ListItem>
-              * Please Click <strong>Action</strong> to find your{" "}
+              * Please click <strong>Action</strong> to find your{" "}
               <strong>Order ID</strong>
             </ListItem>
           </List>
@@ -264,6 +264,7 @@ export const CustomerOrders = () => {
           width: 95%;
         }
         .order-status {
+          font-size: 0.9rem;
           margin: 25px 0;
         }
         th {
@@ -279,6 +280,9 @@ export const CustomerOrders = () => {
           .customer-orders {
             margin: auto;
             width: 80%;
+          }
+          .order-status {
+            font-size: 1rem;
           }
           td {
             padding: 5px 10px;
