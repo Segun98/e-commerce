@@ -9,10 +9,10 @@ import { Commas } from "../../utils/helpers";
 import { useMutation } from "../../utils/useMutation";
 
 interface StoreProps {
-  data: UsersRes;
+  user: UsersRes;
   // handleDelete: (id: string, creator_id: string, name: string) => void;
 }
-export const MainStore: React.FC<StoreProps> = ({ data }) => {
+export const MainStore: React.FC<StoreProps> = ({ user }) => {
   const router = useRouter();
   //from context
   const { Token } = useToken();
@@ -68,23 +68,23 @@ export const MainStore: React.FC<StoreProps> = ({ data }) => {
       <header>
         <div>
           <div className="store-name">
-            <Icon name="triangle-up" /> {data.business_name}
+            <Icon name="triangle-up" /> {user.business_name}
           </div>
           <div className="store-bio">
             <img src="/profile.svg" alt="profile" />{" "}
-            {data.business_bio ||
+            {user.business_bio ||
               "We seek to provide quality products and services to our customers. At " +
-                data.business_name +
+                user.business_name +
                 ", customers come first"}
           </div>
           <div className="store-location">
             <Icon name="phone" mr="10px" />
-            {data.phone || "080123456789"}
+            {user.phone || "080123456789"}
           </div>
         </div>
         {/* ONLY SHOW EDIT BUTTON TO STORE OWNER */}
         <div>
-          {data && data.id === data.jwt_user_id ? (
+          {user && user.id === user.jwt_user_id ? (
             <div className="edit-btn">
               <button
                 aria-label="edit account"
@@ -107,17 +107,18 @@ export const MainStore: React.FC<StoreProps> = ({ data }) => {
         </div>
       </header>
       <hr />
+
       <div className="store-products">
         <div className="store-products_head">
-          <h1>{data && data.usersProducts.length} Products In Store</h1>
+          <h1>{user && user.usersProducts.length} Products In Store</h1>
         </div>
 
         {/* IF NO PRODUCT IN STORE */}
         <div>
-          {data && data.usersProducts.length === 0 && (
+          {user && user.usersProducts.length === 0 && (
             <div>
               {/* MESSAGE FOR STORE OWNER */}
-              {data.id === data.jwt_user_id ? (
+              {user.id === user.jwt_user_id ? (
                 <div
                   className="status"
                   style={{ color: "black", background: "white" }}
@@ -137,8 +138,8 @@ export const MainStore: React.FC<StoreProps> = ({ data }) => {
         {/* STORE PRODUCTS  */}
 
         <div className="store-products_wrap">
-          {data &&
-            data.usersProducts.map((p, index) => (
+          {user &&
+            user.usersProducts.map((p, index) => (
               <div className="store-item" key={p.id}>
                 <Link
                   href={`/product/${p.name_slug}`}
@@ -155,7 +156,7 @@ export const MainStore: React.FC<StoreProps> = ({ data }) => {
                 </Link>
                 {/* ONLY SHOW PRODUCT EDIT BUTTON TO STORE OWNER */}
 
-                {data && data.id === data.jwt_user_id ? (
+                {user && user.id === user.jwt_user_id ? (
                   <div className="edit-btn">
                     <button
                       title="edit product"

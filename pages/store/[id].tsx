@@ -9,7 +9,7 @@ import { Footer } from "../../components/Footer";
 import { MainStore } from "../../components/vendor/MainStore";
 
 interface Iprops {
-  data: UsersRes;
+  user: UsersRes;
   error: any;
 }
 export async function getServerSideProps({ params, req }) {
@@ -42,10 +42,10 @@ export async function getServerSideProps({ params, req }) {
   graphQLClient.setHeader("authorization", `bearer ${cookie}`);
   try {
     const res = await graphQLClient.request(STORE, variables);
-    const data = await res.user;
+    const user = await res.user;
     return {
       props: {
-        data,
+        user,
       },
     };
   } catch (err) {
@@ -57,14 +57,14 @@ export async function getServerSideProps({ params, req }) {
   }
 }
 
-const Store = ({ data, error }: Iprops) => {
+const Store = ({ user, error }: Iprops) => {
   const toast = useToast();
 
   return (
     <div className="store-page">
       <Head>
-        <title>{data ? data.business_name : "Error"} | PartyStore</title>
-        <meta name="description" content={data ? data.business_name : ""} />
+        <title>{user ? user.business_name : "Error"} | PartyStore</title>
+        <meta name="description" content={user ? user.business_name : ""} />
         <script
           async
           src="https://kit.fontawesome.com/c772bfb479.js"
@@ -98,26 +98,26 @@ const Store = ({ data, error }: Iprops) => {
             </div>
           </div>
         )}
-        {!data && <p className="space"></p>}
+        {!user && <p className="space"></p>}
 
         {/* USER/STORE IS PENDING  */}
-        {!error && data && data.pending === "true" ? (
+        {!error && user && user.pending === "true" ? (
           <div className="indicator">
             <div className="status">
-              {/* Display different messages to the public and tore owner  */}
-              {data && data.jwt_user_id === data.id
+              {/* Display different messages to the public and store owner  */}
+              {user && user.jwt_user_id === user.id
                 ? "Your Profile Is Currently Under Review. Please, Fill Out Your Profile Information In Your ACCOUNT PAGE for a Quick Review"
                 : "This Store Is Currently Under Review"}
             </div>
           </div>
         ) : //ELSE IF USER IS NOT PENDING, CHECK IF THEY ARE ONLINE
-        !error && data && data.online === "true" ? (
-          <MainStore data={data} />
+        !error && user && user.online === "true" ? (
+          <MainStore user={user} />
         ) : (
           //OFFLINE SCREEN
           <div className="indicator" style={{ display: error ? "none" : "" }}>
             <div className="status">
-              {data && data.jwt_user_id === data.id ? (
+              {user && user.jwt_user_id === user.id ? (
                 "You are currently OFFLINE, you will no longer recieve any orders. Visit your account page to return ONLINE"
               ) : (
                 <div>
