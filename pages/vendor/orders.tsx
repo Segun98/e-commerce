@@ -18,7 +18,7 @@ export const Orders = () => {
             <List>
               <ListItem>
                 * <strong>Pending</strong> signifies that you have NOT ACCEPTED
-                an Order
+                an Order.
               </ListItem>
               <ListItem>
                 * <strong>Cancelled</strong> signifies that You or a customer
@@ -53,7 +53,9 @@ export const Orders = () => {
         }
         .order-status {
           font-size: 0.9rem;
-          margin: 30px 0;
+          margin: 45px 0 30px 0;
+          box-shadow: var(--box) var(--softgrey);
+          padding: 5px;
         }
         .orders-page h1 {
           margin: 10px 0 10px 0;

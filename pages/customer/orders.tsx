@@ -266,7 +266,10 @@ export const CustomerOrders = () => {
         .order-status {
           font-size: 0.9rem;
           margin: 25px 0;
+          box-shadow: var(--box) var(--softgrey);
+          padding: 5px;
         }
+
         th {
           text-align: center;
           font-size: 0.8rem;
