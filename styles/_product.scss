@@ -50,6 +50,17 @@
                     padding-bottom: 3px;
                 }
 
+                .more-images {
+                    display: flex;
+                    margin: 2px 0;
+
+                    img {
+                        margin: 0 4px;
+                        border: 1px solid $lightblue;
+                        cursor: pointer;
+                    }
+                }
+
                 .share-section {
                     text-align: left;
 
@@ -209,6 +220,7 @@
 
             .product-img img {
                 width: 100%;
+                height: 100%;
                 object-fit: contain;
             }
 

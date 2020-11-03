@@ -21,6 +21,7 @@ import { addToCart } from "../../graphql/customer";
 import Head from "next/head";
 import { cartItems } from "../../redux/features/cart/fetchCart";
 import { useDispatch } from "react-redux";
+import Image from "next/image";
 
 interface response {
   product: ProductsRes;
@@ -52,10 +53,12 @@ const Product = ({ product, error }: response) => {
   const toast = useToast();
   const { Token } = useToken();
   const role = Cookies.get("role");
+  const dispatch = useDispatch();
 
   //Cart Qunatity
   const [quantity, setQuantity] = useState(1);
-  const dispatch = useDispatch();
+  //main image to be displayed out of all product images
+  const [currentImage, setCurrentImage] = useState(0);
 
   const [loading, setLoading] = useState(false);
   //filter out the main product
@@ -193,22 +196,42 @@ const Product = ({ product, error }: response) => {
             <div className="product-wrap">
               <div className="product-info1">
                 <div className="product-img">
-                  <img src={product.images[0]} alt={`${product.name}`} />
+                  <img
+                    src={product.images[currentImage]}
+                    alt={`${product.name}`}
+                  />
                 </div>
                 <hr />
                 <h1 className="product-name-mobile">{product.name}</h1>
                 <p className="product-price-mobile">
                   &#8358; {Commas(product.price)}
                 </p>
+                <hr />
+                <div className="more-images">
+                  {product.images.map((i, index) => (
+                    <img
+                      key={index}
+                      src={`${i}`}
+                      alt={`Image ${index}`}
+                      width="65"
+                      height="60"
+                      loading="lazy"
+                      role="button"
+                      onClick={() => {
+                        setCurrentImage(index);
+                      }}
+                    />
+                  ))}
+                </div>
                 <div className="share-section">
                   <hr />
                   <h1>Share</h1>
                   <div className="share-icons">
                     <ul>
-                      <li>
+                      <li role="button">
                         <img src="/twitter.svg" alt="Twitter Icon" />
                       </li>
-                      <li>
+                      <li role="button">
                         <img src="/facebook.svg" alt="Facebook Icon" />
                       </li>
                     </ul>

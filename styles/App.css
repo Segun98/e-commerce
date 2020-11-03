@@ -790,6 +790,19 @@ Class names accross components can be the same but they are wrapped by a unique 
   padding-bottom: 3px;
 }
 
+.product-page .product .product-wrap .product-info1 .more-images {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin: 2px 0;
+}
+
+.product-page .product .product-wrap .product-info1 .more-images img {
+  margin: 0 4px;
+  border: 1px solid #cbd8f9;
+  cursor: pointer;
+}
+
 .product-page .product .product-wrap .product-info1 .share-section {
   text-align: left;
 }
@@ -956,6 +969,7 @@ Class names accross components can be the same but they are wrapped by a unique 
   }
   .product-page .product .product-img img {
     width: 100%;
+    height: 100%;
     -o-object-fit: contain;
        object-fit: contain;
   }
