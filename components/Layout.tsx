@@ -10,6 +10,14 @@ export const Layout = ({ children }) => {
         <title>
           PartyStore | Shop Your Favourite Products For Your Parties In Nigeria
         </title>
+        <meta
+          name="description"
+          content="The number one market place for Party Supplies, Gift Items and Games in Lagos,Nigeria"
+        />
+        <meta
+          name="keywords"
+          content="Party, Parties, Gifts, E-Commerce, Online Store, Market, Lagos"
+        />
       </Head>
       <Header />
       {children}
