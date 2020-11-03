@@ -21,7 +21,6 @@ import { addToCart } from "../../graphql/customer";
 import Head from "next/head";
 import { cartItems } from "../../redux/features/cart/fetchCart";
 import { useDispatch } from "react-redux";
-import Image from "next/image";
 
 interface response {
   product: ProductsRes;
@@ -147,6 +146,7 @@ const Product = ({ product, error }: response) => {
       <Head>
         <title>{product ? product.name : "Error"} | PartyStore</title>
         <meta name="keywords" content={product.name} />
+        <meta name="description" content={`${product.description}`} />
         <meta name="author" content={product.creator.business_name} />
         <meta name="twitter:title" content={product.name} />
         <meta name="twitter:image" content={product.images[0]} />
