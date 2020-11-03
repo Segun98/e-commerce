@@ -146,6 +146,34 @@ const Product = ({ product, error }: response) => {
     <Layout>
       <Head>
         <title>{product ? product.name : "Error"} | PartyStore</title>
+        <meta name="keywords" content={product.name} />
+        <meta name="author" content={product.creator.business_name} />
+        <meta name="twitter:title" content={product.name} />
+        <meta name="twitter:image" content={product.images[0]} />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta property="og:type" content="website" />
+        <meta
+          property="og:url"
+          content={`https://partystore.vercel.app/product/${product.name_slug}`}
+        />
+        <meta property="og:title" content={product.name} />
+        <meta property="og:image" content={product.images[0]} />
+        <meta property="og:site_name" content={product.name} />
+        <link
+          rel="canonical"
+          href={`https://partystore.vercel.app/product/${product.name_slug}`}
+        />
+        <script
+          async
+          src="https://platform.twitter.com/widgets.js"
+          charSet="utf-8"
+        ></script>
+        <script
+          async
+          defer
+          crossOrigin="anonymous"
+          src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v7.0"
+        ></script>
       </Head>
       <div className="product-page">
         <>
@@ -229,10 +257,30 @@ const Product = ({ product, error }: response) => {
                   <div className="share-icons">
                     <ul>
                       <li role="button">
-                        <img src="/twitter.svg" alt="Twitter Icon" />
+                        <a
+                          href="https://twitter.com/share?ref_src=twsrc%5Etfw"
+                          className="twitter-share-button"
+                          data-size="small"
+                          data-show-count="false"
+                        >
+                          <img src="/twitter.svg" alt="Twitter Icon" />
+                        </a>
                       </li>
                       <li role="button">
-                        <img src="/facebook.svg" alt="Facebook Icon" />
+                        <div
+                          className="fb-share-button"
+                          data-href="https://developers.facebook.com/docs/plugins/"
+                          data-layout="button"
+                          data-size="small"
+                        >
+                          <a
+                            target="_blank"
+                            href={`https://www.facebook.com/sharer/sharer.php?u=https://partystore.vercel.app/product/${product.name_slug}`}
+                            className="fb-xfbml-parse-ignore"
+                          >
+                            <img src="/facebook.svg" alt="Facebook Icon" />
+                          </a>
+                        </div>
                       </li>
                     </ul>
                     <hr />
