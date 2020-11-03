@@ -1,13 +1,13 @@
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import { uploadLink } from "../../utils/client";
 import Upload from "rc-upload";
 import { Icon, Spinner, useToast } from "@chakra-ui/core";
 
 interface Iprops {
-  images: any[];
-  setImages: any;
-  imageLoad: any;
-  setImageLoad: any;
+  images: string[];
+  setImages: Dispatch<SetStateAction<string[]>>;
+  imageLoad: boolean;
+  setImageLoad: Dispatch<SetStateAction<boolean>>;
 }
 export const ImageUpload: React.FC<Iprops> = ({
   imageLoad,
@@ -56,6 +56,12 @@ export const ImageUpload: React.FC<Iprops> = ({
     },
   };
 
+  function deleteImage(index: number) {
+    let imgs = [...images];
+    imgs.splice(index, 1);
+    setImages(imgs);
+  }
+
   return (
     <div>
       <div className="images">
@@ -63,11 +69,10 @@ export const ImageUpload: React.FC<Iprops> = ({
           <div key={index}>
             <img src={`${i}`} alt={`${index}`} />
             <button
+              type="button"
               aria-label="delete image"
               onClick={() => {
-                let imgs = [...images];
-                let newImgs = imgs.splice(index, 1);
-                setImages(newImgs);
+                deleteImage(index);
               }}
             >
               <Icon name="delete" />

@@ -21,8 +21,6 @@ import { Navigation } from "../../components/vendor/Navigation";
 import { Footer } from "../../components/Footer";
 import Head from "next/head";
 import { useUser } from "../../Context/UserProvider";
-import Upload from "rc-upload";
-import { uploadLink } from "./../../utils/client";
 import { ImageUpload } from "../../components/vendor/ImageUpload";
 
 export const Newitem = () => {
