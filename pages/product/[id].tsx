@@ -1,26 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { graphQLClient } from "../../utils/client";
 import { PRODUCT } from "../../graphql/vendor";
 import {
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbLink,
-  Button,
   Icon,
   useToast,
 } from "@chakra-ui/core";
-import { MutationAddToCartArgs, ProductsRes } from "../../Typescript/types";
+import { ProductsRes } from "../../Typescript/types";
 import { Layout } from "../../components/Layout";
 import { Commas } from "./../../utils/helpers";
 import Link from "next/link";
 import { PurchaseSteps } from "../../components/customer/PurchaseSteps";
-import { useToken } from "../../Context/TokenProvider";
-import Cookies from "js-cookie";
-import { useMutation } from "../../utils/useMutation";
-import { addToCart } from "../../graphql/customer";
 import Head from "next/head";
-import { cartItems } from "../../redux/features/cart/fetchCart";
-import { useDispatch } from "react-redux";
+import { AddToCart } from "../../components/customer/AddToCart";
 
 interface response {
   product: ProductsRes;
@@ -50,9 +44,6 @@ export async function getServerSideProps({ params }) {
 
 const Product = ({ product, error }: response) => {
   const toast = useToast();
-  const { Token } = useToken();
-  const role = Cookies.get("role");
-  const dispatch = useDispatch();
 
   //Cart Qunatity
   const [quantity, setQuantity] = useState(1);
@@ -64,82 +55,6 @@ const Product = ({ product, error }: response) => {
   const related = product
     ? product.related.filter((p) => p.id !== product.id)
     : [];
-
-  async function addCart(product_id, prod_creator_id, quantity) {
-    setLoading(true);
-    const variables: MutationAddToCartArgs = {
-      product_id,
-      prod_creator_id,
-      quantity,
-    };
-    const { data, error } = await useMutation(addToCart, variables, Token);
-    if (data) {
-      setLoading(false);
-      dispatch(cartItems(Token));
-      toast({
-        title: "Item Added to Cart!",
-        description: `Your Item has been added to cart, proceed to checkout`,
-        status: "success",
-        duration: 7000,
-      });
-    }
-    if (error) {
-      setLoading(false);
-      //handled this error cos chakra ui "status" should be "info"
-      if (error.response?.errors[0].message === "Item is already in Cart") {
-        toast({
-          title: "Item Is Already In Cart",
-          description: "Please Visit your Cart page to checkout",
-          isClosable: true,
-          status: "info",
-        });
-        return;
-      }
-      toast({
-        title: "An Error occurred while adding to cart.",
-        description:
-          error.message === "Network request failed"
-            ? "Check Your Internet Connection and Refresh"
-            : role !== "customer"
-            ? "You need to Login as a customer"
-            : "",
-        status: "info",
-        duration: 7000,
-        isClosable: true,
-      });
-    }
-  }
-
-  //save item to local storage for unauthorised customers
-  const [savedItem, setSavedItem] = useState(storeItem);
-  useEffect(() => {
-    if (typeof window === "object") {
-      localStorage.setItem("savedItem", JSON.stringify(savedItem));
-    }
-  }, [savedItem]);
-
-  function storeItem() {
-    if (typeof window === "object") {
-      const SavedItem = JSON.parse(localStorage.getItem("savedItem"));
-      return SavedItem || [];
-    }
-  }
-
-  function addToSavedItems() {
-    const newItem = {
-      images: product.images[0],
-      name: product.name,
-      price: product.price,
-      product_id: product.id,
-      prod_creator_id: product.creator_id,
-      name_slug: product.name_slug,
-    };
-    // prevent duplicates
-    let exists = savedItem.filter((s) => s.product_id === product.id);
-    if (exists.length === 0) {
-      setSavedItem([...savedItem, newItem]);
-    }
-  }
 
   return (
     <Layout>
@@ -333,56 +248,12 @@ const Product = ({ product, error }: response) => {
                         <Icon name="small-add" color="black" size="22px" />
                       </button>
                     </div>
-                    <Button
-                      variantColor="blue"
-                      border="none"
-                      isLoading={loading ? true : false}
-                      style={{ backgroundColor: "var(--deepblue" }}
-                      onClick={() => {
-                        if (!Token || !role || role === "vendor") {
-                          addToSavedItems();
-                          toast({
-                            title: "Your Item Has Been Saved!",
-                            description:
-                              "Find It In Your Account Page After You LogIn",
-                            status: "info",
-                            duration: 7000,
-                            position: "bottom",
-                            isClosable: true,
-                          });
-                          return;
-                        }
-                        if (product.in_stock === "false") {
-                          addToSavedItems();
-                          toast({
-                            title: "This Product is Currently Out of Stock!",
-                            description:
-                              "It has been added to Saved Items in your Account page",
-                            status: "info",
-                            duration: 5000,
-                            position: "bottom",
-                            isClosable: true,
-                          });
-                          return;
-                        }
-                        if (product.creator.online === "false") {
-                          addToSavedItems();
-                          toast({
-                            title: "The Vendor is Currently OFFLINE",
-                            description:
-                              "This Item Has Been Saved In Your Account Page. Please Try Again Later",
-                            status: "info",
-                            duration: 5000,
-                            position: "bottom",
-                            isClosable: true,
-                          });
-                          return;
-                        }
-                        addCart(product.id, product.creator_id, quantity);
-                      }}
-                    >
-                      Add To Cart
-                    </Button>
+                    <AddToCart
+                      product={product}
+                      loading={loading}
+                      setLoading={setLoading}
+                      quantity={quantity}
+                    />
                   </div>
                 </div>
 
