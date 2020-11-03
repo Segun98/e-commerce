@@ -235,7 +235,7 @@ export const Account = () => {
                       isReadOnly={readOnly}
                       autoFocus={readOnly}
                       placeholder="Click Edit to add Phone Number"
-                      width="350px"
+                      width="100%"
                       type="tel"
                       name="Phone"
                       value={phone}
