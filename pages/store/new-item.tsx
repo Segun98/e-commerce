@@ -7,7 +7,6 @@ import {
   Select,
   useToast,
   InputGroup,
-  Spinner,
 } from "@chakra-ui/core";
 import Cookies from "js-cookie";
 import React, { useState } from "react";
@@ -24,6 +23,7 @@ import Head from "next/head";
 import { useUser } from "../../Context/UserProvider";
 import Upload from "rc-upload";
 import { uploadLink } from "./../../utils/client";
+import { ImageUpload } from "../../components/vendor/ImageUpload";
 
 export const Newitem = () => {
   const toast = useToast();
@@ -39,46 +39,8 @@ export const Newitem = () => {
   const { handleSubmit, register, errors, watch } = useForm();
   const [category, setCategory] = useState("");
   const [partyCategory, setPartyCategory] = useState("");
-  const [image, setImage] = useState("");
+  const [images, setImages] = useState([]);
   const [imageLoad, setImageLoad] = useState(false);
-
-  //Image Upload Library
-  const uploaderProps = {
-    action: () => {
-      return new Promise((resolve) => {
-        setTimeout(() => {
-          resolve(uploadLink[0]);
-        }, 2000);
-      });
-    },
-    onSuccess(ImageLink) {
-      setImageLoad(false);
-      if (ImageLink["error"]) {
-        toast({
-          title: "Error Uploading Image",
-          description: "Check Your Internet Connection and Try Again",
-          status: "error",
-          duration: 5000,
-          isClosable: true,
-        });
-        return;
-      }
-      setImage(ImageLink);
-    },
-    onProgress(step, file) {
-      setImageLoad(true);
-    },
-    onError(err) {
-      toast({
-        title: "Error Uploading Image",
-        description: "Check Your Internet Connection and Try Again",
-        status: "error",
-        duration: 5000,
-        isClosable: true,
-      });
-      setImageLoad(false);
-    },
-  };
 
   // form submit
   const onSubmit = async (values, e): Promise<void> => {
@@ -94,7 +56,7 @@ export const Newitem = () => {
       return;
     }
 
-    if (!image) {
+    if (images.length === 0) {
       toast({
         title: "Please Upload an Image of Your Product",
         description: "White Background Preferably",
@@ -132,7 +94,7 @@ export const Newitem = () => {
       price: parseInt(price),
       category: category,
       party_category: partyCategory,
-      image,
+      images,
       available_qty: parseInt(available_qty),
     };
 
@@ -232,11 +194,6 @@ export const Newitem = () => {
                       <div className="form-item">
                         <FormLabel htmlFor="price">Price</FormLabel>
                         <InputGroup>
-                          {/* <InputLeftAddon
-                              children="&#8358;"
-                              color="blue.400"
-                              fontSize="0.8em"
-                            /> */}
                           <Input
                             type="text"
                             inputMode="numeric"
@@ -324,21 +281,12 @@ export const Newitem = () => {
                         </InputGroup>
                       </div>
                       <div className="form-item image-upload">
-                        {/* @ts-ignore */}
-                        <Upload {...uploaderProps} id="test">
-                          {imageLoad ? (
-                            <Spinner speed="0.7s"></Spinner>
-                          ) : image ? null : (
-                            <div>
-                              <a>
-                                Click or Drag Here to Upload Product Image.
-                                White Background Preferably
-                              </a>
-                              <img src="/upload-icon.png" />
-                            </div>
-                          )}
-                          <img src={`${image}`} />
-                        </Upload>
+                        <ImageUpload
+                          images={images}
+                          setImages={setImages}
+                          imageLoad={imageLoad}
+                          setImageLoad={setImageLoad}
+                        />
                       </div>
                     </section>
                   </div>

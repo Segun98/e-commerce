@@ -7,7 +7,6 @@ import {
   Radio,
   RadioGroup,
   Select,
-  Spinner,
   Textarea,
   useToast,
 } from "@chakra-ui/core";
@@ -23,10 +22,10 @@ import {
   ProductsRes,
   MutationUpdateProductArgs,
 } from "../../../Typescript/types";
-import { graphQLClient, uploadLink } from "../../../utils/client";
+import { graphQLClient } from "../../../utils/client";
 import { ProtectRouteV } from "../../../utils/ProtectedRouteV";
 import { useMutation } from "../../../utils/useMutation";
-import Upload from "rc-upload";
+import { ImageUpload } from "../../../components/vendor/ImageUpload";
 
 interface Iprops {
   product: ProductsRes;
@@ -72,46 +71,8 @@ const Edit = ({ product, error }: Iprops) => {
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState<any>("");
   const [available_qty, setAvailableQty] = useState<any>("");
-  const [image, setImage] = useState("");
+  const [images, setImages] = useState([]);
   const [imageLoad, setImageLoad] = useState(false);
-
-  //Image Upload Library
-  const uploaderProps = {
-    action: () => {
-      return new Promise((resolve) => {
-        setTimeout(() => {
-          resolve(uploadLink[0]);
-        }, 2000);
-      });
-    },
-    onSuccess(ImageLink) {
-      setImageLoad(false);
-      if (ImageLink["error"]) {
-        toast({
-          title: "Error Uploading Image",
-          description: "Check Your Internet Connection and Try Again",
-          status: "error",
-          duration: 5000,
-          isClosable: true,
-        });
-        return;
-      }
-      setImage(ImageLink);
-    },
-    onProgress(step, file) {
-      setImageLoad(true);
-    },
-    onError(err) {
-      setImageLoad(false);
-      toast({
-        title: "Error Uploading Image",
-        description: "Check Your Internet Connection and Try Again",
-        status: "error",
-        duration: 5000,
-        isClosable: true,
-      });
-    },
-  };
 
   //populate product input fields with exisiting data from DB
   useEffect(() => {
@@ -123,7 +84,7 @@ const Edit = ({ product, error }: Iprops) => {
       setCategory(product.category || "");
       setPartyCategory(product.party_category || "");
       setInStock(product.in_stock || "");
-      setImage(product.image || "");
+      setImages(product.images || []);
     }
   }, [product]);
 
@@ -147,7 +108,7 @@ const Edit = ({ product, error }: Iprops) => {
       });
       return;
     }
-    if (!image) {
+    if (images.length === 0) {
       toast({
         title: "Please Upload an Image of Your Product",
         description: "White Background Preferably",
@@ -165,7 +126,7 @@ const Edit = ({ product, error }: Iprops) => {
       price: parseInt(price),
       category,
       party_category: partyCategory,
-      image,
+      images,
       in_stock: inStock,
       available_qty: parseInt(available_qty),
     };
@@ -225,7 +186,7 @@ const Edit = ({ product, error }: Iprops) => {
             )}
             {role && role === "vendor" && (
               <div className="main-wrap">
-                <h1 className="title">Add A New Product</h1>
+                <h1 className="title">Edit Product</h1>
                 <form onSubmit={handleSubmit}>
                   <FormControl isRequired>
                     <div className="form-wrap">
@@ -369,22 +330,12 @@ const Edit = ({ product, error }: Iprops) => {
                         </div>
 
                         <div className="form-item image-upload">
-                          {/* @ts-ignore */}
-                          <Upload {...uploaderProps} id="test">
-                            {imageLoad ? (
-                              <Spinner speed="0.7s"></Spinner>
-                            ) : image ? null : (
-                              <div>
-                                <a>
-                                  Click or Drag Here to Update Product Image.
-                                  White Background Preferably
-                                </a>
-                                <img src="/upload-icon.png" />
-                              </div>
-                            )}
-                            <p>{image && "Click to Edit"}</p>
-                            <img src={`${image}`} />
-                          </Upload>
+                          <ImageUpload
+                            imageLoad={imageLoad}
+                            setImageLoad={setImageLoad}
+                            images={images}
+                            setImages={setImages}
+                          />
                         </div>
                       </section>
                     </div>

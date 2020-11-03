@@ -18,14 +18,6 @@ const Home = () => {
   const [data, loading] = useQuery(featuredProducts, { limit: 5 });
   const products = data ? data.featuredProducts : [];
 
-  const featured_images = [
-    "product3.png",
-    "product2.png",
-    "product4.png",
-    "product2.png",
-    "product3.png",
-  ];
-
   return (
     <Layout>
       <div className="home-page">
@@ -144,28 +136,28 @@ const Home = () => {
           <section className="featured">
             <h1>Top Picks For You</h1>
             <div className="scroll-direction">
-              <button title="scroll left" aria-label="scroll left">
-                <Icon
-                  name="chevron-left"
-                  onClick={() => {
-                    if (scrollRef.current) {
-                      scrollRef.current.scrollLeft -= 30;
-                    }
-                  }}
-                  size="32px"
-                />
+              <button
+                title="scroll left"
+                aria-label="scroll left"
+                onClick={() => {
+                  if (scrollRef.current) {
+                    scrollRef.current.scrollLeft -= 30;
+                  }
+                }}
+              >
+                <Icon name="chevron-left" size="32px" />
               </button>
 
-              <button title="scroll right" aria-label="scroll right">
-                <Icon
-                  name="chevron-right"
-                  onClick={() => {
-                    if (scrollRef.current) {
-                      scrollRef.current.scrollLeft += 30;
-                    }
-                  }}
-                  size="32px"
-                />
+              <button
+                title="scroll right"
+                aria-label="scroll right"
+                onClick={() => {
+                  if (scrollRef.current) {
+                    scrollRef.current.scrollLeft += 30;
+                  }
+                }}
+              >
+                <Icon name="chevron-right" size="32px" />
               </button>
             </div>
             {loading && (
@@ -182,10 +174,7 @@ const Home = () => {
                       as={`/product/${p.name_slug}`}
                     >
                       <a>
-                        <img
-                          src={`${p.image || "/" + featured_images[index]}`}
-                          alt={`${p.name}`}
-                        />
+                        <img src={p.images[0]} alt={`${p.name}`} />
                         <hr />
                         <div className="featured-desc">
                           <h2>{p.name}</h2>

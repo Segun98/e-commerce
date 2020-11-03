@@ -21,7 +21,7 @@ export const byCategory = gql`
       name
       name_slug
       price
-      image
+      images
     }
   }
 `;
@@ -53,15 +53,6 @@ export async function getServerSideProps({ query }) {
 export const Category = ({ products, error }: Iprops) => {
   const toast = useToast();
   const router: any = useRouter();
-
-  const images = [
-    "slider/slide2.jpeg",
-    "product3.png",
-    "product2.png",
-    "product4.png",
-    "product2.png",
-    "product1.png",
-  ];
 
   //pagination
   const [page, setpage] = useState(parseInt(router.query.p) || 1);
@@ -117,7 +108,7 @@ export const Category = ({ products, error }: Iprops) => {
                     as={`/product/${p.name_slug}`}
                   >
                     <a>
-                      <img src={`/${images[index]}`} alt={`${p.name}`} />
+                      <img src={p.images[0]} alt={`${p.name}`} />
                       <hr />
                       <div className="category-desc">
                         <h2>{p.name}</h2>

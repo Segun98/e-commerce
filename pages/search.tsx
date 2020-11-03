@@ -39,7 +39,8 @@ export async function getServerSideProps({ query }) {
     };
   }
 }
-export const Search = ({ products, error }: Iprops) => {
+
+const Search = ({ products, error }: Iprops) => {
   const toast = useToast();
   //pagination
   const router: any = useRouter();
@@ -54,14 +55,6 @@ export const Search = ({ products, error }: Iprops) => {
     }
     router.push(`/search?query=${router.query.query}&p=${page}`);
   }, [page]);
-  const images = [
-    "slider/slide2.jpeg",
-    "product3.png",
-    "product2.png",
-    "product4.png",
-    "product2.png",
-    "product1.png",
-  ];
 
   return (
     <Layout>
@@ -99,10 +92,7 @@ export const Search = ({ products, error }: Iprops) => {
                     as={`/product/${p.name_slug}`}
                   >
                     <a>
-                      <img
-                        src={`${p.image || "/" + images[index]}`}
-                        alt={`${p.name}`}
-                      />
+                      <img src={p.images[0]} alt={`${p.name}`} />
                       <hr />
                       <div className="search-desc">
                         <h2>{p.name}</h2>

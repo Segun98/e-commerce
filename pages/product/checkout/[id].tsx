@@ -288,7 +288,7 @@ const Checkout = ({ variables }) => {
               <h1>Your Order</h1>
               <hr />
               <div className="wrap">
-                <img src={`${cart.product.image}`} alt="product image" />
+                <img src={cart.product.images[0]} alt="product image" />
                 <div>
                   <p>{cart.product.name}</p>
                   <p style={{ color: "var(--deepblue)" }}>

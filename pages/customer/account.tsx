@@ -30,15 +30,6 @@ export const Account = () => {
   const role = Cookies && Cookies.get("role");
   const dispatch = useDispatch();
 
-  const images = [
-    "slider/slide2.jpeg",
-    "product3.png",
-    "product2.png",
-    "product4.png",
-    "product2.png",
-    "product1.png",
-  ];
-
   //Input Fileds Values
   const [readOnly, setReadOnly] = useState(true);
   const [phone, setPhone] = useState("");
@@ -305,7 +296,7 @@ export const Account = () => {
                       as={`/product/${s.name_slug}`}
                     >
                       <a>
-                        <img src={`/${images[i]}`} alt={`${s.name}`} />
+                        <img src={s.images} alt={`${s.name}`} />
                         <hr />
                         <div className="saved-desc">
                           <h2>{s.name}</h2>

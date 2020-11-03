@@ -8,7 +8,7 @@ export const ADD_PRODUCT = gql`
     $price: Int!
     $category: String!
     $party_category: String
-    $image: String!
+    $images: [String]
     $available_qty: Int!
   ) {
     addProduct(
@@ -18,7 +18,7 @@ export const ADD_PRODUCT = gql`
       price: $price
       category: $category
       party_category: $party_category
-      image: $image
+      images: $images
       available_qty: $available_qty
     ) {
       message
@@ -42,7 +42,7 @@ export const STORE = gql`
         name
         name_slug
         price
-        image
+        images
         creator_id
       }
     }
@@ -56,7 +56,7 @@ export const featuredProducts = gql`
       name
       name_slug
       price
-      image
+      images
     }
   }
 `;
@@ -71,7 +71,7 @@ export const PRODUCT = gql`
       price
       category
       party_category
-      image
+      images
       in_stock
       available_qty
       creator_id
@@ -80,7 +80,7 @@ export const PRODUCT = gql`
         name
         name_slug
         price
-        image
+        images
       }
       creator {
         business_name_slug
@@ -100,7 +100,7 @@ export const editProductPage = gql`
       price
       category
       party_category
-      image
+      images
       in_stock
       available_qty
       creator_id
@@ -116,7 +116,7 @@ export const updateProduct = gql`
     $price: Int!
     $category: String
     $party_category: String
-    $image: String
+    $images: [String]
     $available_qty: Int
     $in_stock: String
     $creator_id: String!
@@ -128,7 +128,7 @@ export const updateProduct = gql`
       price: $price
       category: $category
       party_category: $party_category
-      image: $image
+      images: $images
       available_qty: $available_qty
       in_stock: $in_stock
       creator_id: $creator_id

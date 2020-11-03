@@ -9,7 +9,7 @@ export const getCartItems = gql`
         id
         name
         price
-        image
+        images
         in_stock
         available_qty
       }
@@ -39,7 +39,7 @@ export const getCart = gql`
         name_slug
         description
         price
-        image
+        images
         in_stock
         creator_id
         available_qty
@@ -130,7 +130,7 @@ export const SEARCH = gql`
       name
       name_slug
       price
-      image
+      images
     }
   }
 `;

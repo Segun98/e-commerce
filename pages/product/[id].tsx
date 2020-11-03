@@ -63,15 +63,6 @@ const Product = ({ product, error }: response) => {
     ? product.related.filter((p) => p.id !== product.id)
     : [];
 
-  const featured_images = [
-    "slider/slide2.jpeg",
-    "product3.png",
-    "product2.png",
-    "product4.png",
-    "product2.png",
-    "product1.png",
-  ];
-
   async function addCart(product_id, prod_creator_id, quantity) {
     setLoading(true);
     const variables: MutationAddToCartArgs = {
@@ -134,7 +125,7 @@ const Product = ({ product, error }: response) => {
 
   function addToSavedItems() {
     const newItem = {
-      image: product.image,
+      images: product.images[0],
       name: product.name,
       price: product.price,
       product_id: product.id,
@@ -202,10 +193,7 @@ const Product = ({ product, error }: response) => {
             <div className="product-wrap">
               <div className="product-info1">
                 <div className="product-img">
-                  <img
-                    src={`${product.image}` || "/product1.png"}
-                    alt={`${product.name}`}
-                  />
+                  <img src={product.images[0]} alt={`${product.name}`} />
                 </div>
                 <hr />
                 <h1 className="product-name-mobile">{product.name}</h1>
@@ -384,10 +372,7 @@ const Product = ({ product, error }: response) => {
                       as={`/product/${r.name_slug}`}
                     >
                       <a>
-                        <img
-                          src={`${r.image || "/" + featured_images[index]}`}
-                          alt={`${r.name}`}
-                        />
+                        <img src={r.images[0]} alt={`${r.name}`} />
                         <hr />
                         <div className="related-desc">
                           <h2>{r.name}</h2>

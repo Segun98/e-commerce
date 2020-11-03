@@ -19,16 +19,6 @@ export const MainStore: React.FC<StoreProps> = ({ data }) => {
 
   const toast = useToast();
 
-  const images = [
-    "slider/slide2.jpeg",
-    "product3.png",
-    "product4.png",
-    "product2.png",
-    "product1.png",
-    "product2.png",
-    "product3.png",
-  ];
-
   // Delete Product
   const handleDelete = async (id, creator_id, name) => {
     const variables: MutationDeleteProductArgs = {
@@ -155,10 +145,7 @@ export const MainStore: React.FC<StoreProps> = ({ data }) => {
                   as={`/product/${p.name_slug}`}
                 >
                   <a>
-                    <img
-                      src={`${p.image || "/" + images[index]}`}
-                      alt={`${p.name}`}
-                    />
+                    <img src={p.images[0]} alt={`${p.name}`} />
                     <hr />
                     <div className="store-desc">
                       <h2>{p.name}</h2>

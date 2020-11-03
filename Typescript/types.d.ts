@@ -20,6 +20,7 @@ export type Query = {
   customerProfile?: Maybe<UsersRes>;
   editUserPage?: Maybe<UsersRes>;
   products?: Maybe<Array<Maybe<ProductsRes>>>;
+  featuredProducts?: Maybe<Array<Maybe<ProductsRes>>>;
   product?: Maybe<ProductsRes>;
   search?: Maybe<Array<Maybe<ProductsRes>>>;
   byCategory?: Maybe<Array<Maybe<ProductsRes>>>;
@@ -51,6 +52,12 @@ export type QueryEditUserPageArgs = {
 
 
 export type QueryProductsArgs = {
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+};
+
+
+export type QueryFeaturedProductsArgs = {
   limit?: Maybe<Scalars['Int']>;
 };
 
@@ -126,7 +133,7 @@ export type ProductsRes = {
   price?: Maybe<Scalars['Int']>;
   category?: Maybe<Scalars['String']>;
   party_category?: Maybe<Scalars['String']>;
-  image?: Maybe<Scalars['String']>;
+  images?: Maybe<Array<Maybe<Scalars['String']>>>;
   in_stock?: Maybe<Scalars['String']>;
   creator_id?: Maybe<Scalars['String']>;
   created_at?: Maybe<Scalars['String']>;
@@ -245,7 +252,7 @@ export type MutationAddProductArgs = {
   price: Scalars['Int'];
   category?: Maybe<Scalars['String']>;
   party_category?: Maybe<Scalars['String']>;
-  image?: Maybe<Scalars['String']>;
+  images?: Maybe<Array<Maybe<Scalars['String']>>>;
   available_qty: Scalars['Int'];
 };
 
@@ -257,7 +264,7 @@ export type MutationUpdateProductArgs = {
   price: Scalars['Int'];
   category?: Maybe<Scalars['String']>;
   party_category?: Maybe<Scalars['String']>;
-  image?: Maybe<Scalars['String']>;
+  images?: Maybe<Array<Maybe<Scalars['String']>>>;
   available_qty?: Maybe<Scalars['Int']>;
   in_stock?: Maybe<Scalars['String']>;
   creator_id: Scalars['String'];

@@ -25,7 +25,7 @@ export const partyCategory = gql`
       name
       name_slug
       price
-      image
+      images
     }
   }
 `;
@@ -54,7 +54,8 @@ export async function getServerSideProps({ query }) {
     };
   }
 }
-export const Category = ({ products, error }: Iprops) => {
+
+const Category = ({ products, error }: Iprops) => {
   const toast = useToast();
   const router: any = useRouter();
 
@@ -68,14 +69,6 @@ export const Category = ({ products, error }: Iprops) => {
     }
     router.push(`/party?category=${router.query.category}&p=${page}`);
   }, [page]);
-  const images = [
-    "slider/slide2.jpeg",
-    "product3.png",
-    "product2.png",
-    "product4.png",
-    "product1.png",
-    "product3.png",
-  ];
 
   return (
     <Layout>
@@ -115,7 +108,7 @@ export const Category = ({ products, error }: Iprops) => {
                     as={`/product/${p.name_slug}`}
                   >
                     <a>
-                      <img src={`/${images[index]}`} alt={`${p.name}`} />
+                      <img src={p.images[0]} alt={`${p.name}`} />
                       <hr />
                       <div className="category-desc">
                         <h2>{p.name}</h2>
