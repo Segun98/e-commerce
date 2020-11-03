@@ -64,7 +64,7 @@ const Store = ({ user, error }: Iprops) => {
     <div className="store-page">
       <Head>
         <title>{user ? user.business_name : "Error"} | PartyStore</title>
-        <meta name="description" content={user ? user.business_name : ""} />
+        <meta name="description" content={user ? user.business_bio : ""} />
         <script
           async
           src="https://kit.fontawesome.com/c772bfb479.js"
