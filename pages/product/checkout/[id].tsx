@@ -23,6 +23,7 @@ import { Commas } from "../../../utils/helpers";
 import { useMutation } from "../../../utils/useMutation";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import { ConfirmOrder } from "../../../components/customer/ConfirmOrder";
 
 export async function getServerSideProps({ params }) {
   const variables = {
@@ -36,9 +37,7 @@ export async function getServerSideProps({ params }) {
   };
 }
 const Checkout = ({ variables }) => {
-  const toast = useToast();
   const { Token } = useToken();
-  const router = useRouter();
 
   const [editMode, setEditMode] = useState(false);
   const [address, setAddress] = useState("");
@@ -53,75 +52,6 @@ const Checkout = ({ variables }) => {
     setAddress(cart?.cartCreator.customer_address || "");
     setPhone(cart?.cartCreator.phone || "");
   }, [cart]);
-
-  async function handleOrder() {
-    let sub = cart.product.price * cart.quantity + 1000;
-    const variables: MutationCreateOrderArgs | any = {
-      name: cart.product.name,
-      price: cart.product.price,
-      quantity: cart.quantity,
-      delivery_fee: 1000,
-      //@ts-ignore
-      subtotal: parseInt(sub),
-      request,
-      customer_email: cart.cartCreator.email,
-      vendor_email: cart.product.creator.email,
-      customer_phone: cart.cartCreator.phone,
-      vendor_phone: cart.product.creator.phone,
-      customer_address: address,
-      business_address: cart.product.creator.business_address,
-      product_id: cart.product_id,
-      prod_creator_id: cart.prod_creator_id,
-    };
-    if (!address || !phone) {
-      toast({
-        title: "Address Details Cannot Be Empty",
-        status: "error",
-        duration: 5000,
-        isClosable: true,
-        position: "top",
-      });
-      return;
-    }
-
-    //check if product is out of stock or creator is offline
-
-    if (
-      cart.product.creator.online === "false" ||
-      cart.product.in_stock === "false"
-    ) {
-      toast({
-        title: "Sorry you cannot make this Order at this time",
-        description:
-          "The product is either out of stock or Vendor is unavailable. Sorry for the incovinience, do check back later",
-        status: "info",
-        duration: 5000,
-        isClosable: true,
-        position: "top",
-      });
-      return;
-    }
-    const { data, error } = await useMutation(createOrder, variables, Token);
-
-    if (data) {
-      const { data } = await useMutation(deleteFromCart, {
-        id: cart.id,
-      });
-      if (data.deleteFromCart) {
-        router.push("/customer/cart#cart-top");
-      }
-    }
-    if (error) {
-      toast({
-        title: "An error occurred.",
-        description: "check your internet connection and refresh.",
-        status: "error",
-        duration: 5000,
-        isClosable: true,
-        position: "top",
-      });
-    }
-  }
 
   return (
     <Layout>
@@ -274,15 +204,12 @@ const Checkout = ({ variables }) => {
                   </span>
                 </p>
               </div>
-
-              <Button
-                color="white"
-                background="var(--deepblue)"
-                display="block"
-                onClick={handleOrder}
-              >
-                Confirm Order
-              </Button>
+              <ConfirmOrder
+                cart={cart}
+                request={request}
+                phone={phone}
+                address={address}
+              />
             </div>
             <div className="product-info">
               <h1>Your Order</h1>
