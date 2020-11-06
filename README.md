@@ -18,8 +18,12 @@
 
 > Reactjs - Nextjs
 
+> Redux Toolkit
+
 > GraphQL
 
-> Chakra UI
+> Chakra UI - SASS
+
+> GraphQL Codegen
 
 [Backend Here](https://github.com/Segun98/api-ecommerce)
