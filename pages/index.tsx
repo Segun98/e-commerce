@@ -169,10 +169,7 @@ const Home = () => {
               {products &&
                 products.map((p: ProductsRes, index) => (
                   <div className="featured-item" key={p.id}>
-                    <Link
-                      href={`/product/${p.name_slug}`}
-                      as={`/product/${p.name_slug}`}
-                    >
+                    <Link href={`/product/${p.name_slug}`}>
                       <a>
                         <img src={p.images[0]} alt={`${p.name}`} />
                         <hr />
