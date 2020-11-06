@@ -2,26 +2,18 @@ import Head from "next/head";
 import React, { useEffect, useState } from "react";
 import { Layout } from "../../../components/Layout";
 import { useToken } from "../../../Context/TokenProvider";
-import {
-  createOrder,
-  deleteFromCart,
-  getCart,
-} from "../../../graphql/customer";
-import { Cart, MutationCreateOrderArgs } from "../../../Typescript/types";
+import { getCart } from "../../../graphql/customer";
+import { Cart } from "../../../Typescript/types";
 import { useQuery } from "./../../../components/useQuery";
 import {
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbLink,
-  Button,
   Icon,
   Input,
   Textarea,
-  useToast,
 } from "@chakra-ui/core";
 import { Commas } from "../../../utils/helpers";
-import { useMutation } from "../../../utils/useMutation";
-import { useRouter } from "next/router";
 import Link from "next/link";
 import { ConfirmOrder } from "../../../components/customer/ConfirmOrder";
 
