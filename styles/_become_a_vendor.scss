@@ -1,7 +1,7 @@
 header {
 
     .intro-image {
-        background-image: url("/slider/slide2.jpeg");
+        background-image: url("/slider/storefront2.jpg");
         background-position: center;
         background-repeat: no-repeat;
         height: 120px;
@@ -20,6 +20,12 @@ header {
             border-radius: 2px;
             color: white;
             display: none;
+        }
+    }
+
+    @media only screen and (min-width:1000px) {
+        .intro-image {
+            width: 100vw
         }
     }
 

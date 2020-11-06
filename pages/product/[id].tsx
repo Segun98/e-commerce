@@ -156,8 +156,6 @@ const Product = ({ product, error }: response) => {
                       key={index}
                       src={`${i}`}
                       alt={`Image ${index}`}
-                      width="65"
-                      height="60"
                       loading="lazy"
                       role="button"
                       onClick={() => {

@@ -159,7 +159,11 @@ export const Account = () => {
                       *This will be displayed in the public "Stores" Page
                     </small>
                   </h2>
-                  <img src={`${image || tempImage}`} alt="store image" />
+                  <img
+                    className="store-img"
+                    src={`${image || tempImage}`}
+                    alt="store image"
+                  />
                   <br />
                   <span style={{ display: editMode ? "block" : "none" }}>
                     <div className="form-item image-upload">
@@ -409,7 +413,10 @@ export const Account = () => {
           .account-head h1 {
             font-size: 1.1rem;
           }
-
+          .account-item img {
+            width: 800px;
+            height: 250px;
+          }
           .account-head {
             width: 100%;
           }
@@ -422,7 +429,7 @@ export const Account = () => {
             width: 67%;
           }
           .account-item img {
-            width: 400px;
+            width: 1000px;
           }
         }
       `}</style>

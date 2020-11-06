@@ -801,6 +801,8 @@ Class names accross components can be the same but they are wrapped by a unique 
   margin: 0 4px;
   border: 1px solid #cbd8f9;
   cursor: pointer;
+  width: 65px;
+  height: 60px;
 }
 
 .product-page .product .product-wrap .product-info1 .share-section {
@@ -1822,7 +1824,7 @@ Class names accross components can be the same but they are wrapped by a unique 
 }
 
 header .intro-image {
-  background-image: url("/slider/slide2.jpeg");
+  background-image: url("/slider/storefront2.jpg");
   background-position: center;
   background-repeat: no-repeat;
   height: 120px;
@@ -1848,6 +1850,12 @@ header .intro-image h1 {
   border-radius: 2px;
   color: white;
   display: none;
+}
+
+@media only screen and (min-width: 1000px) {
+  header .intro-image {
+    width: 100vw;
+  }
 }
 
 header .intro-mobile-caption {
