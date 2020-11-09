@@ -92,7 +92,7 @@ export const CustomerCart = () => {
         {role && role === "vendor" && !loading && (
           <div className="indicator">
             <div className="status">
-              <div>Log In as a Customer To Add To Cart </div>
+              <div>Only Customers can use Cart </div>
               <br />
               <div
                 className="cart-unauthorised"

@@ -145,7 +145,6 @@ const Edit = ({ product, error }: Iprops) => {
       router.push(`/product/${product.name_slug}`);
     }
     if (error) {
-      setLoading(false);
       toast({
         title: "An Error Ocurred",
         description: error.response?.errors[0].message
@@ -153,6 +152,7 @@ const Edit = ({ product, error }: Iprops) => {
           : "An error occurred, check your internet connection",
         status: "error",
       });
+      setLoading(false);
     }
   };
 
@@ -188,12 +188,13 @@ const Edit = ({ product, error }: Iprops) => {
               <div className="main-wrap">
                 <h1 className="title">Edit Product</h1>
                 <form onSubmit={handleSubmit}>
-                  <FormControl isRequired>
+                  <FormControl>
                     <div className="form-wrap">
                       <section className="grid-1">
                         <div className="form-item">
                           <FormLabel htmlFor="name">Name</FormLabel>
                           <Input
+                            isRequired
                             type="text"
                             id="name"
                             name="name"
@@ -208,6 +209,7 @@ const Edit = ({ product, error }: Iprops) => {
                             Description
                           </FormLabel>
                           <Textarea
+                            isRequired
                             id="description"
                             name="description"
                             aria-describedby="descriptiom-helper-text"
@@ -223,6 +225,7 @@ const Edit = ({ product, error }: Iprops) => {
                           <FormLabel htmlFor="price">Price</FormLabel>
                           <InputGroup>
                             <Input
+                              isRequired
                               type="text"
                               inputMode="numeric"
                               pattern="[0-9]*"
@@ -295,6 +298,7 @@ const Edit = ({ product, error }: Iprops) => {
                           </FormLabel>
                           <InputGroup>
                             <Input
+                              isRequired
                               type="text"
                               inputMode="numeric"
                               pattern="[0-9]*"

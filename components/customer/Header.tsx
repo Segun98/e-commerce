@@ -490,6 +490,7 @@ export const Header = () => {
           z-index: 9999;
           transition: 0.5s ease;
           overflow-y: scroll;
+          border-radius: 0 17px 17px 0;
         }
 
         .navigation.open-nav {

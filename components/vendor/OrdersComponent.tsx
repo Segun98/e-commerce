@@ -18,6 +18,7 @@ import {
   PopoverTrigger,
   Skeleton,
   useToast,
+  Text,
 } from "@chakra-ui/core";
 import { useMutation } from "../../utils/useMutation";
 import { gql } from "graphql-request";
@@ -148,69 +149,42 @@ export const OrdersComponent: React.FC<Iprops> = ({ limit }) => {
 
   return (
     <div className="vendor-orders-p">
-      <table style={{ width: "100%" }}>
-        <thead>
-          <tr>
-            <th>Order ID</th>
-            <th>Name</th>
-            <th>Price</th>
-            <th>Qty</th>
-            <th>Subtotal</th>
-            <th>Request</th>
-            <th>Order Date</th>
-            <th>Completed</th>
-            <th>Status</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        {!loading && orders && orders.length === 0
-          ? "You Have No Orders..."
-          : null}
-        {!loading &&
-          error &&
-          "error Fetching Your Orders, Check your internet connection and refresh"}
-        <tbody>
-          {loading && (
-            <tr className="skeleton">
-              <td>
-                <Skeleton height="40px" my="10px" />
-              </td>
-              <td>
-                <Skeleton height="40px" my="10px" />
-              </td>
-              <td>
-                <Skeleton height="40px" my="10px" />
-              </td>
-              <td>
-                <Skeleton height="40px" my="10px" />
-              </td>
-              <td>
-                <Skeleton height="40px" my="10px" />
-              </td>
-              <td>
-                <Skeleton height="40px" my="10px" />
-              </td>
-              <td>
-                <Skeleton height="40px" my="10px" />
-              </td>
-              <td>
-                <Skeleton height="40px" my="10px" />
-              </td>
-              <td>
-                <Skeleton height="40px" my="10px" />
-              </td>
-              <td>
-                <Skeleton height="40px" my="10px" />
-              </td>
-              <td>
-                <Skeleton height="40px" my="10px" />
-              </td>
+      {loading && (
+        <Text as="div" className="skeleton">
+          <Skeleton height="40px" my="10px" />
+          <Skeleton height="40px" my="10px" />
+          <Skeleton height="40px" my="10px" />
+          <Skeleton height="40px" my="10px" />
+          <Skeleton height="40px" my="10px" />
+          <Skeleton height="40px" my="10px" />
+          <Skeleton height="40px" my="10px" />
+          <Skeleton height="40px" my="10px" />
+        </Text>
+      )}
+
+      {!loading &&
+        error &&
+        "error Fetching Your Orders, Check your internet connection and refresh..."}
+      {!loading && !error && orders && (
+        <table style={{ width: "100%" }}>
+          <thead>
+            <tr>
+              <th>Order ID</th>
+              <th>Name</th>
+              <th>Price</th>
+              <th>Qty</th>
+              <th>Subtotal</th>
+              <th>Request</th>
+              <th>Order Date</th>
+              <th>Completed</th>
+              <th>Status</th>
+              <th>Action</th>
             </tr>
-          )}
-          {!loading &&
-            !error &&
-            orders &&
-            orders.map((o) => (
+          </thead>
+
+          {orders.length === 0 ? "You Have No Orders..." : null}
+          <tbody>
+            {orders.map((o) => (
               <tr className="order-item" key={o.id}>
                 <td style={{ display: "flex" }}>
                   {/* display "*" if order is pending */}
@@ -249,7 +223,7 @@ export const OrdersComponent: React.FC<Iprops> = ({ limit }) => {
                   <Popover placement="left" usePortal={true}>
                     <PopoverTrigger>
                       <Button
-                        size="sm"
+                        size="xs"
                         rightIcon="chevron-down"
                         style={{
                           background: "var(--deepblue)",
@@ -316,8 +290,9 @@ export const OrdersComponent: React.FC<Iprops> = ({ limit }) => {
                 </td>
               </tr>
             ))}
-        </tbody>
-      </table>
+          </tbody>
+        </table>
+      )}
       <style jsx>{`
         table {
           border-spacing: 5px;

@@ -142,47 +142,36 @@ export const DashboardOrders = () => {
 
   return (
     <div className="orders-table">
-      <table style={{ width: "100%" }}>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Price</th>
-            <th>Qty</th>
-            <th>Total</th>
-            <th>Req</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        {!loading && data && orders.length === 0
-          ? "You Have No Orders..."
-          : null}
-        {!loading &&
-          error &&
-          "error Fetching Your Orders, Check your internet connection and refresh"}
-        <tbody>
-          {loading && (
-            <tr className="skeleton">
-              <td>
-                <Skeleton height="40px" my="10px" />
-              </td>
-              <td>
-                <Skeleton height="40px" my="10px" />
-              </td>
-              <td>
-                <Skeleton height="40px" my="10px" />
-              </td>
-              <td>
-                <Skeleton height="40px" my="10px" />
-              </td>
-              <td>
-                <Skeleton height="40px" my="10px" />
-              </td>
+      {loading && (
+        <Text as="div" className="skeleton">
+          <Skeleton height="40px" my="10px" />
+          <Skeleton height="40px" my="10px" />
+          <Skeleton height="40px" my="10px" />
+          <Skeleton height="40px" my="10px" />
+          <Skeleton height="40px" my="10px" />
+          <Skeleton height="40px" my="10px" />
+          <Skeleton height="40px" my="10px" />
+          <Skeleton height="40px" my="10px" />
+        </Text>
+      )}
+      {!loading &&
+        error &&
+        "error Fetching Your Orders, Check your internet connection and refresh"}
+      {!loading && !error && data && (
+        <table style={{ width: "100%" }}>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Price</th>
+              <th>Qty</th>
+              <th>Total</th>
+              <th>Req</th>
+              <th>Action</th>
             </tr>
-          )}
-          {!loading &&
-            !error &&
-            data &&
-            orders.map((o: Orders, i) => (
+          </thead>
+          {orders.length === 0 ? "You Have No Orders..." : null}
+          <tbody>
+            {orders.map((o: Orders) => (
               <tr key={o.id}>
                 <td className="name">
                   {/* display "*" if order is pending */}
@@ -289,9 +278,9 @@ export const DashboardOrders = () => {
                 </td>
               </tr>
             ))}
-        </tbody>
-      </table>
-
+          </tbody>
+        </table>
+      )}
       <style jsx>{`
         table {
           border-spacing: 5px;

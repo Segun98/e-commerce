@@ -98,9 +98,12 @@ export const Login = () => {
     }
   };
 
-  //succesful ouath response
+  //succesful oauth response
   const responseGoogle = async (response) => {
     let data = {
+      first_name: response.profileObj.givenName,
+      last_name: response.profileObj.familyName,
+      password: response.profileObj.googleId,
       email: response.profileObj.email,
     };
     const instance = axios.create({
@@ -110,6 +113,9 @@ export const Login = () => {
     try {
       if (response) {
         const res = await instance.post(oAuthLoginLink[0], {
+          first_name: data.first_name,
+          last_name: data.last_name,
+          password: data.password,
           email: data.email,
         });
 
@@ -123,7 +129,6 @@ export const Login = () => {
           // secure: true,
         });
 
-        //check for inexisting user
         if (res.data) {
           setToken(res.data.accesstoken);
           toast({
@@ -144,18 +149,18 @@ export const Login = () => {
         return;
       }
       //user doesn't exist
-      if (error.message === "Request failed with status code 404") {
-        toast({
-          title: "You Need To Signup",
-          description: "Redirecting...",
-          status: "info",
-          position: "top",
-          duration: 3000,
-        });
-        setTimeout(() => {
-          router.push("/customer/register#google");
-        }, 2000);
-      }
+      // if (error.message === "Request failed with status code 404") {
+      //   toast({
+      //     title: "You Need To Signup",
+      //     description: "Redirecting...",
+      //     status: "info",
+      //     position: "top",
+      //     duration: 3000,
+      //   });
+      //   setTimeout(() => {
+      //     router.push("/customer/register#google");
+      //   }, 2000);
+      // }
     }
   };
   //failed oauth response

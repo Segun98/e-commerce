@@ -184,6 +184,8 @@ export const Navigation = () => {
           z-index: 2;
           transition: 0.5s ease;
           min-height: 100vh;
+          /* border-radius: 10px; */
+          border-radius: 17px;
         }
 
         .vendor-menu.open {
@@ -197,7 +199,7 @@ export const Navigation = () => {
         }
 
         .vendor-menu header {
-          font-style: italic;
+          /* font-style: italic; */
           font-size: 1.2rem;
           font-weight: bold;
           color: white;
@@ -208,6 +210,7 @@ export const Navigation = () => {
           background: var(--deepblue);
           display: flex;
           justify-content: space-between;
+          border-top-right-radius: 15px;
         }
         .vendor-menu ul li {
           margin: 10px 0;

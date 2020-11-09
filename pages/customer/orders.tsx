@@ -117,49 +117,37 @@ export const CustomerOrders = () => {
               * <strong>Delivered</strong> signifies that your item has been
               delivered and accepted by you
             </ListItem>
-            <ListItem>
-              * Please click <strong>Action</strong> to find your{" "}
-              <strong>Order ID</strong>
-            </ListItem>
           </List>
         </div>
-        <table style={{ width: "100%" }}>
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Price</th>
-              <th>Qty</th>
-              <th>Total</th>
-              <th>Status</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          {!loading && data && orders.length === 0
-            ? "You Have No Orders..."
-            : null}
-          <tbody>
-            {loading && (
-              <tr className="skeleton">
-                <td>
-                  <Skeleton height="40px" my="10px" />
-                </td>
-                <td>
-                  <Skeleton height="40px" my="10px" />
-                </td>
-                <td>
-                  <Skeleton height="40px" my="10px" />
-                </td>
-                <td>
-                  <Skeleton height="40px" my="10px" />
-                </td>
-                <td>
-                  <Skeleton height="40px" my="10px" />
-                </td>
+
+        {loading && (
+          <Text as="div" className="skeleton">
+            <Skeleton height="40px" my="10px" />
+            <Skeleton height="40px" my="10px" />
+            <Skeleton height="40px" my="10px" />
+            <Skeleton height="40px" my="10px" />
+            <Skeleton height="40px" my="10px" />
+            <Skeleton height="40px" my="10px" />
+            <Skeleton height="40px" my="10px" />
+            <Skeleton height="40px" my="10px" />
+          </Text>
+        )}
+
+        {!loading && data && (
+          <table style={{ width: "100%" }}>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Qty</th>
+                <th>Total</th>
+                <th>Status</th>
+                <th>Action</th>
               </tr>
-            )}
-            {!loading &&
-              data &&
-              orders.map((o: Orders, i) => (
+            </thead>
+            {orders.length === 0 ? "You Have No Orders..." : null}
+            <tbody>
+              {orders.map((o: Orders, i) => (
                 <tr key={o.id}>
                   <td>{o.name}</td>
                   <td>{Commas(o.price)}</td>
@@ -248,8 +236,9 @@ export const CustomerOrders = () => {
                   </td>
                 </tr>
               ))}
-          </tbody>
-        </table>
+            </tbody>
+          </table>
+        )}
       </main>
       <PurchaseSteps />
       <style jsx>{`
@@ -268,6 +257,11 @@ export const CustomerOrders = () => {
           margin: 25px 0;
           box-shadow: var(--box) var(--softgrey);
           padding: 5px;
+          border-radius: 8px;
+        }
+
+        .order-status strong {
+          color: var(--deepblue);
         }
 
         th {

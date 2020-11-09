@@ -1550,11 +1550,13 @@ Class names accross components can be the same but they are wrapped by a unique 
   font-weight: bold;
   font-size: 1.3rem;
   margin-left: 10px;
+  padding-top: 5px;
 }
 
 .dashboard main .order-status_items .order-status_item p {
   color: #626262;
   font-size: 0.9rem;
+  padding-bottom: 5px;
 }
 
 .dashboard main .account-snippet h1 {

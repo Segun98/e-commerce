@@ -184,14 +184,13 @@ export const Account = () => {
         <div className="indicator">
           <div className="status">
             <div>
-              This Page is Unauthorised For Vendors, Login as a Customer or
-              Visit Your Dashboard{" "}
+              This Page is Unauthorised For Vendors, Visit Your Account{" "}
             </div>
             <br />
             <div style={{ textAlign: "center" }}>
               <div className="unauthorised">
-                <Link href="/vendor/dashboard">
-                  <a>Dashboard</a>
+                <Link href="/vendor/account">
+                  <a>Account</a>
                 </Link>
               </div>
             </div>
