@@ -30,6 +30,7 @@ export type Query = {
   getCart?: Maybe<Cart>;
   getCustomerOrders?: Maybe<Array<Maybe<Orders>>>;
   getVendorOrders?: Maybe<Array<Maybe<Orders>>>;
+  getOrder?: Maybe<Orders>;
   getAllOrders?: Maybe<Array<Maybe<Orders>>>;
 };
 
@@ -102,6 +103,11 @@ export type QueryGetVendorOrdersArgs = {
   limit?: Maybe<Scalars['Int']>;
 };
 
+
+export type QueryGetOrderArgs = {
+  id: Scalars['ID'];
+};
+
 export type UsersRes = {
   __typename?: 'usersRes';
   id?: Maybe<Scalars['ID']>;
@@ -165,6 +171,7 @@ export type Orders = {
   quantity?: Maybe<Scalars['Int']>;
   delivery_fee?: Maybe<Scalars['Int']>;
   subtotal?: Maybe<Scalars['Int']>;
+  paid?: Maybe<Scalars['String']>;
   description?: Maybe<Scalars['String']>;
   accepted?: Maybe<Scalars['String']>;
   completed?: Maybe<Scalars['String']>;
@@ -180,6 +187,7 @@ export type Orders = {
   customer_id?: Maybe<Scalars['ID']>;
   prod_creator_id?: Maybe<Scalars['ID']>;
   created_at?: Maybe<Scalars['String']>;
+  delivery_date?: Maybe<Scalars['String']>;
 };
 
 export type Mutation = {
@@ -194,7 +202,8 @@ export type Mutation = {
   addToCart?: Maybe<CustomRes>;
   deleteFromCart?: Maybe<CustomRes>;
   updateCart?: Maybe<CustomRes>;
-  createOrder?: Maybe<CustomRes>;
+  createOrder?: Maybe<IdRes>;
+  updateOrder?: Maybe<CustomRes>;
   cancelOrder?: Maybe<CustomRes>;
   acceptOrder?: Maybe<CustomRes>;
   completeOrder?: Maybe<CustomRes>;
@@ -313,6 +322,11 @@ export type MutationCreateOrderArgs = {
 };
 
 
+export type MutationUpdateOrderArgs = {
+  id: Scalars['ID'];
+};
+
+
 export type MutationCancelOrderArgs = {
   id: Scalars['ID'];
 };
@@ -342,6 +356,11 @@ export type LoginRes = {
   refreshtoken?: Maybe<Scalars['String']>;
   accesstoken?: Maybe<Scalars['String']>;
   role?: Maybe<Scalars['String']>;
+};
+
+export type IdRes = {
+  __typename?: 'idRes';
+  id?: Maybe<Scalars['ID']>;
 };
 
 export type Users = {
@@ -374,7 +393,7 @@ export type Products = {
   price?: Maybe<Scalars['Int']>;
   category?: Maybe<Scalars['String']>;
   party_category?: Maybe<Scalars['String']>;
-  image?: Maybe<Scalars['String']>;
+  images?: Maybe<Array<Maybe<Scalars['String']>>>;
   in_stock?: Maybe<Scalars['String']>;
   creator_id?: Maybe<Scalars['String']>;
   available_qty?: Maybe<Scalars['Int']>;

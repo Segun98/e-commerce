@@ -65,7 +65,7 @@ export const Login = () => {
         setLoading(false);
         setToken(data.accesstoken);
         if (data.role !== "customer") {
-          router.push(`/${data.role}/login`);
+          router.push(`/${data.role}/dashboard`);
           return;
         }
         toast({

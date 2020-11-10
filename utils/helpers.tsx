@@ -13,3 +13,5 @@ export function truncate(str) {
     return str;
   }
 }
+
+export const nairaSign = <span>&#8358;</span>;

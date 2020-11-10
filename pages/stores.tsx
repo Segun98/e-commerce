@@ -8,6 +8,7 @@ import {
   Input,
   InputGroup,
   InputLeftAddon,
+  Spinner,
   useToast,
 } from "@chakra-ui/core";
 import Link from "next/link";
@@ -29,6 +30,7 @@ const getStores = gql`
 const Stores = () => {
   const [stores, setStores] = useState<UsersRes[]>([]);
   const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState("");
   const router: any = useRouter();
   const toast = useToast();
@@ -66,12 +68,15 @@ const Stores = () => {
       limit: 30,
       offset: pageCalc || 0,
     };
+    setLoading(true);
     try {
       const res = await graphQLClient.request(getStores, variables);
       const data = res.getStores;
       setStores(data);
+      setLoading(false);
     } catch (err) {
       setError(true);
+      setLoading(false);
     }
   }
 
@@ -138,7 +143,14 @@ const Stores = () => {
           </form>
           <div></div>
         </div>
-        {stores && stores.length === 0 && <strong>No results...</strong>}
+        {!loading && stores && stores.length === 0 && (
+          <strong>No results...</strong>
+        )}
+        {loading && (
+          <div className="text-center">
+            <Spinner speed="0.9s" />
+          </div>
+        )}
         <div className="store-items">
           {stores &&
             stores.map((s, i) => (

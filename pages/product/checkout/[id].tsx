@@ -15,7 +15,7 @@ import {
 } from "@chakra-ui/core";
 import { Commas } from "../../../utils/helpers";
 import Link from "next/link";
-import { ConfirmOrder } from "../../../components/customer/ConfirmOrder";
+import { NextStep } from "@/components/customer/NextStep";
 
 export async function getServerSideProps({ params }) {
   const variables = {
@@ -196,7 +196,7 @@ const Checkout = ({ variables }) => {
                   </span>
                 </p>
               </div>
-              <ConfirmOrder
+              <NextStep
                 cart={cart}
                 request={request}
                 phone={phone}
@@ -223,13 +223,13 @@ const Checkout = ({ variables }) => {
                 <p>Delivery Fee</p>
                 <p>&#8358; {Commas(1000)}</p>
                 <p>Total</p>
-                <p style={{ color: "var(--deepblue)" }}>
+                <p style={{ color: "var(--deepblue)", fontWeight: "bold" }}>
                   &#8358; {Commas(cart.quantity * cart.product.price + 1000)}
                 </p>
               </div>
               <aside>
                 <p>Vendor</p>
-                <p style={{ color: "var(--deepblue)" }}>
+                <p style={{ color: "var(--deepblue)", fontWeight: "bold" }}>
                   {cart.product.creator.business_name}
                 </p>
               </aside>
@@ -249,7 +249,7 @@ const Checkout = ({ variables }) => {
           font-size: 0.8rem;
           padding: 5px 0;
           text-align: center;
-          border-right: 1px solid var(--softgrey);
+          font-weight: bold;
         }
         .bread-crumb {
           margin: auto;
@@ -260,6 +260,7 @@ const Checkout = ({ variables }) => {
         @media only screen and (min-width: 700px) {
           td {
             padding: 5px 10px;
+            border-right: 1px solid var(--softgrey);
           }
           .bread-crumb {
             width: 80%;

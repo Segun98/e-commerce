@@ -6,6 +6,15 @@
       "dom.iterable",
       "esnext"
     ],
+      "baseUrl": ".",
+      "paths": {
+        "@/components/*": ["components/*"],
+        "@/Context/*": ["Context/*"],
+        "@/graphql/*": ["graphql/*"],
+        "@/redux/*": ["redux/*"],
+        "@/Typescript/*": ["Typescript/*"],
+        "@/utils/*": ["utils/*"],
+      },
     "allowJs": true,
     "skipLibCheck": true,
     "strict": false,

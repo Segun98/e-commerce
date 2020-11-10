@@ -1753,6 +1753,7 @@ Class names accross components can be the same but they are wrapped by a unique 
 
 .delivery-info span {
   color: #02247a;
+  font-weight: bold;
 }
 
 .product-info {
@@ -1825,7 +1826,7 @@ Class names accross components can be the same but they are wrapped by a unique 
   }
 }
 
-header .intro-image {
+.intro-image {
   background-image: url("/slider/storefront2.jpg");
   background-position: center;
   background-repeat: no-repeat;
@@ -1843,7 +1844,7 @@ header .intro-image {
           justify-content: center;
 }
 
-header .intro-image h1 {
+.intro-image h1 {
   font-size: 1.5rem;
   font-weight: bold;
   background: rgba(2, 36, 122, 0.6);
@@ -1855,12 +1856,12 @@ header .intro-image h1 {
 }
 
 @media only screen and (min-width: 1000px) {
-  header .intro-image {
+  .intro-image {
     width: 100vw;
   }
 }
 
-header .intro-mobile-caption {
+.intro-mobile-caption {
   background: #02247a;
   padding: 5px;
   text-align: center;
@@ -1868,32 +1869,32 @@ header .intro-mobile-caption {
   font-weight: bold;
 }
 
-header .intro-mobile-caption h5 {
+.intro-mobile-caption h5 {
   font-size: 1rem;
 }
 
-header .intro-mobile-caption a {
+.intro-mobile-caption a {
   font-size: 0.9rem;
   text-decoration: underline;
 }
 
 @media only screen and (min-width: 700px) {
-  header .intro-mobile-caption {
+  .intro-mobile-caption {
     display: none;
   }
 }
 
-header .intro-desktop-caption {
+.intro-desktop-caption {
   display: none;
 }
 
 @media only screen and (min-width: 700px) {
-  header .intro-desktop-caption {
+  .intro-desktop-caption {
     display: block;
     margin-bottom: 25px;
     color: white;
   }
-  header .intro-desktop-caption h3 {
+  .intro-desktop-caption h3 {
     font-size: 1.5rem;
     font-weight: bold;
     background: rgba(2, 36, 122, 0.6);
@@ -1901,7 +1902,7 @@ header .intro-desktop-caption {
     padding: 5px;
     border-radius: 2px;
   }
-  header .intro-desktop-caption a {
+  .intro-desktop-caption a {
     background: rgba(2, 36, 122, 0.6);
     padding: 10px;
     margin-top: 15px;
@@ -1910,18 +1911,18 @@ header .intro-desktop-caption {
 }
 
 @media only screen and (min-width: 1200px) {
-  header .intro-desktop-caption a {
+  .intro-desktop-caption a {
     font-size: 1.3rem;
     border-radius: 4px;
   }
-  header .intro-desktop-caption h3 {
+  .intro-desktop-caption h3 {
     margin-bottom: 80px;
     border-radius: 4px;
   }
 }
 
 @media only screen and (min-width: 700px) {
-  header .intro-image {
+  .intro-image {
     height: 400px;
   }
 }

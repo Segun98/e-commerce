@@ -57,6 +57,37 @@ export const getCart = gql`
   }
 `;
 
+export const getOrder = gql`
+  query getOrder($id: ID!) {
+    getOrder(id: $id) {
+      id
+      order_id
+      name
+      price
+      quantity
+      delivery_fee
+      subtotal
+      paid
+      description
+      accepted
+      completed
+      canceled
+      request
+      customer_email
+      vendor_email
+      customer_phone
+      vendor_phone
+      customer_address
+      business_address
+      product_id
+      customer_id
+      prod_creator_id
+      created_at
+      delivery_date
+    }
+  }
+`;
+
 export const addToCart = gql`
   mutation addToCart($product_id: ID!, $prod_creator_id: ID!, $quantity: Int) {
     addToCart(
@@ -118,7 +149,7 @@ export const createOrder = gql`
       product_id: $product_id
       prod_creator_id: $prod_creator_id
     ) {
-      message
+      id
     }
   }
 `;
