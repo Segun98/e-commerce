@@ -70,10 +70,11 @@ export const Login = () => {
         }
         toast({
           title: "LogIn Successfull!",
+          description: "Redirecting...",
           status: "success",
           duration: 3000,
         });
-        router.push("/customer/account");
+        router.push("/customer/account").then(() => window.scrollTo(0, 0));
       }
     } catch (err) {
       setLoading(false);
@@ -133,10 +134,11 @@ export const Login = () => {
           setToken(res.data.accesstoken);
           toast({
             title: "LogIn Successfull!",
+            description: "Redirecting...",
             status: "success",
-            duration: 3000,
+            duration: 5000,
           });
-          router.push("/customer/account");
+          router.push("/customer/account").then(() => window.scrollTo(0, 0));
         }
       }
     } catch (error) {

@@ -9,6 +9,7 @@ import { Button, useToast } from "@chakra-ui/core";
 import { useMutation } from "../../utils/useMutation";
 import { addToCart } from "../../graphql/customer";
 import { cartItems } from "../../redux/features/cart/fetchCart";
+import { useRouter } from "next/router";
 
 interface Iprops {
   product: ProductsRes;
@@ -22,6 +23,7 @@ export const AddToCart: React.FC<Iprops> = ({
   setLoading,
   quantity,
 }) => {
+  const router = useRouter();
   const toast = useToast();
   const { Token } = useToken();
   const role = Cookies.get("role");
@@ -45,6 +47,7 @@ export const AddToCart: React.FC<Iprops> = ({
         status: "success",
         duration: 7000,
       });
+      router.push("/customer/cart");
     }
     if (error) {
       setLoading(false);

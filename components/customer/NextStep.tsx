@@ -78,7 +78,7 @@ export const NextStep: React.FC<Iprops> = ({
       //set session to store cart id
       window.sessionStorage.setItem("cart_id", cart.id);
       //payment page
-      router.push(`/product/pay/${id}`);
+      router.push(`/product/pay/${id}`).then(() => window.scrollTo(0, 0));
     }
     if (error) {
       toast({

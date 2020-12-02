@@ -420,10 +420,11 @@ export const Header = () => {
           padding: 5px 0;
         }
         .header-component {
-          position: sticky;
+          position: sticky !important;
           position: -webkit-sticky;
           top: 0;
           background: white;
+          width: 100%;
         }
         .header-wrap {
           display: flex;
