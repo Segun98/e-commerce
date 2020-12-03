@@ -1,3 +1,5 @@
+[I explained what I learned and used in this project here](https://segunos.vercel.app/partystore#top)
+
 ### 'Full Featured' E-commerce APP
 
 #### Layouts for Vendor, Admin and Customer
