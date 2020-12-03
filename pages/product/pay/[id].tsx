@@ -67,6 +67,12 @@ const Pay = ({ variables }) => {
                   {nairaSign} {Commas(order.subtotal)}
                 </p>
               </div>
+              {order && order.request && (
+                <div className="details-grid">
+                  <p>Request </p>
+                  <p>{order.request}</p>
+                </div>
+              )}
             </section>
           </div>
           <div className="text-center pb-3 pt-3">
