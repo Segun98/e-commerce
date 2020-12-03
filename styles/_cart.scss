@@ -2,9 +2,6 @@
     background: $softblue;
 
     .cart-section {
-        h1 {
-            font-style: italic;
-        }
 
         .cart-wrap {
             margin: auto;
@@ -12,7 +9,7 @@
             padding: 10px 0;
 
             h1 {
-                font-size: 1.3rem;
+                font-size: 1.2rem;
                 font-weight: bold;
                 margin-bottom: 10px;
             }
@@ -42,7 +39,7 @@
 
             .item-details {
                 text-align: center;
-                font-size: 0.9rem;
+                font-size: 0.8rem;
 
                 .name {
                     font-style: italic;
@@ -81,7 +78,7 @@
             }
 
             .order-btn {
-                font-size: 0.9rem;
+                font-size: 0.7rem;
                 margin-left: 5px;
             }
 
@@ -92,6 +89,16 @@
         @media only screen and (min-width:700px) {
             .cart-wrap {
                 width: 90%;
+            }
+
+            .cart-item {
+                .item-details {
+                    font-size: 0.9rem;
+                }
+
+                .order-btn {
+                    font-size: 0.9rem;
+                }
             }
         }
 

@@ -420,9 +420,6 @@ export const Header = () => {
           padding: 5px 0;
         }
         .header-component {
-          position: sticky !important;
-          position: -webkit-sticky;
-          top: 0;
           background: white;
           width: 100%;
         }
@@ -448,10 +445,12 @@ export const Header = () => {
           color: var(--deepblue);
           margin-left: 10px;
           font-weight: bold;
-          font-size: 1.2rem;
-          font-style: italic;
+          font-size: 1.1rem;
+          /* font-style: italic; */
         }
-
+        .profile-icon {
+          font-size: 0.9rem;
+        }
         .cart-icon {
           color: var(--deepblue);
           margin-left: 10px;
@@ -549,7 +548,12 @@ export const Header = () => {
           .search-bar {
             display: none;
           }
-
+          .logo {
+            font-size: 1.2rem;
+          }
+          .profile-icon {
+            font-size: 1rem;
+          }
           .navigation {
             width: 50%;
           }
