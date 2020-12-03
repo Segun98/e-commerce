@@ -12,6 +12,8 @@ import {
   Icon,
   Input,
   Textarea,
+  Spinner,
+  useToast,
 } from "@chakra-ui/core";
 import { Commas } from "../../../utils/helpers";
 import Link from "next/link";
@@ -28,7 +30,9 @@ export async function getServerSideProps({ params }) {
     },
   };
 }
+
 const Checkout = ({ variables }) => {
+  const toast = useToast();
   const { Token } = useToken();
 
   const [editMode, setEditMode] = useState(false);
@@ -51,6 +55,18 @@ const Checkout = ({ variables }) => {
         <title>Checkout | PartyStore</title>
       </Head>
       <div className="checkout-page">
+        {!cart && (
+          <div style={{ textAlign: "center" }}>
+            <Spinner speed="1s"></Spinner>
+          </div>
+        )}
+        {!loading &&
+          error &&
+          toast({
+            title: "An error occurred",
+            description: "Please refresh the page",
+            status: "error",
+          })}
         {error || (!cart && <div className="space"></div>)}
         {cart && (
           <div className="bread-crumb">
