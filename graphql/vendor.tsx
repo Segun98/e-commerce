@@ -44,6 +44,7 @@ export const STORE = gql`
         price
         images
         creator_id
+        available_qty
       }
     }
   }
