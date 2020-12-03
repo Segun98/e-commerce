@@ -22,8 +22,10 @@ import { addToCart } from "../../graphql/customer";
 import { cartItems } from "../../redux/features/cart/fetchCart";
 import { useDispatch } from "react-redux";
 import { gql } from "graphql-request";
+import { useRouter } from "next/router";
 
 export const Account = () => {
+  const router = useRouter();
   const { Token } = useToken();
   const { User, setUserDependency, userDependency } = useUser();
   const toast = useToast();
@@ -126,6 +128,8 @@ export const Account = () => {
       //delete from saved item after adding to Cart
       const newSaved = savedItem.filter((s) => s.product_id !== product_id);
       setSavedItem(newSaved);
+
+      router.push("/customer/cart").then(() => window.scrollTo(0, 0));
     }
     if (error) {
       if (error.response?.errors[0].message === "Item is already in Cart") {

@@ -47,7 +47,7 @@ export const AddToCart: React.FC<Iprops> = ({
         status: "success",
         duration: 7000,
       });
-      router.push("/customer/cart");
+      router.push("/customer/cart").then(() => window.scrollTo(0, 0));
     }
     if (error) {
       setLoading(false);
