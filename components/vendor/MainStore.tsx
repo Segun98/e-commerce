@@ -70,10 +70,8 @@ export const MainStore: React.FC<StoreProps> = ({ user }) => {
           <div className="store-name" style={{ display: "flex" }}>
             <img src="/home-alt.svg" alt="profile" className="mr-1" />{" "}
             <span>{user.business_name}</span>
-            {/* <Icon name="triangle-up" /> */}
           </div>
           <div className="store-bio">
-            {/* <img src="/profile.svg" alt="profile" />{" "} */}
             <img src="/notes.svg" alt="profile" />{" "}
             {user.business_bio ||
               "We seek to provide quality products and services to our customers. At " +
@@ -144,6 +142,21 @@ export const MainStore: React.FC<StoreProps> = ({ user }) => {
           {user &&
             user.usersProducts.map((p, index) => (
               <div className="store-item" key={p.id}>
+                {/* Inventory status , visible only to store owner (user.id === user.jwt_user_id) */}
+                {user && user.id === user.jwt_user_id ? (
+                  <div className="product-status pl-3">
+                    {p.available_qty === 0 || p.in_stock === "false" ? (
+                      <span style={{ color: "red", fontWeight: "bold" }}>
+                        Out of stock!!
+                      </span>
+                    ) : (
+                      `${p.available_qty} in stock`
+                    )}
+                  </div>
+                ) : (
+                  ""
+                )}
+
                 <Link
                   href={`/product/${p.name_slug}`}
                   as={`/product/${p.name_slug}`}

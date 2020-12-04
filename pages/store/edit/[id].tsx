@@ -142,7 +142,9 @@ const Edit = ({ product, error }: Iprops) => {
         status: "success",
         duration: 5000,
       });
-      router.push(`/product/${product.name_slug}`);
+      router
+        .push(`/product/${product.name_slug}`)
+        .then(() => window.scrollTo(0, 0));
     }
     if (error) {
       toast({

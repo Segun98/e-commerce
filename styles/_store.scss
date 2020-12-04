@@ -67,16 +67,22 @@
             display: grid;
             grid-template-columns: 1fr 1fr;
             column-gap: 10px;
-            row-gap: 20px;
+            row-gap: 22px;
         }
 
         .store-item {
             box-shadow: $box $softgrey;
-            // border: 1px solid $softgrey;
             border-radius: 5px;
             width: 150px;
             position: relative;
             margin-bottom: 5px;
+        }
+
+        .product-status {
+            background: $lightblue;
+            color: $deepblue;
+            // font-style: italic;
+            font-size: 0.8rem;
         }
 
         .edit-btn {
@@ -141,6 +147,10 @@
 
             .store-item img {
                 display: flex;
+            }
+
+            .product-status {
+                font-size: 0.9rem;
             }
         }
 

@@ -45,6 +45,7 @@ export const STORE = gql`
         images
         creator_id
         available_qty
+        in_stock
       }
     }
   }
