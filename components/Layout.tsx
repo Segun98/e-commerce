@@ -12,7 +12,7 @@ export const Layout = ({ children }) => {
         </title>
         <meta
           name="description"
-          content="The number one market place for Party Supplies, Gift Items and Games in Lagos,Nigeria"
+          content="The number one #1 market place for Party Supplies, Gift Items and Games in Lagos,Nigeria"
         />
         <meta
           name="keywords"

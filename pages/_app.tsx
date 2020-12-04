@@ -38,6 +38,8 @@ function MyApp({ Component, pageProps }: AppProps) {
                 content="width=device-width, initial-scale=1"
               />
               <meta name="theme-color" content="#02247a" />
+              <link rel="icon" href="/home-alt.svg" />
+              <link rel="apple-touch-icon" href="/home-alt.svg" />
             </Head>
             {/* COMPONENTS  */}
             <Component {...pageProps} />
