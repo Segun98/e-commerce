@@ -312,7 +312,11 @@ const Product = ({ product, error }: response) => {
                       as={`/product/${r.name_slug}`}
                     >
                       <a>
-                        <img src={r.images[0]} alt={`${r.name}`} />
+                        <img
+                          src={r.images[0]}
+                          alt={`${r.name}`}
+                          loading="lazy"
+                        />
                         <hr />
                         <div className="related-desc">
                           <h2>{r.name}</h2>

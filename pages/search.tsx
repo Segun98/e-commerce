@@ -92,7 +92,7 @@ const Search = ({ products, error }: Iprops) => {
                     as={`/product/${p.name_slug}`}
                   >
                     <a>
-                      <img src={p.images[0]} alt={`${p.name}`} />
+                      <img src={p.images[0]} alt={`${p.name}`} loading="lazy" />
                       <hr />
                       <div className="search-desc">
                         <h2>{p.name}</h2>
