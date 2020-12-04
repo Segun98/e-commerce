@@ -9,6 +9,7 @@ import { deleteFromCart } from "../../graphql/customer";
 import { MutationUpdateOrderArgs, Orders } from "../../Typescript/types";
 import { useMutation } from "@/utils/useMutation";
 
+//basically set payment status to paid
 const updateOrder = gql`
   mutation updateOrder($id: ID!) {
     updateOrder(id: $id) {
@@ -16,6 +17,16 @@ const updateOrder = gql`
     }
   }
 `;
+
+//update available quantity in stock for ordered product
+const updateQuantity = gql`
+  mutation updateQuantity($id: ID!, $qty_ordered: Int) {
+    updateQuantity(id: $id, qty_ordered: $qty_ordered) {
+      message
+    }
+  }
+`;
+
 interface Iprops {
   order: Orders;
 }
@@ -46,6 +57,13 @@ export const ConfirmOrder: React.FC<Iprops> = ({ order }) => {
           isClosable: true,
           position: "top",
         });
+
+        //update available quantity in stock for ordered product
+        await useMutation(updateQuantity, {
+          id: order.product_id,
+          qty_ordered: order.quantity,
+        });
+
         router.push(`/customer/cart#cart-top`);
       }
     }

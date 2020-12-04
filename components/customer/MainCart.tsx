@@ -120,7 +120,7 @@ export const MainCart: React.FC<IProps> = ({ cart, setLoadingCart }) => {
                     aria-label="increment quantity"
                     aria-roledescription="increment quantity"
                     onClick={() => {
-                      if (c.quantity === c.product.available_qty) {
+                      if (c.quantity >= c.product.available_qty) {
                         return;
                       }
                       updateCartFn(c.id, c.quantity + 1);

@@ -237,7 +237,7 @@ const Product = ({ product, error }: response) => {
                         aria-label="increment quantity"
                         aria-roledescription="increment quantity"
                         onClick={() => {
-                          if (quantity === product.available_qty) {
+                          if (quantity >= product.available_qty) {
                             return;
                           }
                           setQuantity(quantity + 1);

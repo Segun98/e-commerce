@@ -57,7 +57,8 @@ export const NextStep: React.FC<Iprops> = ({
 
     if (
       cart.product.creator.online === "false" ||
-      cart.product.in_stock === "false"
+      cart.product.in_stock === "false" ||
+      cart.product.available_qty < 1
     ) {
       toast({
         title: "Sorry you cannot make this Order at this time",
