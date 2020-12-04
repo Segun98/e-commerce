@@ -67,11 +67,14 @@ export const MainStore: React.FC<StoreProps> = ({ user }) => {
     <section className="main-store">
       <header>
         <div>
-          <div className="store-name">
-            <Icon name="triangle-up" /> {user.business_name}
+          <div className="store-name" style={{ display: "flex" }}>
+            <img src="/home-alt.svg" alt="profile" className="mr-1" />{" "}
+            <span>{user.business_name}</span>
+            {/* <Icon name="triangle-up" /> */}
           </div>
           <div className="store-bio">
-            <img src="/profile.svg" alt="profile" />{" "}
+            {/* <img src="/profile.svg" alt="profile" />{" "} */}
+            <img src="/notes.svg" alt="profile" />{" "}
             {user.business_bio ||
               "We seek to provide quality products and services to our customers. At " +
                 user.business_name +
