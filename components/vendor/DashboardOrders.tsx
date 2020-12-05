@@ -48,9 +48,7 @@ export const DashboardOrders = () => {
       }
     `;
     if (
-      window.confirm(`Are you sure you want to Accept this Order? 
-      
-      *Note: Accepting an order means the product is READILY AVAILABLE. Expect a dispatch rider soon.
+      window.confirm(`A dispatch rider will get in touch after you accept an order.
       
       *Details -
 
@@ -58,7 +56,7 @@ export const DashboardOrders = () => {
 
        Quantity: ${quantity}
        
-       Subtotal: ${subtotal}
+       Subtotal: ${Commas(subtotal)}
       `)
     ) {
       const { data, error } = await useMutation(acceptOrder, { id }, Token);
@@ -104,7 +102,7 @@ export const DashboardOrders = () => {
 
       Quantity: ${quantity}
       
-      Subtotal: ${subtotal}
+      Subtotal: ${Commas(subtotal)}
       `
     );
     if (answer) {
@@ -251,7 +249,8 @@ export const DashboardOrders = () => {
                             Accept
                           </Button>
                           <Button
-                            color="var(--deepblue)"
+                            color="white"
+                            background="red"
                             isDisabled={
                               o.accepted === "true" || o.canceled === "true"
                                 ? true
