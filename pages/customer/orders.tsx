@@ -43,8 +43,8 @@ export const CustomerOrders = () => {
   //cancel order
   async function handleOrderCancel(id, name, quantity, subtotal) {
     const cancelOrder = gql`
-      mutation cancelOrder($id: ID!) {
-        cancelOrder(id: $id) {
+      mutation cancelOrder($id: ID!, $cancel_reason: String) {
+        cancelOrder(id: $id, cancel_reason: $cancel_reason) {
           message
         }
       }
@@ -63,7 +63,11 @@ export const CustomerOrders = () => {
       `
     );
     if (answer) {
-      const { data, error } = await useMutation(cancelOrder, { id }, Token);
+      const { data, error } = await useMutation(
+        cancelOrder,
+        { id, cancel_reason: answer },
+        Token
+      );
 
       if (data) {
         setFakeDependency(!FakeDependency);
@@ -206,7 +210,8 @@ export const CustomerOrders = () => {
                             }}
                           >
                             <Button
-                              color="var(--deepblue)"
+                              background="red"
+                              color="white"
                               isDisabled={
                                 o.accepted === "true" || o.canceled === "true"
                                   ? true

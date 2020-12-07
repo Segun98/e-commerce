@@ -86,8 +86,8 @@ export const DashboardOrders = () => {
   //cancel order
   async function handleOrderCancel(id, name, quantity, subtotal) {
     const cancelOrder = gql`
-      mutation cancelOrder($id: ID!) {
-        cancelOrder(id: $id) {
+      mutation cancelOrder($id: ID!, $cancel_reason: String) {
+        cancelOrder(id: $id, cancel_reason: $cancel_reason) {
           message
         }
       }
@@ -106,7 +106,11 @@ export const DashboardOrders = () => {
       `
     );
     if (answer) {
-      const { data, error } = await useMutation(cancelOrder, { id }, Token);
+      const { data, error } = await useMutation(
+        cancelOrder,
+        { id, cancel_reason: answer },
+        Token
+      );
       if (data) {
         setFakeDependency(!FakeDependency);
         dispatch(ordersThunk(Token, { limit: null }));

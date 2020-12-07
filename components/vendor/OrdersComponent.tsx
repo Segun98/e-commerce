@@ -59,17 +59,15 @@ export const OrdersComponent: React.FC<Iprops> = ({ limit }) => {
       }
     `;
     if (
-      window.confirm(`Are you sure you want to Accept this Order? 
-      
-      *Note: Accepting an order means the product is READILY AVAILABLE. Expect a dispatch rider soon.
+      window.confirm(`A dispatch rider will get in touch after you accept an order.
       
       *Details -
 
-      Product: ${name}
+       Product: ${name}
 
-      Quantity: ${quantity}
-      
-      Subtotal: ${subtotal}
+       Quantity: ${quantity}
+       
+       Subtotal: ${Commas(subtotal)}
       `)
     ) {
       const { data, error } = await useMutation(acceptOrder, { id }, Token);
@@ -97,8 +95,8 @@ export const OrdersComponent: React.FC<Iprops> = ({ limit }) => {
   //cancel order
   async function handleOrderCancel(id, name, quantity, subtotal) {
     const cancelOrder = gql`
-      mutation cancelOrder($id: ID!) {
-        cancelOrder(id: $id) {
+      mutation cancelOrder($id: ID!, $cancel_reason: String) {
+        cancelOrder(id: $id, cancel_reason: $cancel_reason) {
           message
         }
       }
@@ -116,7 +114,12 @@ export const OrdersComponent: React.FC<Iprops> = ({ limit }) => {
       `
     );
     if (answer) {
-      const { data, error } = await useMutation(cancelOrder, { id }, Token);
+      const { data, error } = await useMutation(
+        cancelOrder,
+        { id, cancel_reason: answer },
+        Token
+      );
+
       if (data) {
         dispatch(ordersThunk(Token, { limit: null }));
         toast({
@@ -263,7 +266,8 @@ export const OrdersComponent: React.FC<Iprops> = ({ limit }) => {
                             Accept
                           </Button>
                           <Button
-                            color="var(--deepblue)"
+                            color="white"
+                            background="red"
                             isDisabled={
                               o.accepted === "true" || o.canceled === "true"
                                 ? true
