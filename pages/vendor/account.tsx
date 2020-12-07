@@ -11,16 +11,16 @@ import {
 } from "@chakra-ui/core";
 import Head from "next/head";
 import React, { useEffect, useState } from "react";
-import { Footer } from "../../components/Footer";
-import { Navigation } from "../../components/vendor/Navigation";
-import { useToken } from "../../Context/TokenProvider";
-import { useUser } from "../../Context/UserProvider";
-import { MutationUpdateProfileArgs } from "../../Typescript/types";
-import { useMutation } from "../../utils/useMutation";
-import { ProtectRouteV } from "./../../utils/ProtectedRouteV";
+import { Footer } from "@/components/Footer";
+import { Navigation } from "@/components/vendor/Navigation";
+import { useToken } from "@/Context/TokenProvider";
+import { useUser } from "@/Context/UserProvider";
+import { MutationUpdateProfileArgs } from "@/Typescript/types";
+import { useMutation } from "@/utils/useMutation";
+import { ProtectRouteV } from "@/utils/ProtectedRouteV";
 import Upload from "rc-upload";
-import { uploadLink } from "./../../utils/client";
-import { updateProfile } from "../../graphql/vendor";
+import { uploadLink } from "@/utils/client";
+import { updateProfile } from "@/graphql/vendor";
 
 export const Account = () => {
   const { User, userDependency, setUserDependency } = useUser();
@@ -95,6 +95,7 @@ export const Account = () => {
         position: "top",
         isClosable: true,
       });
+
       setEditMode(false);
       //update user in useEffect
       setUserDependency(!userDependency);
