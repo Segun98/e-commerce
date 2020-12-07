@@ -64,7 +64,7 @@ export const ConfirmOrder: React.FC<Iprops> = ({ order }) => {
           qty_ordered: order.quantity,
         });
 
-        router.push(`/customer/cart#cart-top`);
+        router.push(`/customer/cart`).then(() => window.scrollTo(0, 0));
       }
     }
     if (error) {

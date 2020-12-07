@@ -22,8 +22,10 @@ import { Footer } from "../../components/Footer";
 import Head from "next/head";
 import { useUser } from "../../Context/UserProvider";
 import { ImageUpload } from "../../components/vendor/ImageUpload";
+import { useRouter } from "next/router";
 
 export const Newitem = () => {
+  const router = useRouter();
   const toast = useToast();
   //from context
   const { Token } = useToken();
@@ -109,6 +111,7 @@ export const Newitem = () => {
         isClosable: true,
       });
       e.target.reset();
+      router.push(`/product/${slug(name)}`);
     }
     if (error) {
       setLoading(false);
