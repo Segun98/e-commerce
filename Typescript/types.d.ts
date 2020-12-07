@@ -126,6 +126,7 @@ export type UsersRes = {
   business_bio?: Maybe<Scalars['String']>;
   customer_address?: Maybe<Scalars['String']>;
   featured?: Maybe<Scalars['String']>;
+  completed_qty?: Maybe<Scalars['Int']>;
   jwt_user_id?: Maybe<Scalars['String']>;
   usersProducts?: Maybe<Array<Maybe<ProductsRes>>>;
 };
@@ -176,6 +177,9 @@ export type Orders = {
   accepted?: Maybe<Scalars['String']>;
   completed?: Maybe<Scalars['String']>;
   canceled?: Maybe<Scalars['String']>;
+  cancel_reason?: Maybe<Scalars['String']>;
+  canceled_by?: Maybe<Scalars['String']>;
+  refund?: Maybe<Scalars['String']>;
   request?: Maybe<Scalars['String']>;
   customer_email?: Maybe<Scalars['String']>;
   vendor_email?: Maybe<Scalars['String']>;
@@ -199,6 +203,7 @@ export type Mutation = {
   addProduct?: Maybe<CustomRes>;
   updateProduct?: Maybe<CustomRes>;
   deleteProduct?: Maybe<CustomRes>;
+  updateQuantity?: Maybe<CustomRes>;
   addToCart?: Maybe<CustomRes>;
   deleteFromCart?: Maybe<CustomRes>;
   updateCart?: Maybe<CustomRes>;
@@ -208,6 +213,7 @@ export type Mutation = {
   acceptOrder?: Maybe<CustomRes>;
   completeOrder?: Maybe<CustomRes>;
   cancelOrderAdmin?: Maybe<CustomRes>;
+  updateCompleted?: Maybe<CustomRes>;
 };
 
 
@@ -286,6 +292,12 @@ export type MutationDeleteProductArgs = {
 };
 
 
+export type MutationUpdateQuantityArgs = {
+  id: Scalars['ID'];
+  qty_ordered?: Maybe<Scalars['Int']>;
+};
+
+
 export type MutationAddToCartArgs = {
   product_id: Scalars['ID'];
   prod_creator_id: Scalars['ID'];
@@ -329,6 +341,7 @@ export type MutationUpdateOrderArgs = {
 
 export type MutationCancelOrderArgs = {
   id: Scalars['ID'];
+  cancel_reason?: Maybe<Scalars['String']>;
 };
 
 
@@ -343,6 +356,11 @@ export type MutationCompleteOrderArgs = {
 
 
 export type MutationCancelOrderAdminArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type MutationUpdateCompletedArgs = {
   id: Scalars['ID'];
 };
 
@@ -382,6 +400,7 @@ export type Users = {
   business_bio?: Maybe<Scalars['String']>;
   customer_address?: Maybe<Scalars['String']>;
   featured?: Maybe<Scalars['String']>;
+  completed_qty?: Maybe<Scalars['Int']>;
 };
 
 export type Products = {
