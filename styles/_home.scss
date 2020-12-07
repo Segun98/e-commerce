@@ -192,6 +192,13 @@
                 .featured-wrap {
                     margin: 15px auto;
                     overflow: hidden;
+                    display: grid;
+                    grid-template-columns: repeat(5, 1fr);
+                    row-gap: 15px;
+                }
+
+                .featured-item {
+                    margin: 0 5px;
                 }
             }
 

@@ -257,6 +257,14 @@ Class names accross components can be the same but they are wrapped by a unique 
   .home-page .main-section .featured .featured-wrap {
     margin: 15px auto;
     overflow: hidden;
+    display: -ms-grid;
+    display: grid;
+    -ms-grid-columns: (1fr)[5];
+        grid-template-columns: repeat(5, 1fr);
+    row-gap: 15px;
+  }
+  .home-page .main-section .featured .featured-item {
+    margin: 0 5px;
   }
 }
 

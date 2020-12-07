@@ -1,13 +1,13 @@
 import React, { useRef } from "react";
 import { Icon, Spinner } from "@chakra-ui/core";
-import { featuredProducts } from "./../graphql/vendor";
-import { ProductsRes } from "../Typescript/types";
+import { featuredProducts } from "@/graphql/vendor";
+import { ProductsRes } from "@/Typescript/types";
 import Link from "next/link";
-import { Layout } from "../components/Layout";
+import { Layout } from "@/components/Layout";
 import Carousel from "react-bootstrap/Carousel";
-import { Commas } from "../utils/helpers";
-import { PurchaseSteps } from "../components/customer/PurchaseSteps";
-import { useQuery } from "./../components/useQuery";
+import { Commas } from "@/utils/helpers";
+import { PurchaseSteps } from "@/components/customer/PurchaseSteps";
+import { useQuery } from "@/components/useQuery";
 import Image from "next/image";
 
 const Home = () => {
@@ -15,7 +15,7 @@ const Home = () => {
   const scrollRef = useRef(null);
 
   //fetch products with custom hook
-  const [data, loading] = useQuery(featuredProducts, { limit: 5 });
+  const [data, loading] = useQuery(featuredProducts, { limit: 10 });
   const products = data ? data.featuredProducts : [];
 
   return (
