@@ -164,7 +164,7 @@ export const CustomerOrders = () => {
                     {o.completed === "false" && (
                       <div>
                         {o.accepted === "true"
-                          ? "Processing"
+                          ? "Being shipped"
                           : o.canceled === "true"
                           ? "Cancelled"
                           : "Processing"}
