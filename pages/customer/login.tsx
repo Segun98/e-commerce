@@ -11,18 +11,18 @@ import {
   Text,
 } from "@chakra-ui/core";
 import { useForm } from "react-hook-form";
-import { graphQLClient, oAuthLoginLink } from "../../utils/client";
+import { graphQLClient, oAuthLoginLink } from "@/utils/client";
 import { useRouter } from "next/router";
-import { LOG_IN } from "../../graphql/users";
-import { LoginRes, MutationLogInArgs } from "../../Typescript/types";
-import { useToken } from "../../Context/TokenProvider";
-import { Layout } from "../../components/Layout";
+import { LOG_IN } from "@/graphql/users";
+import { LoginRes, MutationLogInArgs } from "@/Typescript/types";
+import { useToken } from "@/Context/TokenProvider";
+import { Layout } from "@/components/Layout";
 import Link from "next/link";
 import Head from "next/head";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { GoogleLogin } from "react-google-login";
-import { CLIENT_ID } from "./../../utils/client";
+import { CLIENT_ID } from "@/utils/client";
 
 export const Login = () => {
   const toast = useToast();
@@ -237,6 +237,11 @@ export const Login = () => {
                   />
                 </InputRightElement>
               </InputGroup>
+              <span className="forgot-pass">
+                <Link href="/password/change">
+                  <a>forgot password?</a>
+                </Link>
+              </span>
             </div>
           </FormControl>
 
@@ -302,6 +307,11 @@ export const Login = () => {
             margin: 10px 0;
           }
 
+          .forgot-pass {
+            display: flex;
+            justify-content: flex-end;
+            font-size: 0.8rem;
+          }
           .btn {
             margin-top: 10px;
             display: flex;

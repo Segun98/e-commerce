@@ -2,12 +2,12 @@ import { Button, Icon, useToast } from "@chakra-ui/core";
 import Link from "next/link";
 import React from "react";
 import { useDispatch } from "react-redux";
-import { useToken } from "../../Context/TokenProvider";
-import { deleteFromCart, updateCart } from "../../graphql/customer";
-import { cartItems } from "../../redux/features/cart/fetchCart";
-import { Cart } from "../../Typescript/types";
-import { Commas } from "../../utils/helpers";
-import { useMutation } from "../../utils/useMutation";
+import { useToken } from "@/Context/TokenProvider";
+import { deleteFromCart, updateCart } from "@/graphql/customer";
+import { cartItems } from "@/redux/features/cart/fetchCart";
+import { Cart } from "@/Typescript/types";
+import { Commas } from "@/utils/helpers";
+import { useMutation } from "@/utils/useMutation";
 
 interface IProps {
   cart: Cart[];
@@ -31,7 +31,7 @@ export const MainCart: React.FC<IProps> = ({ cart, setLoadingCart }) => {
       toast({
         title: "Quantity Updated",
         status: "info",
-        duration: 3000,
+        duration: 1000,
         isClosable: true,
         position: "top",
       });

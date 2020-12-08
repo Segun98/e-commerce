@@ -15,3 +15,11 @@ export function truncate(str) {
 }
 
 export const nairaSign = <span>&#8358;</span>;
+
+//display toast at the top when on desktop
+export function topOrBottom() {
+  if (typeof window === "object") {
+    return window.screen.width > 1000 ? "top" : "bottom";
+  }
+  return "bottom";
+}

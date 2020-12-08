@@ -1,12 +1,12 @@
-import { STORE } from "../../graphql/vendor";
+import { STORE } from "@/graphql/vendor";
 import Link from "next/link";
 import { Icon, useToast } from "@chakra-ui/core";
-import { UsersRes } from "../../Typescript/types";
+import { UsersRes } from "@/Typescript/types";
 import Head from "next/head";
-import { graphQLClient } from "../../utils/client";
-import { Navigation } from "../../components/vendor/Navigation";
-import { Footer } from "../../components/Footer";
-import { MainStore } from "../../components/vendor/MainStore";
+import { graphQLClient } from "@/utils/client";
+import { Navigation } from "@/components/vendor/Navigation";
+import { Footer } from "@/components/Footer";
+import { MainStore } from "@/components/vendor/MainStore";
 
 interface Iprops {
   user: UsersRes;

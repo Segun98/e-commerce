@@ -154,6 +154,24 @@ export const createOrder = gql`
   }
 `;
 
+export const updateProfile = gql`
+  mutation updateProfile(
+    $first_name: String
+    $last_name: String
+    $phone: String
+    $customer_address: String
+  ) {
+    updateProfile(
+      first_name: $first_name
+      last_name: $last_name
+      phone: $phone
+      customer_address: $customer_address
+    ) {
+      message
+    }
+  }
+`;
+
 export const SEARCH = gql`
   query search($query: String!, $limit: Int, $offset: Int) {
     search(query: $query, limit: $limit, offset: $offset) {

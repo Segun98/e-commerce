@@ -6,9 +6,9 @@ import React, {
   SetStateAction,
   useContext,
 } from "react";
-import { graphQLClient } from "../utils/client";
+import { graphQLClient } from "@/utils/client";
 import { useToken } from "./TokenProvider";
-import { UsersRes } from "../Typescript/types";
+import { UsersRes } from "@/Typescript/types";
 import { gql } from "graphql-request";
 
 interface props {

@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { MutationAddToCartArgs, ProductsRes } from "../../Typescript/types";
+import { MutationAddToCartArgs, ProductsRes } from "@/Typescript/types";
 import { Dispatch } from "react";
 import { SetStateAction } from "react";
 import { useDispatch } from "react-redux";
 import Cookies from "js-cookie";
-import { useToken } from "../../Context/TokenProvider";
+import { useToken } from "@/Context/TokenProvider";
 import { Button, useToast } from "@chakra-ui/core";
-import { useMutation } from "../../utils/useMutation";
-import { addToCart } from "../../graphql/customer";
-import { cartItems } from "../../redux/features/cart/fetchCart";
+import { useMutation } from "@/utils/useMutation";
+import { addToCart } from "@/graphql/customer";
+import { cartItems } from "@/redux/features/cart/fetchCart";
 import { useRouter } from "next/router";
+import { topOrBottom } from "@/utils/helpers";
 
 interface Iprops {
   product: ProductsRes;
@@ -120,10 +121,11 @@ export const AddToCart: React.FC<Iprops> = ({
             title: "Your Item Has Been Saved!",
             description: "Find It In Your Account Page After You LogIn",
             status: "info",
-            duration: 7000,
-            position: "bottom",
+            duration: 9000,
+            position: topOrBottom(),
             isClosable: true,
           });
+          router.push(`/customer/login`).then(() => window.scrollTo(0, 0));
           return;
         }
         if (product.in_stock === "false") {

@@ -8,7 +8,7 @@ import React, {
 } from "react";
 import Cookies from "js-cookie";
 import axios from "axios";
-import { restLink } from "./../utils/client";
+import { restLink } from "@/utils/client";
 
 interface props {
   Token: string;

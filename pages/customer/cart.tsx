@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Spinner, useToast } from "@chakra-ui/core";
 import Link from "next/link";
-import { useToken } from "../../Context/TokenProvider";
-import { Layout } from "../../components/Layout";
+import { useToken } from "@/Context/TokenProvider";
+import { Layout } from "@/components/Layout";
 import Head from "next/head";
 import Cookies from "js-cookie";
-import { PurchaseSteps } from "../../components/customer/PurchaseSteps";
+import { PurchaseSteps } from "@/components/customer/PurchaseSteps";
 import { useSelector, useDispatch } from "react-redux";
-import { cartItems, IinitialState } from "../../redux/features/cart/fetchCart";
-import { MainCart } from "./../../components/customer/MainCart";
+import { cartItems, IinitialState } from "@/redux/features/cart/fetchCart";
+import { MainCart } from "@/components/customer/MainCart";
 
 interface DefaultRootState {
   cart: IinitialState;

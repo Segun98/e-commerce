@@ -3,11 +3,10 @@ import { gql } from "graphql-request";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
-import { useToken } from "../../Context/TokenProvider";
-import { MutationDeleteProductArgs, UsersRes } from "../../Typescript/types";
-import { Commas } from "../../utils/helpers";
-import { useMutation } from "../../utils/useMutation";
-
+import { useToken } from "@/Context/TokenProvider";
+import { MutationDeleteProductArgs, UsersRes } from "@/Typescript/types";
+import { Commas } from "@/utils/helpers";
+import { useMutation } from "@/utils/useMutation";
 interface StoreProps {
   user: UsersRes;
   // handleDelete: (id: string, creator_id: string, name: string) => void;

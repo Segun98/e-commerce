@@ -1,11 +1,11 @@
 import { Button, useToast } from "@chakra-ui/core";
 import Link from "next/link";
 import React, { useEffect, useRef, useState } from "react";
-import { PurchaseSteps } from "../components/customer/PurchaseSteps";
-import { Layout } from "../components/Layout";
-import { ProductsRes } from "../Typescript/types";
-import { graphQLClient } from "../utils/client";
-import { Commas } from "../utils/helpers";
+import { PurchaseSteps } from "@/components/customer/PurchaseSteps";
+import { Layout } from "@/components/Layout";
+import { ProductsRes } from "@/Typescript/types";
+import { graphQLClient } from "@/utils/client";
+import { Commas } from "@/utils/helpers";
 import { useRouter } from "next/router";
 import Head from "next/head";
 import { gql } from "graphql-request";

@@ -16,15 +16,15 @@ import {
 } from "@chakra-ui/core";
 import Head from "next/head";
 import React, { useState } from "react";
-import { PurchaseSteps } from "../../components/customer/PurchaseSteps";
-import { Layout } from "../../components/Layout";
-import { useQuery } from "../../components/useQuery";
-import { useToken } from "../../Context/TokenProvider";
-import { getCustomerOrders } from "../../graphql/customer";
-import { Orders } from "../../Typescript/types";
-import { Commas } from "../../utils/helpers";
-import { useMutation } from "../../utils/useMutation";
-import { ProtectRouteC } from "./../../utils/ProtectedRouteC";
+import { PurchaseSteps } from "@/components/customer/PurchaseSteps";
+import { Layout } from "@/components/Layout";
+import { useQuery } from "@/components/useQuery";
+import { useToken } from "@/Context/TokenProvider";
+import { getCustomerOrders } from "@/graphql/customer";
+import { Orders } from "@/Typescript/types";
+import { Commas } from "@/utils/helpers";
+import { useMutation } from "@/utils/useMutation";
+import { ProtectRouteC } from "@/utils/ProtectedRouteC";
 import { gql } from "graphql-request";
 
 export const CustomerOrders = () => {

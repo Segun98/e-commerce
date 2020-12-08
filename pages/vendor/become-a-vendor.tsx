@@ -1,7 +1,6 @@
 import React from "react";
 import Head from "next/head";
 import { Layout } from "@/components/Layout";
-import { Text } from "@chakra-ui/core";
 import Link from "next/link";
 
 const BecomeAVendor = () => {

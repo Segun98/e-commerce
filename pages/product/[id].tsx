@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { graphQLClient } from "../../utils/client";
-import { PRODUCT } from "../../graphql/vendor";
+import { graphQLClient } from "@/utils/client";
+import { PRODUCT } from "@/graphql/vendor";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -8,13 +8,13 @@ import {
   Icon,
   useToast,
 } from "@chakra-ui/core";
-import { ProductsRes } from "../../Typescript/types";
-import { Layout } from "../../components/Layout";
-import { Commas } from "./../../utils/helpers";
+import { ProductsRes } from "@/Typescript/types";
+import { Layout } from "@/components/Layout";
+import { Commas } from "@/utils/helpers";
 import Link from "next/link";
-import { PurchaseSteps } from "../../components/customer/PurchaseSteps";
+import { PurchaseSteps } from "@/components/customer/PurchaseSteps";
 import Head from "next/head";
-import { AddToCart } from "../../components/customer/AddToCart";
+import { AddToCart } from "@/components/customer/AddToCart";
 
 interface response {
   product: ProductsRes;

@@ -10,13 +10,13 @@ import {
   useToast,
 } from "@chakra-ui/core";
 import { useForm } from "react-hook-form";
-import { graphQLClient } from "../../utils/client";
+import { graphQLClient } from "@/utils/client";
 import { useRouter } from "next/router";
-import { LOG_IN } from "../../graphql/users";
-import { useToken } from "../../Context/TokenProvider";
-import { LoginRes, MutationLogInArgs } from "../../Typescript/types";
+import { LOG_IN } from "@/graphql/users";
+import { useToken } from "@/Context/TokenProvider";
+import { LoginRes, MutationLogInArgs } from "@/Typescript/types";
 import Link from "next/link";
-import { Layout } from "../../components/Layout";
+import { Layout } from "@/components/Layout";
 import Head from "next/head";
 import Cookies from "js-cookie";
 
@@ -158,6 +158,11 @@ export const Login = () => {
                   />
                 </InputRightElement>
               </InputGroup>
+              <span className="forgot-pass">
+                <Link href="/password/change">
+                  <a>forgot password?</a>
+                </Link>
+              </span>
             </div>
           </FormControl>
           <div className="btn">
@@ -207,7 +212,11 @@ export const Login = () => {
           form div {
             margin: 10px 0;
           }
-
+          .forgot-pass {
+            display: flex;
+            justify-content: flex-end;
+            font-size: 0.8rem;
+          }
           .btn {
             margin-top: 10px;
             display: flex;

@@ -13,13 +13,13 @@ import {
   Text,
 } from "@chakra-ui/core";
 import React, { useState } from "react";
-import { useToken } from "../../Context/TokenProvider";
-import { Commas, truncate } from "../../utils/helpers";
-import { useQuery } from "./../useQuery";
-import { getVendorOrders } from "./../../graphql/vendor";
-import { Orders } from "../../Typescript/types";
-import { useMutation } from "../../utils/useMutation";
-import { ordersThunk } from "../../redux/features/orders/fetchOrders";
+import { useToken } from "@/Context/TokenProvider";
+import { Commas, truncate } from "@/utils/helpers";
+import { useQuery } from "../useQuery";
+import { getVendorOrders } from "@/graphql/vendor";
+import { Orders } from "@/Typescript/types";
+import { useMutation } from "@/utils/useMutation";
+import { ordersThunk } from "@/redux/features/orders/fetchOrders";
 import { useDispatch } from "react-redux";
 import { gql } from "graphql-request";
 

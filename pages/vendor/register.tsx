@@ -11,12 +11,12 @@ import {
 } from "@chakra-ui/core";
 import { useForm } from "react-hook-form";
 import { request } from "graphql-request";
-import { SIGN_UP } from "./../../graphql/users";
-import { endpoint } from "../../utils/client";
+import { SIGN_UP } from "@/graphql/users";
+import { endpoint } from "@/utils/client";
 import { useRouter } from "next/router";
 import slug from "slug";
-import { MutationSignUpArgs } from "../../Typescript/types";
-import { Layout } from "../../components/Layout";
+import { MutationSignUpArgs } from "@/Typescript/types";
+import { Layout } from "@/components/Layout";
 import Head from "next/head";
 import Link from "next/link";
 

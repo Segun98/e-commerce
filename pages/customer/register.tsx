@@ -12,12 +12,12 @@ import {
 } from "@chakra-ui/core";
 import { useForm } from "react-hook-form";
 import { request } from "graphql-request";
-import { SIGN_UP } from "./../../graphql/users";
-import { CLIENT_ID, endpoint, oAuthSignupLink } from "../../utils/client";
+import { SIGN_UP } from "@/graphql/users";
+import { CLIENT_ID, endpoint, oAuthSignupLink } from "@/utils/client";
 import { useRouter } from "next/router";
-import { MutationSignUpArgs } from "../../Typescript/types";
+import { MutationSignUpArgs } from "@/Typescript/types";
 import Link from "next/link";
-import { Layout } from "../../components/Layout";
+import { Layout } from "@/components/Layout";
 import Head from "next/head";
 import axios from "axios";
 import { GoogleLogin } from "react-google-login";

@@ -9,8 +9,8 @@ import React from "react";
 import { UserProvider } from "../Context/UserProvider";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Provider } from "react-redux";
-import store from "../redux/store";
-import Head from "next/head";
+import store from "@/redux/store";
+import { GlobalLayout } from "@/components/GlobalLayout";
 
 function MyApp({ Component, pageProps }: AppProps) {
   //progress bar on page visit
@@ -29,32 +29,12 @@ function MyApp({ Component, pageProps }: AppProps) {
     <Provider store={store}>
       <TokenProvider>
         <UserProvider>
-          <ThemeProvider>
-            <CSSReset />
-            {/* GLOBAL HEAD TAGS  */}
-            <Head>
-              <meta
-                name="viewport"
-                content="width=device-width, initial-scale=1"
-              />
-              <meta name="theme-color" content="#02247a" />
-              <link rel="icon" href="/home-alt.svg" />
-              <link rel="apple-touch-icon" href="/home-alt.svg" />
-            </Head>
-            {/* COMPONENTS  */}
-            <Component {...pageProps} />
-          </ThemeProvider>
-          {/* GLOBAL STYLES  */}
-          <style jsx global>{`
-            :root {
-              --box: 0 1px 6px 0;
-              --softgrey: rgba(32, 33, 36, 0.28);
-              --lightblue: #cbd8f9;
-              --deepblue: #02247a;
-              --text: #626262;
-              --softblue: rgb(238, 238, 245);
-            }
-          `}</style>
+          <GlobalLayout>
+            <ThemeProvider>
+              <CSSReset />
+              <Component {...pageProps} />
+            </ThemeProvider>
+          </GlobalLayout>
         </UserProvider>
       </TokenProvider>
     </Provider>

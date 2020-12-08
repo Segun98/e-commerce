@@ -14,18 +14,15 @@ import Cookies from "js-cookie";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import React, { useState, useEffect } from "react";
-import { Footer } from "../../../components/Footer";
-import { Navigation } from "../../../components/vendor/Navigation";
-import { useToken } from "../../../Context/TokenProvider";
-import { editProductPage, updateProduct } from "../../../graphql/vendor";
-import {
-  ProductsRes,
-  MutationUpdateProductArgs,
-} from "../../../Typescript/types";
-import { graphQLClient } from "../../../utils/client";
-import { ProtectRouteV } from "../../../utils/ProtectedRouteV";
-import { useMutation } from "../../../utils/useMutation";
-import { ImageUpload } from "../../../components/vendor/ImageUpload";
+import { Footer } from "@/components/Footer";
+import { Navigation } from "@/components/vendor/Navigation";
+import { useToken } from "@/Context/TokenProvider";
+import { editProductPage, updateProduct } from "@/graphql/vendor";
+import { ProductsRes, MutationUpdateProductArgs } from "@/Typescript/types";
+import { graphQLClient } from "@/utils/client";
+import { ProtectRouteV } from "@/utils/ProtectedRouteV";
+import { useMutation } from "@/utils/useMutation";
+import { ImageUpload } from "@/components/vendor/ImageUpload";
 
 interface Iprops {
   product: ProductsRes;

@@ -1,7 +1,7 @@
 import { Button, FormLabel, Input, InputGroup, Text } from "@chakra-ui/core";
 import React, { useState } from "react";
 import Head from "next/head";
-import { Layout } from "../../components/Layout";
+import { Layout } from "@/components/Layout";
 
 export const Change = () => {
   const [email, setEmail] = useState("");

@@ -1,9 +1,9 @@
-import { useToken } from "../../Context/TokenProvider";
-import { Layout } from "../../components/Layout";
+import { useToken } from "@/Context/TokenProvider";
+import { Layout } from "@/components/Layout";
 import React, { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import Link from "next/link";
-import { useUser } from "../../Context/UserProvider";
+import { useUser } from "@/Context/UserProvider";
 import {
   FormControl,
   InputGroup,
@@ -14,15 +14,15 @@ import {
   useToast,
   Textarea,
 } from "@chakra-ui/core";
-import { PurchaseSteps } from "../../components/customer/PurchaseSteps";
-import { useMutation } from "../../utils/useMutation";
+import { PurchaseSteps } from "@/components/customer/PurchaseSteps";
+import { useMutation } from "@/utils/useMutation";
 import Head from "next/head";
-import { Commas } from "../../utils/helpers";
-import { addToCart } from "../../graphql/customer";
-import { cartItems } from "../../redux/features/cart/fetchCart";
+import { Commas } from "@/utils/helpers";
+import { addToCart } from "@/graphql/customer";
+import { cartItems } from "@/redux/features/cart/fetchCart";
 import { useDispatch } from "react-redux";
-import { gql } from "graphql-request";
 import { useRouter } from "next/router";
+import { updateProfile } from "@/graphql/vendor";
 
 export const Account = () => {
   const router = useRouter();
@@ -42,24 +42,9 @@ export const Account = () => {
     setAddress(User.customer_address || "");
   }, [User, Token]);
 
-  const updateProfile = gql`
-    mutation updateProfile(
-      $first_name: String
-      $last_name: String
-      $phone: String
-      $customer_address: String
-    ) {
-      updateProfile(
-        first_name: $first_name
-        last_name: $last_name
-        phone: $phone
-        customer_address: $customer_address
-      ) {
-        message
-      }
-    }
-  `;
-  async function updateAccount() {
+  async function updateAccount(e) {
+    e.preventDefault();
+
     const variables = {
       first_name: User.first_name,
       last_name: User.last_name,
@@ -225,7 +210,7 @@ export const Account = () => {
               <h2>Email</h2>
               <p>{User.email}</p>
             </section>
-            <form>
+            <form onSubmit={updateAccount}>
               <FormControl>
                 <div>
                   <h2>Phone Number</h2>
@@ -234,6 +219,7 @@ export const Account = () => {
                       children={<Icon name="phone" color="gray.300" />}
                     />
                     <Input
+                      isRequired
                       aria-label="phone number"
                       isReadOnly={readOnly}
                       autoFocus={readOnly}
@@ -252,6 +238,7 @@ export const Account = () => {
                 <div>
                   <h2>Shipping Address</h2>
                   <Textarea
+                    isRequired
                     aria-label="Address"
                     isReadOnly={readOnly}
                     autoFocus={readOnly}
@@ -268,8 +255,9 @@ export const Account = () => {
               <div>
                 {!readOnly && (
                   <Button
-                    onClick={updateAccount}
-                    style={{ background: "var(--deepblue)", color: "white" }}
+                    type="submit"
+                    background="var(--deepblue)"
+                    color="white"
                     size="sm"
                   >
                     Update

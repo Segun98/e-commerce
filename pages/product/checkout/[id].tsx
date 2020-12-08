@@ -1,10 +1,10 @@
 import Head from "next/head";
 import React, { useEffect, useState } from "react";
-import { Layout } from "../../../components/Layout";
-import { useToken } from "../../../Context/TokenProvider";
-import { getCart } from "../../../graphql/customer";
-import { Cart } from "../../../Typescript/types";
-import { useQuery } from "./../../../components/useQuery";
+import { Layout } from "@/components/Layout";
+import { useToken } from "@/Context/TokenProvider";
+import { getCart } from "@/graphql/customer";
+import { Cart } from "@/Typescript/types";
+import { useQuery } from "@/components/useQuery";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -15,7 +15,7 @@ import {
   Spinner,
   useToast,
 } from "@chakra-ui/core";
-import { Commas } from "../../../utils/helpers";
+import { Commas } from "@/utils/helpers";
 import Link from "next/link";
 import { NextStep } from "@/components/customer/NextStep";
 

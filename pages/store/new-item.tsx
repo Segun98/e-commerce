@@ -12,16 +12,16 @@ import Cookies from "js-cookie";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import slug from "slug";
-import { useToken } from "../../Context/TokenProvider";
-import { MutationAddProductArgs } from "../../Typescript/types";
-import { ADD_PRODUCT } from "../../graphql/vendor";
-import { ProtectRouteV } from "../../utils/ProtectedRouteV";
-import { useMutation } from "../../utils/useMutation";
-import { Navigation } from "../../components/vendor/Navigation";
-import { Footer } from "../../components/Footer";
+import { useToken } from "@/Context/TokenProvider";
+import { MutationAddProductArgs } from "@/Typescript/types";
+import { ADD_PRODUCT } from "@/graphql/vendor";
+import { ProtectRouteV } from "@/utils/ProtectedRouteV";
+import { useMutation } from "@/utils/useMutation";
+import { Navigation } from "@/components/vendor/Navigation";
+import { Footer } from "@/components/Footer";
 import Head from "next/head";
-import { useUser } from "../../Context/UserProvider";
-import { ImageUpload } from "../../components/vendor/ImageUpload";
+import { useUser } from "@/Context/UserProvider";
+import { ImageUpload } from "@/components/vendor/ImageUpload";
 import { useRouter } from "next/router";
 
 export const Newitem = () => {

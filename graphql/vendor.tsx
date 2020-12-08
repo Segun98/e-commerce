@@ -166,6 +166,7 @@ export const updateProfile = gql`
     $business_name: String
     $phone: String
     $business_address: String
+    $customer_address: String
     $business_image: String
     $business_bio: String
     $online: String
@@ -176,6 +177,7 @@ export const updateProfile = gql`
       business_name: $business_name
       phone: $phone
       business_address: $business_address
+      customer_address: $customer_address
       business_image: $business_image
       business_bio: $business_bio
       online: $online

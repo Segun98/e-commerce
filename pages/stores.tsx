@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Layout } from "../components/Layout";
-import { UsersRes } from "../Typescript/types";
-import { graphQLClient } from "../utils/client";
+import { Layout } from "@/components/Layout";
+import { UsersRes } from "@/Typescript/types";
+import { graphQLClient } from "@/utils/client";
 import {
   Button,
   Icon,
@@ -12,7 +12,7 @@ import {
   useToast,
 } from "@chakra-ui/core";
 import Link from "next/link";
-import { truncate } from "../utils/helpers";
+import { truncate } from "@/utils/helpers";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { gql } from "graphql-request";
@@ -144,7 +144,7 @@ const Stores = () => {
           <div></div>
         </div>
         {!loading && stores && stores.length === 0 && (
-          <strong>No results...</strong>
+          <strong>No results@.</strong>
         )}
         {loading && (
           <div className="text-center">
@@ -262,7 +262,6 @@ const Stores = () => {
           padding: 5px;
         }
         .store-desc {
-          font-style: italic;
           color: var(--deepblue);
           margin: 3px 0;
           font-weight: bold;

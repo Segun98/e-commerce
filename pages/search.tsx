@@ -3,12 +3,12 @@ import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useEffect, useRef, useState } from "react";
-import { PurchaseSteps } from "../components/customer/PurchaseSteps";
-import { Layout } from "../components/Layout";
-import { SEARCH } from "../graphql/customer";
-import { ProductsRes } from "../Typescript/types";
-import { graphQLClient } from "../utils/client";
-import { Commas } from "../utils/helpers";
+import { PurchaseSteps } from "@/components/customer/PurchaseSteps";
+import { Layout } from "@/components/Layout";
+import { SEARCH } from "@/graphql/customer";
+import { ProductsRes } from "@/Typescript/types";
+import { graphQLClient } from "@/utils/client";
+import { Commas } from "@/utils/helpers";
 
 interface Iprops {
   products: ProductsRes[];
@@ -75,7 +75,7 @@ const Search = ({ products, error }: Iprops) => {
         </>
 
         <section className="search-results">
-          <h1>Search Results... ({products && products.length} items)</h1>
+          <h1>Search Results@. ({products && products.length} items)</h1>
 
           {products && products.length === 0 && (
             <h1>

@@ -73,7 +73,7 @@ export const Account = () => {
     },
   };
 
-  async function updateAccount(e) {
+  async function updateAccount(e: React.SyntheticEvent<EventTarget>) {
     e.preventDefault();
     const variables: MutationUpdateProfileArgs = {
       first_name: User.first_name,

@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { Orders } from "../../../Typescript/types";
-import { graphQLClient } from "../../../utils/client";
-import { getVendorOrders } from "./../../../graphql/vendor";
+import { Orders } from "@/Typescript/types";
+import { graphQLClient } from "@/utils/client";
+import { getVendorOrders } from "@/graphql/vendor";
 
 export interface IOrderInitialState {
   orders: Orders[];

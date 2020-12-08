@@ -1,18 +1,18 @@
 import React, { useEffect } from "react";
 import Link from "next/link";
-import { useToken } from "../../Context/TokenProvider";
-import { ProtectRouteV } from "../../utils/ProtectedRouteV";
-import { Navigation } from "../../components/vendor/Navigation";
+import { useToken } from "@/Context/TokenProvider";
+import { ProtectRouteV } from "@/utils/ProtectedRouteV";
+import { Navigation } from "@/components/vendor/Navigation";
 import Head from "next/head";
 import { Button, Icon, useToast } from "@chakra-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import {
   IOrderInitialState,
   ordersThunk,
-} from "../../redux/features/orders/fetchOrders";
-import { DashboardOrders } from "../../components/vendor/DashboardOrders";
-import { Chart } from "../../components/vendor/Chart";
-import { Commas } from "../../utils/helpers";
+} from "@/redux/features/orders/fetchOrders";
+import { DashboardOrders } from "@/components/vendor/DashboardOrders";
+import { Chart } from "@/components/vendor/Chart";
+import { Commas } from "@/utils/helpers";
 
 interface DefaultOrderState {
   orders: IOrderInitialState;
