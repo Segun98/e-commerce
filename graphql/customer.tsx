@@ -199,6 +199,7 @@ export const getCustomerOrders = gql`
       canceled
       customer_email
       created_at
+      delivery_date
     }
   }
 `;

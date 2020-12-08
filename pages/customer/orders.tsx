@@ -22,7 +22,7 @@ import { useQuery } from "@/components/useQuery";
 import { useToken } from "@/Context/TokenProvider";
 import { getCustomerOrders } from "@/graphql/customer";
 import { Orders } from "@/Typescript/types";
-import { Commas } from "@/utils/helpers";
+import { Commas, formatDate } from "@/utils/helpers";
 import { useMutation } from "@/utils/useMutation";
 import { ProtectRouteC } from "@/utils/ProtectedRouteC";
 import { gql } from "graphql-request";
@@ -99,6 +99,23 @@ export const CustomerOrders = () => {
     }).format(date);
 
     return format || date.toLocaleString();
+  }
+
+  //disable order return button if after 3 days of order reciept
+  function disableReturnOrder(date) {
+    //if no delivery date (order is most likely still in transit or was canceled before delivery)
+    if (!date) {
+      return true;
+    }
+
+    let days = formatDate(date, false);
+    let dateArr = days.split(" ");
+    let dayNum = parseInt(dateArr[0]);
+
+    if (dayNum > 3) {
+      return true;
+    }
+    return false;
   }
 
   return (
@@ -228,7 +245,10 @@ export const CustomerOrders = () => {
                             >
                               Cancel
                             </Button>
-                            <Button color="var(--deepblue)" isDisabled={true}>
+                            <Button
+                              color="var(--deepblue)"
+                              isDisabled={disableReturnOrder(o.delivery_date)}
+                            >
                               Return
                             </Button>
                           </div>
