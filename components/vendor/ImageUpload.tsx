@@ -1,5 +1,5 @@
 import React, { Dispatch, SetStateAction } from "react";
-import { uploadLink } from "../../utils/client";
+import { uploadLink } from "@/utils/client";
 import Upload from "rc-upload";
 import { Icon, Spinner, useToast } from "@chakra-ui/core";
 
