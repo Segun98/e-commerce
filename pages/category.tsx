@@ -96,7 +96,7 @@ export const Category = ({ products, error }: Iprops) => {
           {products && products.length === 0 && (
             <h1>
               <br />
-              Oops, no results found@.
+              Oops, no results found...
             </h1>
           )}
           <div className="category-wrap">

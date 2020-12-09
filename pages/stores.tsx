@@ -144,7 +144,7 @@ const Stores = () => {
           <div></div>
         </div>
         {!loading && stores && stores.length === 0 && (
-          <strong>No results@.</strong>
+          <strong>No results...</strong>
         )}
         {loading && (
           <div className="text-center">

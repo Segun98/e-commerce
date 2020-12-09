@@ -75,7 +75,7 @@ const Search = ({ products, error }: Iprops) => {
         </>
 
         <section className="search-results">
-          <h1>Search Results@. ({products && products.length} items)</h1>
+          <h1>Search Results... ({products && products.length} items)</h1>
 
           {products && products.length === 0 && (
             <h1>
