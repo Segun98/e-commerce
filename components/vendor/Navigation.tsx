@@ -115,12 +115,17 @@ export const Navigation = () => {
               </Link>
             </li>
             <li>
+              <Link href="/customer/orders">
+                <a>Orders</a>
+              </Link>
+            </li>
+            <li>
               <Link href="/stores">
                 <a>Stores</a>
               </Link>
             </li>
             <br />
-            <li>
+            {/* <li>
               <Link href="/category?category=Gifts">
                 <a>Gifts</a>
               </Link>
@@ -149,7 +154,7 @@ export const Navigation = () => {
               <Link href="/category?category=Cakes">
                 <a>Cakes</a>
               </Link>
-            </li>
+            </li> */}
             <div className="login-btn">
               <Button
                 style={{ color: "white", background: "var(--deepblue)" }}
@@ -174,7 +179,8 @@ export const Navigation = () => {
       </button>
       <style jsx>{`
         .vendor-menu {
-          background: var(--softblue);
+          background: #062863;
+          /* background: var(--deepblue); */
           width: 300px;
           height: 100%;
           border-right: 0.6px solid var(--softgrey);
@@ -184,8 +190,7 @@ export const Navigation = () => {
           z-index: 2;
           transition: 0.5s ease;
           min-height: 100vh;
-          /* border-radius: 10px; */
-          border-radius: 17px;
+          /* border-radius: 17px; */
         }
 
         .vendor-menu.open {
@@ -199,25 +204,21 @@ export const Navigation = () => {
         }
 
         .vendor-menu header {
-          /* font-style: italic; */
           font-size: 1.2rem;
           font-weight: bold;
           color: white;
           margin-bottom: 10px;
           margin-left: 0;
-          border-bottom: 1px solid;
-          padding: 10px 15px;
-          background: var(--deepblue);
+          padding: 20px 15px;
           display: flex;
           justify-content: space-between;
-          border-top-right-radius: 15px;
         }
         .vendor-menu ul li {
           margin: 10px 0;
-          padding-left: 10px;
+          padding-left: 30px;
           padding-bottom: 5px;
           display: block;
-          border-bottom: 1px solid var(--lightblue);
+          color: white;
         }
         .vendor-menu-btn {
           position: absolute;
@@ -249,10 +250,11 @@ export const Navigation = () => {
           .vendor-menu {
             width: 250px;
           }
-
+          .vendor-menu header {
+            padding-top: 40px;
+          }
           .vendor-menu ul li {
             margin: 10px 0;
-            padding-left: 10px;
             padding-bottom: 8px;
             font-size: 1.1rem;
           }

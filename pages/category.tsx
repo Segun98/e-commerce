@@ -101,7 +101,7 @@ export const Category = ({ products, error }: Iprops) => {
           )}
           <div className="category-wrap">
             {products &&
-              products.map((p, index) => (
+              products.map((p) => (
                 <div className="category-item" key={p.id}>
                   <Link
                     href={`/product/${p.name_slug}`}
@@ -168,131 +168,7 @@ export const Category = ({ products, error }: Iprops) => {
         {error && <div className="space"></div>}
         <PurchaseSteps />
       </div>
-      <style jsx>{`
-        .category-results {
-          padding: 20px 10px;
-        }
-        .category-results h1 {
-          font-weight: bold;
-          font-size: 1rem;
-          text-align: center;
-          margin: 10px 0 20px 0;
-        }
-        .category-wrap {
-          margin: auto;
-          width: 90%;
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 8px;
-        }
-
-        .category-wrap .category-item {
-          box-shadow: var(--box) var(--softgrey);
-          border-radius: 5px;
-          margin: 0 5px;
-        }
-        .category-wrap .category-item a {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-        }
-
-        .category-wrap .category-item img {
-          min-width: 100px;
-          height: 100px;
-          object-fit: contain;
-          border-radius: 5px;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-        }
-
-        .category-wrap .category-desc {
-          margin: 5px 0;
-          padding: 3px;
-          text-align: center;
-          font-weight: bold;
-        }
-
-        .category-wrap .category-desc h2 {
-          color: var(--deepblue);
-          padding: 5px 0;
-          font-style: italic;
-          font-size: 0.9rem;
-        }
-        .paginate {
-          margin: 10px auto;
-          width: 80%;
-        }
-        @media only screen and (min-width: 700px) {
-          .category-results h1 {
-            margin: 15px 0;
-          }
-
-          .category-wrap {
-            grid-template-columns: repeat(4, 1fr);
-            column-gap: 10px;
-          }
-          .paginate {
-            margin-top: 20px;
-            width: 70%;
-          }
-          .category-wrap .category-item img {
-            display: flex;
-          }
-        }
-
-        @media only screen and (min-width: 1000px) {
-          .category-wrap {
-            margin: 15px auto;
-            width: 70%;
-          }
-          .category-wrap .category-item {
-            width: 200px;
-          }
-          .category-wrap .category-item img {
-            min-width: 150px;
-            height: 150px;
-          }
-        }
-
-        @media only screen and (min-width: 1200px) {
-          .category-results h1 {
-            font-size: 1.2rem;
-          }
-
-          .category-wrap {
-            margin: 35px auto;
-          }
-          .paginate {
-            width: 65%;
-          }
-          .category-wrap .category-item {
-            margin: 10px 14px;
-          }
-
-          .category-wrap .category-item img {
-            object-fit: contain;
-            width: 200px;
-          }
-
-          .category-item .category-desc {
-            margin: 8px 0;
-            padding: 5px;
-          }
-        }
-
-        @media only screen and (min-width: 1800px) {
-          .results-wrap {
-            width: 50%;
-          }
-          .paginate {
-            width: 40%;
-          }
-        }
-      `}</style>
+      <style jsx>{``}</style>
     </Layout>
   );
 };

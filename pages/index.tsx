@@ -8,15 +8,34 @@ import Carousel from "react-bootstrap/Carousel";
 import { Commas } from "@/utils/helpers";
 import { PurchaseSteps } from "@/components/customer/PurchaseSteps";
 import { useQuery } from "@/components/useQuery";
-import Image from "next/image";
+import { graphQLClient } from "@/utils/client";
 
-const Home = () => {
+export async function getServerSideProps() {
+  try {
+    const res = await graphQLClient.request(featuredProducts, { limit: 10 });
+    const products = await res.featuredProducts;
+    return {
+      props: {
+        products,
+        loading: false,
+      },
+    };
+  } catch (err) {
+    return {
+      props: {
+        error: err?.response?.errors[0].message || err.message,
+      },
+    };
+  }
+}
+
+const Home = ({ products, loading }) => {
   //Featured Products Section Scroll
   const scrollRef = useRef(null);
 
-  //fetch products with custom hook
-  const [data, loading] = useQuery(featuredProducts, { limit: 10 });
-  const products = data ? data.featuredProducts : [];
+  // //fetch products with custom hook
+  // const [data, loading] = useQuery(featuredProducts, { limit: 10 });
+  // const products = data ? data.featuredProducts : [];
 
   return (
     <Layout>
@@ -167,7 +186,7 @@ const Home = () => {
             )}
             <div className="featured-wrap" ref={scrollRef}>
               {products &&
-                products.map((p: ProductsRes, index) => (
+                products.map((p: ProductsRes) => (
                   <div className="featured-item" key={p.id}>
                     <Link href={`/product/${p.name_slug}`}>
                       <a>

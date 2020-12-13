@@ -81,7 +81,6 @@
         .product-status {
             background: $lightblue;
             color: $deepblue;
-            // font-style: italic;
             font-size: 0.8rem;
         }
 
@@ -118,13 +117,12 @@
             text-align: center;
             font-weight: bold;
             padding: 3px;
+            font-size: 0.8rem;
         }
 
         .store-desc h2 {
             color: var(--deepblue);
             padding: 5px 0;
-            font-style: italic;
-            font-size: 0.9rem;
         }
 
         @media only screen and (min-width: 400px) {
@@ -193,12 +191,9 @@
                 margin: 10px 14px;
             }
 
-            // .store-item img {
-            //     // object-fit: contain;
-            // }
-
             .store-desc {
                 margin: 8px 0;
+                font-size: 0.9rem;
             }
         }
 

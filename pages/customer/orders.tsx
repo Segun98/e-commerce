@@ -247,7 +247,10 @@ export const CustomerOrders = () => {
                             </Button>
                             <Button
                               color="var(--deepblue)"
-                              isDisabled={disableReturnOrder(o.delivery_date)}
+                              isDisabled={
+                                disableReturnOrder(o.delivery_date) ||
+                                o.canceled === "true"
+                              }
                             >
                               Return
                             </Button>

@@ -60,12 +60,8 @@ button {
 
 /* Note - ALL Imported styles represent each page and are named accordingly. 
 Class names accross components can be the same but they are wrapped by a unique class, usually named after the page or component */
-.home-page h1 {
-  font-style: italic;
-}
-
 .home-page .main-carousel .carousel-item .mobile-caption {
-  background: #02247a;
+  background: #062863;
   padding: 5px;
   text-align: center;
   color: white;
@@ -193,10 +189,6 @@ Class names accross components can be the same but they are wrapped by a unique 
   padding: 3px;
 }
 
-.home-page .main-section .featured .featured-item h2 {
-  font-style: italic;
-}
-
 .home-page .main-section .featured .featured-item a {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -225,14 +217,15 @@ Class names accross components can be the same but they are wrapped by a unique 
 }
 
 .home-page .main-section .featured .featured-item a .featured-desc h2 {
-  color: #02247a;
+  color: #062863;
   font-weight: bold;
   padding: 5px 0;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
 }
 
 .home-page .main-section .featured .featured-item a .featured-desc p {
   font-weight: bold;
+  font-size: 0.8rem;
 }
 
 @media only screen and (min-width: 700px) {
@@ -294,8 +287,9 @@ Class names accross components can be the same but they are wrapped by a unique 
   .home-page .main-section .featured .featured-item a .featured-desc {
     margin: 8px 0;
   }
-  .home-page .main-section .featured .featured-item a .featured-desc h2 {
-    font-size: 1rem;
+  .home-page .main-section .featured .featured-item a .featured-desc h2,
+  .home-page .main-section .featured .featured-item a .featured-desc p {
+    font-size: 0.9rem;
   }
 }
 
@@ -307,6 +301,7 @@ Class names accross components can be the same but they are wrapped by a unique 
 
 .home-page .sale-banner {
   padding: 15px 0;
+  display: none;
 }
 
 .home-page .sale-banner img {
@@ -663,7 +658,7 @@ Class names accross components can be the same but they are wrapped by a unique 
 
 .store_new-item .main-wrap .title {
   font-weight: bold;
-  color: #02247a;
+  color: #062863;
   margin-left: 25px;
   padding: 20px;
 }
@@ -743,10 +738,6 @@ Class names accross components can be the same but they are wrapped by a unique 
   padding-top: 20px;
 }
 
-.product-page .product h1 {
-  font-style: italic;
-}
-
 .product-page .product .product-wrap {
   display: -ms-grid;
   display: grid;
@@ -770,10 +761,6 @@ Class names accross components can be the same but they are wrapped by a unique 
   margin: 10px 0;
 }
 
-.product-page .product .product-wrap .product-info1 .product-name-mobile {
-  font-style: italic;
-}
-
 .product-page .product .product-wrap .product-info1 .product-img {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -794,7 +781,7 @@ Class names accross components can be the same but they are wrapped by a unique 
   font-weight: bold;
   font-size: 1rem;
   text-align: center;
-  color: #02247a;
+  color: #062863;
   padding-bottom: 3px;
 }
 
@@ -842,8 +829,9 @@ Class names accross components can be the same but they are wrapped by a unique 
 
 .product-page .product .product-wrap .product-info1 .share-section .share-icons p {
   font-size: 0.9rem;
-  color: #02247a;
+  color: #062863;
   font-weight: bold;
+  padding-top: 5px;
 }
 
 .product-page .product .product-wrap .product-info2 {
@@ -860,7 +848,7 @@ Class names accross components can be the same but they are wrapped by a unique 
   font-size: 1.2rem;
   margin: 10px 0;
   text-align: center;
-  color: #02247a;
+  color: #062863;
   display: none;
 }
 
@@ -896,8 +884,8 @@ Class names accross components can be the same but they are wrapped by a unique 
       -ms-flex-align: center;
           align-items: center;
   background: white;
-  color: #02247a;
-  border: 0.5px solid #02247a;
+  color: #062863;
+  border: 0.5px solid #062863;
   font-weight: bold;
   width: 40%;
   height: 50px;
@@ -1055,13 +1043,12 @@ Class names accross components can be the same but they are wrapped by a unique 
   margin: 5px 0;
   text-align: center;
   font-weight: bold;
+  font-size: 0.8rem;
 }
 
 .product-page .related-products .related-item a .related-desc h2 {
-  color: #02247a;
+  color: #062863;
   padding: 5px 2px;
-  font-style: italic;
-  font-size: 0.9rem;
 }
 
 @media only screen and (min-width: 700px) {
@@ -1110,6 +1097,7 @@ Class names accross components can be the same but they are wrapped by a unique 
   }
   .product-page .related-products .related-item a .related-desc {
     margin: 8px 0;
+    font-size: 0.9rem;
   }
 }
 
@@ -1167,13 +1155,9 @@ Class names accross components can be the same but they are wrapped by a unique 
   font-size: 0.8rem;
 }
 
-.cart-page .cart-section .cart-item .item-details .name {
-  font-style: italic;
-}
-
 .cart-page .cart-section .cart-item .item-details .price {
   padding: 10px 0;
-  color: #02247a;
+  color: #062863;
 }
 
 .cart-page .cart-section .cart-item .item-details .qty-btn {
@@ -1210,7 +1194,7 @@ Class names accross components can be the same but they are wrapped by a unique 
 }
 
 .cart-page .cart-section .cart-item .subtotal {
-  color: #02247a;
+  color: #062863;
   font-size: 0.9rem;
 }
 
@@ -1288,7 +1272,7 @@ Class names accross components can be the same but they are wrapped by a unique 
 
 .main-store header .store-name {
   font-weight: bold;
-  color: #02247a;
+  color: #062863;
 }
 
 .main-store header .store-bio {
@@ -1332,7 +1316,7 @@ Class names accross components can be the same but they are wrapped by a unique 
 
 .main-store .store-products_head h1 {
   font-weight: bold;
-  color: #02247a;
+  color: #062863;
 }
 
 .main-store .store-products_wrap {
@@ -1356,7 +1340,7 @@ Class names accross components can be the same but they are wrapped by a unique 
 
 .main-store .store-products .product-status {
   background: #cbd8f9;
-  color: #02247a;
+  color: #062863;
   font-size: 0.8rem;
 }
 
@@ -1415,13 +1399,12 @@ Class names accross components can be the same but they are wrapped by a unique 
   text-align: center;
   font-weight: bold;
   padding: 3px;
+  font-size: 0.8rem;
 }
 
 .main-store .store-products .store-desc h2 {
   color: var(--deepblue);
   padding: 5px 0;
-  font-style: italic;
-  font-size: 0.9rem;
 }
 
 @media only screen and (min-width: 400px) {
@@ -1489,6 +1472,7 @@ Class names accross components can be the same but they are wrapped by a unique 
   }
   .main-store .store-products .store-desc {
     margin: 8px 0;
+    font-size: 0.9rem;
   }
 }
 
@@ -1531,13 +1515,12 @@ Class names accross components can be the same but they are wrapped by a unique 
 }
 
 .dashboard main .headline {
-  color: #02247a;
   font-weight: bold;
   font-size: 1.2rem;
 }
 
 .dashboard main .order-status h1 {
-  color: #02247a;
+  color: #062863;
   font-weight: bold;
   margin: 10px 0 10px 0;
 }
@@ -1579,7 +1562,7 @@ Class names accross components can be the same but they are wrapped by a unique 
 }
 
 .dashboard main .account-snippet h1 {
-  color: #02247a;
+  color: #062863;
   font-style: italic;
   font-weight: bold;
   margin: 20px 0 10px 0;
@@ -1620,7 +1603,7 @@ Class names accross components can be the same but they are wrapped by a unique 
 }
 
 .dashboard main .recent-orders h1 {
-  color: #02247a;
+  color: #062863;
   font-weight: bold;
 }
 
@@ -1730,7 +1713,7 @@ Class names accross components can be the same but they are wrapped by a unique 
 }
 
 .checkout-wrap Button:hover {
-  color: #02247a;
+  color: #062863;
 }
 
 .delivery-info {
@@ -1766,12 +1749,12 @@ Class names accross components can be the same but they are wrapped by a unique 
       -ms-flex-pack: justify;
           justify-content: space-between;
   padding: 5px 0;
-  color: #02247a;
+  color: #062863;
   font-weight: bold;
 }
 
 .delivery-info span {
-  color: #02247a;
+  color: #062863;
   font-weight: bold;
 }
 
@@ -1801,7 +1784,7 @@ Class names accross components can be the same but they are wrapped by a unique 
   .checkout-wrap .product-info h1 {
     font-weight: bold;
     font-size: 1.1rem;
-    color: #02247a;
+    color: #062863;
     text-align: center;
     padding: 5px 0;
   }
@@ -1881,7 +1864,7 @@ Class names accross components can be the same but they are wrapped by a unique 
 }
 
 .intro-mobile-caption {
-  background: #02247a;
+  background: #062863;
   padding: 5px;
   text-align: center;
   color: white;
@@ -1943,6 +1926,370 @@ Class names accross components can be the same but they are wrapped by a unique 
 @media only screen and (min-width: 700px) {
   .intro-image {
     height: 400px;
+  }
+}
+
+.header-component {
+  background: white;
+  width: 100%;
+}
+
+.header-component header {
+  -webkit-box-shadow: var(--box) var(--softgrey);
+          box-shadow: var(--box) var(--softgrey);
+  padding: 5px 0;
+}
+
+.header-wrap {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin: auto;
+  width: 90%;
+}
+
+.header-wrap img {
+  width: 40px;
+  height: 35px;
+}
+
+.header-wrap_left,
+.header-wrap_right {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.logo {
+  color: var(--deepblue);
+  margin-left: 10px;
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.profile-icon {
+  font-size: 0.9rem;
+}
+
+.cart-icon {
+  color: var(--deepblue);
+  margin-left: 10px;
+  font-size: 0.8rem;
+  text-align: center;
+  font-weight: bold;
+  position: relative;
+}
+
+.cart-icon img {
+  width: 30px;
+  height: 25px;
+}
+
+.cart-icon a aside {
+  position: absolute;
+  top: 0;
+  margin-left: 20px;
+  margin-top: -12px;
+  color: var(--deepblue);
+  font-weight: bolder;
+}
+
+.large-bar {
+  display: none;
+}
+
+/* Navigation and Hamburger  */
+.navigation {
+  background: var(--softblue);
+  width: 80%;
+  height: 100%;
+  margin-left: -85%;
+  position: relative;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  z-index: 9999;
+  -webkit-transition: 0.5s ease;
+  transition: 0.5s ease;
+  overflow-y: scroll;
+  border-radius: 0 17px 17px 0;
+}
+
+.navigation.open-nav {
+  margin-left: 0%;
+  -webkit-transition: ease 0.4s;
+  transition: ease 0.4s;
+}
+
+.navigation nav ul li {
+  padding: 10px;
+  border-bottom: 1px solid var(--lightblue);
+}
+
+.navigation nav ul li {
+  z-index: 9999;
+}
+
+.navigation h1 {
+  color: #626262;
+  font-weight: bold;
+  padding: 8px;
+  text-align: center;
+}
+
+.nav-profile {
+  background: var(--deepblue);
+  color: white;
+  padding: 10px;
+  font-weight: bold;
+}
+
+.pop-over-body {
+  padding: 0 2px;
+}
+
+.pop-over-body-rest {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.pop-over-body-rest p {
+  font-weight: bold;
+  padding: 8px 0;
+  text-align: center;
+}
+
+@media only screen and (min-width: 700px) {
+  .header-wrap {
+    -ms-flex-pack: distribute;
+        justify-content: space-around;
+  }
+  .large-bar {
+    display: block;
+  }
+  .large-bar {
+    width: 60%;
+  }
+  .search-bar {
+    display: none;
+  }
+  .logo {
+    font-size: 1.2rem;
+  }
+  .profile-icon {
+    font-size: 1rem;
+  }
+  .navigation {
+    width: 50%;
+  }
+  .cart-icon {
+    font-size: 1rem;
+  }
+  .cart-icon img {
+    width: 35px;
+    height: 30px;
+  }
+}
+
+@media only screen and (min-width: 1000px) {
+  .navigation {
+    width: 30%;
+  }
+  .pop-over-body-rest p {
+    padding: 0 20px;
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  .navigation ul li {
+    font-size: 1.1rem;
+  }
+}
+
+@media only screen and (min-width: 1400px) {
+  .navigation ul li {
+    font-size: 1.2rem;
+  }
+}
+
+@media only screen and (min-width: 1800px) {
+  .navigation ul li {
+    font-size: 1.3rem;
+  }
+}
+
+.category-results {
+  padding: 20px 10px;
+}
+
+.category-results h1 {
+  font-weight: bold;
+  font-size: 1rem;
+  text-align: center;
+  margin: 10px 0 20px 0;
+}
+
+.category-wrap {
+  margin: auto;
+  width: 90%;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 1fr 1fr;
+      grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.paginate {
+  margin: 10px auto;
+  width: 80%;
+}
+
+.category-wrap .category-item {
+  -webkit-box-shadow: var(--box) var(--softgrey);
+          box-shadow: var(--box) var(--softgrey);
+  border-radius: 5px;
+  margin: 0 5px;
+}
+
+.category-wrap .category-item a {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.category-wrap .category-item img {
+  min-width: 100px;
+  height: 100px;
+  -o-object-fit: contain;
+     object-fit: contain;
+  border-radius: 5px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.category-wrap .category-desc {
+  margin: 5px 0;
+  padding: 3px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+
+.category-wrap .category-desc h2 {
+  color: var(--deepblue);
+  padding: 5px 0;
+}
+
+@media only screen and (min-width: 700px) {
+  .category-results h1 {
+    margin: 15px 0;
+  }
+  .category-wrap {
+    -ms-grid-columns: (1fr)[4];
+        grid-template-columns: repeat(4, 1fr);
+    -webkit-column-gap: 10px;
+            column-gap: 10px;
+  }
+  .paginate {
+    margin-top: 20px;
+    width: 70%;
+  }
+  .category-wrap .category-item img {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+  }
+}
+
+@media only screen and (min-width: 1000px) {
+  .category-wrap {
+    margin: 15px auto;
+    width: 70%;
+  }
+  .category-wrap .category-item {
+    width: 200px;
+  }
+  .category-wrap .category-item img {
+    min-width: 150px;
+    height: 150px;
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  .category-results h1 {
+    font-size: 1.2rem;
+  }
+  .category-wrap {
+    margin: 35px auto;
+  }
+  .paginate {
+    width: 65%;
+  }
+  .category-wrap .category-item {
+    margin: 10px 14px;
+  }
+  .category-wrap .category-item img {
+    -o-object-fit: contain;
+       object-fit: contain;
+    width: 200px;
+  }
+  .category-item .category-desc {
+    margin: 8px 0;
+    padding: 5px;
+    font-size: 0.9rem;
+  }
+}
+
+@media only screen and (min-width: 1800px) {
+  .category-wrap {
+    width: 50%;
+  }
+  .paginate {
+    width: 40%;
   }
 }
 /*# sourceMappingURL=App.css.map */

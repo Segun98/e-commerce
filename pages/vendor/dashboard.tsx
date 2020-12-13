@@ -13,6 +13,7 @@ import {
 import { DashboardOrders } from "@/components/vendor/DashboardOrders";
 import { Chart } from "@/components/vendor/Chart";
 import { Commas } from "@/utils/helpers";
+import { useUser } from "@/Context/UserProvider";
 
 interface DefaultOrderState {
   orders: IOrderInitialState;
@@ -27,6 +28,8 @@ export const Dashboard: React.FC = () => {
   );
 
   const toast = useToast();
+  const { User } = useUser();
+
   //Token from context
   const { Token } = useToken();
 
@@ -72,7 +75,8 @@ export const Dashboard: React.FC = () => {
         </div>
         <main>
           <div className="headline-wrap">
-            <h1 className="headline"> Your Dashboard</h1>
+            {/* <h1 className="headline"> Your Dashboard</h1> */}
+            <h1 className="headline">Hi, {User && User.first_name}</h1>
             <Button
               size="xs"
               style={{ background: "var(--deepblue)", color: "white" }}

@@ -289,6 +289,7 @@ export const Account = () => {
                         the website, meaning you will recieve no Orders
                       </small>
                     </FormLabel>
+                    {/* CANT SET STATUS IF YOU'RE PENDING  */}
                     <span
                       style={{
                         display:
@@ -415,8 +416,8 @@ export const Account = () => {
             font-size: 1.1rem;
           }
           .account-item img {
-            width: 800px;
-            height: 250px;
+            max-width: 80%;
+            height: 200px;
           }
           .account-head {
             width: 100%;

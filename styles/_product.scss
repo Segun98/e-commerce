@@ -4,9 +4,6 @@
     .product {
         padding-top: 20px;
 
-        h1 {
-            font-style: italic;
-        }
 
         .product-wrap {
             display: grid;
@@ -27,9 +24,9 @@
                     margin: 10px 0;
                 }
 
-                .product-name-mobile {
-                    font-style: italic;
-                }
+                // .product-name-mobile {
+                //     font-style: italic;
+                // }
 
                 .product-img {
                     display: flex;
@@ -90,6 +87,7 @@
                             font-size: 0.9rem;
                             color: $deepblue;
                             font-weight: bold;
+                            padding-top: 5px;
                         }
                     }
                 }
@@ -288,12 +286,11 @@
                     margin: 5px 0;
                     text-align: center;
                     font-weight: bold;
+                    font-size: 0.8rem;
 
                     h2 {
                         color: $deepblue;
                         padding: 5px 2px;
-                        font-style: italic;
-                        font-size: 0.9rem
                     }
                 }
             }
@@ -349,6 +346,7 @@
 
                     .related-desc {
                         margin: 8px 0;
+                        font-size: 0.9rem;
                     }
                 }
             }

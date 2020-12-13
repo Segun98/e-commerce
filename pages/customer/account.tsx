@@ -42,6 +42,18 @@ export const Account = () => {
     setAddress(User.customer_address || "");
   }, [User, Token]);
 
+  useEffect(() => {
+    if ((Token && User && User.phone === "") || User.customer_address === "") {
+      toast({
+        title: "Please add your contact and shipping address",
+        status: "info",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom-right",
+      });
+    }
+  }, [User]);
+
   async function updateAccount(e) {
     e.preventDefault();
 

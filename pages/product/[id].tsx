@@ -305,7 +305,7 @@ const Product = ({ product, error }: response) => {
               </div>
             ) : (
               <div className="related-wrap">
-                {related.map((r, index) => (
+                {related.map((r) => (
                   <div className="related-item" key={r.id}>
                     <Link
                       href={`/product/${r.name_slug}`}

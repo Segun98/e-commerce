@@ -14,6 +14,7 @@ import {
   Textarea,
   Spinner,
   useToast,
+  Text,
 } from "@chakra-ui/core";
 import { Commas } from "@/utils/helpers";
 import Link from "next/link";
@@ -97,12 +98,16 @@ const Checkout = ({ variables }) => {
               <div className="grid-1">
                 <div className="head">
                   <h1>Address Details</h1>
-                  <Icon
-                    aria-label="edit address"
-                    name="edit"
+                  <Text
+                    as="span"
                     cursor="pointer"
+                    aria-label="edit address"
+                    role="button"
+                    aria-roledescription="edit address"
                     onClick={() => setEditMode(!editMode)}
-                  />
+                  >
+                    Edit <Icon aria-label="edit address" name="edit" />
+                  </Text>
                 </div>
                 <hr />
                 <p>

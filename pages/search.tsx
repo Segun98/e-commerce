@@ -208,8 +208,11 @@ const Search = ({ products, error }: Iprops) => {
         .results-wrap .search-desc h2 {
           color: var(--deepblue);
           padding: 5px 0;
-          font-style: italic;
-          font-size: 0.9rem;
+        }
+
+        .results-wrap .search-desc h2,
+        p {
+          font-size: 0.8rem;
         }
 
         @media only screen and (min-width: 400px) {
@@ -274,6 +277,10 @@ const Search = ({ products, error }: Iprops) => {
           .search-item .search-desc {
             margin: 8px 0;
             padding: 5px;
+          }
+          .results-wrap .search-desc h2,
+          p {
+            font-size: 0.9rem;
           }
         }
 

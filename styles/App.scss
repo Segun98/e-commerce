@@ -12,7 +12,8 @@ $softgrey: rgba(32, 33, 36, 0.28);
 //boxshadow
 $box: 0 1px 6px 0;
 $lightblue: #cbd8f9;
-$deepblue: #02247a;
+$deepblue: #062863;
+// $deepblue: #02247a;
 $text: #626262;
 $softblue: rgb(238, 238, 245);
 
@@ -74,3 +75,5 @@ Class names accross components can be the same but they are wrapped by a unique 
 @import "./dashboard";
 @import "./checkout";
 @import "./become_a_vendor";
+@import "./header";
+@import "./category";

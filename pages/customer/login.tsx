@@ -150,26 +150,14 @@ export const Login = () => {
         });
         return;
       }
-      //user doesn't exist
-      // if (error.message === "Request failed with status code 404") {
-      //   toast({
-      //     title: "You Need To Signup",
-      //     description: "Redirecting...",
-      //     status: "info",
-      //     position: "top",
-      //     duration: 3000,
-      //   });
-      //   setTimeout(() => {
-      //     router.push("/customer/register#google");
-      //   }, 2000);
-      // }
     }
   };
   //failed oauth response
   const failureGoogle = (response) => {
     toast({
       title: "Google Error",
-      description: "Please Login the other way if this error persists",
+      description:
+        "Please Login with the alternative method if this error persists",
       status: "error",
       duration: 3000,
     });

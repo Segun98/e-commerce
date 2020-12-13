@@ -10,7 +10,6 @@ import { useMutation } from "@/utils/useMutation";
 import { addToCart } from "@/graphql/customer";
 import { cartItems } from "@/redux/features/cart/fetchCart";
 import { useRouter } from "next/router";
-import { topOrBottom } from "@/utils/helpers";
 
 interface Iprops {
   product: ProductsRes;
@@ -122,7 +121,7 @@ export const AddToCart: React.FC<Iprops> = ({
             description: "Find It In Your Account Page After You LogIn",
             status: "info",
             duration: 9000,
-            position: topOrBottom(),
+            position: "top",
             isClosable: true,
           });
           router.push(`/customer/login`).then(() => window.scrollTo(0, 0));
