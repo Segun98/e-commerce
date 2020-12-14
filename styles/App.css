@@ -2013,9 +2013,9 @@ Class names accross components can be the same but they are wrapped by a unique 
 /* Navigation and Hamburger  */
 .navigation {
   background: var(--softblue);
+  margin-left: -85%;
   width: 80%;
   height: 100%;
-  margin-left: -85%;
   position: relative;
   position: fixed;
   top: 0;
