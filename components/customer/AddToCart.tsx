@@ -124,7 +124,9 @@ export const AddToCart: React.FC<Iprops> = ({
             position: "top",
             isClosable: true,
           });
-          router.push(`/customer/login`).then(() => window.scrollTo(0, 0));
+          setTimeout(() => {
+            router.push(`/customer/login`).then(() => window.scrollTo(0, 0));
+          }, 1500);
           return;
         }
         if (product.in_stock === "false") {
