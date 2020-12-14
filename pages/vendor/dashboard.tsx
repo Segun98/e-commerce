@@ -52,6 +52,20 @@ export const Dashboard: React.FC = () => {
   );
   const canceled = orders.filter((c) => c.canceled === "true"); // order.length - completed.length - pending.length
 
+  useEffect(() => {
+    if (orders.length > 0 && pending.length > 0) {
+      toast({
+        title: "You have pending Orders",
+        description: "Please take Action",
+        status: "info",
+        duration: 5000,
+        isClosable: true,
+        position: "top-right",
+      });
+    }
+  }, [pending]);
+
+  
   return (
     <div className="dashboard">
       <Head>
@@ -167,7 +181,7 @@ export const Dashboard: React.FC = () => {
                   >
                     "*"
                   </span>{" "}
-                  Signifies Pending Orders, Please take Action
+                  Signifies Pending Orders
                 </p>
               </div>
 
