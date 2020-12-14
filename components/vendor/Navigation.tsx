@@ -4,8 +4,8 @@ import { Button, Icon } from "@chakra-ui/core";
 import Cookies from "js-cookie";
 import { useUser } from "../../Context/UserProvider";
 import { useRouter } from "next/router";
-import axios from "axios";
-import { logoutLink } from "./../../utils/client";
+// import axios from "axios";
+// import { logoutLink } from "./../../utils/client";
 
 export const Navigation = () => {
   const role = Cookies.get("role");
@@ -77,7 +77,7 @@ export const Navigation = () => {
               </li>
               <li>
                 <Link href="/">
-                  <a>Payout?</a>
+                  <a>Payment</a>
                 </Link>
               </li>
               <li>
