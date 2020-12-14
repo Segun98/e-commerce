@@ -18,14 +18,6 @@ export function truncate(str) {
 
 export const nairaSign = <span>&#8358;</span>;
 
-//display toast at the top when on desktop
-export function topOrBottom() {
-  if (typeof window === "object") {
-    return window.screen.width > 1000 ? "top" : "bottom";
-  }
-  return "bottom";
-}
-
 //formate date to get distance. e.g "3 days ago"
 export function formatDate(date, suffix: boolean) {
   //order date
@@ -43,4 +35,15 @@ export function differenceBetweenDates(date) {
   //order date - now
   let dateLib = differenceInDays(new Date(), toReadableString);
   return dateLib;
+}
+
+//return screen width
+export function screenWidth():number | 600 {
+  let width = 600;
+
+  if (typeof window === "object") {
+    width = window.screen.width;
+  }
+
+  return width;
 }
