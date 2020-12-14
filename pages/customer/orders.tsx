@@ -22,7 +22,7 @@ import { useQuery } from "@/components/useQuery";
 import { useToken } from "@/Context/TokenProvider";
 import { getCustomerOrders } from "@/graphql/customer";
 import { Orders } from "@/Typescript/types";
-import { Commas, formatDate } from "@/utils/helpers";
+import { Commas, differenceBetweenDates, formatDate } from "@/utils/helpers";
 import { useMutation } from "@/utils/useMutation";
 import { ProtectRouteC } from "@/utils/ProtectedRouteC";
 import { gql } from "graphql-request";
@@ -108,11 +108,9 @@ export const CustomerOrders = () => {
       return true;
     }
 
-    let days = formatDate(date, false);
-    let dateArr = days.split(" ");
-    let dayNum = parseInt(dateArr[0]);
+    let day = differenceBetweenDates(date);
 
-    if (dayNum > 3) {
+    if (day > 7) {
       return true;
     }
     return false;

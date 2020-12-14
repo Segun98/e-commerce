@@ -1,4 +1,4 @@
-import { formatDistance } from "date-fns";
+import { differenceInDays, formatDistance } from "date-fns";
 
 //Adds commas to numbers
 export function Commas(x) {
@@ -34,5 +34,13 @@ export function formatDate(date, suffix: boolean) {
   let dateLib = formatDistance(toReadableString, new Date(), {
     addSuffix: suffix,
   });
+  return dateLib;
+}
+
+export function differenceBetweenDates(date) {
+  //order date
+  const toReadableString = new Date(parseInt(date));
+  //order date - now
+  let dateLib = differenceInDays(new Date(), toReadableString);
   return dateLib;
 }
