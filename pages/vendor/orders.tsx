@@ -17,17 +17,17 @@ export const Orders = () => {
           <div className="order-status">
             <List>
               <ListItem>
-                * <strong>Pending</strong> signifies that you have NOT ACCEPTED
-                an Order, Please take action.
+                * <strong>Pending</strong> signifies that you have not
+                accepted/acknowleged an Order, Please take ACTION.
               </ListItem>
               <ListItem mt="2" mb="2">
-                * <strong>Cancelled</strong> signifies that You or a customer
+                * <strong>Cancelled</strong> signifies that you or a customer
                 has cancelled the order. Note: You cannnot cancel after you have
                 accepted an Order
               </ListItem>
               <ListItem>
                 * <strong>Delivered</strong> (under 'Completed' column)
-                signifies that Your Item Has Been delivered to your customer
+                signifies that your item has been delivered to your customer
                 else you see 'NO'
               </ListItem>
             </List>
@@ -45,7 +45,8 @@ export const Orders = () => {
             >
               "*"
             </span>{" "}
-            Signifies Pending Orders, Please take Action
+            Signifies Pending Orders{" "}
+            {/* <span className="scroll-right">scroll right for Action</span> */}
           </p>
           <OrdersComponent limit={null} />
         </main>
@@ -78,7 +79,6 @@ export const Orders = () => {
           margin: 0 auto;
           width: 90%;
         }
-
         @media only screen and (min-width: 700px) {
           .order-status {
             font-size: 1rem;
@@ -88,7 +88,11 @@ export const Orders = () => {
             width: 60%;
           }
         }
-
+        @media only screen and (min-width: 1000px) {
+          .scroll-right {
+            display: none;
+          }
+        }
         @media only screen and (min-width: 1200px) {
           .order-status {
             padding: 10px;
