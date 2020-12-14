@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useToken } from "../../Context/TokenProvider";
-import { Commas } from "./../../utils/helpers";
+import { useToken } from "@/Context/TokenProvider";
+import { Commas, screenWidth } from "@/utils/helpers";
 import {
   IOrderInitialState,
   ordersThunk,
-} from "../../redux/features/orders/fetchOrders";
+} from "@/redux/features/orders/fetchOrders";
 import {
   Button,
   Popover,
@@ -20,7 +20,7 @@ import {
   useToast,
   Text,
 } from "@chakra-ui/core";
-import { useMutation } from "../../utils/useMutation";
+import { useMutation } from "@/utils/useMutation";
 import { gql } from "graphql-request";
 
 interface Iprops {
@@ -169,133 +169,212 @@ export const OrdersComponent: React.FC<Iprops> = ({ limit }) => {
         error &&
         "error Fetching Your Orders, Check your internet connection and refresh..."}
       {!loading && !error && orders && (
-        <table style={{ width: "100%" }}>
-          <thead>
-            <tr>
-              <th>Order ID</th>
-              <th>Name</th>
-              <th>Price</th>
-              <th>Qty</th>
-              <th>Subtotal</th>
-              <th>Request</th>
-              <th>Order Date</th>
-              <th>Completed</th>
-              <th>Status</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-
-          {orders.length === 0 ? "You Have No Orders..." : null}
-          <tbody>
-            {orders.map((o) => (
-              <tr className="order-item" key={o.id}>
-                <td style={{ display: "flex" }}>
-                  {/* display "*" if order is pending */}
-                  <span
-                    style={{
-                      color: "red",
-                      display:
-                        o.accepted === "true"
-                          ? "none"
-                          : o.canceled === "true"
-                          ? "none"
-                          : "block",
-                    }}
-                  >
-                    *
-                  </span>
-                  <span>{o.order_id}</span>
-                </td>
-                <td>{o.name}</td>
-                <td>{o.price}</td>
-                <td>{o.quantity}</td>
-                <td>{Commas(o.price * o.quantity)}</td>
-                <td>{o.request || "none"}</td>
-                <td>{toDate(o.created_at)}</td>
-                {/* completed means customer has recieved item */}
-                <td>{o.completed === "false" ? "No" : "Delivered"}</td>
-                {/* not accepted or not cancelled should mean the item is pending  */}
-                <td>
-                  {o.accepted === "true"
-                    ? "Accepted"
-                    : o.canceled === "true"
-                    ? "Cancelled"
-                    : "Pending"}
-                </td>
-                <td>
-                  <Popover placement="left" usePortal={true}>
-                    <PopoverTrigger>
-                      <Button
-                        size="xs"
-                        rightIcon="chevron-down"
-                        style={{
-                          background: "var(--deepblue)",
-                          color: "white",
-                        }}
-                      >
-                        Action
-                      </Button>
-                    </PopoverTrigger>
-                    <PopoverContent zIndex={4}>
-                      <PopoverArrow />
-                      <PopoverCloseButton />
-                      <PopoverHeader>Order ID: {o.order_id}</PopoverHeader>
-                      <PopoverBody>
-                        <div
-                          style={{
-                            display: "flex",
-                            justifyContent: "space-around",
-                          }}
-                        >
-                          <Button
-                            color="var(--deepblue)"
-                            isDisabled={
-                              o.accepted === "true" || o.canceled === "true"
-                                ? true
-                                : false
-                            }
-                            onClick={() =>
-                              handleOrderAccept(
-                                o.id,
-                                o.name,
-                                o.quantity,
-                                o.subtotal
-                              )
-                            }
-                          >
-                            Accept
-                          </Button>
-                          <Button
-                            color="white"
-                            background="red"
-                            isDisabled={
-                              o.accepted === "true" || o.canceled === "true"
-                                ? true
-                                : false
-                            }
-                            onClick={() =>
-                              handleOrderCancel(
-                                o.id,
-                                o.name,
-                                o.quantity,
-                                o.subtotal
-                              )
-                            }
-                          >
-                            Cancel
-                          </Button>
-                        </div>
-                      </PopoverBody>
-                      <PopoverFooter fontSize="0.7rem">
-                        Ensure the product is readily available before accepting
-                      </PopoverFooter>
-                    </PopoverContent>
-                  </Popover>
-                </td>
+        <div style={{ overflowX: "auto" }}>
+          <table style={{ width: "100%" }}>
+            <thead>
+              <tr>
+                {screenWidth() < 990 && <th>Action</th>}
+                <th>Order ID</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Qty</th>
+                <th>Subtotal</th>
+                <th>Request</th>
+                <th>Order Date</th>
+                <th>Completed</th>
+                <th>Status</th>
+                {screenWidth() > 990 && <th>Action</th>}
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+
+            {orders.length === 0 ? "You Have No Orders..." : null}
+            <tbody>
+              {orders.map((o) => (
+                <tr className="order-item" key={o.id}>
+                  {screenWidth() < 990 && (
+                    <td>
+                      <Popover placement="left" usePortal={true}>
+                        <PopoverTrigger>
+                          <Button
+                            size="xs"
+                            rightIcon="chevron-down"
+                            style={{
+                              background: "var(--deepblue)",
+                              color: "white",
+                            }}
+                          >
+                            Action
+                          </Button>
+                        </PopoverTrigger>
+                        <PopoverContent zIndex={4}>
+                          <PopoverArrow />
+                          <PopoverCloseButton />
+                          <PopoverHeader>Order ID: {o.order_id}</PopoverHeader>
+                          <PopoverBody>
+                            <div
+                              style={{
+                                display: "flex",
+                                justifyContent: "space-around",
+                              }}
+                            >
+                              <Button
+                                color="var(--deepblue)"
+                                isDisabled={
+                                  o.accepted === "true" || o.canceled === "true"
+                                    ? true
+                                    : false
+                                }
+                                onClick={() =>
+                                  handleOrderAccept(
+                                    o.id,
+                                    o.name,
+                                    o.quantity,
+                                    o.subtotal
+                                  )
+                                }
+                              >
+                                Accept
+                              </Button>
+                              <Button
+                                color="white"
+                                background="red"
+                                isDisabled={
+                                  o.accepted === "true" || o.canceled === "true"
+                                    ? true
+                                    : false
+                                }
+                                onClick={() =>
+                                  handleOrderCancel(
+                                    o.id,
+                                    o.name,
+                                    o.quantity,
+                                    o.subtotal
+                                  )
+                                }
+                              >
+                                Cancel
+                              </Button>
+                            </div>
+                          </PopoverBody>
+                          <PopoverFooter fontSize="0.7rem">
+                            Ensure the product is readily available before
+                            accepting
+                          </PopoverFooter>
+                        </PopoverContent>
+                      </Popover>
+                    </td>
+                  )}
+                  <td style={{ display: "flex" }}>
+                    {/* display "*" if order is pending */}
+                    <span
+                      style={{
+                        color: "red",
+                        display:
+                          o.accepted === "true"
+                            ? "none"
+                            : o.canceled === "true"
+                            ? "none"
+                            : "block",
+                      }}
+                    >
+                      *
+                    </span>
+                    <span>{o.order_id}</span>
+                  </td>
+                  <td>{o.name}</td>
+                  <td>{o.price}</td>
+                  <td>{o.quantity}</td>
+                  <td>{Commas(o.price * o.quantity)}</td>
+                  <td>{o.request || "none"}</td>
+                  <td>{toDate(o.created_at)}</td>
+                  {/* completed means customer has recieved item */}
+                  <td>{o.completed === "false" ? "No" : "Delivered"}</td>
+                  {/* not accepted or not cancelled should mean the item is pending  */}
+                  <td>
+                    {o.accepted === "true"
+                      ? "Accepted"
+                      : o.canceled === "true"
+                      ? "Cancelled"
+                      : "Pending"}
+                  </td>
+                  {screenWidth() > 990 && (
+                    <td>
+                      <Popover placement="left" usePortal={true}>
+                        <PopoverTrigger>
+                          <Button
+                            size="xs"
+                            rightIcon="chevron-down"
+                            style={{
+                              background: "var(--deepblue)",
+                              color: "white",
+                            }}
+                          >
+                            Action
+                          </Button>
+                        </PopoverTrigger>
+                        <PopoverContent zIndex={4}>
+                          <PopoverArrow />
+                          <PopoverCloseButton />
+                          <PopoverHeader>Order ID: {o.order_id}</PopoverHeader>
+                          <PopoverBody>
+                            <div
+                              style={{
+                                display: "flex",
+                                justifyContent: "space-around",
+                              }}
+                            >
+                              <Button
+                                color="var(--deepblue)"
+                                isDisabled={
+                                  o.accepted === "true" || o.canceled === "true"
+                                    ? true
+                                    : false
+                                }
+                                onClick={() =>
+                                  handleOrderAccept(
+                                    o.id,
+                                    o.name,
+                                    o.quantity,
+                                    o.subtotal
+                                  )
+                                }
+                              >
+                                Accept
+                              </Button>
+                              <Button
+                                color="white"
+                                background="red"
+                                isDisabled={
+                                  o.accepted === "true" || o.canceled === "true"
+                                    ? true
+                                    : false
+                                }
+                                onClick={() =>
+                                  handleOrderCancel(
+                                    o.id,
+                                    o.name,
+                                    o.quantity,
+                                    o.subtotal
+                                  )
+                                }
+                              >
+                                Cancel
+                              </Button>
+                            </div>
+                          </PopoverBody>
+                          <PopoverFooter fontSize="0.7rem">
+                            Ensure the product is readily available before
+                            accepting
+                          </PopoverFooter>
+                        </PopoverContent>
+                      </Popover>
+                    </td>
+                  )}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       )}
       <style jsx>{`
         table {
