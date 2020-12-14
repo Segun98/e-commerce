@@ -8,34 +8,34 @@ import Carousel from "react-bootstrap/Carousel";
 import { Commas } from "@/utils/helpers";
 import { PurchaseSteps } from "@/components/customer/PurchaseSteps";
 import { useQuery } from "@/components/useQuery";
-import { graphQLClient } from "@/utils/client";
+// import { graphQLClient } from "@/utils/client";
 
-export async function getServerSideProps() {
-  try {
-    const res = await graphQLClient.request(featuredProducts, { limit: 10 });
-    const products = await res.featuredProducts;
-    return {
-      props: {
-        products,
-        loading: false,
-      },
-    };
-  } catch (err) {
-    return {
-      props: {
-        error: err?.response?.errors[0].message || err.message,
-      },
-    };
-  }
-}
+// export async function getServerSideProps() {
+//   try {
+//     const res = await graphQLClient.request(featuredProducts, { limit: 10 });
+//     const products = await res.featuredProducts;
+//     return {
+//       props: {
+//         products,
+//         loading: false,
+//       },
+//     };
+//   } catch (err) {
+//     return {
+//       props: {
+//         error: err?.response?.errors[0].message || err.message,
+//       },
+//     };
+//   }
+// }
 
-const Home = ({ products, loading }) => {
+const Home = () => {
   //Featured Products Section Scroll
   const scrollRef = useRef(null);
 
   // //fetch products with custom hook
-  // const [data, loading] = useQuery(featuredProducts, { limit: 10 });
-  // const products = data ? data.featuredProducts : [];
+  const [data, loading] = useQuery(featuredProducts, { limit: 10 });
+  const products = data ? data.featuredProducts : [];
 
   return (
     <Layout>
