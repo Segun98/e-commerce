@@ -22,7 +22,7 @@ import { useQuery } from "@/components/useQuery";
 import { useToken } from "@/Context/TokenProvider";
 import { getCustomerOrders } from "@/graphql/customer";
 import { Orders } from "@/Typescript/types";
-import { Commas, differenceBetweenDates, formatDate } from "@/utils/helpers";
+import { Commas, differenceBetweenDates } from "@/utils/helpers";
 import { useMutation } from "@/utils/useMutation";
 import { ProtectRouteC } from "@/utils/ProtectedRouteC";
 import { gql } from "graphql-request";
