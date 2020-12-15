@@ -7,7 +7,8 @@ import { Layout } from "@/components/Layout";
 import Carousel from "react-bootstrap/Carousel";
 import { Commas } from "@/utils/helpers";
 import { PurchaseSteps } from "@/components/customer/PurchaseSteps";
-import { useQuery } from "@/components/useQuery";
+import queryFunc from "@/utils/fetcher";
+import useSWR from "swr";
 // import { graphQLClient } from "@/utils/client";
 
 // export async function getServerSideProps() {
@@ -33,9 +34,12 @@ const Home = () => {
   //Featured Products Section Scroll
   const scrollRef = useRef(null);
 
-  // //fetch products with custom hook
-  const [data, loading] = useQuery(featuredProducts, { limit: 10 });
-  const products = data ? data.featuredProducts : [];
+  //using SWR to fetch data
+  const { data } = useSWR(
+    `featuredProducts`,
+    () => queryFunc(featuredProducts, { limit: 10 }),
+    { refreshInterval: 1000 }
+  );
 
   return (
     <Layout>
@@ -179,14 +183,14 @@ const Home = () => {
                 <Icon name="chevron-right" size="32px" />
               </button>
             </div>
-            {loading && (
+            {!data && (
               <div style={{ textAlign: "center" }}>
                 <Spinner speed="1s"></Spinner>
               </div>
             )}
             <div className="featured-wrap" ref={scrollRef}>
-              {products &&
-                products.map((p: ProductsRes) => (
+              {data &&
+                data.featuredProducts.map((p: ProductsRes) => (
                   <div className="featured-item" key={p.id}>
                     <Link href={`/product/${p.name_slug}`}>
                       <a>
