@@ -12,31 +12,35 @@ import {
   PopoverCloseButton,
   Text,
 } from "@chakra-ui/core";
-import React, { useState } from "react";
+import { useEffect } from "react";
 import { useToken } from "@/Context/TokenProvider";
 import { Commas, truncate } from "@/utils/helpers";
-import { useQuery } from "../useQuery";
 import { getVendorOrders } from "@/graphql/vendor";
 import { Orders } from "@/Typescript/types";
 import { useMutation } from "@/utils/useMutation";
 import { ordersThunk } from "@/redux/features/orders/fetchOrders";
 import { useDispatch } from "react-redux";
 import { gql } from "graphql-request";
+import useSWR, { mutate } from "swr";
+import queryFunc from "@/utils/fetcher";
 
 //Recent Orders displayed in /vendor/dashboard.
 export const DashboardOrders = () => {
   const { Token } = useToken();
   const toast = useToast();
   const dispatch = useDispatch();
-  //point is to cause custome hook useQuery to refecth after i cancel or complete an order
-  const [FakeDependency, setFakeDependency] = useState(false);
-  const [data, loading, error] = useQuery(
-    getVendorOrders,
-    { limit: 5 },
-    Token,
-    FakeDependency
+
+  //using SWR to fetch data
+  const { data, error } = useSWR(
+    `getVendorOrders`,
+    () => queryFunc(getVendorOrders, { limit: 5 }, Token),
+    { refreshInterval: 1000 }
   );
-  let orders = data && data.getVendorOrders;
+
+  //refetch when token loads
+  useEffect(() => {
+    mutate(`getVendorOrders`);
+  }, [Token]);
 
   //accept order
   async function handleOrderAccept(id, name, quantity, subtotal) {
@@ -61,8 +65,10 @@ export const DashboardOrders = () => {
     ) {
       const { data, error } = await useMutation(acceptOrder, { id }, Token);
       if (data) {
-        //causes useQuery to refecth and store to update
-        setFakeDependency(!FakeDependency);
+        //causes useQuery to refetch and store to update
+        mutate(`getVendorOrders`);
+
+        //dispatching to update central redux store, to update the dashboard metrics
         dispatch(ordersThunk(Token, { limit: null }));
         toast({
           title: "Order Has Been Accepted",
@@ -112,7 +118,9 @@ export const DashboardOrders = () => {
         Token
       );
       if (data) {
-        setFakeDependency(!FakeDependency);
+        mutate(`getVendorOrders`);
+
+        //dispatching to update central redux store, to update the dashboard metrics
         dispatch(ordersThunk(Token, { limit: null }));
         toast({
           title: "Order Has Been Cancelled",
@@ -144,7 +152,7 @@ export const DashboardOrders = () => {
 
   return (
     <div className="orders-table">
-      {loading && (
+      {!data && (
         <Text as="div" className="skeleton">
           <Skeleton height="40px" my="10px" />
           <Skeleton height="40px" my="10px" />
@@ -156,10 +164,9 @@ export const DashboardOrders = () => {
           <Skeleton height="40px" my="10px" />
         </Text>
       )}
-      {!loading &&
-        error &&
+      {error &&
         "error Fetching Your Orders, Check your internet connection and refresh"}
-      {!loading && !error && data && (
+      {data && (
         <table style={{ width: "100%" }}>
           <thead>
             <tr>
@@ -171,9 +178,9 @@ export const DashboardOrders = () => {
               <th>Action</th>
             </tr>
           </thead>
-          {orders.length === 0 ? "You Have No Orders..." : null}
+          {data.getVendorOrders.length === 0 ? "You Have No Orders..." : null}
           <tbody>
-            {orders.map((o: Orders) => (
+            {data.getVendorOrders.map((o: Orders) => (
               <tr key={o.id}>
                 <td className="name">
                   {/* display "*" if order is pending */}

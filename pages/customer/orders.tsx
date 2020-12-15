@@ -15,10 +15,9 @@ import {
   Text,
 } from "@chakra-ui/core";
 import Head from "next/head";
-import React, { useState } from "react";
+import { useEffect } from "react";
 import { PurchaseSteps } from "@/components/customer/PurchaseSteps";
 import { Layout } from "@/components/Layout";
-import { useQuery } from "@/components/useQuery";
 import { useToken } from "@/Context/TokenProvider";
 import { getCustomerOrders } from "@/graphql/customer";
 import { Orders } from "@/Typescript/types";
@@ -26,19 +25,24 @@ import { Commas, differenceBetweenDates } from "@/utils/helpers";
 import { useMutation } from "@/utils/useMutation";
 import { ProtectRouteC } from "@/utils/ProtectedRouteC";
 import { gql } from "graphql-request";
+import queryFunc from "@/utils/fetcher";
+import useSWR, { mutate } from "swr";
 
 export const CustomerOrders = () => {
   const { Token } = useToken();
   const toast = useToast();
-  //point is to cause custome hook useQuery to refecth after i cancel or complete an order
-  const [FakeDependency, setFakeDependency] = useState(false);
-  const [data, loading] = useQuery(
-    getCustomerOrders,
-    {},
-    Token,
-    FakeDependency
+
+  //using SWR to fetch data
+  const { data } = useSWR(
+    `getCustomerOrders`,
+    () => queryFunc(getCustomerOrders, {}, Token),
+    { refreshInterval: 1000 }
   );
-  let orders = data && data.getCustomerOrders;
+
+  //refetch when token loads
+  useEffect(() => {
+    mutate(`getCustomerOrders`);
+  }, [Token]);
 
   //cancel order
   async function handleOrderCancel(id, name, quantity, subtotal) {
@@ -70,7 +74,7 @@ export const CustomerOrders = () => {
       );
 
       if (data) {
-        setFakeDependency(!FakeDependency);
+        mutate(`getCustomerOrders`);
         toast({
           title: "Order Has Been Cancelled",
           status: "info",
@@ -139,7 +143,7 @@ export const CustomerOrders = () => {
           </List>
         </div>
 
-        {loading && (
+        {!data && (
           <Text as="div" className="skeleton">
             <Skeleton height="40px" my="10px" />
             <Skeleton height="40px" my="10px" />
@@ -152,7 +156,7 @@ export const CustomerOrders = () => {
           </Text>
         )}
 
-        {!loading && data && (
+        {data && (
           <table style={{ width: "100%" }}>
             <thead>
               <tr>
@@ -164,9 +168,11 @@ export const CustomerOrders = () => {
                 <th>Action</th>
               </tr>
             </thead>
-            {orders.length === 0 ? "You Have No Orders..." : null}
+            {data.getCustomerOrders.length === 0
+              ? "You Have No Orders..."
+              : null}
             <tbody>
-              {orders.map((o: Orders, i) => (
+              {data.getCustomerOrders.map((o: Orders) => (
                 <tr key={o.id}>
                   <td>{o.name}</td>
                   <td>{Commas(o.price)}</td>
@@ -213,7 +219,7 @@ export const CustomerOrders = () => {
                               |
                             </Text>
                             <Text as="span" color="var(--deepblue)">
-                              {toDate(o.created_at)}
+                              Date: {toDate(o.created_at)}
                             </Text>
                           </Text>
                         </PopoverHeader>
@@ -255,6 +261,18 @@ export const CustomerOrders = () => {
                           </div>
                         </PopoverBody>
                         <PopoverFooter fontSize="0.7rem">
+                          {o.delivery_date && (
+                            <span>
+                              Delivery date:
+                              <Text as="span" color="var(--deepblue)">
+                                {toDate(o.delivery_date)}
+                              </Text>
+                              <Text as="span" color="var(--deepblue)">
+                                {" "}
+                                |
+                              </Text>
+                            </span>
+                          )}{" "}
                           Orders are fulfilled within 2-4 days of placement
                         </PopoverFooter>
                       </PopoverContent>
