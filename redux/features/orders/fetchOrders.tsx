@@ -42,9 +42,7 @@ export function ordersThunk(Token, variables) {
       }
       const res = await graphQLClient.request(getVendorOrders, variables);
       const data: Orders[] = res.getVendorOrders;
-      if (data) {
-        dispatch(getOrders(data));
-      }
+      dispatch(getOrders(data));
     } catch (err) {
       let error = err?.response?.errors[0].message || err.message;
       if (Token && err) {

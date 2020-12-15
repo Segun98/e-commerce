@@ -45,9 +45,7 @@ export function cartItems(Token) {
       }
       const res = await graphQLClient.request(getCartItems);
       const data: Cart[] = res.getCartItems;
-      if (data) {
         dispatch(getCart(data));
-      }
     } catch (err) {
       let error = err?.response?.errors[0].message || err.message;
       if (Token && err) {
