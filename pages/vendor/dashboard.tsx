@@ -63,9 +63,8 @@ export const Dashboard: React.FC = () => {
         position: "top-right",
       });
     }
-  }, [pending]);
+  }, [orders]);
 
-  
   return (
     <div className="dashboard">
       <Head>
