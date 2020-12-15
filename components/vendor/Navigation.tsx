@@ -67,7 +67,7 @@ export const Navigation = () => {
               </li>
               <li>
                 <Link href="/store/new-item">
-                  <a>Add New Product</a>
+                  <a>New Product</a>
                 </Link>
               </li>
               <li>
