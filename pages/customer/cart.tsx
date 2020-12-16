@@ -123,8 +123,7 @@ export const CustomerCart = () => {
               textAlign: "center",
               padding: "20vh 0",
               fontWeight: "bold",
-              fontStyle: "italic",
-              fontSize: "2rem",
+              fontSize: "1.8rem",
             }}
             id="cart-top"
           >
