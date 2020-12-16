@@ -5,12 +5,12 @@ export function Commas(x) {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
-export function truncate(str) {
+export function truncate(str: string, length: number) {
   if (!str) {
     return str;
   }
-  if (str.length > 60) {
-    return str.slice(0, 60) + "...";
+  if (str.length > length) {
+    return str.slice(0, length) + "...";
   } else {
     return str;
   }
@@ -38,7 +38,7 @@ export function differenceBetweenDates(date) {
 }
 
 //return screen width
-export function screenWidth():number | 600 {
+export function screenWidth(): number | 600 {
   let width = 600;
 
   if (typeof window === "object") {
