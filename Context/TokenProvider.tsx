@@ -49,7 +49,7 @@ export const TokenProvider = ({ children }) => {
       }
     } catch (error) {
       if (error.message === "Request failed with status code 401") {
-        return Cookies.remove("role");
+        Cookies.remove("role");
       }
       // console.log(error.message);
     }

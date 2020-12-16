@@ -191,7 +191,7 @@ export const Header = () => {
                           }}
                         >
                           <Link href="/customer/register">
-                            <a>CREATE AN ACCOUNT</a>
+                            <a>CREATE ACCOUNT</a>
                           </Link>
                         </p>
                       )}
