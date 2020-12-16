@@ -31,7 +31,7 @@ export const getCart = gql`
         email
         customer_address
         phone
-        online
+        pending
       }
       product {
         id

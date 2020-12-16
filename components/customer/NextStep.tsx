@@ -53,6 +53,19 @@ export const NextStep: React.FC<Iprops> = ({
       return;
     }
 
+    //restricted customer can't place an order
+    if (cart.cartCreator.pending === "true") {
+      toast({
+        title: "Sorry you cannot make this Order at this time",
+        description: "Your account is currently restricted, please contact us",
+        status: "info",
+        duration: 7000,
+        isClosable: true,
+        position: "top",
+      });
+      return;
+    }
+
     //check if product is out of stock or creator is offline
 
     if (
