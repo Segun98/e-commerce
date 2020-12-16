@@ -349,7 +349,7 @@ export const Account = () => {
           margin-top: 20px;
         }
         .account-wrap {
-          margin: 30px auto;
+          margin: 10px auto;
           width: 85%;
         }
 
@@ -456,6 +456,7 @@ export const Account = () => {
 
         @media only screen and (min-width: 1200px) {
           .account-wrap {
+            margin: 30px auto;
             width: 60%;
           }
           .saved-item-wrap {

@@ -88,11 +88,11 @@ export const MainCart: React.FC<IProps> = ({ cart, setLoadingCart }) => {
           <div></div>
           <div>Subtotal</div>
           <div></div>
-          <div>Delete</div>
+          <div>Remove</div>
         </div>
         <hr />
         {cart &&
-          cart.map((c: Cart, index) => (
+          cart.map((c: Cart) => (
             <div key={c.id} className="cart-item">
               <div className="cart-img">
                 <img src={c.product.images[0]} alt={`${c.product.name}`} />

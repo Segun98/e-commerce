@@ -82,7 +82,7 @@ const Pay = ({ variables }) => {
       )}
       <style jsx>{`
         .pay-wrap {
-          margin: 20px auto;
+          margin: 10px auto;
           width: 90%;
           border: 0.5px solid $softblue;
           border-radius: 12px;
@@ -95,7 +95,7 @@ const Pay = ({ variables }) => {
           font-weight: bold;
           color: var(--deepblue);
           font-size: 1.3rem;
-          padding: 20px 0;
+          padding: 10px 0;
         }
         .details-grid {
           display: grid;
@@ -122,9 +122,11 @@ const Pay = ({ variables }) => {
         @media only screen and (min-width: 1000px) {
           .pay-wrap {
             width: 60%;
+            margin: 20px auto;
           }
           .heading {
             font-size: 1.5rem;
+            padding: 20px 0;
           }
         }
 

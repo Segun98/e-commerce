@@ -4,9 +4,9 @@ import { gql } from "graphql-request";
 import { useRouter } from "next/router";
 import React from "react";
 import { PaystackConsumer } from "react-paystack";
-import { useToken } from "../../Context/TokenProvider";
-import { deleteFromCart } from "../../graphql/customer";
-import { MutationUpdateOrderArgs, Orders } from "../../Typescript/types";
+import { useToken } from "@/Context/TokenProvider";
+import { deleteFromCart } from "@/graphql/customer";
+import { MutationUpdateOrderArgs, Orders } from "@/Typescript/types";
 import { useMutation } from "@/utils/useMutation";
 
 //basically set payment status to paid
@@ -30,6 +30,7 @@ const updateQuantity = gql`
 interface Iprops {
   order: Orders;
 }
+
 export const ConfirmOrder: React.FC<Iprops> = ({ order }) => {
   const { Token } = useToken();
   const { User } = useUser();

@@ -125,36 +125,7 @@ export const Navigation = () => {
               </Link>
             </li>
             <br />
-            {/* <li>
-              <Link href="/category?category=Gifts">
-                <a>Gifts</a>
-              </Link>
-            </li>
-            <li>
-              <Link href="/category?category=Decorations">
-                <a>Decorations</a>
-              </Link>
-            </li>
-            <li>
-              <Link href="/category?category=Games">
-                <a>Games</a>
-              </Link>
-            </li>
-            <li>
-              <Link href="/category?category=Drinks">
-                <a>Drinks</a>
-              </Link>
-            </li>
-            <li>
-              <Link href="/category?category=Props">
-                <a>Party Props</a>
-              </Link>
-            </li>
-            <li>
-              <Link href="/category?category=Cakes">
-                <a>Cakes</a>
-              </Link>
-            </li> */}
+
             <div className="login-btn">
               <Button
                 style={{ color: "white", background: "var(--deepblue)" }}

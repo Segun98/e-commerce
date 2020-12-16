@@ -184,7 +184,7 @@ const Checkout = ({ variables }) => {
                       <th>Product</th>
                       <th>Price</th>
                       <th>Qty</th>
-                      <th>Subtotal</th>
+                      <th>Sub</th>
                       <th>Delivery</th>
                     </tr>
                   </thead>

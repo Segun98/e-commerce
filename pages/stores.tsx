@@ -172,7 +172,7 @@ const Stores = () => {
 
                     <div className="store-desc">
                       <h4 className="bio">
-                        {truncate(s.business_bio) ||
+                        {truncate(s.business_bio, 60) ||
                           `We Are A Customer First Business`}
                       </h4>
                     </div>
