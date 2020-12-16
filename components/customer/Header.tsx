@@ -8,6 +8,13 @@ import {
   PopoverTrigger,
   PopoverContent,
   Divider,
+  Drawer,
+  DrawerBody,
+  DrawerHeader,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerCloseButton,
+  useDisclosure,
 } from "@chakra-ui/core";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
@@ -19,6 +26,7 @@ import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { cartItems } from "../../redux/features/cart/fetchCart";
 import { logoutLink } from "./../../utils/client";
+import { screenWidth } from "@/utils/helpers";
 
 interface DefaultRootState {
   cart: any;
@@ -33,30 +41,33 @@ export const Header = () => {
   const router = useRouter();
   const role = Cookies && Cookies.get("role");
   const { User } = useUser();
-  const [IsOpen, setIsOpen] = useState(false);
+
+  //search input state
   const [search, setSearch] = useState("");
+
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   useEffect(() => {
     dispatch(cartItems(Token));
   }, [Token, cartLength]);
 
-  //close menu when you click outside of the menu
-  useEffect(() => {
-    if (typeof window === "object") {
-      const body = document.body;
-      body.addEventListener("click", (e) => {
-        //@ts-ignore
-        if (e.target.parentNode.nodeName === "NAV") {
-          return;
-        } else {
-          if (IsOpen) {
-            setIsOpen(false);
-            return;
-          }
-        }
-      });
-    }
-  }, [IsOpen]);
+  // //close menu when you click outside of the menu
+  // useEffect(() => {
+  //   if (typeof window === "object") {
+  //     const body = document.body;
+  //     body.addEventListener("click", (e) => {
+  //       //@ts-ignore
+  //       if (e.target.parentNode.nodeName === "NAV") {
+  //         return;
+  //       } else {
+  //         if (IsOpen) {
+  //           setIsOpen(false);
+  //           return;
+  //         }
+  //       }
+  //     });
+  //   }
+  // }, [IsOpen]);
 
   function handleSearch(e) {
     e.preventDefault();
@@ -93,16 +104,13 @@ export const Header = () => {
         <header>
           <div className="header-wrap">
             <div className="header-wrap_left">
-              <button
+              <Button
                 aria-label="menu"
-                title="menu"
-                className="hamburger"
-                onClick={() => {
-                  setIsOpen(!IsOpen);
-                }}
+                aria-roledescription="menu"
+                onClick={onOpen}
               >
-                <img src="/menu.svg" alt="menu" />
-              </button>
+                <img src="/menu.svg" alt="menu svg" />
+              </Button>
               <div className="logo">
                 <Link href="/">
                   <a title="logo">PartyStore</a>
@@ -168,7 +176,7 @@ export const Header = () => {
                           }}
                         >
                           <Link href="/customer/login">
-                            <a>LOGIN</a>
+                            <a>Login</a>
                           </Link>
                         </p>
                       )}
@@ -191,7 +199,7 @@ export const Header = () => {
                           }}
                         >
                           <Link href="/customer/register">
-                            <a>CREATE ACCOUNT</a>
+                            <a>Create Account</a>
                           </Link>
                         </p>
                       )}
@@ -281,140 +289,146 @@ export const Header = () => {
 
       {/* MENU SECTION */}
 
-      <section className={IsOpen ? "navigation open-nav" : "navigation"}>
-        <nav>
-          <div
-            className="nav-profile"
-            style={{ display: "flex", justifyContent: "space-between" }}
-          >
-            {role ? (
-              <div style={{ cursor: "pointer" }}>
-                <div>Hi, {Token && User && User.first_name}</div>
-              </div>
-            ) : (
-              <Link href="/customer/login">
-                <a>Hello, Login</a>
-              </Link>
-            )}
+      <Drawer
+        placement={"left"}
+        onClose={onClose}
+        isOpen={isOpen}
+        scrollBehavior={"inside"}
+        size={screenWidth() > 800 ? "sm" : "xs"}
+      >
+        <DrawerOverlay>
+          <DrawerContent>
+            <DrawerCloseButton />
+            <DrawerHeader borderBottomWidth="1px">
+              {role ? (
+                <div style={{ cursor: "pointer" }}>
+                  <div>Hi, {Token && User && User.first_name}</div>
+                </div>
+              ) : (
+                <Link href="/customer/login">
+                  <a>Hello, Login</a>
+                </Link>
+              )}
+            </DrawerHeader>
+            <DrawerBody background="var(--softblue)">
+              <nav className="navigation">
+                <h1>PROFILE</h1>
+                <ul>
+                  <Link href="/">
+                    <a>
+                      <li>Home</li>
+                    </a>
+                  </Link>
+                  <Link href="/customer/account">
+                    <a>
+                      <li>Account</li>
+                    </a>
+                  </Link>
+                  <Link href="/customer/cart">
+                    <a>
+                      <li>Cart</li>
+                    </a>
+                  </Link>
+                  <Link href="/customer/orders">
+                    <a>
+                      <li>Orders</li>
+                    </a>
+                  </Link>
+                  <Link href="/">
+                    <a>
+                      <li>Help</li>
+                    </a>
+                  </Link>
+                  <Link href="/stores">
+                    <a>
+                      <li>Stores</li>
+                    </a>
+                  </Link>
+                </ul>
+                <h1>SHOP BY CATEGORY</h1>
+                <ul>
+                  <Link href="/category?category=Gifts">
+                    <a>
+                      <li>Gifts</li>
+                    </a>
+                  </Link>
 
-            <button
-              aria-roledescription="close menu"
-              aria-label="close menu"
-              onClick={() => {
-                setIsOpen(false);
-              }}
-            >
-              <Icon name="close" color="white" />
-            </button>
-          </div>
-          <h1>PROFILE</h1>
-          <ul>
-            <Link href="/">
-              <a>
-                <li>Home</li>
-              </a>
-            </Link>
-            <Link href="/customer/account">
-              <a>
-                <li>Account</li>
-              </a>
-            </Link>
-            <Link href="/customer/cart">
-              <a>
-                <li>Cart</li>
-              </a>
-            </Link>
-            <Link href="/customer/orders">
-              <a>
-                <li>Orders</li>
-              </a>
-            </Link>
-            <Link href="/">
-              <a>
-                <li>Help</li>
-              </a>
-            </Link>
-            <Link href="/stores">
-              <a>
-                <li>Stores</li>
-              </a>
-            </Link>
-          </ul>
-          <h1>SHOP BY CATEGORY</h1>
-          <ul
-            onClick={() => {
-              setIsOpen(!IsOpen);
-            }}
-          >
-            <Link href="/category?category=Gifts">
-              <a>
-                <li>Gifts</li>
-              </a>
-            </Link>
+                  <Link href="/category?category=Decorations">
+                    <a>
+                      <li>Decorations</li>
+                    </a>
+                  </Link>
+                  <Link href="/category?category=Games">
+                    <a>
+                      <li>Games</li>
+                    </a>
+                  </Link>
+                  <Link href="/category?category=Drinks">
+                    <a>
+                      <li>Drinks</li>
+                    </a>
+                  </Link>
+                  <Link href="/category?category=Props">
+                    <a>
+                      <li>Party Props</li>
+                    </a>
+                  </Link>
+                  <Link href="/category?category=Cakes">
+                    <a>
+                      <li>Cakes</li>
+                    </a>
+                  </Link>
+                </ul>
 
-            <Link href="/category?category=Decorations">
-              <a>
-                <li>Decorations</li>
-              </a>
-            </Link>
-            <Link href="/category?category=Games">
-              <a>
-                <li>Games</li>
-              </a>
-            </Link>
-            <Link href="/category?category=Drinks">
-              <a>
-                <li>Drinks</li>
-              </a>
-            </Link>
-            <Link href="/category?category=Props">
-              <a>
-                <li>Party Props</li>
-              </a>
-            </Link>
-            <Link href="/category?category=Cakes">
-              <a>
-                <li>Cakes</li>
-              </a>
-            </Link>
-          </ul>
+                <h1>SHOP BY PARTY</h1>
+                <ul>
+                  <Link href="/party?category=House Party">
+                    <a>
+                      <li>House Party</li>
+                    </a>
+                  </Link>
+                  <Link href="/party?category=Beach Party">
+                    <a>
+                      <li>Beach Party</li>
+                    </a>
+                  </Link>
+                  <Link href="/party?category=Birthday Party">
+                    <a>
+                      <li>Birthdays</li>
+                    </a>
+                  </Link>
+                  <Link href="/party?category=Outdoors">
+                    <a>
+                      <li>Outdoors</li>
+                    </a>
+                  </Link>
+                  <Link href="/party?category=Indoors">
+                    <a>
+                      <li>Indoors</li>
+                    </a>
+                  </Link>
+                </ul>
+              </nav>
+            </DrawerBody>
+          </DrawerContent>
+        </DrawerOverlay>
+      </Drawer>
+      <style jsx>{`
+        .navigation {
+          /* background: var(--softblue); */
+        }
+        .navigation ul li {
+          padding: 10px;
+          border-bottom: 1px solid var(--lightblue);
+        }
 
-          <h1>SHOP BY PARTY</h1>
-          <ul
-            onClick={() => {
-              setIsOpen(!IsOpen);
-            }}
-          >
-            <Link href="/party?category=House Party">
-              <a>
-                <li>House Party</li>
-              </a>
-            </Link>
-            <Link href="/party?category=Beach Party">
-              <a>
-                <li>Beach Party</li>
-              </a>
-            </Link>
-            <Link href="/party?category=Birthday Party">
-              <a>
-                <li>Birthdays</li>
-              </a>
-            </Link>
-            <Link href="/party?category=Outdoors">
-              <a>
-                <li>Outdoors</li>
-              </a>
-            </Link>
-            <Link href="/party?category=Indoors">
-              <a>
-                <li>Indoors</li>
-              </a>
-            </Link>
-          </ul>
-        </nav>
-      </section>
-
-      <style jsx>{``}</style>
+        .navigation h1 {
+          color: $text;
+          font-weight: bold;
+          padding: 8px;
+          text-align: center;
+        }
+      `}</style>
     </div>
   );
 };
