@@ -485,6 +485,13 @@
         }
 
 
+        @media only screen and (min-width:2800px) {
+            .categories-wrap {
+                grid-template-columns: 1fr 1fr 1fr;
+            }
+        }
+
+
     }
 
 
