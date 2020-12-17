@@ -27,10 +27,12 @@ import { ProtectRouteC } from "@/utils/ProtectedRouteC";
 import { gql } from "graphql-request";
 import queryFunc from "@/utils/fetcher";
 import useSWR, { mutate } from "swr";
+import { useRouter } from "next/router";
 
 export const CustomerOrders = () => {
   const { Token } = useToken();
   const toast = useToast();
+  const router = useRouter();
 
   //using SWR to fetch data
   const { data } = useSWR(`getCustomerOrders`, () =>
@@ -43,7 +45,12 @@ export const CustomerOrders = () => {
   }, [Token]);
 
   //cancel order
-  async function handleOrderCancel(id, name, quantity, subtotal) {
+  async function handleOrderCancel(
+    id: string,
+    name: string,
+    quantity: number,
+    subtotal: number
+  ) {
     const cancelOrder = gql`
       mutation cancelOrder($id: ID!, $cancel_reason: String) {
         cancelOrder(id: $id, cancel_reason: $cancel_reason) {
@@ -253,6 +260,7 @@ export const CustomerOrders = () => {
                                 disableReturnOrder(o.delivery_date) ||
                                 o.canceled === "true"
                               }
+                              onClick={() => router.push(`/customer/contact`)}
                             >
                               Return
                             </Button>
@@ -313,6 +321,7 @@ export const CustomerOrders = () => {
         td {
           text-align: center;
           font-size: 0.8rem;
+          padding: 5px 0;
         }
 
         @media only screen and (min-width: 700px) {
