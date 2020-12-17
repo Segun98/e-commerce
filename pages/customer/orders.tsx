@@ -260,7 +260,11 @@ export const CustomerOrders = () => {
                                 disableReturnOrder(o.delivery_date) ||
                                 o.canceled === "true"
                               }
-                              onClick={() => router.push(`/customer/contact`)}
+                              onClick={() =>
+                                router.push(
+                                  `/customer/contact?refundID=${o.order_id}`
+                                )
+                              }
                             >
                               Return
                             </Button>

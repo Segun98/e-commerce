@@ -42,17 +42,23 @@ export const Account = () => {
     setAddress(User.customer_address || "");
   }, [User, Token]);
 
+  //notification to insert your contact
+
   useEffect(() => {
-    if ((User && User.phone === "") || User.customer_address === "") {
-      toast({
-        title: "Please add your contact and shipping address",
-        status: "info",
-        duration: 5000,
-        isClosable: true,
-        position: "bottom-right",
-      });
+    if (User["email"]) {
+      if (!User.phone || !User.customer_address) {
+        setTimeout(() => {
+          toast({
+            title: "Please add your contact and shipping address",
+            status: "info",
+            duration: 5000,
+            isClosable: true,
+            position: "top-right",
+          });
+        }, 2000);
+      }
     }
-  }, [User]);
+  }, [User, Token]);
 
   async function updateAccount(e) {
     e.preventDefault();
