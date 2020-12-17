@@ -38,7 +38,7 @@ const Home = () => {
   const { data } = useSWR(
     `featuredProducts`,
     () => queryFunc(featuredProducts, { limit: 10 }),
-    { refreshInterval: 1000 }
+    { errorRetryInterval: 1000 }
   );
 
   return (

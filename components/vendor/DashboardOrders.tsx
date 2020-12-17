@@ -31,10 +31,8 @@ export const DashboardOrders = () => {
   const dispatch = useDispatch();
 
   //using SWR to fetch data
-  const { data, error } = useSWR(
-    `getVendorOrders`,
-    () => queryFunc(getVendorOrders, { limit: 5 }, Token),
-    { refreshInterval: 1000 }
+  const { data, error } = useSWR(`getVendorOrders`, () =>
+    queryFunc(getVendorOrders, { limit: 5 }, Token)
   );
 
   //refetch when token loads
@@ -202,7 +200,7 @@ export const DashboardOrders = () => {
                 <td>{Commas(o.price)}</td>
                 <td>{o.quantity}</td>
                 <td>{Commas(o.subtotal)}</td>
-                <td>{truncate(o.request) || "none"}</td>
+                <td>{truncate(o.request, 60) || "none"}</td>
                 <td>
                   <Popover placement="left" usePortal={true}>
                     <PopoverTrigger>

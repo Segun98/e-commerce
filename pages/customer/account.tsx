@@ -43,7 +43,7 @@ export const Account = () => {
   }, [User, Token]);
 
   useEffect(() => {
-    if ((Token && User && User.phone === "") || User.customer_address === "") {
+    if ((User && User.phone === "") || User.customer_address === "") {
       toast({
         title: "Please add your contact and shipping address",
         status: "info",

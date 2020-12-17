@@ -33,10 +33,8 @@ export const CustomerOrders = () => {
   const toast = useToast();
 
   //using SWR to fetch data
-  const { data } = useSWR(
-    `getCustomerOrders`,
-    () => queryFunc(getCustomerOrders, {}, Token),
-    { refreshInterval: 1000 }
+  const { data } = useSWR(`getCustomerOrders`, () =>
+    queryFunc(getCustomerOrders, {}, Token)
   );
 
   //refetch when token loads

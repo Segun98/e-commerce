@@ -52,7 +52,8 @@ export const ConfirmOrder: React.FC<Iprops> = ({ order }) => {
       if (data) {
         toast({
           title: "Payment Successful",
-          description: "Your Order has been successfuly placed",
+          description:
+            "Your Order has been successfuly placed, track it in your Orders page",
           status: "success",
           duration: 5000,
           isClosable: true,
