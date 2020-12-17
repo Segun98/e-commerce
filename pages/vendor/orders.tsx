@@ -4,6 +4,7 @@ import React from "react";
 import { Navigation } from "@/components/vendor/Navigation";
 import { OrdersComponent } from "@/components/vendor/OrdersComponent";
 import { ProtectRouteV } from "@/utils/ProtectedRouteV";
+import { screenWidth } from "@/utils/helpers";
 
 export const Orders = () => {
   return (
@@ -45,8 +46,10 @@ export const Orders = () => {
             >
               "*"
             </span>{" "}
-            Signifies Pending Orders{" "}
-            {/* <span className="scroll-right">scroll right for Action</span> */}
+            Signifies Pending,{" "}
+            {screenWidth() < 900 && (
+              <span className="scroll-right">scroll right for more info</span>
+            )}
           </p>
           <OrdersComponent limit={null} />
         </main>
