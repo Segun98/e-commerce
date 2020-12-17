@@ -1,4 +1,3 @@
-import React from "react";
 import Head from "next/head";
 import { Layout } from "@/components/Layout";
 import Link from "next/link";
@@ -9,28 +8,26 @@ const BecomeAVendor = () => {
       <Head>
         <title>Become a Vendor | PartyStore</title>
       </Head>
-      <div className="become-vendor">
+      <div className="become-a-vendor">
         <header>
-          <div className="intro-image">
-            {/* Large screen  */}
-            <div className="intro-desktop-caption">
-              <h3>Partner With Us, Grow Your Business The Right Way!</h3>
+          <div className="split">
+            <div className="left">
+              <h1>Partner With Us, Grow Your Business The Right Way!</h1>
+              <p>
+                Start selling today on PartyStore, we handle everything, from
+                delivery to order management. All you have to do is make your
+                product available and accept orders, easy!
+              </p>
               <Link href="/vendor/register">
                 <a>Get Started</a>
               </Link>
             </div>
-          </div>
-          {/* Mobile screen  */}
-          <div className="intro-mobile-caption">
-            <h5>Partner With Us, Grow Your Business The Right Way!</h5>
-            <Link href="/vendor/register">
-              <a>Get Started</a>
-            </Link>
+            <div className="right">
+              <img src="/vendor-store.png" alt="become a vendor" />
+            </div>
           </div>
         </header>
-        <section className="content-1"></section>
       </div>
-
       <style jsx>{``}</style>
     </Layout>
   );
