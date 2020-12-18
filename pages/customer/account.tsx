@@ -43,9 +43,8 @@ export const Account = () => {
   }, [User, Token]);
 
   //notification to insert your contact
-
   useEffect(() => {
-    if (User["email"]) {
+    if (User["email"] && User.role === "customer") {
       if (!User.phone || !User.customer_address) {
         setTimeout(() => {
           toast({

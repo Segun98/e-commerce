@@ -114,7 +114,7 @@ export type UsersRes = {
   first_name?: Maybe<Scalars['String']>;
   last_name?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
-  role?: Maybe<Scalars['String']>;
+  role?: 'customer' | 'vendor' | 'super_admin';
   phone?: Maybe<Scalars['String']>;
   pending?: Maybe<Scalars['String']>;
   online?: Maybe<Scalars['String']>;
