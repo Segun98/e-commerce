@@ -106,7 +106,7 @@ export const Login = () => {
           className="login-vector"
         />
         <form onSubmit={handleSubmit(onSubmit)}>
-          <h1 className="log-in">Log In</h1>
+          <h1 className="log-in mb-2">Log In</h1>
           <h2 className="log-in-message">Let's Make Sales Today!</h2>
           <FormControl isRequired>
             <div>

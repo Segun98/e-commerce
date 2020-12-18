@@ -171,7 +171,7 @@ export const Login = () => {
       <div className="login-page-wrap">
         <img src="/login.png" alt="login vector" className="login-vector" />
         <form onSubmit={handleSubmit(onSubmit)}>
-          <h1 className="log-in">Log In</h1>
+          <h1 className="log-in mb-2">Log In</h1>
           <h2 className="log-in-message">Enjoy A Modern Shopping Experience</h2>
 
           <FormControl isRequired>

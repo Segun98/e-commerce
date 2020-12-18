@@ -183,7 +183,7 @@ export const Register = () => {
           className="register-vector"
         />
         <form onSubmit={handleSubmit(onSubmit)}>
-          <h1 className="register">Create Account</h1>
+          <h1 className="register mb-2">Create Account</h1>
           <h2 className="register-message">
             Enjoy A Modern Shopping Experience
           </h2>
@@ -361,11 +361,11 @@ export const Register = () => {
           .register-page-wrap {
             display: flex;
             flex-direction: column-reverse;
-            margin: 2rem auto;
+            margin: 1rem auto;
             width: 90%;
           }
           form {
-            margin: 2rem auto;
+            margin: 1rem auto;
             width: 90%;
           }
 
@@ -403,6 +403,10 @@ export const Register = () => {
             .register-page-wrap {
               flex-direction: row;
               width: 80%;
+              margin: 2rem auto;
+            }
+            form {
+              margin: 2rem auto;
             }
             .register-vector {
               width: 50%;
