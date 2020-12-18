@@ -38,7 +38,7 @@ export const Navigation = () => {
       <header>
         <span>PartyStore</span>
         <button onClick={() => setIsOpen(!isOpen)}>
-          {isOpen ? <Icon name="close" /> : <Icon name="arrow-right" />}
+          {isOpen ? <Icon name="close" /> : <img src="/album.svg" alt="menu" />}
         </button>
       </header>
 
