@@ -19,8 +19,8 @@ export const PurchaseSteps = () => {
           <div className="steps-item">
             <img src="/track.png" alt="track order" />
             <p>
-              Track Your Order and Expect To Recieve Your Product(s) within 2-4
-              days From Order Date.{" "}
+              Track Your Order in Your Orders Page, and Expect To Recieve Your
+              Product(s) within 2-4 days From Order Date.{" "}
             </p>
           </div>
           <div className="steps-item">

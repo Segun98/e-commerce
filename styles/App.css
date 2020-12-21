@@ -1935,6 +1935,69 @@ Class names accross components can be the same but they are wrapped by a unique 
   }
 }
 
+.become-a-vendor .how-it-works {
+  padding-bottom: 50px;
+}
+
+.become-a-vendor .how-it-works h1 {
+  text-align: center;
+  font-size: 1.5rem;
+  color: #02247a;
+  font-weight: bold;
+  padding: 50px 0 30px 0;
+}
+
+.become-a-vendor .how-it-works .wrap {
+  margin: auto;
+  width: 90%;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 1fr;
+      grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+.become-a-vendor .how-it-works .wrap .split {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 1fr;
+      grid-template-columns: 1fr;
+}
+
+.become-a-vendor .how-it-works .wrap .split h2 {
+  font-size: 1.1rem;
+  color: #02247a;
+  font-weight: bold;
+  text-align: left;
+  padding-bottom: 5px;
+}
+
+@media only screen and (min-width: 700px) {
+  .become-a-vendor .how-it-works .wrap {
+    -ms-grid-columns: 1fr 1fr;
+        grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  .become-a-vendor .how-it-works .wrap {
+    -ms-grid-columns: 1fr 1fr 1fr;
+        grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+
+@media only screen and (min-width: 1400px) {
+  .become-a-vendor .how-it-works .wrap {
+    width: 70%;
+  }
+}
+
+@media only screen and (min-width: 2000px) {
+  .become-a-vendor .how-it-works .wrap {
+    width: 60%;
+  }
+}
+
 .header-component {
   background: white;
   width: 100%;
