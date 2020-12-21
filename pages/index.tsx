@@ -9,37 +9,36 @@ import { Commas } from "@/utils/helpers";
 import { PurchaseSteps } from "@/components/customer/PurchaseSteps";
 import queryFunc from "@/utils/fetcher";
 import useSWR from "swr";
-// import { graphQLClient } from "@/utils/client";
+import { graphQLClient } from "@/utils/client";
 
-// export async function getServerSideProps() {
-//   try {
-//     const res = await graphQLClient.request(featuredProducts, { limit: 10 });
-//     const products = await res.featuredProducts;
-//     return {
-//       props: {
-//         products,
-//         loading: false,
-//       },
-//     };
-//   } catch (err) {
-//     return {
-//       props: {
-//         error: err?.response?.errors[0].message || err.message,
-//       },
-//     };
-//   }
-// }
+export async function getServerSideProps() {
+  try {
+    const data = await graphQLClient.request(featuredProducts, { limit: 10 });
+    return {
+      props: {
+        data,
+      },
+    };
+  } catch (err) {
+    return {
+      props: {
+        error: err?.response?.errors[0].message || err.message,
+      },
+    };
+  }
+}
 
-const Home = () => {
+const Home = ({ data }) => {
   //Featured Products Section Scroll
   const scrollRef = useRef(null);
 
-  //using SWR to fetch data
-  const { data } = useSWR(
-    `featuredProducts`,
-    () => queryFunc(featuredProducts, { limit: 10 }),
-    { errorRetryInterval: 1000 }
-  );
+  // //using SWR to fetch data
+  // const { data } = useSWR(
+  //   `featuredProducts`,
+  //   () => queryFunc(featuredProducts, { limit: 10 }),
+  //   { errorRetryInterval: 1000, initialData: products }
+  // );
+  // console.log(data);
 
   return (
     <Layout>
