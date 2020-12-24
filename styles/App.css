@@ -1941,7 +1941,7 @@ Class names accross components can be the same but they are wrapped by a unique 
 
 .become-a-vendor .how-it-works h1 {
   text-align: center;
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   color: #02247a;
   font-weight: bold;
   padding: 50px 0 30px 0;
@@ -1977,6 +1977,9 @@ Class names accross components can be the same but they are wrapped by a unique 
 }
 
 @media only screen and (min-width: 700px) {
+  .become-a-vendor .how-it-works h1 {
+    font-size: 1.5rem;
+  }
   .become-a-vendor .how-it-works .wrap {
     -ms-grid-columns: 1fr 1fr;
         grid-template-columns: 1fr 1fr;
@@ -1987,6 +1990,13 @@ Class names accross components can be the same but they are wrapped by a unique 
   .become-a-vendor .how-it-works .wrap {
     -ms-grid-columns: 1fr 1fr 1fr;
         grid-template-columns: 1fr 1fr 1fr;
+  }
+  .become-a-vendor .how-it-works .wrap .split h2 {
+    font-size: 1.1rem;
+    padding-bottom: 8px;
+  }
+  .become-a-vendor .how-it-works .wrap .split p {
+    font-size: 0.9rem;
   }
 }
 
@@ -1999,6 +2009,111 @@ Class names accross components can be the same but they are wrapped by a unique 
 @media only screen and (min-width: 2000px) {
   .become-a-vendor .how-it-works .wrap {
     width: 60%;
+  }
+}
+
+.become-a-vendor .product {
+  background: #02247a;
+  padding: 75px 0;
+}
+
+.become-a-vendor .product h1 {
+  text-align: center;
+  font-size: 1rem;
+  color: white;
+  font-weight: bold;
+  padding: 10px 0;
+}
+
+.become-a-vendor .product .wrap {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 1fr;
+      grid-template-columns: 1fr;
+  gap: 150px;
+  margin: auto;
+  width: 100%;
+}
+
+.become-a-vendor .product .wrap .dashboard,
+.become-a-vendor .product .wrap .store,
+.become-a-vendor .product .wrap .orders {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 1fr 1fr;
+      grid-template-columns: 1fr 1fr;
+}
+
+.become-a-vendor .product .wrap .split {
+  position: relative;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 1fr;
+      grid-template-columns: 1fr;
+}
+
+.become-a-vendor .product .wrap .split img {
+  -o-object-fit: cover;
+     object-fit: cover;
+  position: absolute;
+  width: 375px;
+}
+
+.become-a-vendor .product .wrap .split p {
+  color: white;
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+@media only screen and (min-width: 400px) {
+  .become-a-vendor .product {
+    padding: 100px 0;
+  }
+}
+
+@media only screen and (min-width: 700px) {
+  .become-a-vendor .product {
+    padding: 20px 0;
+  }
+  .become-a-vendor .product .wrap {
+    width: 80%;
+    gap: 0px;
+  }
+  .become-a-vendor .product .wrap .split img {
+    -o-object-fit: contain;
+       object-fit: contain;
+    position: static;
+    height: 380px;
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  .become-a-vendor .product .wrap {
+    width: 75%;
+  }
+  .become-a-vendor .product .wrap .dashboard .split:last-child {
+    padding-bottom: 150px;
+  }
+  .become-a-vendor .product .wrap .orders {
+    margin: -260px 0;
+  }
+  .become-a-vendor .product .wrap .split h1 {
+    font-size: 1.3rem;
+  }
+  .become-a-vendor .product .wrap .split p {
+    font-size: 1rem;
+  }
+  .become-a-vendor .product .wrap .split img {
+    -o-object-fit: contain;
+       object-fit: contain;
+    width: 100%;
+    height: 790px;
+  }
+}
+
+@media only screen and (min-width: 1700px) {
+  .become-a-vendor .product .wrap {
+    width: 55%;
   }
 }
 

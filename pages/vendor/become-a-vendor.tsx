@@ -52,6 +52,53 @@ const BecomeAVendor = () => {
             </div>
           </div>
         </section>
+
+        <section className="product">
+          <div className="wrap">
+            <div className="dashboard">
+              <div className="split">
+                <img src="/dashboard-mob.png" alt="vendor dashboard" />
+              </div>
+              <div className="split">
+                <h1>Your Dashboard</h1>
+                <p>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Voluptate voluptatem laboriosam temporibus, ipsam mollitia
+                  quidem.
+                </p>
+              </div>
+            </div>
+
+            <div className="orders">
+              <div className="split">
+                <h1>Manage Orders</h1>
+                <p>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Voluptate voluptatem laboriosam temporibus, ipsam mollitia
+                  quidem.
+                </p>
+              </div>
+
+              <div className="split">
+                <img src="/orders-page-mob.png" alt="vendor dashboard" />
+              </div>
+            </div>
+
+            <div className="store">
+              <div className="split">
+                <img src="/vendor-store-mob.png" alt="vendor dashboard" />
+              </div>
+              <div className="split">
+                <h1>Your Public Store</h1>
+                <p>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Voluptate voluptatem laboriosam temporibus, ipsam mollitia
+                  quidem.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
       </div>
       <style jsx>{``}</style>
     </Layout>
