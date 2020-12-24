@@ -141,11 +141,15 @@
                     grid-template-columns: 1fr;
 
                     h2 {
-                        font-size: 1.1rem;
+                        font-size: 1rem;
                         color: $shinyblue;
                         font-weight: bold;
                         text-align: left;
                         padding-bottom: 5px;
+                    }
+
+                    p {
+                        font-size: 0.8rem;
                     }
                 }
             }

@@ -1965,11 +1965,15 @@ Class names accross components can be the same but they are wrapped by a unique 
 }
 
 .become-a-vendor .how-it-works .wrap .split h2 {
-  font-size: 1.1rem;
+  font-size: 1rem;
   color: #02247a;
   font-weight: bold;
   text-align: left;
   padding-bottom: 5px;
+}
+
+.become-a-vendor .how-it-works .wrap .split p {
+  font-size: 0.8rem;
 }
 
 @media only screen and (min-width: 700px) {

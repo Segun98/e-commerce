@@ -38,7 +38,7 @@ const Stores = () => {
   //frist page
   const [page, setpage] = useState(parseInt(router.query.p) || 1);
 
-  //prevent useEffect from running on first render
+  //prevent useEffect from running pagination on first render
   const firstRender = useRef(0);
   useEffect(() => {
     if (firstRender.current === 0) {
@@ -247,7 +247,7 @@ const Stores = () => {
         }
         /* Stores' images  */
         .store-img {
-          height: 200px;
+          height: 180px;
           width: 150px;
           display: flex;
           align-items: center;
@@ -265,7 +265,7 @@ const Stores = () => {
           color: var(--deepblue);
           margin: 3px 0;
           font-weight: bold;
-          font-size: 0.9rem;
+          font-size: 0.8rem;
         }
 
         @media only screen and (min-width: 400px) {
