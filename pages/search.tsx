@@ -1,4 +1,12 @@
-import { Button, useToast } from "@chakra-ui/core";
+import {
+  Button,
+  useToast,
+  Text,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+} from "@chakra-ui/core";
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -21,6 +29,7 @@ export async function getServerSideProps({ query }) {
     query: query.query,
     limit: 30,
     offset: pageCalc || 0,
+    sort: query.sort,
   };
 
   try {
@@ -46,7 +55,7 @@ const Search = ({ products, error }: Iprops) => {
   const router: any = useRouter();
 
   const [page, setpage] = useState(parseInt(router.query.p) || 1);
-  //prevent useEffect from running on firts render
+  //prevent useEffect from running pagination on first render
   const firstRender = useRef(0);
 
   useEffect(() => {
@@ -76,7 +85,47 @@ const Search = ({ products, error }: Iprops) => {
 
         <section className="search-results">
           <h1>Search Results... ({products && products.length} items)</h1>
-
+          <Text as="div" mb="2" textAlign="center">
+            <Menu>
+              <MenuButton
+                as={Button}
+                size="sm"
+                background="var(--deepblue)"
+                color="white"
+                //@ts-ignore
+                rightIcon="chevron-down"
+              >
+                Sort By Price
+              </MenuButton>
+              <MenuList>
+                <MenuItem
+                  // check if theres's a sort query, update the query to "low" else append sort query
+                  onClick={() => {
+                    router.query.sort
+                      ? router.push({
+                          pathname: router.pathname,
+                          query: { ...router.query, sort: "low" },
+                        })
+                      : router.push(router.asPath + "&sort=low");
+                  }}
+                >
+                  Low to High
+                </MenuItem>
+                <MenuItem
+                  onClick={() => {
+                    router.query.sort
+                      ? router.push({
+                          pathname: router.pathname,
+                          query: { ...router.query, sort: "high" },
+                        })
+                      : router.push(router.asPath + "&sort=high");
+                  }}
+                >
+                  High to Low
+                </MenuItem>
+              </MenuList>
+            </Menu>
+          </Text>
           {products && products.length === 0 && (
             <h1>
               <br />
@@ -85,7 +134,7 @@ const Search = ({ products, error }: Iprops) => {
           )}
           <div className="results-wrap">
             {products &&
-              products.map((p, index) => (
+              products.map((p) => (
                 <div className="search-item" key={p.id}>
                   <Link
                     href={`/product/${p.name_slug}`}

@@ -173,8 +173,8 @@ export const updateProfile = gql`
 `;
 
 export const SEARCH = gql`
-  query search($query: String!, $limit: Int, $offset: Int) {
-    search(query: $query, limit: $limit, offset: $offset) {
+  query search($query: String!, $limit: Int, $offset: Int, $sort: String) {
+    search(query: $query, limit: $limit, offset: $offset, sort: $sort) {
       id
       name
       name_slug
