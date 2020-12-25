@@ -281,8 +281,6 @@
                         }
                     }
 
-                    .store {}
-
                     .orders {
                         margin: -260px 0;
                     }
@@ -316,4 +314,59 @@
                 }
             }
         }
+
+
+
+        //HELP SECTION
+
+        .help {
+            background: $softblue;
+            height: 200px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+
+            h1 {
+                font-size: 2rem;
+                font-weight: bolder;
+                color: $deepblue;
+                margin-bottom: 15px;
+                margin-top: -40px;
+
+            }
+
+            a {
+                background: $shinyblue;
+                padding: 10px 20px;
+                border-radius: 8px;
+                color: white;
+            }
+        }
+
+
+        @media only screen and (min-width: 700px) {
+            .help {
+                height: 250px;
+
+                h1 {
+                    font-size: 3rem;
+                }
+            }
+
+        }
+
+        @media only screen and (min-width: 1200px) {
+            .help {
+                h1 {
+                    margin-bottom: 35px
+                }
+
+                a {
+                    padding: 10px 30px;
+                }
+            }
+
+        }
+
     }

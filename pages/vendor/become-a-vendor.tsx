@@ -1,6 +1,7 @@
 import Head from "next/head";
 import { Layout } from "@/components/Layout";
 import Link from "next/link";
+import { Text } from "@chakra-ui/core";
 
 const BecomeAVendor = () => {
   return (
@@ -62,9 +63,10 @@ const BecomeAVendor = () => {
               <div className="split">
                 <h1>Your Dashboard</h1>
                 <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Voluptate voluptatem laboriosam temporibus, ipsam mollitia
-                  quidem.
+                  Your comprehensive dashboard highlights your order status,
+                  completed orders are orders that have been delivered to
+                  customers. A sales metrics showing your completed orders by
+                  month and recent orders are also highlighted.
                 </p>
               </div>
             </div>
@@ -73,9 +75,9 @@ const BecomeAVendor = () => {
               <div className="split">
                 <h1>Manage Orders</h1>
                 <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Voluptate voluptatem laboriosam temporibus, ipsam mollitia
-                  quidem.
+                  All the necessary information about an order is provided here.
+                  This is where you acknowledge and track the orders you
+                  recieve.
                 </p>
               </div>
 
@@ -91,13 +93,24 @@ const BecomeAVendor = () => {
               <div className="split">
                 <h1>Your Public Store</h1>
                 <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Voluptate voluptatem laboriosam temporibus, ipsam mollitia
-                  quidem.
+                  All vendors have a public store page with their business name
+                  in the web address. Customers can easily purchase your
+                  products from this SEO backed page.
                 </p>
               </div>
             </div>
           </div>
+        </section>
+
+        <section className="help">
+          <h1>Ready?</h1>
+          <Text as="div">
+            <Link href="/">
+              <a>Contact Us</a>
+            </Link>
+            <span className="mr-2 ml-2">or</span>
+            <Link href="/vendor/register">Get Started</Link>
+          </Text>
         </section>
       </div>
       <style jsx>{``}</style>
