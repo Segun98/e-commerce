@@ -150,7 +150,7 @@ export const DashboardOrders = () => {
 
   return (
     <div className="orders-table">
-      {!data && (
+      {!data && !error && (
         <Text as="div" className="skeleton">
           <Skeleton height="40px" my="10px" />
           <Skeleton height="40px" my="10px" />
