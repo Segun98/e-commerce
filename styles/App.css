@@ -2146,7 +2146,7 @@ Class names accross components can be the same but they are wrapped by a unique 
 .become-a-vendor .help a {
   background: #02247a;
   padding: 10px 20px;
-  border-radius: 8px;
+  border-radius: 5px;
   color: white;
 }
 
@@ -2164,7 +2164,8 @@ Class names accross components can be the same but they are wrapped by a unique 
     margin-bottom: 35px;
   }
   .become-a-vendor .help a {
-    padding: 10px 30px;
+    font-size: 1rem;
+    padding: 10px 40px;
   }
 }
 

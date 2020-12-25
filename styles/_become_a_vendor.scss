@@ -339,7 +339,7 @@
             a {
                 background: $shinyblue;
                 padding: 10px 20px;
-                border-radius: 8px;
+                border-radius: 5px;
                 color: white;
             }
         }
@@ -363,7 +363,8 @@
                 }
 
                 a {
-                    padding: 10px 30px;
+                    font-size: 1rem;
+                    padding: 10px 40px;
                 }
             }
 
