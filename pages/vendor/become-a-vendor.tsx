@@ -103,13 +103,15 @@ const BecomeAVendor = () => {
         </section>
 
         <section className="help">
-          <h1>Ready?</h1>
+          <h1>Ready to partner?</h1>
           <Text as="div">
+            <Link href="/vendor/register">
+              <a>Get Started</a>
+            </Link>
+            <span className="mr-2 ml-2">or</span>
             <Link href="/">
               <a>Contact Us</a>
             </Link>
-            <span className="mr-2 ml-2">or</span>
-            <Link href="/vendor/register">Get Started</Link>
           </Text>
         </section>
       </div>

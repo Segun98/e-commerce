@@ -1992,11 +1992,12 @@ Class names accross components can be the same but they are wrapped by a unique 
         grid-template-columns: 1fr 1fr 1fr;
   }
   .become-a-vendor .how-it-works .wrap .split h2 {
-    font-size: 1.1rem;
+    font-size: 1.15rem;
     padding-bottom: 8px;
   }
   .become-a-vendor .how-it-works .wrap .split p {
-    font-size: 0.9rem;
+    color: #626262;
+    font-size: 1rem;
   }
 }
 
@@ -2118,7 +2119,6 @@ Class names accross components can be the same but they are wrapped by a unique 
 }
 
 .become-a-vendor .help {
-  background: #eeeef5;
   height: 200px;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -2155,7 +2155,7 @@ Class names accross components can be the same but they are wrapped by a unique 
     height: 250px;
   }
   .become-a-vendor .help h1 {
-    font-size: 3rem;
+    font-size: 2.5rem;
   }
 }
 

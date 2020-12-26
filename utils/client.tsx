@@ -1,5 +1,7 @@
 import { GraphQLClient } from "graphql-request";
 
+// export let theLink = process.env.NODE_ENV === "production"?"https://apipartystore.herokuapp.com/api/refreshtoken":"http://localhost:4000/api/refreshtoken"
+
 //REFRESHTOKEN LINK
 export let restLink = [
   "http://localhost:4000/api/refreshtoken",

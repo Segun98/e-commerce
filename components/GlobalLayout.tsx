@@ -18,7 +18,7 @@ export const GlobalLayout = ({ children }) => {
           --box: 0 1px 6px 0;
           --softgrey: rgba(32, 33, 36, 0.28);
           --lightblue: #cbd8f9;
-          // --deepblue: #02247a;
+          --shinyblue: #02247a;
           --deepblue: #062863;
           --text: #626262;
           --softblue: rgb(238, 238, 245);
