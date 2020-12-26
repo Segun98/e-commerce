@@ -1,6 +1,8 @@
 import Link from "next/link";
+import Cookies from "js-cookie";
 
 export const Footer = () => {
+  const role = Cookies.get("role");
   return (
     <footer>
       <hr />
@@ -31,7 +33,7 @@ export const Footer = () => {
           </ul>
         </section>
         <section className="footer-item">
-          <h1>Company Info</h1>
+          <h1>Company</h1>
           <ul>
             <li>
               <Link href="/">
@@ -53,29 +55,21 @@ export const Footer = () => {
                 <a>Become a Vendor</a>
               </Link>{" "}
             </li>
-            <li>
-              <Link href="/vendor/dashboard">
-                <a>Dashboard</a>
-              </Link>{" "}
-            </li>
+            {role && role === "vendor" && (
+              <li>
+                <Link href="/vendor/dashboard">
+                  <a>Dashboard</a>
+                </Link>{" "}
+              </li>
+            )}
             <li>
               <Link href="/stores">
                 <a>Find Stores</a>
               </Link>{" "}
             </li>
             <li>
-              <Link href="/vendor/register">
-                <a>Register</a>
-              </Link>{" "}
-            </li>
-            <li>
-              <Link href="/">
-                <a>Terms and Condition</a>
-              </Link>{" "}
-            </li>
-            <li>
-              <Link href="/">
-                <a>Contact Us</a>
+              <Link href="/vendor/login">
+                <a>Login</a>
               </Link>{" "}
             </li>
           </ul>

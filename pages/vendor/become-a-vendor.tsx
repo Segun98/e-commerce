@@ -82,13 +82,13 @@ const BecomeAVendor = () => {
               </div>
 
               <div className="split">
-                <img src="/orders-page-mob.png" alt="vendor dashboard" />
+                <img src="/orders-page-mob.png" alt="vendor orders" />
               </div>
             </div>
 
             <div className="store">
               <div className="split">
-                <img src="/vendor-store-mob.png" alt="vendor dashboard" />
+                <img src="/vendor-store-mob.png" alt="vendor public store" />
               </div>
               <div className="split">
                 <h1>Your Public Store</h1>
