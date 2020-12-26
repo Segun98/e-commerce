@@ -1,7 +1,7 @@
 import { graphQLClient } from "./client";
 
 //custom function
-export async function useMutation(Mutation, Variables, Token?) {
+export async function useMutation(Mutation: string, Variables, Token?) {
   try {
     if (Token) {
       graphQLClient.setHeader("authorization", `bearer ${Token}`);

@@ -163,7 +163,7 @@ export const DashboardOrders = () => {
         </Text>
       )}
       {error &&
-        "error Fetching Your Orders, Check your internet connection and refresh"}
+        "error fetching your orders, Ccheck your internet connection and refresh"}
       {data && (
         <table style={{ width: "100%" }}>
           <thead>

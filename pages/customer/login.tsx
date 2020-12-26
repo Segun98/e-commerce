@@ -38,7 +38,7 @@ export const Login = () => {
 
   //form submit function
 
-  const onSubmit = async (values: MutationLogInArgs, e): Promise<void> => {
+  const onSubmit = async (values: MutationLogInArgs): Promise<void> => {
     const { email, password } = values;
 
     const variables = {

@@ -1,4 +1,3 @@
-import React from "react";
 import Link from "next/link";
 
 export const Footer = () => {
@@ -26,12 +25,7 @@ export const Footer = () => {
             </li>
             <li>
               <Link href="/">
-                <a>How It Works</a>
-              </Link>
-            </li>
-            <li>
-              <Link href="/">
-                <a>Terms and Condition</a>
+                <a>Purchase Process</a>
               </Link>
             </li>
           </ul>
@@ -41,7 +35,7 @@ export const Footer = () => {
           <ul>
             <li>
               <Link href="/">
-                <a>About Us</a>
+                <a>Terms and Condition</a>
               </Link>
             </li>
             <li>

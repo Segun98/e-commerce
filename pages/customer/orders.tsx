@@ -99,7 +99,7 @@ export const CustomerOrders = () => {
   }
 
   //Parse Date
-  function toDate(d) {
+  function toDate(d: string) {
     let date = new Date(parseInt(d));
     let format = new Intl.DateTimeFormat("en-us", {
       day: "numeric",
@@ -111,7 +111,7 @@ export const CustomerOrders = () => {
   }
 
   //disable order return button if after 3 days of order reciept
-  function disableReturnOrder(date) {
+  function disableReturnOrder(date: string) {
     //if no delivery date (order is most likely still in transit or was canceled before delivery)
     if (!date) {
       return true;

@@ -167,7 +167,7 @@ export const OrdersComponent: React.FC<Iprops> = ({ limit }) => {
 
       {!loading &&
         error &&
-        "error Fetching Your Orders, Check your internet connection and refresh..."}
+        "error fetching your orders, Ccheck your internet connection and refresh..."}
       {!loading && !error && orders && (
         <div style={{ overflowX: "auto" }}>
           <table style={{ width: "100%" }}>

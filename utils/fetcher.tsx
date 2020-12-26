@@ -3,7 +3,7 @@ import { graphQLClient } from "./client";
 //fetcher function for SWR for GraphQL queries
 
 export default async function queryFunc(
-  Query: any,
+  Query: string,
   Variables?: {},
   Token?: string
 ) {
