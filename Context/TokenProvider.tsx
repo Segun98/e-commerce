@@ -31,7 +31,7 @@ export const TokenProvider = ({ children }) => {
     });
 
     try {
-      const res = await instance.post(restLink[0], {
+      const res = await instance.post(restLink, {
         rToken: Cookies.get("ecom"),
       });
 

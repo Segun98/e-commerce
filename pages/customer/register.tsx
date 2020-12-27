@@ -116,7 +116,7 @@ export const Register = () => {
 
     try {
       if (response) {
-        const res = await instance.post(oAuthSignupLink[0], {
+        const res = await instance.post(oAuthSignupLink, {
           first_name: data.first_name,
           last_name: data.last_name,
           password: data.password,

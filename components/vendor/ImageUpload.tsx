@@ -23,7 +23,7 @@ export const ImageUpload: React.FC<Iprops> = ({
     action: () => {
       return new Promise((resolve) => {
         setTimeout(() => {
-          resolve(uploadLink[0]);
+          resolve(uploadLink);
         }, 2000);
       });
     },

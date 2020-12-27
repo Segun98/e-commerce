@@ -113,7 +113,7 @@ export const Login = () => {
 
     try {
       if (response) {
-        const res = await instance.post(oAuthLoginLink[0], {
+        const res = await instance.post(oAuthLoginLink, {
           first_name: data.first_name,
           last_name: data.last_name,
           password: data.password,
