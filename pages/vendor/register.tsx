@@ -12,7 +12,7 @@ import {
 import { useForm } from "react-hook-form";
 import { request } from "graphql-request";
 import { SIGN_UP } from "@/graphql/users";
-import { endpoint } from "@/utils/client";
+import { graphqlEndpoint } from "@/utils/client";
 import { useRouter } from "next/router";
 import slug from "slug";
 import { MutationSignUpArgs } from "@/Typescript/types";
@@ -91,7 +91,7 @@ export const Register = () => {
 
     try {
       setLoading(true);
-      const res = await request(endpoint, SIGN_UP, variables);
+      const res = await request(graphqlEndpoint, SIGN_UP, variables);
 
       if (res.signUp) {
         setLoading(false);

@@ -8,7 +8,7 @@ import React, {
 } from "react";
 import Cookies from "js-cookie";
 import axios from "axios";
-import { restLink } from "@/utils/client";
+import { refreshTokenLink } from "@/utils/client";
 
 interface props {
   Token: string;
@@ -31,7 +31,7 @@ export const TokenProvider = ({ children }) => {
     });
 
     try {
-      const res = await instance.post(restLink, {
+      const res = await instance.post(refreshTokenLink, {
         rToken: Cookies.get("ecom"),
       });
 

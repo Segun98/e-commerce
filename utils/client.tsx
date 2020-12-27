@@ -1,11 +1,9 @@
 import { GraphQLClient } from "graphql-request";
 
-export let restLink =
+export let refreshTokenLink =
   process.env.NODE_ENV === "production"
     ? "https://apipartystore.vercel.app/api/refreshtoken"
     : "http://localhost:4000/api/refreshtoken";
-
-//REFRESHTOKEN LINK
 // "https://apipartystore.herokuapp.com/api/refreshtoken",
 
 //IMAGE UPLOAD LINK
@@ -38,15 +36,13 @@ export let logoutLink =
 export let CLIENT_ID = process.env.CLIENT_ID;
 
 //GRAPHQL API ENDPOINTS
-let links =
+export let graphqlEndpoint =
   process.env.NODE_ENV === "production"
     ? "https://apipartystore.vercel.app/graphql"
     : "http://localhost:4000/graphql";
 // "https://apipartystore.herokuapp.com/graphql",
 
-export const endpoint = links;
-
-export const graphQLClient = new GraphQLClient(endpoint, {
+export const graphQLClient = new GraphQLClient(graphqlEndpoint, {
   // headers: {
   //   authorization: `bearer ${Token}`,
   // },

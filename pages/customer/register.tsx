@@ -13,7 +13,7 @@ import {
 import { useForm } from "react-hook-form";
 import { request } from "graphql-request";
 import { SIGN_UP } from "@/graphql/users";
-import { CLIENT_ID, endpoint, oAuthSignupLink } from "@/utils/client";
+import { CLIENT_ID, graphqlEndpoint, oAuthSignupLink } from "@/utils/client";
 import { useRouter } from "next/router";
 import { MutationSignUpArgs } from "@/Typescript/types";
 import Link from "next/link";
@@ -70,7 +70,7 @@ export const Register = () => {
 
     try {
       setLoading(true);
-      const res = await request(endpoint, SIGN_UP, variables);
+      const res = await request(graphqlEndpoint, SIGN_UP, variables);
 
       if (res.signUp) {
         setLoading(false);
