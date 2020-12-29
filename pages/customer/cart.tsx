@@ -15,22 +15,22 @@ interface DefaultRootState {
 }
 
 export const CustomerCart = () => {
-  //from redux feature - fetchCart
-  const { loading, cart, error } = useSelector<DefaultRootState, IinitialState>(
-    (state) => state.cart
-  );
-
   const dispatch = useDispatch();
   const toast = useToast();
   const { Token } = useToken();
   const role = Cookies.get("role");
 
-  //update cart quantity loading state
-  const [loadingCart, setLoadingCart] = useState(false);
-
   useEffect(() => {
     dispatch(cartItems(Token));
   }, [Token]);
+
+  //from redux feature - fetchCart
+  const { loading, cart, error } = useSelector<DefaultRootState, IinitialState>(
+    (state) => state.cart
+  );
+
+  //update cart quantity loading state
+  const [loadingCart, setLoadingCart] = useState(false);
 
   return (
     <Layout>

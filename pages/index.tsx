@@ -7,8 +7,8 @@ import { Layout } from "@/components/Layout";
 import Carousel from "react-bootstrap/Carousel";
 import { Commas } from "@/utils/helpers";
 import { PurchaseSteps } from "@/components/customer/PurchaseSteps";
-import queryFunc from "@/utils/fetcher";
-import useSWR from "swr";
+// import queryFunc from "@/utils/fetcher";
+// import useSWR from "swr";
 import { graphQLClient } from "@/utils/client";
 
 export async function getServerSideProps() {
