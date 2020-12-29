@@ -131,7 +131,7 @@ export const Header = () => {
                     color="blue.400"
                   />
                   <Input
-                    aria-label="menu"
+                    aria-label="search"
                     title="search"
                     type="search"
                     value={search}
