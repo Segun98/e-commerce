@@ -26,6 +26,7 @@ export const partyCategory = gql`
       name_slug
       price
       images
+      party_category
     }
   }
 `;
