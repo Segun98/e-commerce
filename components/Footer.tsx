@@ -11,22 +11,22 @@ export const Footer = () => {
           <h1>Customer Service</h1>
           <ul>
             <li>
-              <Link href="/">
+              <Link href="/customer#delivery">
                 <a>Delivery Information</a>
               </Link>
             </li>
             <li>
-              <Link href="/">
+              <Link href="/customer#return-policy">
                 <a>Return Policy</a>
               </Link>
             </li>
             <li>
-              <Link href="/">
+              <Link href="/customer#contact">
                 <a>Contact Us</a>
               </Link>
             </li>
             <li>
-              <Link href="/">
+              <Link href="/customer#purchase-process">
                 <a>Purchase Process</a>
               </Link>
             </li>
@@ -36,12 +36,12 @@ export const Footer = () => {
           <h1>Company</h1>
           <ul>
             <li>
-              <Link href="/">
+              <Link href="/terms">
                 <a>Terms and Condition</a>
               </Link>
             </li>
             <li>
-              <Link href="/">
+              <Link href="/terms#privacy-policy">
                 <a>Privacy Policy</a>
               </Link>
             </li>
@@ -83,7 +83,7 @@ export const Footer = () => {
               </Link>{" "}
             </li>
             <li>
-              <Link href="/">
+              <Link href="/customer#contact">
                 <a>Contact</a>
               </Link>{" "}
             </li>
@@ -102,8 +102,10 @@ export const Footer = () => {
         <section className="footer-item">
           <ul>
             <li>
-              <Link href="/">
-                <a>Twitter</a>
+              <Link href="https://twitter.com/segun_os">
+                <a target="_blank" rel="noopener noreferrer">
+                  Twitter
+                </a>
               </Link>{" "}
             </li>
             <li>
