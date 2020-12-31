@@ -10,7 +10,7 @@ import { graphQLClient } from "@/utils/client";
 import { useToken } from "./TokenProvider";
 import { UsersRes } from "@/Typescript/types";
 import { gql } from "graphql-request";
-
+import Cookies from "js-cookie";
 interface props {
   User: UsersRes;
   setUser: Dispatch<SetStateAction<any>>;
@@ -52,6 +52,9 @@ export const UserProvider = ({ children }) => {
     }
   `;
   async function fetchUser() {
+    if (!Cookies.get("ecom")) {
+      return;
+    }
     graphQLClient.setHeader("authorization", `bearer ${Token}`);
     try {
       const res = await graphQLClient.request(getUser);

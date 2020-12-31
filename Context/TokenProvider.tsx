@@ -26,6 +26,10 @@ export const TokenProvider = ({ children }) => {
   }, []);
 
   async function fetchRefreshToken() {
+    if (!Cookies.get("ecom")) {
+      return;
+    }
+
     const instance = axios.create({
       withCredentials: true,
     });
@@ -37,14 +41,15 @@ export const TokenProvider = ({ children }) => {
 
       if (res.data) {
         //setting cookies client side, should be done over server, but i ran into heroku/vercel problems in production
-        Cookies.set("role", res.data.role, {
-          expires: 7,
-        });
-
         Cookies.set("ecom", res.data.refreshtoken, {
           expires: 7,
           // secure: true,
         });
+
+        Cookies.set("role", res.data.role, {
+          expires: 7,
+        });
+
         setToken(res.data.accesstoken);
       }
     } catch (error) {
