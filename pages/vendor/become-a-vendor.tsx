@@ -2,6 +2,7 @@ import Head from "next/head";
 import { Layout } from "@/components/Layout";
 import Link from "next/link";
 import { Text } from "@chakra-ui/core";
+import { ContactForm } from "@/components/ContactForm";
 
 const BecomeAVendor = () => {
   return (
@@ -102,17 +103,17 @@ const BecomeAVendor = () => {
           </div>
         </section>
 
-        <section className="help">
-          <h1>Ready to partner?</h1>
-          <Text as="div">
+        <section className="start">
+          <h1>Grow Your Business With Less Effort</h1>
+          <Text as="div" className="mr-2 ml-2">
             <Link href="/vendor/register">
               <a>Get Started</a>
             </Link>
-            <span className="mr-2 ml-2">or</span>
-            <Link href="/">
-              <a>Contact Us</a>
-            </Link>
           </Text>
+        </section>
+
+        <section style={{ background: "var(--softblue)" }}>
+          <ContactForm />
         </section>
       </div>
       <style jsx>{``}</style>

@@ -66,6 +66,67 @@ button {
     cursor: pointer;
 }
 
+//CONTACT FORM
+
+.contact {
+    padding: 40px 0;
+
+    h1 {
+        font-size: 1.5rem;
+        font-weight: bolder;
+        color: $shinyblue;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    form {
+        margin: auto;
+        width: 90%;
+
+        label {
+            font-size: 0.9rem
+        }
+
+        div {
+            margin: 10px 0;
+
+            textarea {
+                height: 200px;
+            }
+        }
+
+
+    }
+
+    @media only screen and (min-width:700px) {
+        form {
+            width: 60%
+        }
+    }
+
+    @media only screen and (min-width:1000px) {
+        form {
+            width: 50%;
+
+            label {
+                font-size: 1rem
+            }
+        }
+    }
+
+    @media only screen and (min-width:1200px) {
+        form {
+            width: 40%
+        }
+    }
+
+    @media only screen and (min-width:1800px) {
+        form {
+            width: 30%
+        }
+    }
+}
+
 /* Note - ALL Imported styles represent each page and are named accordingly. 
 Class names accross components can be the same but they are wrapped by a unique class, usually named after the page or component */
 

@@ -58,6 +58,62 @@ button {
   cursor: pointer;
 }
 
+.contact {
+  padding: 40px 0;
+}
+
+.contact h1 {
+  font-size: 1.5rem;
+  font-weight: bolder;
+  color: #02247a;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.contact form {
+  margin: auto;
+  width: 90%;
+}
+
+.contact form label {
+  font-size: 0.9rem;
+}
+
+.contact form div {
+  margin: 10px 0;
+}
+
+.contact form div textarea {
+  height: 200px;
+}
+
+@media only screen and (min-width: 700px) {
+  .contact form {
+    width: 60%;
+  }
+}
+
+@media only screen and (min-width: 1000px) {
+  .contact form {
+    width: 50%;
+  }
+  .contact form label {
+    font-size: 1rem;
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  .contact form {
+    width: 40%;
+  }
+}
+
+@media only screen and (min-width: 1800px) {
+  .contact form {
+    width: 30%;
+  }
+}
+
 /* Note - ALL Imported styles represent each page and are named accordingly. 
 Class names accross components can be the same but they are wrapped by a unique class, usually named after the page or component */
 .home-page .main-carousel .carousel-item .mobile-caption {
@@ -2118,32 +2174,20 @@ Class names accross components can be the same but they are wrapped by a unique 
   }
 }
 
-.become-a-vendor .help {
+.become-a-vendor .start {
   height: 200px;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  text-align: center;
+  margin-top: 40px;
 }
 
-.become-a-vendor .help h1 {
-  font-size: 2rem;
+.become-a-vendor .start h1 {
+  font-size: 1.5rem;
   font-weight: bolder;
   color: #02247a;
-  margin-bottom: 15px;
-  margin-top: -40px;
+  margin-bottom: 20px;
 }
 
-.become-a-vendor .help a {
+.become-a-vendor .start a {
   background: #02247a;
   padding: 10px 20px;
   border-radius: 5px;
@@ -2151,19 +2195,20 @@ Class names accross components can be the same but they are wrapped by a unique 
 }
 
 @media only screen and (min-width: 700px) {
-  .become-a-vendor .help {
-    height: 250px;
+  .become-a-vendor .start {
+    margin-top: 80px;
   }
-  .become-a-vendor .help h1 {
-    font-size: 2.5rem;
+  .become-a-vendor .start h1 {
+    font-size: 2rem;
+    margin-bottom: 40px;
   }
 }
 
 @media only screen and (min-width: 1200px) {
-  .become-a-vendor .help h1 {
+  .become-a-vendor .start h1 {
     margin-bottom: 35px;
   }
-  .become-a-vendor .help a {
+  .become-a-vendor .start a {
     font-size: 1rem;
     padding: 10px 40px;
   }
