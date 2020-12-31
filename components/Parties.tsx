@@ -31,7 +31,7 @@ export const Parties: React.FC<PartiesProps> = ({ title, party }) => {
 
   return (
     <div className="home-party-wrap">
-      <h1>{title}</h1>
+      {data && <h1>{title}</h1>}
       <div className="home-party-items">
         {data &&
           products &&
@@ -73,13 +73,13 @@ export const Parties: React.FC<PartiesProps> = ({ title, party }) => {
           background: white;
           border-radius: 5px;
           padding: 3px;
-          margin: 8px;
-          width: 100px;
-          height: 150px;
+          margin: 6px;
+          width: 130px;
+          height: 180px;
         }
         .home-party-product img {
           width: 100%;
-          height: 60px;
+          height: 100px;
           border-radius: 5px;
           text-align: center;
         }
@@ -104,8 +104,11 @@ export const Parties: React.FC<PartiesProps> = ({ title, party }) => {
             width: 85%;
           }
 
+          .home-party-product {
+            height: 188px;
+          }
           .home-party-product img {
-            height: 70px;
+            height: 120px;
           }
         }
 
@@ -116,10 +119,7 @@ export const Parties: React.FC<PartiesProps> = ({ title, party }) => {
           .home-party-product {
             margin: 8px;
             width: 150px;
-            height: 180px;
-          }
-          .home-party-product img {
-            height: 100px;
+            height: 200px;
           }
           .product-info {
             font-size: 0.9rem;
