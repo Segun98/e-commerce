@@ -22,10 +22,10 @@ import { useToken } from "../../Context/TokenProvider";
 import Cookies from "js-cookie";
 import { useRouter } from "next/router";
 import { useUser } from "../../Context/UserProvider";
-import axios from "axios";
+// import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { cartItems } from "../../redux/features/cart/fetchCart";
-import { logoutLink } from "./../../utils/client";
+// import { logoutLink } from "./../../utils/client";
 import { screenWidth } from "@/utils/helpers";
 
 interface DefaultRootState {
@@ -48,6 +48,9 @@ export const Header = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   useEffect(() => {
+    if (!Cookies.get("ecom")) {
+      return;
+    }
     dispatch(cartItems(Token));
   }, [Token, cartLength]);
 
@@ -227,7 +230,11 @@ export const Header = () => {
                             <a>Orders</a>
                           </Link>
                         </p>
-                        <p>Help</p>
+                        <p>
+                          <Link href="/customer#contact">
+                            <a>Help</a>
+                          </Link>
+                        </p>
                         {Token && role && (
                           <Button
                             variantColor="blue"
@@ -334,7 +341,7 @@ export const Header = () => {
                       <li>Orders</li>
                     </a>
                   </Link>
-                  <Link href="/">
+                  <Link href="/customer#contact">
                     <a>
                       <li>Help</li>
                     </a>
