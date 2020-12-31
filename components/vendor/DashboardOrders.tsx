@@ -162,8 +162,16 @@ export const DashboardOrders = () => {
           <Skeleton height="40px" my="10px" />
         </Text>
       )}
+
       {error &&
-        "error fetching your orders, Ccheck your internet connection and refresh"}
+        "Error fetching your orders, check your internet connection and refresh"}
+
+      {data && data.getVendorOrders.length === 0 ? (
+        <Text as="div" textAlign="center">
+          You Have No Orders...
+        </Text>
+      ) : null}
+
       {data && (
         <table style={{ width: "100%" }}>
           <thead>
@@ -176,7 +184,6 @@ export const DashboardOrders = () => {
               <th>Action</th>
             </tr>
           </thead>
-          {data.getVendorOrders.length === 0 ? "You Have No Orders..." : null}
           <tbody>
             {data.getVendorOrders.map((o: Orders) => (
               <tr key={o.id}>

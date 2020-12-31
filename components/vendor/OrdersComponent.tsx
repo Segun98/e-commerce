@@ -167,7 +167,14 @@ export const OrdersComponent: React.FC<Iprops> = ({ limit }) => {
 
       {!loading &&
         error &&
-        "error fetching your orders, Ccheck your internet connection and refresh..."}
+        "Error fetching your orders, check your internet connection and refresh..."}
+
+      {!loading && !error && orders && orders.length === 0 ? (
+        <Text as="div" textAlign="center">
+          You Have No Orders...
+        </Text>
+      ) : null}
+
       {!loading && !error && orders && (
         <div style={{ overflowX: "auto" }}>
           <table style={{ width: "100%" }}>
@@ -187,7 +194,6 @@ export const OrdersComponent: React.FC<Iprops> = ({ limit }) => {
               </tr>
             </thead>
 
-            {orders.length === 0 ? "You Have No Orders..." : null}
             <tbody>
               {orders.map((o) => (
                 <tr className="order-item" key={o.id}>

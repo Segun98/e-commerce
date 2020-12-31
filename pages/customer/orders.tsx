@@ -161,7 +161,13 @@ export const CustomerOrders = () => {
           </Text>
         )}
 
-        {data && (
+        {data.getCustomerOrders.length === 0 ? (
+          <Text as="div" textAlign="center">
+            You Have No Orders...
+          </Text>
+        ) : null}
+
+        {data && data.getCustomerOrders.length > 0 && (
           <table style={{ width: "100%" }}>
             <thead>
               <tr>
@@ -173,9 +179,7 @@ export const CustomerOrders = () => {
                 <th>Action</th>
               </tr>
             </thead>
-            {data.getCustomerOrders.length === 0
-              ? "You Have No Orders..."
-              : null}
+
             <tbody>
               {data.getCustomerOrders.map((o: Orders) => (
                 <tr key={o.id}>
