@@ -161,7 +161,7 @@ export const CustomerOrders = () => {
           </Text>
         )}
 
-        {data.getCustomerOrders.length === 0 ? (
+        {data && data.getCustomerOrders.length === 0 ? (
           <Text as="div" textAlign="center">
             You Have No Orders...
           </Text>
