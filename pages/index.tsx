@@ -7,9 +7,8 @@ import { Layout } from "@/components/Layout";
 import Carousel from "react-bootstrap/Carousel";
 import { Commas } from "@/utils/helpers";
 import { PurchaseSteps } from "@/components/customer/PurchaseSteps";
-// import queryFunc from "@/utils/fetcher";
-// import useSWR from "swr";
 import { graphQLClient } from "@/utils/client";
+import { Parties } from "@/components/Parties";
 
 export async function getServerSideProps() {
   try {
@@ -31,14 +30,6 @@ export async function getServerSideProps() {
 const Home = ({ data }) => {
   //Featured Products Section Scroll
   const scrollRef = useRef(null);
-
-  // //using SWR to fetch data
-  // const { data } = useSWR(
-  //   `featuredProducts`,
-  //   () => queryFunc(featuredProducts, { limit: 10 }),
-  //   { errorRetryInterval: 1000, initialData: products }
-  // );
-  // console.log(data);
 
   return (
     <Layout>
@@ -265,6 +256,11 @@ const Home = ({ data }) => {
           </div>
         </section>
 
+        <section className="home-party-categories">
+          <Parties title="For Your Birthday Parties" party="Birthday Party" />
+          <Parties title="For Your House Parties" party="House Party" />
+          <Parties title="For Outdoor Parties" party="Outdoors" />
+        </section>
         {/* IMPORTED . PURCHASE STEPS SECTION */}
 
         <PurchaseSteps />
