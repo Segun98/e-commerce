@@ -42,6 +42,11 @@ export let graphqlEndpoint =
     : "http://localhost:4000/graphql";
 // "https://apipartystore.herokuapp.com/graphql",
 
+export let restEndpoint =
+  process.env.NODE_ENV === "production"
+    ? "https://apipartystore.vercel.app/api"
+    : "http://localhost:4000/api";
+
 export const graphQLClient = new GraphQLClient(graphqlEndpoint, {
   // headers: {
   //   authorization: `bearer ${Token}`,
