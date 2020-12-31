@@ -1,10 +1,8 @@
-import React from "react";
-
 export const PurchaseSteps = () => {
   // styles can be found in "_home.scss"
   return (
     <div>
-      <section className="steps">
+      <section className="steps" id="steps">
         <h1>Purchase Process</h1>
 
         <div className="steps-wrap">
@@ -20,7 +18,7 @@ export const PurchaseSteps = () => {
             <img src="/track.png" alt="track order" />
             <p>
               Track Your Order in Your Orders Page, and Expect To Recieve Your
-              Product(s) within 2-4 days From Order Date.{" "}
+              Product(s) within 2-3 days From Order Date.{" "}
             </p>
           </div>
           <div className="steps-item">
