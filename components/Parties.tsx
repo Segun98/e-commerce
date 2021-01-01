@@ -82,6 +82,7 @@ export const Parties: React.FC<PartiesProps> = ({ title, party }) => {
           height: 100px;
           border-radius: 5px;
           text-align: center;
+          object-fit: contain;
         }
 
         .product-info {
