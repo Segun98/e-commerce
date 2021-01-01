@@ -13,7 +13,7 @@ export const Chart: React.FC<Iprops> = ({ orders }) => {
   }
   //array of orders for this year
   const OrdersThisYear = orders.filter(
-    (c) => getYear(c.created_at) === new Date().getFullYear()
+    (c) => getYear(c.delivery_date) === new Date().getFullYear()
   );
 
   //Parse date to get month
@@ -29,7 +29,7 @@ export const Chart: React.FC<Iprops> = ({ orders }) => {
   const completed = OrdersThisYear.filter((o) => o.completed === "true");
 
   // return array of months from DB
-  const months = completed.map((c) => getMonth(c.created_at));
+  const months = completed.map((c) => getMonth(c.delivery_date));
 
   //create an object that maps months to frequency e.g{January: 2, February:5}
   function repeatMonths() {

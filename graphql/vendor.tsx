@@ -152,6 +152,7 @@ export const getVendorOrders = gql`
       request
       accepted
       completed
+      delivery_date
       canceled
       customer_email
       created_at
