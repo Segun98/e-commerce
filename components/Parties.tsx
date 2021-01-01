@@ -53,7 +53,7 @@ export const Parties: React.FC<PartiesProps> = ({ title, party }) => {
       <style jsx>{`
         .home-party-wrap {
           margin: 25px auto;
-          width: 95%;
+          width: 99%;
         }
         h1 {
           text-align: center;
@@ -73,7 +73,7 @@ export const Parties: React.FC<PartiesProps> = ({ title, party }) => {
           background: white;
           border-radius: 5px;
           padding: 3px;
-          margin: 6px;
+          margin: 4px;
           width: 130px;
           height: 180px;
         }
