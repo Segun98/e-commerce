@@ -12,6 +12,8 @@ import { useUser } from "@/Context/UserProvider";
 import axios from "axios";
 import { restEndpoint } from "@/utils/client";
 
+//STYLES IN APP.SCSS
+
 export const ContactForm = () => {
   const { User } = useUser();
   const toast = useToast();

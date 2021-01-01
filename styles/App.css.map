@@ -12,7 +12,8 @@
         "_checkout.scss",
         "_become_a_vendor.scss",
         "_header.scss",
-        "_category.scss"
+        "_category.scss",
+        "_customer.scss"
     ],
     "names": [],
     "file": "App.css"
