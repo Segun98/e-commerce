@@ -2177,14 +2177,15 @@ Class names accross components can be the same but they are wrapped by a unique 
 .become-a-vendor .start {
   height: 200px;
   text-align: center;
-  margin-top: 40px;
+  margin: 40px auto 0 auto;
+  width: 80%;
 }
 
 .become-a-vendor .start h1 {
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   font-weight: bolder;
   color: #02247a;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
 }
 
 .become-a-vendor .start a {
@@ -2511,6 +2512,174 @@ Class names accross components can be the same but they are wrapped by a unique 
   }
   .paginate {
     width: 40%;
+  }
+}
+
+.customer header {
+  padding: 50px 0;
+  background: #eeeef5;
+}
+
+.customer .split {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  margin: auto;
+  width: 85%;
+}
+
+.customer .split .left h1 {
+  font-weight: bolder;
+  font-size: 1.6rem;
+  max-width: 80%;
+  color: #02247a;
+}
+
+.customer .split .left p {
+  margin: 20px 0;
+  margin-bottom: 30px;
+  font-size: 0.9rem;
+}
+
+.customer .split .left a {
+  background: #062863;
+  padding: 10px;
+  border-radius: 5px;
+  color: white;
+  display: block;
+  text-align: center;
+}
+
+.customer .split .right {
+  display: none;
+}
+
+@media only screen and (min-width: 700px) {
+  .customer .split .left h1 {
+    font-size: 1.7rem;
+  }
+  .customer .split .left p {
+    font-size: 1rem;
+  }
+  .customer .split .left a {
+    display: inline;
+  }
+  .customer .split .right {
+    display: block;
+  }
+  .customer .split .right img {
+    margin-left: 10px;
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  .customer .split .left h1 {
+    font-size: 2.5rem;
+  }
+  .customer .split .left p {
+    font-size: 1rem;
+    margin-bottom: 35px;
+  }
+  .customer .split .left a {
+    padding: 16px 55px;
+    border-radius: 8px;
+  }
+  .customer .split .right img {
+    margin-left: 20px;
+  }
+}
+
+@media only screen and (min-width: 1400px) {
+  .customer .split {
+    width: 80%;
+  }
+}
+
+@media only screen and (min-width: 1800px) {
+  .customer .split {
+    width: 60%;
+  }
+}
+
+.customer .delivery {
+  margin: auto;
+  width: 85%;
+}
+
+.customer .delivery div {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.customer .delivery h1 {
+  font-weight: bold;
+  text-align: center;
+  margin: 30px 0 20px 0;
+}
+
+.customer .delivery p {
+  line-height: 2;
+  margin: 10px 0;
+}
+
+@media only screen and (min-width: 1400px) {
+  .customer .delivery {
+    width: 80%;
+  }
+}
+
+.customer .return {
+  margin: auto;
+  width: 85%;
+}
+
+.customer .return div {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.customer .return h1 {
+  font-weight: bold;
+  text-align: center;
+  margin: 20px 0;
+}
+
+.customer .return p {
+  line-height: 2;
+  margin: 10px 0;
+}
+
+@media only screen and (min-width: 1400px) {
+  .customer .return {
+    width: 80%;
   }
 }
 /*# sourceMappingURL=App.css.map */

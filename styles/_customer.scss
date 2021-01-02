@@ -1,0 +1,183 @@
+.customer {
+
+    header {
+        padding: 50px 0;
+        background: $softblue;
+    }
+
+    .split {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: auto;
+        width: 85%;
+
+        .left {
+            h1 {
+                font-weight: bolder;
+                font-size: 1.6rem;
+                max-width: 80%;
+                color: $shinyblue;
+            }
+
+            p {
+                margin: 20px 0;
+                margin-bottom: 30px;
+                font-size: 0.9rem;
+            }
+
+            a {
+                background: $deepblue;
+                padding: 10px;
+                border-radius: 5px;
+                color: white;
+                display: block;
+                text-align: center;
+            }
+        }
+
+        .right {
+            display: none;
+        }
+    }
+
+    @media only screen and (min-width:700px) {
+        .split {
+
+            .left {
+                h1 {
+                    font-size: 1.7rem;
+                }
+
+                p {
+                    font-size: 1rem;
+                }
+
+                a {
+                    display: inline;
+                }
+            }
+
+            .right {
+                display: block;
+
+                img {
+                    margin-left: 10px;
+                }
+            }
+        }
+    }
+
+
+    @media only screen and (min-width:1200px) {
+        .split {
+
+            .left {
+                h1 {
+                    font-size: 2.5rem;
+                }
+
+                p {
+                    font-size: 1rem;
+                    margin-bottom: 35px;
+
+                }
+
+                a {
+                    padding: 16px 55px;
+                    border-radius: 8px;
+                }
+
+            }
+
+            .right {
+
+                img {
+                    margin-left: 20px;
+                }
+            }
+        }
+    }
+
+
+
+    @media only screen and (min-width:1400px) {
+        .split {
+            width: 80%;
+        }
+
+    }
+
+    @media only screen and (min-width:1800px) {
+        .split {
+            width: 60%;
+        }
+
+    }
+
+
+
+    //DELIVERY INFO
+
+    .delivery {
+        margin: auto;
+        width: 85%;
+
+        div {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        h1 {
+            font-weight: bold;
+            text-align: center;
+            margin: 30px 0 20px 0;
+        }
+
+        p {
+            line-height: 2;
+            margin: 10px 0;
+        }
+
+        @media only screen and (min-width:1400px) {
+            width: 80%;
+
+        }
+    }
+
+    //RETURN POLICY
+
+    .return {
+        margin: auto;
+        width: 85%;
+
+        div {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        h1 {
+            font-weight: bold;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        p {
+            line-height: 2;
+            margin: 10px 0;
+        }
+
+        @media only screen and (min-width:1400px) {
+            width: 80%;
+
+        }
+    }
+
+
+
+
+}

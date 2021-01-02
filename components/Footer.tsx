@@ -45,6 +45,11 @@ export const Footer = () => {
                 <a>Privacy Policy</a>
               </Link>
             </li>
+            <li>
+              <Link href="/customer">
+                <a>About</a>
+              </Link>
+            </li>
           </ul>
         </section>
         <section className="footer-item">
@@ -62,11 +67,6 @@ export const Footer = () => {
                 </Link>{" "}
               </li>
             )}
-            <li>
-              <Link href="/stores">
-                <a>Find Stores</a>
-              </Link>{" "}
-            </li>
             <li>
               <Link href="/vendor/login">
                 <a>Login</a>
