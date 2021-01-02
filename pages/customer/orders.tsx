@@ -119,7 +119,7 @@ export const CustomerOrders = () => {
 
     let day = differenceBetweenDates(date);
 
-    if (day > 7) {
+    if (day > 2) {
       return true;
     }
     return false;
@@ -265,9 +265,7 @@ export const CustomerOrders = () => {
                                 o.canceled === "true"
                               }
                               onClick={() =>
-                                router.push(
-                                  `/customer/contact?refundID=${o.order_id}`
-                                )
+                                router.push(`/customer?returnId=${o.order_id}`)
                               }
                             >
                               Return
