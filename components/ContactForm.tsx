@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   FormControl,
   Text,
@@ -11,12 +11,17 @@ import {
 import { useUser } from "@/Context/UserProvider";
 import axios from "axios";
 import { restEndpoint } from "@/utils/client";
+import { useRouter } from "next/router";
 
 //STYLES IN APP.SCSS
 
 export const ContactForm = () => {
   const { User } = useUser();
   const toast = useToast();
+  const router = useRouter();
+  //reference to contact form
+  const contactForm = useRef(null);
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [subject, setSubject] = useState("");
@@ -29,7 +34,13 @@ export const ContactForm = () => {
       setName(User.first_name + " " + User.last_name);
       setEmail(User.email);
     }
-  }, [User]);
+
+    if (router.query?.returnId) {
+      setSubject(`Request For Refund for Order ID ${router.query.returnId}`);
+      //scroll to contact form
+      contactForm.current.scrollIntoView();
+    }
+  }, [User, router.query?.returnId]);
 
   //submit contact form
   const handleSubmit = async (e: React.SyntheticEvent<EventTarget>) => {
@@ -68,7 +79,7 @@ export const ContactForm = () => {
   };
 
   return (
-    <section className="contact" id="contact">
+    <section className="contact" id="contact" ref={contactForm}>
       <h1>Contact Us</h1>
       <form onSubmit={handleSubmit}>
         <FormControl isRequired>
