@@ -1,6 +1,6 @@
 import { gql } from "graphql-request";
 
-export const getCartItems = gql`
+export const getCartItemsCartPage = gql`
   query getCartItems {
     getCartItems {
       id
@@ -17,9 +17,9 @@ export const getCartItems = gql`
   }
 `;
 
-export const getCart = gql`
-  query getCart($id: ID!) {
-    getCart(id: $id) {
+export const getCartItemsCheckoutPage = gql`
+  query getCartItems {
+    getCartItems {
       id
       quantity
       product_id
@@ -58,20 +58,13 @@ export const getCart = gql`
 `;
 
 export const getOrder = gql`
-  query getOrder($id: ID!) {
-    getOrder(id: $id) {
-      id
+  query getOrder($order_id: ID!) {
+    getOrder(order_id: $order_id) {
       order_id
       name
       price
       quantity
-      delivery_fee
       subtotal
-      paid
-      description
-      accepted
-      completed
-      canceled
       request
       customer_email
       vendor_email
@@ -83,7 +76,6 @@ export const getOrder = gql`
       customer_id
       prod_creator_id
       created_at
-      delivery_date
     }
   }
 `;
@@ -116,12 +108,20 @@ export const deleteFromCart = gql`
   }
 `;
 
+export const deleteAllFromCart = gql`
+  mutation deleteAllFromCart {
+    deleteAllFromCart {
+      message
+    }
+  }
+`;
+
 export const createOrder = gql`
   mutation createOrder(
+    $order_id: ID!
     $name: String!
     $price: Int!
     $quantity: Int!
-    $delivery_fee: Int
     $subtotal: Int!
     $request: String
     $customer_email: String
@@ -130,14 +130,14 @@ export const createOrder = gql`
     $vendor_phone: String
     $customer_address: String
     $business_address: String
-    $product_id: ID
-    $prod_creator_id: ID
+    $product_id: ID!
+    $prod_creator_id: ID!
   ) {
     createOrder(
+      order_id: $order_id
       name: $name
       price: $price
       quantity: $quantity
-      delivery_fee: $delivery_fee
       subtotal: $subtotal
       request: $request
       customer_email: $customer_email
@@ -149,7 +149,25 @@ export const createOrder = gql`
       product_id: $product_id
       prod_creator_id: $prod_creator_id
     ) {
-      id
+      message
+    }
+  }
+`;
+
+export const updateOrder = gql`
+  mutation updateOrder(
+    $order_id: ID!
+    $transaction_id: ID!
+    $delivery_fee: Int
+    $total_price: Int!
+  ) {
+    updateOrder(
+      order_id: $order_id
+      transaction_id: $transaction_id
+      delivery_fee: $delivery_fee
+      total_price: $total_price
+    ) {
+      message
     }
   }
 `;
@@ -187,19 +205,22 @@ export const SEARCH = gql`
 export const getCustomerOrders = gql`
   query getCustomerOrders {
     getCustomerOrders {
-      id
       order_id
       name
       price
       quantity
       subtotal
       request
-      accepted
-      completed
-      canceled
-      customer_email
       created_at
-      delivery_date
+      orderStatus {
+        order_id
+        delivery_fee
+        total_price
+        delivery_date
+        delivered
+        in_transit
+        canceled
+      }
     }
   }
 `;
