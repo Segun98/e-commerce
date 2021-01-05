@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getCartItems } from "@/graphql/customer";
+import { getCartItemsCartPage } from "@/graphql/customer";
 import { Cart } from "@/Typescript/types";
 import { graphQLClient } from "@/utils/client";
 
@@ -43,9 +43,9 @@ export function cartItems(Token) {
       if (Token) {
         graphQLClient.setHeader("authorization", `bearer ${Token}`);
       }
-      const res = await graphQLClient.request(getCartItems);
+      const res = await graphQLClient.request(getCartItemsCartPage);
       const data: Cart[] = res.getCartItems;
-        dispatch(getCart(data));
+      dispatch(getCart(data));
     } catch (err) {
       let error = err?.response?.errors[0].message || err.message;
       if (Token && err) {
