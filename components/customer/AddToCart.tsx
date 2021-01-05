@@ -55,10 +55,12 @@ export const AddToCart: React.FC<Iprops> = ({
       if (error.response?.errors[0].message === "Item is already in Cart") {
         toast({
           title: "Item Is Already In Cart",
-          description: "Please Visit your Cart page to checkout",
+          description: "Redirecting to cart...",
           isClosable: true,
           status: "info",
         });
+        router.push("/customer/cart").then(() => window.scrollTo(0, 0));
+
         return;
       }
       toast({
