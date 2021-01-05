@@ -268,7 +268,7 @@ const Home = ({ data }) => {
         <section className="home-vendor-onboarding">
           <h1>Become a vendor today</h1>
           <div>
-            <Link href="/vendor/become-a-vendor">
+            <Link href="/become-a-vendor">
               <a>
                 Learn More
                 <Icon name="external-link" />
