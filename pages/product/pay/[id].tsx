@@ -10,7 +10,7 @@ import { useToast } from "@chakra-ui/core";
 
 export async function getServerSideProps({ params }) {
   const variables = {
-    id: params.id,
+    order_id: params.id,
   };
 
   return {
@@ -24,7 +24,10 @@ const Pay = ({ variables }) => {
   const toast = useToast();
   const { Token } = useToken();
   const [data, loading, error] = useQuery(getOrder, variables, Token);
-  const order: Orders = data ? data.getOrder : null;
+  const order: Orders[] = data ? data.getOrder : null;
+
+  const subTotal =
+    order && order.length > 0 ? order.reduce((a, c) => a + c.subtotal, 0) : 0;
 
   return (
     <Layout>
@@ -41,45 +44,50 @@ const Pay = ({ variables }) => {
           <div className="summary-body">
             <section className="delivery pt-3 pb-3">
               <h2 className="pb-1">Delivery Address</h2>
-              <p>{order.customer_address}</p>
-              <p>{order.customer_phone}</p>
+              <p>&#8226; {order[0].customer_address}</p>
+              <p>&#8226; {order[0].customer_phone}</p>
             </section>
 
-            <section>
-              <h2 className="pb-1">Order Details</h2>
-              <div className="details-grid">
-                <p>
-                  {order.name} x {order.quantity}
-                </p>
-                <p>
-                  {nairaSign} {Commas(order.price * order.quantity)}
-                </p>
-              </div>
-              <div className="details-grid">
-                <p>Delivery</p>
-                <p>
-                  {nairaSign} {Commas(order.delivery_fee)}
-                </p>
-              </div>
-              <div className="details-grid">
-                <p>Subtotal </p>
-                <p>
-                  {nairaSign} {Commas(order.subtotal)}
-                </p>
-              </div>
-              {order && order.request && (
+            <h2 className="pb-1">Order Details</h2>
+            {order.map((o) => (
+              <section key={o.product_id}>
                 <div className="details-grid">
-                  <p>Request </p>
-                  <p>{order.request}</p>
+                  <p>
+                    {o.name} x {o.quantity}
+                  </p>
+                  <p>
+                    {nairaSign} {Commas(o.price * o.quantity)}
+                  </p>
                 </div>
-              )}
-            </section>
+
+                {order && o.request && (
+                  <div className="details-grid">
+                    <p>Request </p>
+                    <p>{o.request}</p>
+                  </div>
+                )}
+              </section>
+            ))}
           </div>
-          <div className="text-center pb-3 pt-3">
-            <ConfirmOrder order={order} />
+
+          <div className="details-grid">
+            <p>Delivery</p>
+            <p>
+              {nairaSign} {Commas(1000 * order.length)}
+            </p>
+          </div>
+          <div className="details-grid">
+            <p>Subtotal </p>
+            <p>
+              {nairaSign} {Commas(subTotal)}
+            </p>
           </div>
         </div>
       )}
+
+      <div className="text-center pb-3 pt-3">
+        <ConfirmOrder order={order} />
+      </div>
       <style jsx>{`
         .pay-wrap {
           margin: 10px auto;
