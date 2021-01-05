@@ -5,18 +5,10 @@ import { useRouter } from "next/router";
 import React from "react";
 import { PaystackConsumer } from "react-paystack";
 import { useToken } from "@/Context/TokenProvider";
-import { deleteFromCart } from "@/graphql/customer";
+import { deleteAllFromCart, updateOrder } from "@/graphql/customer";
 import { MutationUpdateOrderArgs, Orders } from "@/Typescript/types";
 import { useMutation } from "@/utils/useMutation";
-
-//basically set payment status to paid
-const updateOrder = gql`
-  mutation updateOrder($id: ID!) {
-    updateOrder(id: $id) {
-      message
-    }
-  }
-`;
+import { graphQLClient } from "@/utils/client";
 
 //update available quantity in stock for ordered product
 const updateQuantity = gql`
@@ -28,7 +20,7 @@ const updateQuantity = gql`
 `;
 
 interface Iprops {
-  order: Orders;
+  order: Orders[];
 }
 
 export const ConfirmOrder: React.FC<Iprops> = ({ order }) => {
@@ -37,38 +29,55 @@ export const ConfirmOrder: React.FC<Iprops> = ({ order }) => {
   const toast = useToast();
   const router = useRouter();
 
-  async function updateOrderFn() {
+  let total_price =
+    order && order.length > 0
+      ? order.reduce((a, c) => a + c.price * c.quantity, 0)
+      : 0;
+
+  async function updateOrderFn(transaction_id: string) {
     const variables: MutationUpdateOrderArgs = {
-      id: order.id,
+      order_id: order[0].order_id,
+      transaction_id,
+      delivery_fee: order.length * 1000,
+      total_price,
     };
 
     const { data, error } = await useMutation(updateOrder, variables, Token);
 
+    toast({
+      title: "Payment Successful",
+      description:
+        "Your Order has been successfuly placed, track it in your Orders page",
+      status: "success",
+      duration: 5000,
+      position: "top",
+    });
+
     if (data) {
-      let id = window.sessionStorage.getItem("cart_id");
-      const { data } = await useMutation(deleteFromCart, {
-        id,
+      //clear cart
+      await useMutation(deleteAllFromCart, {}, Token);
+      toast({
+        title: "You are being redirected...",
+        status: "info",
+        duration: 3000,
+        position: "top",
       });
-      if (data) {
-        toast({
-          title: "Payment Successful",
-          description:
-            "Your Order has been successfuly placed, track it in your Orders page",
-          status: "success",
-          duration: 5000,
-          isClosable: true,
-          position: "top",
-        });
 
-        //update available quantity in stock for ordered product
-        await useMutation(updateQuantity, {
-          id: order.product_id,
-          qty_ordered: order.quantity,
-        });
-
-        router.push(`/customer/cart`).then(() => window.scrollTo(0, 0));
+      //update the quantity of products in stock for the ordered product(s)
+      for await (const o of order) {
+        try {
+          await graphQLClient.request(updateQuantity, {
+            id: o.product_id,
+            qty_ordered: o.quantity,
+          });
+        } catch (err) {
+          //
+        }
       }
+
+      router.push(`/customer/cart`).then(() => window.scrollTo(0, 0));
     }
+
     if (error) {
       toast({
         title: "An error occurred.",
@@ -83,18 +92,18 @@ export const ConfirmOrder: React.FC<Iprops> = ({ order }) => {
 
   //PAYSTACK TEST PAYMENT
   const config = {
-    reference: order?.id,
-    firstname: User.first_name,
-    lastname: User.last_name,
-    phone: order?.customer_phone,
-    email: order?.customer_email,
-    amount: order?.subtotal * 100,
+    reference: order && order[0]?.order_id,
+    firstname: User?.first_name,
+    lastname: User?.last_name,
+    phone: order && order[0]?.customer_phone,
+    email: order && order[0]?.customer_email,
+    amount: order && total_price + order.length * 1000,
     publicKey: process.env.PUBLIC_KEY,
   };
   const componentProps = {
     ...config,
     onSuccess: (res) => {
-      updateOrderFn();
+      updateOrderFn(res.transaction);
     },
     onClose: () => {
       toast({
