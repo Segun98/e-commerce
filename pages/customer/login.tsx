@@ -179,7 +179,6 @@ export const Login = () => {
               <FormLabel htmlFor="email">Email</FormLabel>
               <InputGroup>
                 <Input
-                  autoFocus={true}
                   type="email"
                   id="email"
                   name="email"

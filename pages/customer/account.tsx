@@ -239,7 +239,7 @@ export const Account = () => {
                       isRequired
                       aria-label="phone number"
                       isReadOnly={readOnly}
-                      autoFocus={readOnly}
+                      autoFocus={readOnly ? false : true}
                       placeholder="Click Edit to add Phone Number"
                       width="100%"
                       type="tel"
@@ -258,7 +258,6 @@ export const Account = () => {
                     isRequired
                     aria-label="Address"
                     isReadOnly={readOnly}
-                    autoFocus={readOnly}
                     placeholder="Click Edit to add Address"
                     id="Address"
                     name="Address"
