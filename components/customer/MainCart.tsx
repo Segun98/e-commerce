@@ -6,9 +6,9 @@ import { useToken } from "@/Context/TokenProvider";
 import { deleteFromCart, updateCart } from "@/graphql/customer";
 import { cartItems } from "@/redux/features/cart/fetchCart";
 import { Cart } from "@/Typescript/types";
-import { Commas } from "@/utils/helpers";
+import { Commas, nairaSign } from "@/utils/helpers";
 import { useMutation } from "@/utils/useMutation";
-
+import { useRouter } from "next/router";
 interface IProps {
   cart: Cart[];
   setLoadingCart: (boolean) => void;
@@ -17,6 +17,10 @@ export const MainCart: React.FC<IProps> = ({ cart, setLoadingCart }) => {
   const toast = useToast();
   const { Token } = useToken();
   const dispatch = useDispatch();
+  const router = useRouter();
+
+  //cart items subtotal
+  const subTotal = cart.reduce((a, c) => a + c.product.price * c.quantity, 0);
 
   //update quantity of an item
   const updateCartFn = async (id, quantity) => {
@@ -86,8 +90,7 @@ export const MainCart: React.FC<IProps> = ({ cart, setLoadingCart }) => {
         <div className="cart-item-title">
           <div>Product</div>
           <div></div>
-          <div>Subtotal</div>
-          <div></div>
+          <div>Total</div>
           <div>Remove</div>
         </div>
         <hr />
@@ -99,7 +102,9 @@ export const MainCart: React.FC<IProps> = ({ cart, setLoadingCart }) => {
               </div>
               <div className="item-details">
                 <p className="name">{c.product.name}</p>
-                <p className="price">&#8358; {Commas(c.product.price)}</p>
+                <p className="price">
+                  {nairaSign} {Commas(c.product.price)}
+                </p>
                 <div className="qty-btn">
                   <button
                     title="decrement quantity"
@@ -131,18 +136,9 @@ export const MainCart: React.FC<IProps> = ({ cart, setLoadingCart }) => {
                 </div>
               </div>
               <div className="subtotal">
-                &#8358; {Commas(c.product.price * c.quantity)}
+                {nairaSign} {Commas(c.product.price * c.quantity)}
               </div>
-              <Button
-                className="order-btn"
-                color="white"
-                size="xs"
-                background="var(--deepblue)"
-              >
-                <Link href={`/product/checkout/${c.id}`}>
-                  <a>Checkout</a>
-                </Link>
-              </Button>
+
               <button
                 title="delete cart item"
                 name="delete cart item"
@@ -156,6 +152,29 @@ export const MainCart: React.FC<IProps> = ({ cart, setLoadingCart }) => {
               </button>
             </div>
           ))}
+
+        {/* subtotal and checkout  */}
+        <div className="cart-item-title">
+          <div></div>
+          <div></div>
+          <div>
+            <span>Subtotal:</span>
+            <br />
+            <span style={{ color: "var(--deepblue)" }}>
+              {nairaSign} {Commas(subTotal)}
+            </span>
+          </div>
+
+          <Button
+            className="order-btn"
+            color="white"
+            size="xs"
+            background="var(--deepblue)"
+            onClick={() => router.push(`/product/checkout`)}
+          >
+            Checkout
+          </Button>
+        </div>
       </div>
     </section>
   );
