@@ -1,38 +1,17 @@
-import {
-  Button,
-  List,
-  ListItem,
-  Popover,
-  PopoverArrow,
-  PopoverBody,
-  PopoverCloseButton,
-  PopoverContent,
-  PopoverFooter,
-  PopoverHeader,
-  PopoverTrigger,
-  Skeleton,
-  useToast,
-  Text,
-} from "@chakra-ui/core";
+import { List, ListItem, Skeleton, Text } from "@chakra-ui/core";
 import Head from "next/head";
 import { useEffect } from "react";
 import { PurchaseSteps } from "@/components/customer/PurchaseSteps";
 import { Layout } from "@/components/Layout";
 import { useToken } from "@/Context/TokenProvider";
 import { getCustomerOrders } from "@/graphql/customer";
-import { Orders } from "@/Typescript/types";
-import { Commas, differenceBetweenDates } from "@/utils/helpers";
-import { useMutation } from "@/utils/useMutation";
 import { ProtectRouteC } from "@/utils/ProtectedRouteC";
-import { gql } from "graphql-request";
 import queryFunc from "@/utils/fetcher";
 import useSWR, { mutate } from "swr";
-import { useRouter } from "next/router";
+import { OrderPage } from "@/components/customer/OrderPage";
 
 export const CustomerOrders = () => {
   const { Token } = useToken();
-  const toast = useToast();
-  const router = useRouter();
 
   //using SWR to fetch data
   const { data } = useSWR(`getCustomerOrders`, () =>
@@ -44,86 +23,19 @@ export const CustomerOrders = () => {
     mutate(`getCustomerOrders`);
   }, [Token]);
 
-  //cancel order
-  async function handleOrderCancel(
-    id: string,
-    name: string,
-    quantity: number,
-    subtotal: number
-  ) {
-    const cancelOrder = gql`
-      mutation cancelOrder($id: ID!, $cancel_reason: String) {
-        cancelOrder(id: $id, cancel_reason: $cancel_reason) {
-          message
+  //Lookup helper to map order_id to order(s). {8219681236: [{order}, {order}], 8219681236: [{another order}]}
+
+  //makes it easy to handle multiple orders sharing the same order_id
+
+  const lookup = data
+    ? data.getCustomerOrders.reduce((acc, row) => {
+        if (!(row.order_id in acc)) {
+          acc[row.order_id] = [];
         }
-      }
-    `;
-
-    let answer = window.prompt(
-      `Please Tell Us Why You wish to cancel This Order
-
-      *Details -
-
-      Product: ${name}
-
-      Quantity: ${quantity}
-      
-      Subtotal: ${subtotal}
-      `
-    );
-    if (answer) {
-      const { data, error } = await useMutation(
-        cancelOrder,
-        { id, cancel_reason: answer },
-        Token
-      );
-
-      if (data) {
-        mutate(`getCustomerOrders`);
-        toast({
-          title: "Order Has Been Cancelled",
-          status: "info",
-          position: "top",
-        });
-      }
-      if (error) {
-        let msg = error.response.errors[0].message || error.message;
-        toast({
-          title: "Error Cancelling Order",
-          description: msg,
-          status: "error",
-          position: "top",
-        });
-      }
-    }
-  }
-
-  //Parse Date
-  function toDate(d: string) {
-    let date = new Date(parseInt(d));
-    let format = new Intl.DateTimeFormat("en-us", {
-      day: "numeric",
-      month: "short",
-      year: "numeric",
-    }).format(date);
-
-    return format || date.toLocaleString();
-  }
-
-  //disable order return button if after 3 days of order reciept
-  function disableReturnOrder(date: string) {
-    //if no delivery date (order is most likely still in transit or was canceled before delivery)
-    if (!date) {
-      return true;
-    }
-
-    let day = differenceBetweenDates(date);
-
-    if (day > 2) {
-      return true;
-    }
-    return false;
-  }
+        acc[row.order_id].push(row);
+        return acc;
+      }, {})
+    : {};
 
   return (
     <Layout>
@@ -138,6 +50,10 @@ export const CustomerOrders = () => {
               processed. It has been acknowledged
             </ListItem>
             <ListItem>
+              * <strong>In Transit</strong> signifies that your Order is on its
+              way!
+            </ListItem>
+            <ListItem>
               * <strong>Cancelled</strong> signifies that your item has been
               cancelled by you or our vendor.
             </ListItem>
@@ -148,6 +64,7 @@ export const CustomerOrders = () => {
           </List>
         </div>
 
+        {/* Loading screen  */}
         {!data && (
           <Text as="div" className="skeleton">
             <Skeleton height="40px" my="10px" />
@@ -168,142 +85,11 @@ export const CustomerOrders = () => {
         ) : null}
 
         {data && data.getCustomerOrders.length > 0 && (
-          <table style={{ width: "100%" }}>
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Price</th>
-                <th>Qty</th>
-                <th>Total</th>
-                <th>Status</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-
-            <tbody>
-              {data.getCustomerOrders.map((o: Orders) => (
-                <tr key={o.id}>
-                  <td>{o.name}</td>
-                  <td>{Commas(o.price)}</td>
-                  <td>{o.quantity}</td>
-                  <td>{Commas(o.subtotal)}</td>
-                  <td>
-                    {/* if order is completed return "Delivered" */}
-                    {o.completed === "true" && "Delivered"}
-                    {/* else run this logic- if accepted is true return "Processing" else if Cancelled is true return "Canceled" else return processing */}
-                    {o.completed === "false" && (
-                      <div>
-                        {o.accepted === "true"
-                          ? "Being shipped"
-                          : o.canceled === "true"
-                          ? "Cancelled"
-                          : "Processing"}
-                      </div>
-                    )}
-                  </td>
-                  <td>
-                    <Popover placement="left" usePortal={true}>
-                      <PopoverTrigger>
-                        <Button
-                          size="xs"
-                          rightIcon="chevron-down"
-                          style={{
-                            background: "var(--deepblue)",
-                            color: "white",
-                          }}
-                        >
-                          Action
-                        </Button>
-                      </PopoverTrigger>
-                      <PopoverContent zIndex={4}>
-                        <PopoverArrow />
-                        <PopoverCloseButton />
-                        <PopoverHeader>
-                          <Text as="span">
-                            Order ID:{" "}
-                            <Text as="span" color="var(--deepblue)">
-                              {o.order_id}
-                            </Text>
-                            <Text as="span" padding="0 12px">
-                              |
-                            </Text>
-                            <Text as="span" color="var(--deepblue)">
-                              Date: {toDate(o.created_at)}
-                            </Text>
-                          </Text>
-                        </PopoverHeader>
-                        <PopoverBody>
-                          <div
-                            style={{
-                              display: "flex",
-                              justifyContent: "space-around",
-                            }}
-                          >
-                            <Button
-                              background="red"
-                              color="white"
-                              isDisabled={
-                                o.accepted === "true" || o.canceled === "true"
-                                  ? true
-                                  : false
-                              }
-                              onClick={() =>
-                                handleOrderCancel(
-                                  o.id,
-                                  o.name,
-                                  o.quantity,
-                                  o.subtotal
-                                )
-                              }
-                            >
-                              Cancel
-                            </Button>
-                            <Button
-                              color="var(--deepblue)"
-                              isDisabled={
-                                disableReturnOrder(o.delivery_date) ||
-                                o.canceled === "true"
-                              }
-                              onClick={() =>
-                                router.push(`/customer?returnId=${o.order_id}`)
-                              }
-                            >
-                              Return
-                            </Button>
-                          </div>
-                        </PopoverBody>
-                        <PopoverFooter fontSize="0.7rem">
-                          {o.delivery_date && (
-                            <span>
-                              Delivery date:
-                              <Text as="span" color="var(--deepblue)">
-                                {toDate(o.delivery_date)}
-                              </Text>
-                              <Text as="span" color="var(--deepblue)">
-                                {" "}
-                                |
-                              </Text>
-                            </span>
-                          )}{" "}
-                          Orders are fulfilled within 2-4 days of placement
-                        </PopoverFooter>
-                      </PopoverContent>
-                    </Popover>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          <OrderPage lookup={lookup} Token={Token} />
         )}
       </main>
       <PurchaseSteps />
       <style jsx>{`
-        table {
-          border-spacing: 5px;
-        }
-        tr:nth-child(even) {
-          background-color: #f2f2f2;
-        }
         .customer-orders {
           margin: auto;
           width: 95%;
@@ -320,16 +106,6 @@ export const CustomerOrders = () => {
           color: var(--deepblue);
         }
 
-        th {
-          text-align: center;
-          font-size: 0.8rem;
-        }
-        td {
-          text-align: center;
-          font-size: 0.8rem;
-          padding: 5px 0;
-        }
-
         @media only screen and (min-width: 700px) {
           .customer-orders {
             margin: auto;
@@ -338,20 +114,10 @@ export const CustomerOrders = () => {
           .order-status {
             font-size: 1rem;
           }
-          td {
-            padding: 5px 10px;
-          }
         }
         @media only screen and (min-width: 1000px) {
           .order-status {
             margin: 30px 0;
-          }
-          th {
-            font-size: 1rem;
-          }
-          td {
-            padding: 10px 10px;
-            font-size: 1rem;
           }
         }
 
