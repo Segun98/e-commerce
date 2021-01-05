@@ -1198,8 +1198,8 @@ Class names accross components can be the same but they are wrapped by a unique 
   font-weight: bold;
   display: -ms-grid;
   display: grid;
-  -ms-grid-columns: (1fr)[5];
-      grid-template-columns: repeat(5, 1fr);
+  -ms-grid-columns: (1fr)[4];
+      grid-template-columns: repeat(4, 1fr);
   place-items: center;
 }
 
@@ -1209,8 +1209,8 @@ Class names accross components can be the same but they are wrapped by a unique 
   padding-bottom: 5px;
   display: -ms-grid;
   display: grid;
-  -ms-grid-columns: (1fr)[5];
-      grid-template-columns: repeat(5, 1fr);
+  -ms-grid-columns: (1fr)[4];
+      grid-template-columns: repeat(4, 1fr);
   place-items: center;
   border-bottom: 0.1px solid rgba(32, 33, 36, 0.28);
   gap: 5px;
@@ -1271,7 +1271,6 @@ Class names accross components can be the same but they are wrapped by a unique 
 
 .cart-page .cart-section .cart-item .order-btn {
   font-size: 0.7rem;
-  margin-left: 5px;
 }
 
 @media only screen and (min-width: 700px) {

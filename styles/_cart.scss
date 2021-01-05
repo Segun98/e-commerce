@@ -18,7 +18,7 @@
         .cart-item-title {
             font-weight: bold;
             display: grid;
-            grid-template-columns: repeat(5, 1fr);
+            grid-template-columns: repeat(4, 1fr);
             place-items: center;
         }
 
@@ -27,7 +27,7 @@
             font-weight: bold;
             padding-bottom: 5px;
             display: grid;
-            grid-template-columns: repeat(5, 1fr);
+            grid-template-columns: repeat(4, 1fr);
             place-items: center;
             border-bottom: 0.1px solid $softgrey;
             gap: 5px;
@@ -75,8 +75,9 @@
 
             .order-btn {
                 font-size: 0.7rem;
-                margin-left: 5px;
+
             }
+
 
         }
 
@@ -121,6 +122,7 @@
                         }
                     }
                 }
+
             }
 
         }
