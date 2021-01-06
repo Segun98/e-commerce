@@ -115,6 +115,16 @@ export const OrderPage: React.FC<Props> = ({ lookup, Token }) => {
                       {" "}
                       {nairaSign} {Commas(o.subtotal)}
                     </span>
+                    {o.request && (
+                      <div>
+                        <br />
+                        <h1 style={{ color: "var(--deepblue)" }}>
+                          {" "}
+                          - Request -{" "}
+                        </h1>
+                        <p>{o.request}</p>
+                      </div>
+                    )}
                   </p>
                 </div>
               ))}
@@ -158,9 +168,14 @@ export const OrderPage: React.FC<Props> = ({ lookup, Token }) => {
                   <PopoverHeader>Order ID: {o}</PopoverHeader>
                   <PopoverBody>
                     <div>
+                      Total: {Commas(lookup[o][0].orderStatus.total_price)} |
                       Delivery Fee:{" "}
                       {Commas(lookup[o][0].orderStatus.delivery_fee)} |
-                      Subtotal: {Commas(lookup[o][0].orderStatus.total_price)}
+                      Subtotal:{" "}
+                      {Commas(
+                        lookup[o][0].orderStatus.total_price +
+                          lookup[o][0].orderStatus.delivery_fee
+                      )}
                     </div>
 
                     {/* buttons  */}
@@ -205,13 +220,16 @@ export const OrderPage: React.FC<Props> = ({ lookup, Token }) => {
                   <PopoverFooter fontSize="0.7rem">
                     Orders are fulfilled within 2-4 days of placement{" "}
                     {lookup[o][0].orderStatus.delivered === "true"
-                      ? `| ${toDate(lookup[o][0].orderStatus.delivery_date)}`
+                      ? `| Delivered: ${toDate(
+                          lookup[o][0].orderStatus.delivery_date
+                        )}`
                       : ""}
                   </PopoverFooter>
                 </PopoverContent>
               </Popover>
             </p>
           </div>
+          <hr />
         </section>
       ))}
 
