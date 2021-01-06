@@ -143,19 +143,22 @@ export const updateProduct = gql`
 export const getVendorOrders = gql`
   query getVendorOrders($limit: Int) {
     getVendorOrders(limit: $limit) {
-      id
       order_id
       name
       price
       quantity
       subtotal
       request
-      accepted
-      completed
-      delivery_date
-      canceled
-      customer_email
       created_at
+      orderStatus {
+        order_id
+        delivery_fee
+        total_price
+        delivery_date
+        delivered
+        in_transit
+        canceled
+      }
     }
   }
 `;
