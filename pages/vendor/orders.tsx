@@ -17,19 +17,16 @@ export const Orders = () => {
         <main>
           <div className="order-status">
             <List>
-              <ListItem>
-                * <strong>Pending</strong> signifies that you have not
-                accepted/acknowleged an Order, Please take ACTION.
-              </ListItem>
               <ListItem mt="2" mb="2">
-                * <strong>Cancelled</strong> signifies that you or a customer
-                has cancelled the order. Note: You cannnot cancel after you have
-                accepted an Order
+                * <strong>Cancelled</strong> signifies that admin or a customer
+                has cancelled the order.
               </ListItem>
               <ListItem>
-                * <strong>Delivered</strong> (under 'Completed' column)
+                * <strong>Delivered</strong>
                 signifies that your item has been delivered to your customer
-                else you see 'NO'
+              </ListItem>
+              <ListItem>
+                * <strong>Contact Us </strong> for more information
               </ListItem>
             </List>
           </div>
