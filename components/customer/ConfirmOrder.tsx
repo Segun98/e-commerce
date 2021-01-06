@@ -21,25 +21,26 @@ const updateQuantity = gql`
 
 interface Iprops {
   order: Orders[];
+  subtotal: number;
+  delivery: number;
 }
 
-export const ConfirmOrder: React.FC<Iprops> = ({ order }) => {
+export const ConfirmOrder: React.FC<Iprops> = ({
+  order,
+  subtotal,
+  delivery,
+}) => {
   const { Token } = useToken();
   const { User } = useUser();
   const toast = useToast();
   const router = useRouter();
 
-  let total_price =
-    order && order.length > 0
-      ? order.reduce((a, c) => a + c.price * c.quantity, 0)
-      : 0;
-
   async function updateOrderFn(transaction_id: string) {
     const variables: MutationUpdateOrderArgs = {
       order_id: order[0].order_id,
       transaction_id,
-      delivery_fee: order.length * 1000,
-      total_price,
+      delivery_fee: delivery,
+      total_price: subtotal,
     };
 
     const { data, error } = await useMutation(updateOrder, variables, Token);
@@ -90,6 +91,8 @@ export const ConfirmOrder: React.FC<Iprops> = ({ order }) => {
     }
   }
 
+  let paystackAmount = delivery + subtotal;
+
   //PAYSTACK TEST PAYMENT
   const config = {
     reference: order && order[0]?.order_id,
@@ -97,9 +100,10 @@ export const ConfirmOrder: React.FC<Iprops> = ({ order }) => {
     lastname: User?.last_name,
     phone: order && order[0]?.customer_phone,
     email: order && order[0]?.customer_email,
-    amount: order && total_price + order.length * 1000,
+    amount: paystackAmount * 100,
     publicKey: process.env.PUBLIC_KEY,
   };
+
   const componentProps = {
     ...config,
     onSuccess: (res) => {
