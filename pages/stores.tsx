@@ -101,7 +101,7 @@ const Stores = () => {
         <section className="home-vendor-onboarding">
           <h1>Find Your Favourite Stores</h1>
           <div>
-            <Link href="/vendor/become-a-vendor">
+            <Link href="/become-a-vendor">
               <a>
                 Open Your Store
                 <Icon name="external-link" />
