@@ -39,24 +39,28 @@ export const Dashboard: React.FC = () => {
     }
   }, [Token]);
 
-  //Order Status
-  const completed = orders.filter((c) => c.completed === "true");
+  //delivered orders
+  const delivered = orders.filter((o) => o.orderStatus.delivered === "true");
 
   //Getting Revenue
-  const subtotal = completed.map((c) => c.subtotal);
+  const subtotal = delivered.map((d) => d.subtotal);
+
   //ensure subtotal has run before reducing
   const revenue = subtotal.length > 0 ? subtotal.reduce((a, c) => a + c) : 0;
 
   const pending = orders.filter(
-    (c) => c.accepted === "false" && c.canceled === "false"
+    (o) =>
+      o.orderStatus.canceled === "false" &&
+      o.orderStatus.delivered === "false" &&
+      o.orderStatus.in_transit === "false"
   );
-  const canceled = orders.filter((c) => c.canceled === "true"); // order.length - completed.length - pending.length
+
+  const canceled = orders.filter((o) => o.orderStatus.canceled === "true");
 
   useEffect(() => {
     if (orders.length > 0 && pending.length > 0) {
       toast({
-        title: "You have pending Orders",
-        description: "Please take Action",
+        title: "You have New Orders",
         status: "info",
         duration: 5000,
         isClosable: true,
@@ -133,8 +137,8 @@ export const Dashboard: React.FC = () => {
                   <Icon name="check-circle" color="#32CD32" size="30px" />
                 </div>
                 <hr />
-                <h2>{completed.length}</h2>
-                <p>Completed Orders</p>
+                <h2>{delivered.length}</h2>
+                <p>Delivered Orders</p>
               </div>
 
               <div className="order-status_item">
@@ -163,6 +167,9 @@ export const Dashboard: React.FC = () => {
                 <p>Revenue</p>
               </div>
             </div>
+
+            {/* CHART  */}
+
             <div className="dashboard_chart">
               <Chart orders={orders} />
             </div>
