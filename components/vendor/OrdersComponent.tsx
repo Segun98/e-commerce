@@ -17,11 +17,8 @@ import {
   PopoverHeader,
   PopoverTrigger,
   Skeleton,
-  useToast,
   Text,
 } from "@chakra-ui/core";
-import { useMutation } from "@/utils/useMutation";
-import { gql } from "graphql-request";
 
 interface Iprops {
   limit: number | null;
@@ -34,7 +31,6 @@ interface DefaultOrderState {
 export const OrdersComponent: React.FC<Iprops> = ({ limit }) => {
   // Redux stuff
   const dispatch = useDispatch();
-  const toast = useToast();
   const { loading, error, orders } = useSelector<
     DefaultOrderState,
     IOrderInitialState
@@ -48,95 +44,6 @@ export const OrdersComponent: React.FC<Iprops> = ({ limit }) => {
       dispatch(ordersThunk(Token, { limit }));
     }
   }, [Token]);
-
-  //accept order
-  async function handleOrderAccept(id, name, quantity, subtotal) {
-    const acceptOrder = gql`
-      mutation acceptOrder($id: ID!) {
-        acceptOrder(id: $id) {
-          message
-        }
-      }
-    `;
-    if (
-      window.confirm(`A dispatch rider will get in touch after you accept an order.
-      
-      *Details -
-
-       Product: ${name}
-
-       Quantity: ${quantity}
-       
-       Subtotal: ${Commas(subtotal)}
-      `)
-    ) {
-      const { data, error } = await useMutation(acceptOrder, { id }, Token);
-      if (data) {
-        dispatch(ordersThunk(Token, { limit: null }));
-        toast({
-          title: "Order Has Been Accepted",
-          description: "A Dispatch Rider Will Get In Touch Soon",
-          status: "info",
-          position: "top",
-          duration: 7000,
-        });
-      }
-      if (error) {
-        toast({
-          title: "Error Accepting Order",
-          description: "Check Your Internet Connection",
-          position: "top",
-          status: "error",
-        });
-      }
-    }
-  }
-
-  //cancel order
-  async function handleOrderCancel(id, name, quantity, subtotal) {
-    const cancelOrder = gql`
-      mutation cancelOrder($id: ID!, $cancel_reason: String) {
-        cancelOrder(id: $id, cancel_reason: $cancel_reason) {
-          message
-        }
-      }
-    `;
-    let answer = window.prompt(
-      `Please Tell Us Why You wish to cancel This Order
-
-      *Details -
-
-      Product: ${name}
-
-      Quantity: ${quantity}
-      
-      Subtotal: ${subtotal}
-      `
-    );
-    if (answer) {
-      const { data, error } = await useMutation(
-        cancelOrder,
-        { id, cancel_reason: answer },
-        Token
-      );
-
-      if (data) {
-        dispatch(ordersThunk(Token, { limit: null }));
-        toast({
-          title: "Order Has Been Cancelled",
-          position: "top",
-          status: "info",
-        });
-      }
-      if (error) {
-        toast({
-          title: "Error Cancelling Order",
-          position: "top",
-          status: "error",
-        });
-      }
-    }
-  }
 
   //Parse Date
   function toDate(d) {
@@ -180,7 +87,7 @@ export const OrdersComponent: React.FC<Iprops> = ({ limit }) => {
           <table style={{ width: "100%" }}>
             <thead>
               <tr>
-                {screenWidth() < 990 && <th>Action</th>}
+                {screenWidth() < 990 && <th>More</th>}
                 <th>Order ID</th>
                 <th>Name</th>
                 <th>Price</th>
@@ -188,15 +95,14 @@ export const OrdersComponent: React.FC<Iprops> = ({ limit }) => {
                 <th>Subtotal</th>
                 <th>Request</th>
                 <th>Order Date</th>
-                <th>Completed</th>
                 <th>Status</th>
-                {screenWidth() > 990 && <th>Action</th>}
+                {screenWidth() > 990 && <th>More</th>}
               </tr>
             </thead>
 
             <tbody>
               {orders.map((o) => (
-                <tr className="order-item" key={o.id}>
+                <tr className="order-item" key={o.order_id}>
                   {screenWidth() < 990 && (
                     <td>
                       <Popover placement="left" usePortal={true}>
@@ -209,7 +115,7 @@ export const OrdersComponent: React.FC<Iprops> = ({ limit }) => {
                               color: "white",
                             }}
                           >
-                            Action
+                            More
                           </Button>
                         </PopoverTrigger>
                         <PopoverContent zIndex={4}>
@@ -217,70 +123,47 @@ export const OrdersComponent: React.FC<Iprops> = ({ limit }) => {
                           <PopoverCloseButton />
                           <PopoverHeader>Order ID: {o.order_id}</PopoverHeader>
                           <PopoverBody>
-                            <div
-                              style={{
-                                display: "flex",
-                                justifyContent: "space-around",
-                              }}
+                            <Button
+                              color="var(--deepblue)"
+                              isDisabled={
+                                o.orderStatus.delivered === "true" &&
+                                o.orderStatus.canceled === "true"
+                                  ? true
+                                  : false
+                              }
+                              // onClick={() =>
+                              //   router.push(
+                              //     `/customer?returnId=${lookup[o][0].orderStatus.order_id}`
+                              //   )
+                              // }
                             >
-                              <Button
-                                color="var(--deepblue)"
-                                isDisabled={
-                                  o.accepted === "true" || o.canceled === "true"
-                                    ? true
-                                    : false
-                                }
-                                onClick={() =>
-                                  handleOrderAccept(
-                                    o.id,
-                                    o.name,
-                                    o.quantity,
-                                    o.subtotal
-                                  )
-                                }
-                              >
-                                Accept
-                              </Button>
-                              <Button
-                                color="white"
-                                background="red"
-                                isDisabled={
-                                  o.accepted === "true" || o.canceled === "true"
-                                    ? true
-                                    : false
-                                }
-                                onClick={() =>
-                                  handleOrderCancel(
-                                    o.id,
-                                    o.name,
-                                    o.quantity,
-                                    o.subtotal
-                                  )
-                                }
-                              >
-                                Cancel
-                              </Button>
-                            </div>
+                              Contact
+                            </Button>
                           </PopoverBody>
                           <PopoverFooter fontSize="0.7rem">
-                            Ensure the product is readily available before
-                            accepting
+                            Ensure your products are always readily available
+                            {o.orderStatus.delivered === "true" &&
+                            o.orderStatus.delivery_date
+                              ? `| Delivered: ${toDate(
+                                  o.orderStatus.delivery_date
+                                )}`
+                              : ""}
                           </PopoverFooter>
                         </PopoverContent>
                       </Popover>
                     </td>
                   )}
                   <td style={{ display: "flex" }}>
-                    {/* display "*" if order is pending */}
+                    {/* display "*" if order hasn't been delivered */}
                     <span
                       style={{
                         color: "red",
                         display:
-                          o.accepted === "true"
-                            ? "none"
-                            : o.canceled === "true"
-                            ? "none"
-                            : "block",
+                          o.orderStatus.canceled === "false" &&
+                          o.orderStatus.delivered === "false" &&
+                          o.orderStatus.in_transit === "false"
+                            ? "block"
+                            : "none",
                       }}
                     >
                       *
@@ -293,15 +176,23 @@ export const OrdersComponent: React.FC<Iprops> = ({ limit }) => {
                   <td>{Commas(o.price * o.quantity)}</td>
                   <td>{o.request || "none"}</td>
                   <td>{toDate(o.created_at)}</td>
-                  {/* completed means customer has recieved item */}
-                  <td>{o.completed === "false" ? "No" : "Delivered"}</td>
-                  {/* not accepted or not cancelled should mean the item is pending  */}
                   <td>
-                    {o.accepted === "true"
-                      ? "Accepted"
-                      : o.canceled === "true"
-                      ? "Cancelled"
-                      : "Pending"}
+                    {/* Canceled status  */}
+                    {o.orderStatus.canceled === "true" ? "Cancelled" : ""}
+
+                    {/* processing  */}
+                    {o.orderStatus.delivered === "false" &&
+                    o.orderStatus.in_transit === "false" &&
+                    o.orderStatus.canceled === "false"
+                      ? "Processing"
+                      : ""}
+
+                    {/* delivered shows "delivered", else in transit */}
+                    {o.orderStatus.delivered === "true"
+                      ? "delivered"
+                      : o.orderStatus.in_transit === "true"
+                      ? "In Transit"
+                      : ""}
                   </td>
                   {screenWidth() > 990 && (
                     <td>
@@ -323,54 +214,33 @@ export const OrdersComponent: React.FC<Iprops> = ({ limit }) => {
                           <PopoverCloseButton />
                           <PopoverHeader>Order ID: {o.order_id}</PopoverHeader>
                           <PopoverBody>
-                            <div
-                              style={{
-                                display: "flex",
-                                justifyContent: "space-around",
-                              }}
-                            >
+                            <div>
                               <Button
                                 color="var(--deepblue)"
                                 isDisabled={
-                                  o.accepted === "true" || o.canceled === "true"
+                                  o.orderStatus.delivered === "true" &&
+                                  o.orderStatus.canceled === "true"
                                     ? true
                                     : false
                                 }
-                                onClick={() =>
-                                  handleOrderAccept(
-                                    o.id,
-                                    o.name,
-                                    o.quantity,
-                                    o.subtotal
-                                  )
-                                }
+                                // onClick={() =>
+                                //   router.push(
+                                //     `/customer?returnId=${lookup[o][0].orderStatus.order_id}`
+                                //   )
+                                // }
                               >
-                                Accept
-                              </Button>
-                              <Button
-                                color="white"
-                                background="red"
-                                isDisabled={
-                                  o.accepted === "true" || o.canceled === "true"
-                                    ? true
-                                    : false
-                                }
-                                onClick={() =>
-                                  handleOrderCancel(
-                                    o.id,
-                                    o.name,
-                                    o.quantity,
-                                    o.subtotal
-                                  )
-                                }
-                              >
-                                Cancel
+                                Contact
                               </Button>
                             </div>
                           </PopoverBody>
                           <PopoverFooter fontSize="0.7rem">
-                            Ensure the product is readily available before
-                            accepting
+                            Ensure your products are always readily available
+                            {o.orderStatus.delivered === "true" &&
+                            o.orderStatus.delivery_date
+                              ? `| Delivered: ${toDate(
+                                  o.orderStatus.delivery_date
+                                )}`
+                              : ""}
                           </PopoverFooter>
                         </PopoverContent>
                       </Popover>

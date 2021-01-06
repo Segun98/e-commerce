@@ -1,7 +1,6 @@
 import {
   Button,
   Skeleton,
-  useToast,
   Popover,
   PopoverTrigger,
   PopoverContent,
@@ -17,18 +16,12 @@ import { useToken } from "@/Context/TokenProvider";
 import { Commas, truncate } from "@/utils/helpers";
 import { getVendorOrders } from "@/graphql/vendor";
 import { Orders } from "@/Typescript/types";
-import { useMutation } from "@/utils/useMutation";
-import { ordersThunk } from "@/redux/features/orders/fetchOrders";
-import { useDispatch } from "react-redux";
-import { gql } from "graphql-request";
 import useSWR, { mutate } from "swr";
 import queryFunc from "@/utils/fetcher";
 
 //Recent Orders displayed in /vendor/dashboard.
 export const DashboardOrders = () => {
   const { Token } = useToken();
-  const toast = useToast();
-  const dispatch = useDispatch();
 
   //using SWR to fetch data
   const { data, error } = useSWR(`getVendorOrders`, () =>
@@ -39,102 +32,6 @@ export const DashboardOrders = () => {
   useEffect(() => {
     mutate(`getVendorOrders`);
   }, [Token]);
-
-  //accept order
-  async function handleOrderAccept(id, name, quantity, subtotal) {
-    const acceptOrder = gql`
-      mutation acceptOrder($id: ID!) {
-        acceptOrder(id: $id) {
-          message
-        }
-      }
-    `;
-    if (
-      window.confirm(`A dispatch rider will get in touch after you accept an order.
-      
-      *Details -
-
-       Product: ${name}
-
-       Quantity: ${quantity}
-       
-       Subtotal: ${Commas(subtotal)}
-      `)
-    ) {
-      const { data, error } = await useMutation(acceptOrder, { id }, Token);
-      if (data) {
-        //causes useQuery to refetch and store to update
-        mutate(`getVendorOrders`);
-
-        //dispatching to update central redux store, to update the dashboard metrics
-        dispatch(ordersThunk(Token, { limit: null }));
-        toast({
-          title: "Order Has Been Accepted",
-          description: "A Dispatch Rider Will Get In Touch Soon",
-          status: "info",
-          position: "top",
-          duration: 7000,
-        });
-      }
-      if (error) {
-        toast({
-          title: "Error Accepting Order",
-          description: "Check Your Internet Connection",
-          status: "error",
-          position: "top",
-        });
-      }
-    }
-  }
-
-  //cancel order
-  async function handleOrderCancel(id, name, quantity, subtotal) {
-    const cancelOrder = gql`
-      mutation cancelOrder($id: ID!, $cancel_reason: String) {
-        cancelOrder(id: $id, cancel_reason: $cancel_reason) {
-          message
-        }
-      }
-    `;
-
-    let answer = window.prompt(
-      `Please Tell Us Why You wish to cancel This Order
-
-      *Details -
-
-      Product: ${name}
-
-      Quantity: ${quantity}
-      
-      Subtotal: ${Commas(subtotal)}
-      `
-    );
-    if (answer) {
-      const { data, error } = await useMutation(
-        cancelOrder,
-        { id, cancel_reason: answer },
-        Token
-      );
-      if (data) {
-        mutate(`getVendorOrders`);
-
-        //dispatching to update central redux store, to update the dashboard metrics
-        dispatch(ordersThunk(Token, { limit: null }));
-        toast({
-          title: "Order Has Been Cancelled",
-          position: "top",
-          status: "info",
-        });
-      }
-      if (error) {
-        toast({
-          title: "Error Cancelling Order",
-          status: "error",
-          position: "top",
-        });
-      }
-    }
-  }
 
   //Parse Date
   function toDate(d) {
@@ -181,23 +78,23 @@ export const DashboardOrders = () => {
               <th>Qty</th>
               <th>Total</th>
               <th>Req</th>
-              <th>Action</th>
+              <th>More</th>
             </tr>
           </thead>
           <tbody>
             {data.getVendorOrders.map((o: Orders) => (
-              <tr key={o.id}>
+              <tr key={o.order_id}>
                 <td className="name">
-                  {/* display "*" if order is pending */}
+                  {/* display "*" if order hasn't been delivered */}
                   <span
                     style={{
                       color: "red",
                       display:
-                        o.accepted === "true"
-                          ? "none"
-                          : o.canceled === "true"
-                          ? "none"
-                          : "block",
+                        o.orderStatus.canceled === "false" &&
+                        o.orderStatus.delivered === "false" &&
+                        o.orderStatus.in_transit === "false"
+                          ? "block"
+                          : "none",
                     }}
                   >
                     *
@@ -219,7 +116,7 @@ export const DashboardOrders = () => {
                           color: "white",
                         }}
                       >
-                        Action
+                        More
                       </Button>
                     </PopoverTrigger>
                     <PopoverContent zIndex={4}>
@@ -240,53 +137,33 @@ export const DashboardOrders = () => {
                         </Text>
                       </PopoverHeader>
                       <PopoverBody>
-                        <div
-                          style={{
-                            display: "flex",
-                            justifyContent: "space-around",
-                          }}
-                        >
+                        <div>
                           <Button
                             color="var(--deepblue)"
                             isDisabled={
-                              o.accepted === "true" || o.canceled === "true"
+                              o.orderStatus.delivered === "true" &&
+                              o.orderStatus.canceled === "true"
                                 ? true
                                 : false
                             }
-                            onClick={() =>
-                              handleOrderAccept(
-                                o.id,
-                                o.name,
-                                o.quantity,
-                                o.subtotal
-                              )
-                            }
+                            // onClick={() =>
+                            //   router.push(
+                            //     `/customer?returnId=${lookup[o][0].orderStatus.order_id}`
+                            //   )
+                            // }
                           >
-                            Accept
-                          </Button>
-                          <Button
-                            color="white"
-                            background="red"
-                            isDisabled={
-                              o.accepted === "true" || o.canceled === "true"
-                                ? true
-                                : false
-                            }
-                            onClick={() =>
-                              handleOrderCancel(
-                                o.id,
-                                o.name,
-                                o.quantity,
-                                o.subtotal
-                              )
-                            }
-                          >
-                            Cancel
+                            Contact
                           </Button>
                         </div>
                       </PopoverBody>
                       <PopoverFooter fontSize="0.7rem">
-                        Ensure the product is readily available before accepting
+                        Ensure your products are always readily available
+                        {o.orderStatus.delivered === "true" &&
+                        o.orderStatus.delivery_date
+                          ? `| Delivered: ${toDate(
+                              o.orderStatus.delivery_date
+                            )}`
+                          : ""}
                       </PopoverFooter>
                     </PopoverContent>
                   </Popover>
