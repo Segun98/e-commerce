@@ -1,22 +1,60 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Line } from "react-chartjs-2";
-import { Orders } from "../../Typescript/types";
+import { Orders } from "@/Typescript/types";
+import { useUser } from "@/Context/UserProvider";
 
 interface Iprops {
   orders: Orders[];
 }
 export const Chart: React.FC<Iprops> = ({ orders }) => {
-  //Parse date to get year
+  const { User } = useUser();
+  //year user joined , coming from database
+  const [yearJoined, setYearJoined] = useState("");
+  //an array showing the year the user joined till this year, printYear() function below is where the logic resides
+  const [yearsArr, setYearsArr] = useState([]);
+  //the selected year to dynamically update the chart
+  const [selectedYear, setSelectedYear] = useState<number | undefined>(
+    new Date().getFullYear()
+  );
+
+  useEffect(() => {
+    setYearJoined(User?.created_at || "");
+  }, [User]);
+
+  useEffect(() => {
+    printYears();
+  }, [yearJoined]);
+
+  // if user joined in 2015 and this year is 2017, this should return [2015, 2016, 2017]
+  function printYears() {
+    let joined = getYear(yearJoined);
+    let thisYear = new Date().getFullYear();
+    let years = [];
+
+    let difference = 0;
+    //means user joined this year
+    if (joined === thisYear) {
+      years.push(thisYear);
+      return years;
+    } else {
+      difference = thisYear - joined;
+    }
+
+    for (let i = 0; i < difference + 1; i++) {
+      years.push(joined + i);
+    }
+    setYearsArr(years);
+  }
+
+  // MAIN LOGIC FOR CHART LIBRARY STARTS HERE
+
+  //helper to Parse date to get year
   function getYear(d) {
     let date = new Date(parseInt(d));
     return date.getFullYear();
   }
-  //array of orders for this year
-  const OrdersThisYear = orders.filter(
-    (c) => getYear(c.delivery_date) === new Date().getFullYear()
-  );
 
-  //Parse date to get month
+  //helper to Parse date to get month
   function getMonth(d) {
     let date = new Date(parseInt(d));
     let format = new Intl.DateTimeFormat("en-us", {
@@ -25,11 +63,18 @@ export const Chart: React.FC<Iprops> = ({ orders }) => {
     return format;
   }
 
-  //array of completed orders
-  const completed = OrdersThisYear.filter((o) => o.completed === "true");
+  //array of orders for selected year, default to this year.
+  const OrdersThisYear = orders.filter(
+    (o) => getYear(o.orderStatus.delivery_date) === selectedYear
+  );
+
+  //array of delivered orders
+  const completed = OrdersThisYear.filter(
+    (o) => o.orderStatus.delivered === "true"
+  );
 
   // return array of months from DB
-  const months = completed.map((c) => getMonth(c.delivery_date));
+  const months = completed.map((c) => getMonth(c.orderStatus.delivery_date));
 
   //create an object that maps months to frequency e.g{January: 2, February:5}
   function repeatMonths() {
@@ -69,7 +114,7 @@ export const Chart: React.FC<Iprops> = ({ orders }) => {
     "November",
     "December",
   ];
-  //returns ["","","March", ""] to work with chart library
+  //returns ["1","","2", ""] where the numbers represent the frequency of order in a month
   function final() {
     let d = repeatMonths();
     return labels.map((l) => d[l] || "");
@@ -79,7 +124,7 @@ export const Chart: React.FC<Iprops> = ({ orders }) => {
     labels,
     datasets: [
       {
-        label: "Sales by Month for the Year",
+        label: `Sales by Month for ${selectedYear}`,
         fill: true,
         lineTension: 0.1,
         backgroundColor: "rgba(75,192,192,0.4)",
@@ -105,6 +150,28 @@ export const Chart: React.FC<Iprops> = ({ orders }) => {
   return (
     <div className="chart-comp">
       <h1>Sales Metrics</h1>
+      {/* toggle between years  */}
+      <div style={{ display: "flex" }}>
+        {yearsArr.map((y, i) => (
+          <div key={i}>
+            <button
+              aria-label="toggle chart data by year"
+              onClick={() => setSelectedYear(y)}
+              style={{
+                padding: "0 4px",
+                background: "#4BC0C0",
+                margin: "0 5px",
+                color: "whitesmoke",
+                borderRadius: "3px",
+              }}
+            >
+              {y}
+            </button>
+          </div>
+        ))}
+      </div>
+
+      {/* the chart  */}
       <Line data={data} />
     </div>
   );
