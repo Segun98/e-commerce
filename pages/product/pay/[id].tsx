@@ -7,6 +7,7 @@ import { ConfirmOrder } from "@/components/customer/ConfirmOrder";
 import { Orders } from "@/Typescript/types";
 import { Commas, nairaSign } from "@/utils/helpers";
 import { useToast } from "@chakra-ui/core";
+import Head from "next/head";
 
 export async function getServerSideProps({ params }) {
   const variables = {
@@ -28,9 +29,13 @@ const Pay = ({ variables }) => {
 
   const subTotal =
     order && order.length > 0 ? order.reduce((a, c) => a + c.subtotal, 0) : 0;
+  let delivery = order ? order.length * 1000 : 0;
 
   return (
     <Layout>
+      <Head>
+        <title>Payment | Secure | PartyStore</title>
+      </Head>
       {error &&
         toast({
           title: "An Error Occured",
@@ -73,21 +78,24 @@ const Pay = ({ variables }) => {
           <div className="details-grid">
             <p>Delivery</p>
             <p>
-              {nairaSign} {Commas(1000 * order.length)}
+              {nairaSign} {Commas(delivery)}
             </p>
           </div>
           <div className="details-grid">
             <p>Subtotal </p>
             <p>
-              {nairaSign} {Commas(subTotal)}
+              {nairaSign} {Commas(subTotal + delivery)}
             </p>
           </div>
         </div>
       )}
 
-      <div className="text-center pb-3 pt-3">
-        <ConfirmOrder order={order} />
-      </div>
+      {order && (
+        <div className="text-center pb-3 pt-3">
+          <ConfirmOrder order={order} subtotal={subTotal} delivery={delivery} />
+        </div>
+      )}
+
       <style jsx>{`
         .pay-wrap {
           margin: 10px auto;
