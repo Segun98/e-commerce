@@ -159,7 +159,7 @@ export const OrderPage: React.FC<Props> = ({ lookup, Token }) => {
                       color: "white",
                     }}
                   >
-                    Action
+                    More
                   </Button>
                 </PopoverTrigger>
                 <PopoverContent zIndex={4}>
