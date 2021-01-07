@@ -81,7 +81,7 @@ export const Navigation = () => {
                 </Link>
               </li>
               <li>
-                <Link href="/vendor/become-a-vendor#contact">
+                <Link href="/become-a-vendor#contact">
                   <a>Contact Us</a>
                 </Link>
               </li>
