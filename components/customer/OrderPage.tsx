@@ -109,7 +109,7 @@ export const OrderPage: React.FC<Props> = ({ lookup, Token }) => {
             <div className="order-product-info">
               {lookup[o].map((o: Orders, i) => (
                 <div key={i}>
-                  <p>
+                  <h1>
                     &#8226; {o.name} x{o.quantity} -
                     <span style={{ color: "var(--deepblue)" }}>
                       {" "}
@@ -118,14 +118,14 @@ export const OrderPage: React.FC<Props> = ({ lookup, Token }) => {
                     {o.request && (
                       <div>
                         <br />
-                        <h1 style={{ color: "var(--deepblue)" }}>
+                        <h2 style={{ color: "var(--deepblue)" }}>
                           {" "}
                           - Request -{" "}
-                        </h1>
+                        </h2>
                         <p>{o.request}</p>
                       </div>
                     )}
-                  </p>
+                  </h1>
                 </div>
               ))}
             </div>

@@ -25,7 +25,7 @@ export const CustomerOrders = () => {
 
   //Lookup helper to map order_id to order(s). {8219681236: [{order}, {order}], 8219681236: [{another order}]}
 
-  //makes it easy to handle multiple orders sharing the same order_id
+  //makes it easy to handle multiple orders sharing the same order_id and easily look them up
 
   const lookup = data
     ? data.getCustomerOrders.reduce((acc, row) => {
