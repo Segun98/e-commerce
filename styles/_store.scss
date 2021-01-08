@@ -95,6 +95,20 @@
             margin-bottom: -22px;
         }
 
+
+        .store-add-cart {
+            display: flex;
+            justify-content: center;
+            position: absolute;
+            bottom: 0;
+
+            button {
+                border: 1px solid $text;
+                border-radius: 50%;
+                transform: rotate(2deg);
+            }
+        }
+
         .store-item a {
             display: flex;
             flex-direction: column;

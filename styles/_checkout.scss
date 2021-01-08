@@ -34,6 +34,7 @@
         p {
             color: $text;
             padding: 3px 0;
+            font-size: 0.9rem
         }
     }
 
@@ -54,6 +55,10 @@
 .product-info {
     position: sticky;
     top: 0;
+
+    p {
+        font-size: 0.9rem
+    }
 }
 
 @media only screen and (min-width: 700px) {
@@ -62,6 +67,19 @@
         width: 80%;
         padding: 25px 0;
 
+    }
+
+    .delivery-info {
+
+        .grid-1,
+        .grid-2,
+        .grid-3,
+        .grid-4 {
+
+            p {
+                font-size: 1rem
+            }
+        }
     }
 }
 
@@ -74,6 +92,10 @@
         .product-info {
             display: block;
             background: white;
+
+            p {
+                font-size: 1rem
+            }
 
             h1 {
                 font-weight: bold;
