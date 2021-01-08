@@ -1,8 +1,8 @@
 import { gql } from "graphql-request";
 
 export const getCartItemsCartPage = gql`
-  query getCartItems {
-    getCartItems {
+  query getCartItems($customer_id: ID!) {
+    getCartItems(customer_id: $customer_id) {
       id
       quantity
       product {
@@ -18,21 +18,13 @@ export const getCartItemsCartPage = gql`
 `;
 
 export const getCartItemsCheckoutPage = gql`
-  query getCartItems {
-    getCartItems {
+  query getCartItems($customer_id: ID!) {
+    getCartItems(customer_id: $customer_id) {
       id
       quantity
       product_id
       prod_creator_id
       customer_id
-      cartCreator {
-        first_name
-        last_name
-        email
-        customer_address
-        phone
-        pending
-      }
       product {
         id
         name
@@ -81,8 +73,14 @@ export const getOrder = gql`
 `;
 
 export const addToCart = gql`
-  mutation addToCart($product_id: ID!, $prod_creator_id: ID!, $quantity: Int) {
+  mutation addToCart(
+    $customer_id: ID!
+    $product_id: ID!
+    $prod_creator_id: ID!
+    $quantity: Int
+  ) {
     addToCart(
+      customer_id: $customer_id
       product_id: $product_id
       prod_creator_id: $prod_creator_id
       quantity: $quantity

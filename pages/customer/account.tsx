@@ -23,6 +23,8 @@ import { cartItems } from "@/redux/features/cart/fetchCart";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 import { updateProfile } from "@/graphql/vendor";
+import { MutationAddToCartArgs } from "@/Typescript/types";
+import { v4 as uuidv4 } from "uuid";
 
 export const Account = () => {
   const router = useRouter();
@@ -111,7 +113,21 @@ export const Account = () => {
 
   // add saved item to cart
   async function addCart(product_id, prod_creator_id, quantity) {
-    const variables = {
+    //generate customer id
+    let customer_id = "";
+    const check = Cookies.get("customer_id");
+    if (check) {
+      customer_id = check;
+    } else {
+      customer_id = uuidv4();
+
+      Cookies.set("customer_id", customer_id, {
+        expires: 365,
+      });
+    }
+
+    const variables: MutationAddToCartArgs = {
+      customer_id,
       product_id,
       prod_creator_id,
       quantity,
@@ -208,7 +224,7 @@ export const Account = () => {
         {Token && User["first_name"] && role === "customer" && (
           <div className="account-wrap">
             <div className="heading">
-              <h1>{User && "Hello, " + User.first_name}</h1>
+              <h1></h1>
               <button
                 title="edit profile"
                 aria-label="edit profile"
@@ -268,7 +284,7 @@ export const Account = () => {
                   ></Textarea>
                 </div>
               </FormControl>
-              <div>
+              <div style={{ textAlign: "center" }}>
                 {!readOnly && (
                   <Button
                     type="submit"
@@ -359,7 +375,7 @@ export const Account = () => {
 
         .account-wrap h1 {
           font-weight: bold;
-          margin: 20px 0;
+          margin: 15px 0 8px 0;
           font-size: 1.2rem;
         }
 

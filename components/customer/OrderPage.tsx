@@ -1,6 +1,11 @@
 import React from "react";
 import { Orders } from "@/Typescript/types";
-import { Commas, differenceBetweenDates, nairaSign } from "@/utils/helpers";
+import {
+  Commas,
+  differenceBetweenDates,
+  nairaSign,
+  screenWidth,
+} from "@/utils/helpers";
 import { useMutation } from "@/utils/useMutation";
 import { gql } from "graphql-request";
 import {
@@ -14,6 +19,7 @@ import {
   PopoverHeader,
   PopoverTrigger,
   useToast,
+  Text,
 } from "@chakra-ui/core";
 import { useRouter } from "next/router";
 import { mutate } from "swr";
@@ -120,7 +126,7 @@ export const OrderPage: React.FC<Props> = ({ lookup, Token }) => {
                         <br />
                         <h2 style={{ color: "var(--deepblue)" }}>
                           {" "}
-                          - Request -{" "}
+                          &#8226; Request{" "}
                         </h2>
                         <p>{o.request}</p>
                       </div>
@@ -165,9 +171,24 @@ export const OrderPage: React.FC<Props> = ({ lookup, Token }) => {
                 <PopoverContent zIndex={4}>
                   <PopoverArrow />
                   <PopoverCloseButton />
-                  <PopoverHeader>Order ID: {o}</PopoverHeader>
+                  <PopoverHeader>
+                    <div
+                      style={{
+                        fontSize: screenWidth() > 700 ? "0.9rem" : "0.8rem",
+                      }}
+                    >
+                      Order ID:{" "}
+                      <Text as="span" color="var(--deepblue)">
+                        {o}
+                      </Text>
+                    </div>
+                  </PopoverHeader>
                   <PopoverBody>
-                    <div>
+                    <div
+                      style={{
+                        fontSize: screenWidth() > 700 ? "0.9rem" : "0.8rem",
+                      }}
+                    >
                       Total: {Commas(lookup[o][0].orderStatus.total_price)} |
                       Delivery Fee:{" "}
                       {Commas(lookup[o][0].orderStatus.delivery_fee)} |
@@ -217,7 +238,7 @@ export const OrderPage: React.FC<Props> = ({ lookup, Token }) => {
                       </Button>
                     </div>
                   </PopoverBody>
-                  <PopoverFooter fontSize="0.7rem">
+                  <PopoverFooter fontSize="0.8rem">
                     Orders are fulfilled within 2-4 days of placement{" "}
                     {lookup[o][0].orderStatus.delivered === "true"
                       ? `| Delivered: ${toDate(

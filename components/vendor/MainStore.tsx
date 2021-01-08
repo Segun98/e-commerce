@@ -1,22 +1,42 @@
-import { Icon, useToast } from "@chakra-ui/core";
+import { Icon, useToast, useDisclosure } from "@chakra-ui/core";
 import { gql } from "graphql-request";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useEffect } from "react";
 import { useToken } from "@/Context/TokenProvider";
 import { MutationDeleteProductArgs, UsersRes } from "@/Typescript/types";
 import { Commas } from "@/utils/helpers";
 import { useMutation } from "@/utils/useMutation";
+import { StoreDrawer } from "./StoreCartFlow/StoreDrawer";
+import { useSelector, useDispatch } from "react-redux";
+import { cartItems } from "@/redux/features/cart/fetchCart";
+import Cookies from "js-cookie";
+import { StoreAddToCart } from "./StoreCartFlow/StoreAddToCart";
+
 interface StoreProps {
   user: UsersRes;
   // handleDelete: (id: string, creator_id: string, name: string) => void;
 }
 export const MainStore: React.FC<StoreProps> = ({ user }) => {
+  //for chakra ui drawer
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  //CART FROM REDUX STORE
+  const { cartLength, cart } = useSelector<any, any>((state) => state.cart);
+  const dispatch = useDispatch();
+
   const router = useRouter();
   //from context
   const { Token } = useToken();
 
   const toast = useToast();
+
+  //fetch cart items
+  useEffect(() => {
+    if (!Cookies.get("customer_id")) {
+      return;
+    }
+    dispatch(cartItems({ customer_id: Cookies.get("customer_id") }));
+  }, [cartLength]);
 
   // Delete Product
   const handleDelete = async (id, creator_id, name) => {
@@ -102,11 +122,23 @@ export const MainStore: React.FC<StoreProps> = ({ user }) => {
               </button>
             </div>
           ) : (
-            ""
+            // SHOW CART ICON TO THE PUBLIC
+            <div>
+              <button
+                aria-label="open cart"
+                onClick={onOpen}
+                className="cart-store-icon"
+              >
+                <img src="/shopping-cart.svg" alt="open cart icon" />
+                <h1>{cartLength === 0 ? "" : cartLength}</h1>
+              </button>
+              <StoreDrawer onClose={onClose} isOpen={isOpen} cart={cart} />
+            </div>
           )}
         </div>
       </header>
       <hr />
+      {/* END OF HEADER  */}
 
       <div className="store-products">
         <div className="store-products_head">
@@ -139,7 +171,7 @@ export const MainStore: React.FC<StoreProps> = ({ user }) => {
 
         <div className="store-products_wrap">
           {user &&
-            user.usersProducts.map((p, index) => (
+            user.usersProducts.map((p) => (
               <div className="store-item" key={p.id}>
                 {/* Inventory status , visible only to store owner (user.id === user.jwt_user_id) */}
                 {user && user.id === user.jwt_user_id ? (
@@ -196,7 +228,10 @@ export const MainStore: React.FC<StoreProps> = ({ user }) => {
                     </button>
                   </div>
                 ) : (
-                  ""
+                  //Add to cart button
+                  <div className="store-add-cart">
+                    <StoreAddToCart onOpen={onOpen} product={p} />
+                  </div>
                 )}
               </div>
             ))}
