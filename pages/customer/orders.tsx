@@ -55,11 +55,11 @@ export const CustomerOrders = () => {
             </ListItem>
             <ListItem>
               * <strong>Cancelled</strong> signifies that your item has been
-              cancelled by you or our vendor.
+              cancelled.
             </ListItem>
             <ListItem>
               * <strong>Delivered</strong> signifies that your item has been
-              delivered and accepted by you
+              delivered to you
             </ListItem>
           </List>
         </div>
