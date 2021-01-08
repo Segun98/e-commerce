@@ -3,7 +3,7 @@ import { ProductsRes } from "@/Typescript/types";
 import { useQuery } from "./useQuery";
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { Commas, truncate } from "@/utils/helpers";
+import { Commas, nairaSign, truncate } from "@/utils/helpers";
 
 interface PartiesProps {
   title: string;
@@ -42,7 +42,9 @@ export const Parties: React.FC<PartiesProps> = ({ title, party }) => {
                   <img src={p.images[0]} alt="" />
                   <div className="product-info">
                     <h2>{truncate(p.name, 20)}</h2>
-                    <p>{Commas(p.price)}</p>
+                    <p>
+                      {nairaSign} {Commas(p.price)}
+                    </p>
                   </div>
                 </a>
               </Link>
@@ -53,7 +55,7 @@ export const Parties: React.FC<PartiesProps> = ({ title, party }) => {
       <style jsx>{`
         .home-party-wrap {
           margin: 25px auto;
-          width: 99%;
+          width: 100%;
         }
         h1 {
           text-align: center;
@@ -71,9 +73,9 @@ export const Parties: React.FC<PartiesProps> = ({ title, party }) => {
         .home-party-product {
           box-shadow: var(--box) var(--softgrey);
           background: white;
-          border-radius: 5px;
+          border-radius: 3px;
           padding: 3px;
-          margin: 4px;
+          margin: 3px;
           width: 130px;
           height: 180px;
         }
