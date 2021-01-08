@@ -1,8 +1,6 @@
-import { ProtectRouteC } from "@/utils/ProtectedRouteC";
 import Head from "next/head";
 import React, { useEffect, useState } from "react";
 import { Layout } from "@/components/Layout";
-import { useToken } from "@/Context/TokenProvider";
 import { getCartItemsCheckoutPage } from "@/graphql/customer";
 import { Cart } from "@/Typescript/types";
 import { useQuery } from "@/components/useQuery";
@@ -20,10 +18,12 @@ import {
 import { Commas, nairaSign } from "@/utils/helpers";
 import Link from "next/link";
 import { NextStep } from "@/components/customer/NextStep";
+import Cookies from "js-cookie";
+import { useUser } from "@/Context/UserProvider";
 
 const Checkout = () => {
   const toast = useToast();
-  const { Token } = useToken();
+  const { User } = useUser();
 
   const [editMode, setEditMode] = useState(false);
   const [address, setAddress] = useState("");
@@ -31,7 +31,9 @@ const Checkout = () => {
   const [request, setRequest] = useState("");
 
   //cart data
-  const [data, loading, error] = useQuery(getCartItemsCheckoutPage, {}, Token);
+  const [data, loading, error] = useQuery(getCartItemsCheckoutPage, {
+    customer_id: Cookies.get("customer_id"),
+  });
   let cart: Cart[] = data && data.getCartItems;
 
   //cart items subtotal
@@ -40,8 +42,8 @@ const Checkout = () => {
 
   useEffect(() => {
     if (cart) {
-      setAddress(cart[0].cartCreator.customer_address || "");
-      setPhone(cart[0].cartCreator.phone || "");
+      setAddress(User?.customer_address || "");
+      setPhone(User?.phone || "");
     }
   }, [cart]);
 
@@ -113,8 +115,7 @@ const Checkout = () => {
                 <p>
                   Full Name:{" "}
                   <span>
-                    {cart[0]?.cartCreator.first_name}{" "}
-                    {cart[0]?.cartCreator.last_name}
+                    {User?.first_name} {User?.last_name}
                   </span>
                 </p>
                 <p>
@@ -342,4 +343,4 @@ const Checkout = () => {
   );
 };
 
-export default ProtectRouteC(Checkout);
+export default Checkout;
