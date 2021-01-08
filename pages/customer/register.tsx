@@ -25,6 +25,8 @@ import { GoogleLogin } from "react-google-login";
 export const Register = () => {
   const router = useRouter();
   const toast = useToast();
+  //check if user came from checkout
+  const fromCheckout = router.query.redirect;
 
   //react-hook-form
   const { handleSubmit, register, errors, watch } = useForm();
@@ -71,6 +73,18 @@ export const Register = () => {
     try {
       setLoading(true);
       const res = await request(graphqlEndpoint, SIGN_UP, variables);
+
+      //add redirect query to checkout if customer came form there
+      if (res.signUp && fromCheckout) {
+        setLoading(false);
+        toast({
+          title: "Sign Up Successful!",
+          status: "success",
+          duration: 3000,
+        });
+        router.push("/customer/login?redirect=checkout");
+        return;
+      }
 
       if (res.signUp) {
         setLoading(false);
@@ -122,7 +136,20 @@ export const Register = () => {
           password: data.password,
           email: data.email,
         });
-        //check for EXISITING user
+
+        //add redirect query to checkout if customer came form there
+        if (res.data && fromCheckout) {
+          setLoading(false);
+          toast({
+            title: "Sign Up Successful!",
+            description: "Redirecting to Login",
+            status: "success",
+            duration: 3000,
+          });
+          router.push("/customer/login?redirect=checkout");
+          return;
+        }
+
         if (res.data) {
           toast({
             title: "Sign Up Successful!",

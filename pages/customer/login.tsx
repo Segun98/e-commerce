@@ -29,6 +29,9 @@ export const Login = () => {
   const router = useRouter();
   const { setToken } = useToken();
 
+  //check if user came from checkout
+  const fromCheckout = router.query.redirect;
+
   //react-hook-form
   const { handleSubmit, register, errors } = useForm();
 
@@ -60,6 +63,21 @@ export const Login = () => {
         expires: 7,
         // secure: true,
       });
+
+      //redirect to checkout page if customer came from there.
+      if (data && fromCheckout) {
+        setLoading(false);
+        setToken(data.accesstoken);
+
+        toast({
+          title: "LogIn Successfull!",
+          description: "Redirecting to checkout...",
+          status: "success",
+          duration: 5000,
+        });
+        router.push("/product/checkout").then(() => window.scrollTo(0, 0));
+        return;
+      }
 
       if (data) {
         setLoading(false);
@@ -129,6 +147,19 @@ export const Login = () => {
           expires: 7,
           // secure: true,
         });
+
+        //redirect to checkout page if customer came from there.
+        if (res.data && fromCheckout) {
+          setToken(res.data.accesstoken);
+          toast({
+            title: "LogIn Successfull!",
+            description: "Redirecting to checkout...",
+            status: "success",
+            duration: 5000,
+          });
+          router.push("/product/checkout").then(() => window.scrollTo(0, 0));
+          return;
+        }
 
         if (res.data) {
           setToken(res.data.accesstoken);
@@ -259,7 +290,12 @@ export const Login = () => {
             <div className="sign-up-msg">
               <small>
                 Don't have an account?{" "}
-                <Link href="/customer/register">
+                {fromCheckout ? "Login quickly with Google or " : ""}
+                <Link
+                  href={`/customer/register${
+                    fromCheckout ? `?redirect=checkout` : ""
+                  }`}
+                >
                   <a>Sign Up</a>
                 </Link>{" "}
               </small>
