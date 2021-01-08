@@ -10,6 +10,7 @@ import { useMutation } from "@/utils/useMutation";
 import { addToCart } from "@/graphql/customer";
 import { cartItems } from "@/redux/features/cart/fetchCart";
 import { useRouter } from "next/router";
+import { v4 as uuidv4 } from "uuid";
 
 interface Iprops {
   product: ProductsRes;
@@ -30,17 +31,37 @@ export const AddToCart: React.FC<Iprops> = ({
   const dispatch = useDispatch();
 
   //add to cart
-  async function addCart(product_id, prod_creator_id, quantity) {
+  async function addCart(
+    product_id: string,
+    prod_creator_id: string,
+    quantity: number
+  ) {
     setLoading(true);
+
+    //generate customer id
+    let customer_id = "";
+    const check = Cookies.get("customer_id");
+    if (check) {
+      customer_id = check;
+    } else {
+      customer_id = uuidv4();
+
+      Cookies.set("customer_id", customer_id, {
+        expires: 365,
+      });
+    }
+
     const variables: MutationAddToCartArgs = {
+      customer_id,
       product_id,
       prod_creator_id,
       quantity,
     };
+
     const { data, error } = await useMutation(addToCart, variables, Token);
     if (data) {
       setLoading(false);
-      dispatch(cartItems(Token));
+      dispatch(cartItems({ customer_id: Cookies.get("customer_id") }));
       toast({
         title: "Item Added to Cart!",
         description: `Your Item has been added to cart, proceed to checkout`,
@@ -65,12 +86,7 @@ export const AddToCart: React.FC<Iprops> = ({
       }
       toast({
         title: "An Error occurred while adding to cart.",
-        description:
-          error.message === "Network request failed"
-            ? "Check Your Internet Connection and Refresh"
-            : role !== "customer"
-            ? "You need to Login as a customer"
-            : "",
+        description: "Check Your Internet Connection and Refresh",
         status: "info",
         duration: 7000,
         isClosable: true,
@@ -116,21 +132,15 @@ export const AddToCart: React.FC<Iprops> = ({
       isLoading={loading ? true : false}
       style={{ backgroundColor: "var(--deepblue" }}
       onClick={() => {
-        if (!Token || !role || role === "vendor") {
+        if (role === "vendor") {
           addToSavedItems();
           toast({
-            title: "Your Item Has Been Saved!",
-            description: "Find It In Your Account Page After You LogIn",
+            title: "Please login as a customer to use cart",
             status: "info",
-            duration: 9000,
-            position: "top",
-            isClosable: true,
           });
-          setTimeout(() => {
-            router.push(`/customer/login`).then(() => window.scrollTo(0, 0));
-          }, 1500);
           return;
         }
+
         if (product.in_stock === "false") {
           addToSavedItems();
           toast({

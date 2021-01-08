@@ -37,26 +37,15 @@ export default cartSlice.reducer;
 export const { getCart, errorResponse } = cartSlice.actions;
 
 // get cart items thunk
-export function cartItems(Token) {
+export function cartItems(variables) {
   return async (dispatch) => {
     try {
-      if (Token) {
-        graphQLClient.setHeader("authorization", `bearer ${Token}`);
-      }
-      const res = await graphQLClient.request(getCartItemsCartPage);
+      const res = await graphQLClient.request(getCartItemsCartPage, variables);
       const data: Cart[] = res.getCartItems;
       dispatch(getCart(data));
     } catch (err) {
       let error = err?.response?.errors[0].message || err.message;
-      if (Token && err) {
-        dispatch(errorResponse(error));
-      }
-      if (err.message === "Network request failed") {
-        dispatch(errorResponse(error));
-      }
-      if (error === "jwt must be provided" || error === "You have to Log In") {
-        dispatch(errorResponse(error));
-      }
+      dispatch(errorResponse(error));
     }
   };
 }

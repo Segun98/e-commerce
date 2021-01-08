@@ -18,13 +18,13 @@ import {
 } from "@chakra-ui/core";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import { useToken } from "../../Context/TokenProvider";
+import { useToken } from "@/Context/TokenProvider";
 import Cookies from "js-cookie";
 import { useRouter } from "next/router";
-import { useUser } from "../../Context/UserProvider";
+import { useUser } from "@/Context/UserProvider";
 // import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
-import { cartItems } from "../../redux/features/cart/fetchCart";
+import { cartItems } from "@/redux/features/cart/fetchCart";
 // import { logoutLink } from "./../../utils/client";
 import { screenWidth } from "@/utils/helpers";
 
@@ -48,11 +48,11 @@ export const Header = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   useEffect(() => {
-    if (!Cookies.get("ecom")) {
+    if (!Cookies.get("customer_id")) {
       return;
     }
-    dispatch(cartItems(Token));
-  }, [Token, cartLength]);
+    dispatch(cartItems({ customer_id: Cookies.get("customer_id") }));
+  }, [cartLength]);
 
   // //close menu when you click outside of the menu
   // useEffect(() => {

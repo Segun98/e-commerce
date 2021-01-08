@@ -21,7 +21,11 @@ export const CustomerCart = () => {
   const role = Cookies.get("role");
 
   useEffect(() => {
-    dispatch(cartItems(Token));
+    dispatch(
+      cartItems({
+        customer_id: Cookies.get("customer_id"),
+      })
+    );
   }, [Token]);
 
   //from redux feature - fetchCart
@@ -59,35 +63,6 @@ export const CustomerCart = () => {
 
       {/* NOT LOGGED IN  */}
       <div className="cart-page">
-        {!loading && !Token && !role && (
-          <div className="indicator">
-            <div className="status">
-              <div>
-                Looks Like You're Not Logged in, Click Login to Use Cart
-              </div>
-              <br />
-              <div
-                className="cart-unauthorised"
-                style={{ textAlign: "center" }}
-              >
-                <Link href="/customer/login">
-                  <a>LogIn</a>
-                </Link>
-              </div>
-              <div style={{ textAlign: "center" }}>
-                <p className="cart-unauthorised">Or</p>
-              </div>
-              <div style={{ textAlign: "center" }}>
-                <div className="cart-unauthorised">
-                  <Link href="/customer/register">
-                    <a>SignUp</a>
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-
         {/* vendors trying to access Cart  */}
         {role && role === "vendor" && !loading && (
           <div className="indicator">
@@ -117,7 +92,7 @@ export const CustomerCart = () => {
         )}
 
         {/* EMPTY CART  */}
-        {!loading && role !== "vendor" && Token && cart.length === 0 && (
+        {!loading && role !== "vendor" && cart.length === 0 && (
           <div
             style={{
               textAlign: "center",
@@ -132,7 +107,7 @@ export const CustomerCart = () => {
         )}
 
         {/* CART CONTENT  */}
-        {Token && role === "customer" && cart && cart.length > 0 && (
+        {cart && cart.length > 0 && (
           <MainCart cart={cart} setLoadingCart={setLoadingCart} />
         )}
 

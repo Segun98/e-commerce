@@ -1,21 +1,20 @@
 import { Button, Icon, useToast } from "@chakra-ui/core";
-import Link from "next/link";
 import React from "react";
 import { useDispatch } from "react-redux";
-import { useToken } from "@/Context/TokenProvider";
 import { deleteFromCart, updateCart } from "@/graphql/customer";
 import { cartItems } from "@/redux/features/cart/fetchCart";
 import { Cart } from "@/Typescript/types";
 import { Commas, nairaSign } from "@/utils/helpers";
 import { useMutation } from "@/utils/useMutation";
 import { useRouter } from "next/router";
+import Cookies from "js-cookie";
+
 interface IProps {
   cart: Cart[];
   setLoadingCart: (boolean) => void;
 }
 export const MainCart: React.FC<IProps> = ({ cart, setLoadingCart }) => {
   const toast = useToast();
-  const { Token } = useToken();
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -30,7 +29,7 @@ export const MainCart: React.FC<IProps> = ({ cart, setLoadingCart }) => {
       quantity,
     });
     if (data) {
-      dispatch(cartItems(Token));
+      dispatch(cartItems({ customer_id: Cookies.get("customer_id") }));
       setLoadingCart(false);
       toast({
         title: "Quantity Updated",
@@ -60,7 +59,7 @@ export const MainCart: React.FC<IProps> = ({ cart, setLoadingCart }) => {
       id,
     });
     if (data.deleteFromCart) {
-      dispatch(cartItems(Token));
+      dispatch(cartItems({ customer_id: Cookies.get("customer_id") }));
       setLoadingCart(false);
       toast({
         title: "Item Removed From Cart",
