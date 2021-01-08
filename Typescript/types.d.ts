@@ -30,6 +30,7 @@ export type Query = {
   getVendorOrders?: Maybe<Array<Maybe<Orders>>>;
   getOrder?: Maybe<Array<Maybe<Orders>>>;
   getAllOrders?: Maybe<Array<Maybe<Orders>>>;
+  getOrderStatus?: Maybe<Array<Maybe<Order_Status>>>;
   products?: Maybe<Array<Maybe<ProductsRes>>>;
 };
 
@@ -85,6 +86,11 @@ export type QueryPartyCategoryArgs = {
 
 export type QueryEditProductPageArgs = {
   id: Scalars['ID'];
+};
+
+
+export type QueryGetCartItemsArgs = {
+  customer_id: Scalars['ID'];
 };
 
 
@@ -190,7 +196,6 @@ export type Cart = {
   prod_creator_id?: Maybe<Scalars['ID']>;
   customer_id?: Maybe<Scalars['ID']>;
   created_at?: Maybe<Scalars['String']>;
-  cartCreator?: Maybe<UsersRes>;
   product?: Maybe<ProductsRes>;
   productCreator?: Maybe<UsersRes>;
 };
@@ -212,6 +217,7 @@ export type Mutation = {
   updateOrder?: Maybe<CustomRes>;
   cancelOrder?: Maybe<CustomRes>;
   setUserStatus?: Maybe<CustomRes>;
+  setInTransit?: Maybe<CustomRes>;
   completeOrder?: Maybe<CustomRes>;
   cancelOrderAdmin?: Maybe<CustomRes>;
   updateCompleted?: Maybe<CustomRes>;
@@ -297,6 +303,7 @@ export type MutationUpdateQuantityArgs = {
 
 
 export type MutationAddToCartArgs = {
+  customer_id: Scalars['ID'];
   product_id: Scalars['ID'];
   prod_creator_id: Scalars['ID'];
   quantity?: Maybe<Scalars['Int']>;
@@ -349,6 +356,11 @@ export type MutationCancelOrderArgs = {
 export type MutationSetUserStatusArgs = {
   pending: Scalars['String'];
   id: Scalars['ID'];
+};
+
+
+export type MutationSetInTransitArgs = {
+  order_id: Scalars['ID'];
 };
 
 
