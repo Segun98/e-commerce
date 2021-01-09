@@ -37,7 +37,10 @@ const Home = ({ data }) => {
         <section className="main-carousel">
           <Carousel indicators={false} interval={7000}>
             <Carousel.Item>
-              <img src="/slider/slide1.jpg" alt="slider" />
+              <img
+                src="https://res.cloudinary.com/dowrygm9b/image/upload/v1610194711/slide1_kqk2ea.jpg"
+                alt="slider"
+              />
 
               <Carousel.Caption>
                 <h3>We Have All You Need To Enoy Your Time At The Beach</h3>
@@ -53,7 +56,10 @@ const Home = ({ data }) => {
               </div>
             </Carousel.Item>
             <Carousel.Item>
-              <img src="/slider/slide2.jpeg" alt="slider" />
+              <img
+                src="https://res.cloudinary.com/dowrygm9b/image/upload/v1610194733/slide2_jsm7kr.jpg"
+                alt="slider"
+              />
 
               <Carousel.Caption>
                 <h3>Your House Parties Are About to get Real Lit</h3>
@@ -69,7 +75,10 @@ const Home = ({ data }) => {
               </div>
             </Carousel.Item>
             <Carousel.Item>
-              <img src="/slider/slide3.jpeg" alt="slider" />
+              <img
+                src="https://res.cloudinary.com/dowrygm9b/image/upload/v1610194744/slide3_polccw.jpg"
+                alt="slider"
+              />
 
               <Carousel.Caption>
                 <h3>
@@ -88,7 +97,10 @@ const Home = ({ data }) => {
             </Carousel.Item>
 
             <Carousel.Item>
-              <img src="/slider/slide4.jpeg" alt="slider" />
+              <img
+                src="https://res.cloudinary.com/dowrygm9b/image/upload/v1610194757/slide4_of8may.jpg"
+                alt="slider"
+              />
 
               <Carousel.Caption>
                 <h3>
@@ -108,7 +120,10 @@ const Home = ({ data }) => {
             </Carousel.Item>
 
             <Carousel.Item>
-              <img src="/slider/slide5.jpeg" alt="slider" />
+              <img
+                src="https://res.cloudinary.com/dowrygm9b/image/upload/v1610194769/slide5_wktz3k.jpg"
+                alt="slider"
+              />
 
               <Carousel.Caption>
                 <h3>Whats A Party Without Lights?</h3>
@@ -125,7 +140,10 @@ const Home = ({ data }) => {
             </Carousel.Item>
 
             <Carousel.Item>
-              <img src="/slider/slide5.jpeg" alt="slider" />
+              <img
+                src="https://res.cloudinary.com/dowrygm9b/image/upload/v1610194769/slide5_wktz3k.jpg"
+                alt="slider"
+              />
 
               <Carousel.Caption>
                 <h3>Whats An Indoor Party Without Lights?</h3>
