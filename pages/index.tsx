@@ -9,6 +9,7 @@ import { Commas } from "@/utils/helpers";
 import { PurchaseSteps } from "@/components/customer/PurchaseSteps";
 import { graphQLClient } from "@/utils/client";
 import { Parties } from "@/components/Parties";
+import { StoresHome } from "@/components/StoresHome";
 
 export async function getServerSideProps() {
   try {
@@ -272,6 +273,10 @@ const Home = ({ data }) => {
               </a>
             </Link>
           </div>
+        </section>
+
+        <section>
+          <StoresHome />
         </section>
 
         <section className="home-party-categories">

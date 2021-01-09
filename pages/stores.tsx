@@ -252,7 +252,8 @@ const Stores = () => {
           display: flex;
           align-items: center;
           justify-content: center;
-          object-fit: cover;
+          /* object-fit: cover; */
+          object-fit: contain;
         }
         .store-img h3 {
           color: white;
