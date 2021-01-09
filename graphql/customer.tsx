@@ -107,8 +107,8 @@ export const deleteFromCart = gql`
 `;
 
 export const deleteAllFromCart = gql`
-  mutation deleteAllFromCart {
-    deleteAllFromCart {
+  mutation deleteAllFromCart($customer_id: ID!) {
+    deleteAllFromCart(customer_id: $customer_id) {
       message
     }
   }

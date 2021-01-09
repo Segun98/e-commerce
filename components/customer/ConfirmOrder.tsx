@@ -9,6 +9,7 @@ import { deleteAllFromCart, updateOrder } from "@/graphql/customer";
 import { MutationUpdateOrderArgs, Orders } from "@/Typescript/types";
 import { useMutation } from "@/utils/useMutation";
 import { graphQLClient } from "@/utils/client";
+import Cookies from "js-cookie";
 
 //update available quantity in stock for ordered product
 const updateQuantity = gql`
@@ -56,7 +57,9 @@ export const ConfirmOrder: React.FC<Iprops> = ({
 
     if (data) {
       //clear cart
-      await useMutation(deleteAllFromCart, {}, Token);
+      await useMutation(deleteAllFromCart, {
+        customer_id: Cookies.get("customer_id"),
+      });
       toast({
         title: "You are being redirected...",
         status: "info",
