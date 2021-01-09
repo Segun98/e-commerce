@@ -41,11 +41,11 @@ const Checkout = () => {
     cart && cart.reduce((a, c) => a + c.product.price * c.quantity, 0);
 
   useEffect(() => {
-    if (cart) {
+    if (User) {
       setAddress(User?.customer_address || "");
       setPhone(User?.phone || "");
     }
-  }, [cart]);
+  }, [cart, User]);
 
   return (
     <Layout>
