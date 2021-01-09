@@ -1,6 +1,6 @@
 import { UsersRes } from "@/Typescript/types";
 import Link from "next/link";
-import { truncate } from "@/utils/helpers";
+import { screenWidth, truncate } from "@/utils/helpers";
 import { gql } from "graphql-request";
 import { useEffect, useState } from "react";
 import { useQuery } from "./useQuery";
@@ -87,7 +87,11 @@ export const StoresHome = () => {
           <div></div>
           <div style={{ padding: "10px", color: "var(--deepblue)" }}>
             <Link href="/stores">
-              <a>Click here to find more Stores...</a>
+              <a>
+                {screenWidth() > 700
+                  ? "Click here to find more Stores..."
+                  : "Find More..."}
+              </a>
             </Link>
           </div>
         </div>
