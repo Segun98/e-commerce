@@ -8,6 +8,7 @@ import { Commas, nairaSign } from "@/utils/helpers";
 import { useMutation } from "@/utils/useMutation";
 import { useRouter } from "next/router";
 import Cookies from "js-cookie";
+import { useToken } from "@/Context/TokenProvider";
 
 interface IProps {
   cart: Cart[];
@@ -17,6 +18,8 @@ export const MainCart: React.FC<IProps> = ({ cart, setLoadingCart }) => {
   const toast = useToast();
   const dispatch = useDispatch();
   const router = useRouter();
+  const { Token } = useToken();
+  const role = Cookies.get("role");
 
   //cart items subtotal
   const subTotal = cart.reduce((a, c) => a + c.product.price * c.quantity, 0);
@@ -169,7 +172,24 @@ export const MainCart: React.FC<IProps> = ({ cart, setLoadingCart }) => {
             color="white"
             size="xs"
             background="var(--deepblue)"
-            onClick={() => router.push(`/product/checkout`)}
+            onClick={() => {
+              if (!Token || !role) {
+                toast({
+                  title: "Almost There! You need to Login before checkout",
+                  description: "Redirecting",
+                  status: "info",
+                  position: "top",
+                  duration: 7000,
+                });
+
+                setTimeout(() => {
+                  router.push(`/customer/login?redirect=checkout`);
+                }, 1000);
+
+                return;
+              }
+              router.push(`/product/checkout`);
+            }}
           >
             Checkout
           </Button>
