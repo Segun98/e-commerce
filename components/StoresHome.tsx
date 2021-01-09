@@ -111,7 +111,7 @@ export const StoresHome = () => {
 
         .store-items {
           display: flex;
-          overflow-x: scroll;
+          overflow: auto;
           align-items: center;
         }
 

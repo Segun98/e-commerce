@@ -66,7 +66,7 @@ export const Parties: React.FC<PartiesProps> = ({ title, party }) => {
 
         .home-party-items {
           display: flex;
-          overflow-x: scroll;
+          overflow: auto;
           align-items: center;
         }
 
