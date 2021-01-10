@@ -78,6 +78,7 @@ export const DashboardOrders = () => {
               <th>Qty</th>
               <th>Total</th>
               <th>Req</th>
+              <th>Status</th>
               <th>More</th>
             </tr>
           </thead>
@@ -105,6 +106,24 @@ export const DashboardOrders = () => {
                 <td>{o.quantity}</td>
                 <td>{Commas(o.subtotal)}</td>
                 <td>{truncate(o.request, 60) || "none"}</td>
+                <td>
+                  {/* Canceled status  */}
+                  {o.orderStatus.canceled === "true" ? "Cancelled" : ""}
+
+                  {/* processing  */}
+                  {o.orderStatus.delivered === "false" &&
+                  o.orderStatus.in_transit === "false" &&
+                  o.orderStatus.canceled === "false"
+                    ? "Processing"
+                    : ""}
+
+                  {/* delivered shows "delivered", else in transit */}
+                  {o.orderStatus.delivered === "true"
+                    ? "delivered"
+                    : o.orderStatus.in_transit === "true"
+                    ? "In Transit"
+                    : ""}
+                </td>
                 <td>
                   <Popover placement="left" usePortal={true}>
                     <PopoverTrigger>
