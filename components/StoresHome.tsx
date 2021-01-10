@@ -82,19 +82,20 @@ export const StoresHome = () => {
               </div>
             ))}
         </div>
-
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <div></div>
-          <div style={{ padding: "10px", color: "var(--deepblue)" }}>
-            <Link href="/stores">
-              <a>
-                {screenWidth() > 700
-                  ? "Click here to find more Stores..."
-                  : "Find More..."}
-              </a>
-            </Link>
+        {stores && stores.length > 0 && (
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <div></div>
+            <div style={{ padding: "10px", color: "var(--deepblue)" }}>
+              <Link href="/stores">
+                <a>
+                  {screenWidth() > 700
+                    ? "Click here to find more Stores..."
+                    : "Find More..."}
+                </a>
+              </Link>
+            </div>
           </div>
-        </div>
+        )}
       </main>
 
       <style jsx>{`
